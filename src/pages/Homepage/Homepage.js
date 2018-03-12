@@ -1,7 +1,7 @@
 /*
 AUTHOR: Gotis, Ciara Mae R.
 		Esperanza, Dannah Louise F.
-FILE: 	Homepage
+FILE: 	Homepage; contains the lecture and lab sections of CMSC subjects
 */
 
 import {Card, Button, Input, Grid, Container, Search, Header, Modal, Icon, Checkbox, Accordion} from "semantic-ui-react";
