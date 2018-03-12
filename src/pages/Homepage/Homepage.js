@@ -81,7 +81,7 @@ class Homepage extends Component{
 										 	<Grid columns={3} divided>
 											 	<Grid.Row>
 											 		<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 																 <Card.Header>CMSC 2 E-2L</Card.Header>
 																 <Card.Meta>10:00-1:00</Card.Meta>
@@ -90,7 +90,7 @@ class Homepage extends Component{
 														 </Card>
 													</Grid.Column>
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 															 <Card.Header>CMSC 2 E-3L</Card.Header>
 															 <Card.Meta>1:00-4:00</Card.Meta>
@@ -100,7 +100,7 @@ class Homepage extends Component{
 													</Grid.Column>
 
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 														 <Card.Content>
 														 <Card.Header>CMSC 2 E-4L</Card.Header>
 														 <Card.Meta>4:00-7:00</Card.Meta>
@@ -132,7 +132,7 @@ class Homepage extends Component{
 										 	<Grid columns={3} divided>
 											 	<Grid.Row>
 											 		<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 																 <Card.Header>CMSC 2 F-1L</Card.Header>
 																 <Card.Meta>10:00-1:00</Card.Meta>
@@ -141,7 +141,7 @@ class Homepage extends Component{
 														 </Card>
 													</Grid.Column>
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 															 <Card.Header>CMSC 2 F-2L</Card.Header>
 															 <Card.Meta>1:00-4:00</Card.Meta>
@@ -151,7 +151,7 @@ class Homepage extends Component{
 													</Grid.Column>
 
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 														 <Card.Content>
 														 <Card.Header>CMSC 2 F-2L</Card.Header>
 														 <Card.Meta>4:00-7:00</Card.Meta>
@@ -192,7 +192,7 @@ class Homepage extends Component{
 										 	<Grid columns={3} divided>
 											 	<Grid.Row>
 											 		<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 																 <Card.Header>CMSC 11 ST-2L</Card.Header>
 																 <Card.Meta>10:00-1:00</Card.Meta>
@@ -201,7 +201,7 @@ class Homepage extends Component{
 														 </Card>
 													</Grid.Column>
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 															 <Card.Header>CMSC 11 ST-3L</Card.Header>
 															 <Card.Meta>1:00-4:00</Card.Meta>
@@ -211,7 +211,7 @@ class Homepage extends Component{
 													</Grid.Column>
 
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 														 <Card.Content>
 														 <Card.Header>CMSC 11 ST-4L</Card.Header>
 														 <Card.Meta>4:00-7:00</Card.Meta>
@@ -243,7 +243,7 @@ class Homepage extends Component{
 										 	<Grid columns={3} divided>
 											 	<Grid.Row>
 											 		<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 																 <Card.Header>CMSC 11 UV-2L</Card.Header>
 																 <Card.Meta>10:00-1:00</Card.Meta>
@@ -252,7 +252,7 @@ class Homepage extends Component{
 														 </Card>
 													</Grid.Column>
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 															 <Card.Header>CMSC 11 UV-3L</Card.Header>
 															 <Card.Meta>1:00-4:00</Card.Meta>
@@ -262,7 +262,7 @@ class Homepage extends Component{
 													</Grid.Column>
 
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 														 <Card.Content>
 														 <Card.Header>CMSC 11 UV-4L</Card.Header>
 														 <Card.Meta>4:00-7:00</Card.Meta>
@@ -303,7 +303,7 @@ class Homepage extends Component{
 										 	<Grid columns={3} divided>
 											 	<Grid.Row>
 											 		<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 																 <Card.Header>CMSC 21 U-2L</Card.Header>
 																 <Card.Meta>10:00-1:00</Card.Meta>
@@ -312,7 +312,7 @@ class Homepage extends Component{
 														 </Card>
 													</Grid.Column>
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 															 <Card.Header>CMSC 21 U-3L</Card.Header>
 															 <Card.Meta>1:00-4:00</Card.Meta>
@@ -322,7 +322,7 @@ class Homepage extends Component{
 													</Grid.Column>
 
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 														 <Card.Content>
 														 <Card.Header>CMSC 21 U-4L</Card.Header>
 														 <Card.Meta>4:00-7:00</Card.Meta>
@@ -354,7 +354,7 @@ class Homepage extends Component{
 										 	<Grid columns={3} divided>
 											 	<Grid.Row>
 											 		<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 																 <Card.Header>CMSC 21 V-2L</Card.Header>
 																 <Card.Meta>10:00-1:00</Card.Meta>
@@ -363,7 +363,7 @@ class Homepage extends Component{
 														 </Card>
 													</Grid.Column>
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 															 <Card.Content>
 															 <Card.Header>CMSC 21 V-3L</Card.Header>
 															 <Card.Meta>1:00-4:00</Card.Meta>
@@ -373,7 +373,7 @@ class Homepage extends Component{
 													</Grid.Column>
 
 													<Grid.Column>
-														 <Card href='#card-example-link-card'>
+														 <Card id = "cardMargin" href='#card-example-link-card'>
 														 <Card.Content>
 														 <Card.Header>CMSC 21 V-4L</Card.Header>
 														 <Card.Meta>4:00-7:00</Card.Meta>
