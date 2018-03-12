@@ -7,7 +7,7 @@ FILE: 	Homepage; contains the lecture and lab sections of CMSC subjects
 import {Card, Button, Input, Grid, Container, Search, Header, Modal, Icon, Checkbox, Accordion} from "semantic-ui-react";
 import React, {Component} from "react";
 import autobind from "react-autobind";
-import './App.css';
+import './Homepage.css';
 
 const inlineStyle = {
   modal : {
