@@ -7,7 +7,7 @@ FILE: 	Homepage; contains the lecture and lab sections of CMSC subjects
 import {Card, Button, Input, Grid, Container, Search, Header, Modal, Icon, Checkbox, Accordion} from "semantic-ui-react";
 import React, {Component} from "react";
 import autobind from "react-autobind";
-import './Homepage.css';
+import HomeNav from '../../components/HomeNav';
 
 const inlineStyle = {
   modal : {
@@ -17,7 +17,7 @@ const inlineStyle = {
   }
 };
 
-class Homepage extends Component{
+class Courses extends Component{
 	constructor(props){
 		super(props);
 		this.state={
@@ -45,6 +45,7 @@ class Homepage extends Component{
 		return(
 			// Returns an Accordion that contains the lecture sections; Lab sections displayed using Cards
 			<div>
+				<HomeNav />
 				<Container>
 				<Grid centered={true}>
 					<Grid.Row>
@@ -112,7 +113,7 @@ class Homepage extends Component{
 												</Grid.Row>
 											</Grid>
 
-											
+
 										 </Modal.Description>
 									</Container>
 								 </Modal.Content>
@@ -163,7 +164,7 @@ class Homepage extends Component{
 												</Grid.Row>
 											</Grid>
 
-											
+
 										 </Modal.Description>
 									</Container>
 								 </Modal.Content>
@@ -223,7 +224,7 @@ class Homepage extends Component{
 												</Grid.Row>
 											</Grid>
 
-											
+
 										 </Modal.Description>
 									</Container>
 								 </Modal.Content>
@@ -274,7 +275,7 @@ class Homepage extends Component{
 												</Grid.Row>
 											</Grid>
 
-											
+
 										 </Modal.Description>
 									</Container>
 								 </Modal.Content>
@@ -334,7 +335,7 @@ class Homepage extends Component{
 												</Grid.Row>
 											</Grid>
 
-											
+
 										 </Modal.Description>
 									</Container>
 								 </Modal.Content>
@@ -385,7 +386,7 @@ class Homepage extends Component{
 												</Grid.Row>
 											</Grid>
 
-											
+
 										 </Modal.Description>
 									</Container>
 								 </Modal.Content>
@@ -402,4 +403,4 @@ class Homepage extends Component{
 	}
 }
 
-export default Homepage;
+export default Courses;
