@@ -1,0 +1,31 @@
+
+#accent{
+	background-color: #ff5252;
+}
+
+#accent:hover{
+	background-color: #d32f2f;
+}
+
+#table th, #table td{
+	font-size: large;
+		text-align: center;
+}
+#table th{
+	background-color: #1976d2;
+	color: #ffffff;
+}
+
+#table td{
+	background-color: #FFFFFF;
+	
+}
+
+#table td:nth-child(1){
+	font-weight: bold;
+	
+}
+
+#header{
+	color: #1976D2;
+}
