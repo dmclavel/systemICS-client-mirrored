@@ -78,22 +78,17 @@ class Data extends Component {
 							<td>PC Lab 6</td>
 							<td>20</td>
 						</tr>					</tbody>
-					<tfoot class="full-width">
-						<tr>
-							<th colspan="5">
-							<div class="ui right aligned container">
-								<button class="ui positive button">
-								  <i class="edit icon"></i> Add 
-								</button>
-								<button class="ui negative button">
-								  <i class="file alternate icon"></i> Post
-								 </button>
-							</div>
-						
-							</th>
-						</tr>
-					</tfoot>
+					
 				</Table>
+					<button class="green fluid ui button">
+								  <i class="edit icon"></i> Add 
+								
+					</button>
+				<div class="ui right aligned header">
+					<button class="ui negative button">
+										<i class="file alternate icon"></i> Post
+					 </button>
+				</div>
 			</Container>
     );
   }
