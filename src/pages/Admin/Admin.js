@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { Grid, Container, Header, Table } from 'semantic-ui-react';
 import './Admin.css';
@@ -13,7 +12,6 @@ class Admin extends Component {
       	<LoggedInNavBar />
 			 <Grid centered={true}>
       	 <Grid.Row>  </Grid.Row>
-      	 
       	 
       	 <Grid.Row>
 						 <Header>
