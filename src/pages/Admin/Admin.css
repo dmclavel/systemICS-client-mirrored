@@ -6,9 +6,6 @@
 #accent:hover{
 	background-color: #d32f2f;
 }
-#table{
-	margin-bottom:0;
-}
 
 #table th, #table td{
 	font-size: large;
@@ -31,12 +28,4 @@
 
 #header{
 	color: #1976D2;
-}
-
-#professors{
-	color: #1976D2;
-}
-
-#segment{
-	margin-bottom: 0;
 }
