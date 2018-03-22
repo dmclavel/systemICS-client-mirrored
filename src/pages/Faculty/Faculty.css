@@ -1,0 +1,33 @@
+
+
+.MainSection{
+     position: relative;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+}
+
+#search1{
+  background: #e0e0d1;
+}
+
+#LeftSide{
+     max-height: 575px;
+     /*overflow-y: scroll;*/
+     /*background: rgb(255,255,255);*/
+     border-width: 1px;
+     /*border-color: gray;*/
+}
+#RightSide{
+     max-height: 575px;
+     overflow-y: scroll;
+     background: rgb(255,255,255);
+     /*border-width: 1px;*/
+     /*border-color: gray;*/
+}
+
+#search-segment{
+  background-color: #d6d6c2;
+  border-radius: 10px;
+}
