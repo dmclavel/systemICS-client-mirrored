@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Grid, Container, Header, Table, Button, Card, Input, Modal, Segment} from 'semantic-ui-react';
+import { Grid, Container, Header, Table, Button, Card, Input, Modal, Segment, Form} from 'semantic-ui-react';
 import CourseRow from '../../components/CourseRow';
-import RegcomRow from '../../components/RegcomRow';
 import LoggedInNavBar from '../../components/LoggedInNavBar';
 import autobind from 'react-autobind';
 const inlineStyle={
@@ -17,7 +16,7 @@ const inlineStyle={
 class Admin extends Component {
 	constructor(){
 		super()
-		
+
 		this.state = {
 			course_id: '',
 			time_start: '',
@@ -28,56 +27,79 @@ class Admin extends Component {
 			unit:'',
 			max_capacity: ''
 		}
-		
+
 		autobind(this);
 
-		
+
 	}
-	
-			
+
+
 		handleCourseId(e){
 			this.setState( {course_id : e.target.value} );
 		}
-		
+
 		handleTimeStart(e){
 			this.setState( {time_start : e.target.value} );
 		}
-		
+
 		handleTimeEnd(e){
 			this.setState( {time_end : e.target.value} );
 		}
-		
+
 		handleRoom(e){
 			this.setState( {room : e.target.value} );
 		}
-		
+
 		handleDay(e){
 			this.setState( {day : e.target.value} );
 		}
-		
+
 		handleSection(e){
 			this.setState( {section : e.target.value} );
 		}
-		
+
 		handleUnit(e){
 			this.setState( {unit : e.target.value} );
 		}
-		
+
 		handleMaxCapacity(e){
 			this.setState( {max_capacity : e.target.value} );
 		}
-		
-		handleAddButton(e){
-		
+
+		handleChange = (e, {name, value}) => {
+			this.setState({[name]: value})
 		}
-	
-		handleChange = (e) => {
-			const state = this.state;
-			state[e.target.name] = e.target.value;
-			this.setState({ state });
+
+		handleSubmit = () => {
+			const{course_id, time_start, time_end, room, day, section, unit, max_capacity} = this.state
+
+			this.setState(
+				{course_id:course_id,
+				time_start:time_start,
+				time_end:time_end,
+				room:room,
+				day:day,
+				section:section,
+				unit:unit,
+				max_capacity:max_capacity}
+			)
 		}
-	
+
+		close = () =>
+			this.setState(
+				{course_id:'',
+				time_start:'',
+				time_end:'',
+				room:'',
+				day:'',
+				section:'',
+				unit:'',
+				max_capacity:''}
+			)
+
   render() {
+		const{course_id, time_start, time_end, room, day, section, unit, max_capacity} = this.state
+
     return(
       <div className='Admin'>
       <LoggedInNavBar />
@@ -89,14 +111,14 @@ class Admin extends Component {
 						 	Faculty Workload
 						</Header>
 
-            
+
             <Card centered>
             	<Card.Content>
             		<Input icon="search" transparent fluid/>
             	</Card.Content>
             </Card>
-            
-            <Modal style={inlineStyle.modal} trigger={<Button floated="right" positive content="Add course" />} basic size = 'small'>
+
+            <Modal style={inlineStyle.modal} onClose={this.close} trigger={<Button floated="right" positive content="Add course" />} basic size = 'small'>
             	<Modal.Content>
             	<Segment>
             	<Grid>
@@ -104,20 +126,30 @@ class Admin extends Component {
             			<Header as="h2">Lecture </Header>
             		</Grid.Row>
             		<Grid.Row>
-            			<Input name="course_id" handler={this.handleCourseId} placeholder="Course code" />
-            			<Input placeholder="Course title" />
-            			<Input placeholder="Course section" />
-            			<Input placeholder="Time start" />
-            			<Input placeholder="Time end" />
-            			<Input placeholder="Days" />
-            			<Input placeholder="Room" />
-            			<Input placeholder="Max Capacity" />
-            			<Input placeholder="Units" />
-            			
-            			
-            			<Container> <Button positive content="Add" floated="right"/> </Container>
+									<Form onSubmit={this.handleSubmit}>
+										<Form.Group>
+		            			<Form.Input placeholder="Course ID" name="course_id" value={course_id} onChange={this.handleChange}/>
+		            			<Form.Input placeholder="Course section" name="section" value={section} onChange={this.handleChange}/>
+		            			<Form.Input placeholder="Time start" name="time_start" value={time_start} onChange={this.handleChange}/>
+										</Form.Group>
+										<Form.Group>
+											<Form.Input placeholder="Time end" name="time_end" value={time_end} onChange={this.handleChange}/>
+		            			<Form.Input placeholder="Days" name="day" value={day} onChange={this.handleChange}/>
+		            			<Form.Input placeholder="Room" name="room" value={room} onChange={this.handleChange}/>
+										</Form.Group>
+										<Form.Group>
+											<Form.Input placeholder="Max Capacity" name="max_capacity" value={max_capacity} onChange={this.handleChange}/>
+		            			<Form.Input placeholder="Units" name="unit" value={unit} onChange={this.handleChange}/>
+											<Form.Button content="Add" />
+										</Form.Group>
+									</Form>
+
+									<strong>onChange:</strong>
+					        <pre>{JSON.stringify({ course_id, time_start, time_end, room, day, section, unit, max_capacity }, null, 8)}</pre>
+					        <strong>onSubmit:</strong>
+					        <pre>{JSON.stringify({ course_id, time_start, time_end, room, day, section, unit, max_capacity }, null, 8)}</pre>
             		</Grid.Row>
-            		
+
             		<Grid.Row>
             		<Header as="h2">Laboratory </Header>
             		</Grid.Row>
