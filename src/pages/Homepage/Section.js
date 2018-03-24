@@ -1,5 +1,6 @@
 /*
 AUTHOR: Gotis, Ciara Mae
+		Esperanza, Dannah
 FILE: FacultyTab, to be used for basic JS pages in the system.
 
 BASIC TEMPLATE FOR ALL JS PAGES
@@ -8,36 +9,20 @@ Change name FacultyTab to the name of file.
 This will be updated for mapping, grid layouting, etc.
 Write the Author of the code at the top of the document.
 */
-import {Image, Card, Button, Input, Grid, Container, Search, Header, Modal, Icon, Checkbox, Accordion, Segment, List} from "semantic-ui-react";
+import {Image, Card, Button, Input, Grid, Container, Search, Header, Modal, Icon, Checkbox, Accordion, Segment} from "semantic-ui-react";
 import React, { Component } from 'react';
 import autobind from 'react-autobind';
+import SectionCard from './SectionCard';
 import socketIOClient from 'socket.io-client';
-import './FacultyTab.css';
-import FacultyCard from './FacultyCard';
-import RegCommCard from './RegCommCard';
 /*
 If you wish to import other JS files, do it here.
 */
 
-class FacultyTab extends Component {
+class Section extends Component {
 	constructor(props){
 	    super(props);
 	    this.state = {
-	        endpoint:  'http://10.0.5.153:3000', // the address of the server
-	        faculty: [
-	        {"name": "Kim Ezekiel del Mundo", "email": "kldelmundo@up.edu.ph", "committee": "Registration Committee"},
-	        {"name": "Ciara Mae Gotis", "email": "crgotis@up.edu.ph", "committee": "Faculty"},
-	        {"name": "Dannah Esperanza", "email": "dfsesperanza@up.edu.ph", "committee": "Registration Committee"},
-	        {"name": "Cedric Gaza", "email": "cgaza@up.edu.ph", "committee": "Registration Committee"},
-	        {"name": "Jem Torres", "email": "jtorres@up.edu.ph", "committee": "Faculty"},
-	        {"name": "Aaron Lagazon", "email": "alagazon@up.edu.ph", "committee": "Registration Committee"},
-	        {"name": "Jem Torres", "email": "jtorres@up.edu.ph", "committee": "Faculty"},
-	        {"name": "Aaron Lagazon", "email": "alagazon@up.edu.ph", "committee": "Registration Committee"},
-	        {"name": "Jem Torres", "email": "jtorres@up.edu.ph", "committee": "Faculty"},
-	        {"name": "Aaron Lagazon", "email": "alagazon@up.edu.ph", "committee": "Registration Committee"},
-	        {"name": "Jem Torres", "email": "jtorres@up.edu.ph", "committee": "Faculty"}
-	        ]
-
+	        endpoint: 'http://10.0.5.153:3000' // the address of the server
 	    }
 	    autobind(this);
  	}
@@ -71,22 +56,41 @@ class FacultyTab extends Component {
 					            </Card>
 				            </Grid.Row>
 						</Grid.Column>
-						<Grid.Column width={16} textAlign = "center">
+						<Grid.Column width={16} verticalAlign="middle">
 							<Grid columns={4} divided>
-									
-								
-									{this.state.faculty.map((item, index)=>
-										<div>
-										{item.committee == "Registration Committee" &&
-											<RegCommCard name={item.name} email={item.email} committee={item.committee}/>
-										}
-										{item.committee == "Faculty" &&
-											<FacultyCard name={item.name} email={item.email} committee={item.committee}/>
-										}
-										</div>	
-									)}
-									
-								
+								<Grid.Row>
+									<Grid.Column>
+										<SectionCard/>
+									</Grid.Column>
+									<Grid.Column>
+										<SectionCard/>
+									</Grid.Column>
+									<Grid.Column>
+										<SectionCard/>
+									</Grid.Column>
+									<Grid.Column>
+										<SectionCard/>
+									</Grid.Column>
+								</Grid.Row>
+								<Grid.Row>
+									<Grid.Column>
+										<SectionCard/>
+									</Grid.Column>
+									<Grid.Column>
+										<SectionCard/>
+									</Grid.Column>
+									<Grid.Column>
+										<SectionCard/>
+									</Grid.Column>
+									<Grid.Column>
+										<SectionCard/>
+									</Grid.Column>
+								</Grid.Row>
+								<Grid.Row>
+									<Button primary textAlign="center">
+									Back to lecture
+									</Button>
+								</Grid.Row>
 							</Grid>
 						</Grid.Column>
 				</Grid.Row>
@@ -97,7 +101,7 @@ class FacultyTab extends Component {
   }
 }
 
-export default FacultyTab;
+export default Section;
 
 /*
 DELETE THE COMMENTS AFTER.

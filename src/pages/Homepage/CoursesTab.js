@@ -1,406 +1,58 @@
-/*
-AUTHOR: Gotis, Ciara Mae R.
-		Esperanza, Dannah Louise F.
-FILE: 	Homepage; contains the lecture and lab sections of CMSC subjects
-*/
+import React, { Component } from 'react';
+import { Segment, Container, Grid, Image, Button, Header } from 'semantic-ui-react';
+import './Heading.css';
+import CourseCard from './CourseCard';
+import autobind from 'react-autobind';
+import socketIOClient from 'socket.io-client';
 
-import {Card, Button, Input, Grid, Container, Search, Header, Modal, Icon, Checkbox, Accordion} from "semantic-ui-react";
-import React, {Component} from "react";
-import autobind from "react-autobind";
-import HomeNav from '../../components/HomeNav';
+const square = { width: 100, height: 100 };
+const square1 = { width: 50, height: 50 };
 
-const inlineStyle = {
-  modal : {
-    marginTop: '0px !important',
-    marginLeft: 'auto',
-    marginRight: 'auto'
-  }
-};
-
-class CoursesTab extends Component{
+class CourseTab extends Component {
 	constructor(props){
-		super(props);
-		this.state={
-			query: ''
-		}
-		autobind(this);
+	    super(props);
+	    this.state = {
+	        endpoint:  'http://10.0.5.153:3000', // the address of the server
+	        courses: [
+	        {"course_title": "Introduction to Internet", "course_number": "CMSC 2", "course_description": "Principles and methods for the design, implementation, validation, evaluation and maintenance of software systems.", "course_instructor_room": "C112", "course_instructor": "Reginald Recario", "course_room": "tentative", "course_schedule": "2:00-4:00"},
+	        {"course_title": "Introduction to Internet", "course_number": "CMSC 21", "course_description": "Principles and methods for the design, implementation, validation, evaluation and maintenance of software systems.", "course_instructor_room": "C112", "course_instructor": "Reginald Recario", "course_room": "ICSLH", "course_schedule": "Tentative"},
+	        {"course_title": "Introduction to Internet", "course_number": "CMSC 128", "course_description": "Principles and methods for the design, implementation, validation, evaluation and maintenance of software systems.", "course_instructor_room": "C112", "course_instructor": "Reginald Recario", "course_room": "ICSMH", "course_schedule": "1:00-4:00"}
+	        ]
+
+	    }
+	    autobind(this);
+ 	}
+
+  // what to do once the page (re)loads
+	componentDidMount = () =>{
+		    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
+		    // listens on an endpoint and executes fallback function
+		    socket.emit('view_all_faculty', 'this is my data');//send data to 'login' endpoint in server
+		    socket.on('view_all_faculty', (returnValueFromServer) => {
+		      console.log(returnValueFromServer);
+		    });
+		  }
+		  //a function for sending data to server.you can have many of these
+		  sendData = () => {
+		    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
+		    socket.emit('login', 'this is my data');//send data to 'login' endpoint in server
 	}
-
-	handleQuery(e){
-		this.setState({query: e.target.value});
-		// this.state.query = e.target.value;
-		console.log(this.state.query);
-	}
-	state = { activeIndex: 0 }
-
-	 handleClick = (e, titleProps) => {
-	    const { index } = titleProps
-	    const { activeIndex } = this.state
-	    const newIndex = activeIndex === index ? -1 : index
-
-	    this.setState({ activeIndex: newIndex })
-	  }
-	render(){
-		const { activeIndex } = this.state
-		return(
-			// Returns an Accordion that contains the lecture sections; Lab sections displayed using Cards
+	render() {
+		return (
 			<div>
-				<HomeNav />
-				<Container>
-				<Grid centered={true}>
-					<Grid.Row>
-						<Grid.Column width={10} verticalAlign="middle">
-							<Input placeholder = {this.props.placeholder} fluid={true}/>
-						</Grid.Column>
-					</Grid.Row>
-					<Grid.Row>
-						<Grid.Column width={10} verticalAlign="middle">
-							<Header as='h1' color='teal' floated='left'>Course List</Header>
-						</Grid.Column>
-					</Grid.Row>
-					<Grid.Row>
-						<Grid.Column width={10} >
-							<Accordion styled fluid={true}>
-						        <Accordion.Title active={activeIndex === 0} index={0} onClick={this.handleClick}>
-						          <Icon name='dropdown' />
-						          CMSC 2: Introduction to the Internet
-						        </Accordion.Title>
-						        <Accordion.Content active={activeIndex === 0}>
-						        <Button.Group vertical fluid>
-						        	<Modal style={inlineStyle.modal} trigger={
-								<Button color='teal' >CMSC 2 E</Button>
-							}>
-								 <Modal.Header >
-								 	<Header textAlign='center'>CMSC 2: Introduction to the Internet</Header>
-								 	<center><p textAlign='center'>
-								 	Patrick Albacea<br/>
-								 	TTh 3:00pm-4:00pm | ICSMH</p></center>
-								 </Modal.Header>
-								 <Modal.Content image>
-								 	<Container>
-										 <Modal.Description>
-										 	<Grid columns={3} divided>
-											 	<Grid.Row>
-											 		<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-																 <Card.Header>CMSC 2 E-2L</Card.Header>
-																 <Card.Meta>10:00-1:00</Card.Meta>
-																 <Card.Description>PC LAB 8</Card.Description>
-															 </Card.Content>
-														 </Card>
-													</Grid.Column>
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-															 <Card.Header>CMSC 2 E-3L</Card.Header>
-															 <Card.Meta>1:00-4:00</Card.Meta>
-															 <Card.Description>PC LAB 9</Card.Description>
-																</Card.Content>
-														 </Card>
-													</Grid.Column>
+			<div className="heading-main">
+				</div>
+			<div className="courses">
 
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-														 <Card.Content>
-														 <Card.Header>CMSC 2 E-4L</Card.Header>
-														 <Card.Meta>4:00-7:00</Card.Meta>
-														 <Card.Description>PC LAB 2</Card.Description>
-															</Card.Content>
-														 </Card>
-													</Grid.Column>
-
-												</Grid.Row>
-											</Grid>
-
-
-										 </Modal.Description>
-									</Container>
-								 </Modal.Content>
-							 	</Modal>
-						          <Modal style={inlineStyle.modal} trigger={
-								<Button color='teal' >CMSC 2 F</Button>
-							}>
-								 <Modal.Header >
-								 	<Header textAlign='center'>CMSC 2: Introduction to the Internet</Header>
-								 	<center><p textAlign='center'>
-								 	Maureen Lauron<br/>
-								 	WF 10:00am-11:00am | ICSMH</p></center>
-								 </Modal.Header>
-								 <Modal.Content image>
-								 	<Container>
-										 <Modal.Description>
-										 	<Grid columns={3} divided>
-											 	<Grid.Row>
-											 		<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-																 <Card.Header>CMSC 2 F-1L</Card.Header>
-																 <Card.Meta>10:00-1:00</Card.Meta>
-																 <Card.Description>PC LAB 8</Card.Description>
-															 </Card.Content>
-														 </Card>
-													</Grid.Column>
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-															 <Card.Header>CMSC 2 F-2L</Card.Header>
-															 <Card.Meta>1:00-4:00</Card.Meta>
-															 <Card.Description>PC LAB 9</Card.Description>
-																</Card.Content>
-														 </Card>
-													</Grid.Column>
-
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-														 <Card.Content>
-														 <Card.Header>CMSC 2 F-2L</Card.Header>
-														 <Card.Meta>4:00-7:00</Card.Meta>
-														 <Card.Description>PC LAB 2</Card.Description>
-															</Card.Content>
-														 </Card>
-													</Grid.Column>
-
-												</Grid.Row>
-											</Grid>
-
-
-										 </Modal.Description>
-									</Container>
-								 </Modal.Content>
-							 	</Modal>
-						        </Button.Group>
-						        </Accordion.Content>
-
-						        <Accordion.Title active={activeIndex === 1} index={1} onClick={this.handleClick}>
-						          <Icon name='dropdown' />
-						          CMSC 11: Introduction to Computer Science
-						        </Accordion.Title>
-						       <Accordion.Content active={activeIndex === 1}>
-						        <Button.Group vertical fluid>
-						        		<Modal style={inlineStyle.modal} trigger={
-								<Button color='teal' >CMSC 11 ST</Button>
-							}>
-								 <Modal.Header >
-								 	<Header textAlign='center'>CMSC 11: Introduction to Computer Science</Header>
-								 	<center><p textAlign='center'>
-								 	Patrick Albacea<br/>
-								 	TTh 3:00pm-4:00pm | ICSMH</p></center>
-								 </Modal.Header>
-								 <Modal.Content image>
-								 	<Container>
-										 <Modal.Description>
-										 	<Grid columns={3} divided>
-											 	<Grid.Row>
-											 		<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-																 <Card.Header>CMSC 11 ST-2L</Card.Header>
-																 <Card.Meta>10:00-1:00</Card.Meta>
-																 <Card.Description>PC LAB 8</Card.Description>
-															 </Card.Content>
-														 </Card>
-													</Grid.Column>
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-															 <Card.Header>CMSC 11 ST-3L</Card.Header>
-															 <Card.Meta>1:00-4:00</Card.Meta>
-															 <Card.Description>PC LAB 9</Card.Description>
-																</Card.Content>
-														 </Card>
-													</Grid.Column>
-
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-														 <Card.Content>
-														 <Card.Header>CMSC 11 ST-4L</Card.Header>
-														 <Card.Meta>4:00-7:00</Card.Meta>
-														 <Card.Description>PC LAB 2</Card.Description>
-															</Card.Content>
-														 </Card>
-													</Grid.Column>
-
-												</Grid.Row>
-											</Grid>
-
-
-										 </Modal.Description>
-									</Container>
-								 </Modal.Content>
-							 	</Modal>
-						          <Modal style={inlineStyle.modal} trigger={
-								<Button color='teal' >CMSC 11 UV</Button>
-							}>
-								 <Modal.Header >
-								 	<Header textAlign='center'>CMSC 11: Introduction to Computer Science</Header>
-								 	<center><p textAlign='center'>
-								 	Patrick Albacea<br/>
-								 	TTh 3:00pm-4:00pm | ICSMH</p></center>
-								 </Modal.Header>
-								 <Modal.Content image>
-								 	<Container>
-										 <Modal.Description>
-										 	<Grid columns={3} divided>
-											 	<Grid.Row>
-											 		<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-																 <Card.Header>CMSC 11 UV-2L</Card.Header>
-																 <Card.Meta>10:00-1:00</Card.Meta>
-																 <Card.Description>PC LAB 8</Card.Description>
-															 </Card.Content>
-														 </Card>
-													</Grid.Column>
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-															 <Card.Header>CMSC 11 UV-3L</Card.Header>
-															 <Card.Meta>1:00-4:00</Card.Meta>
-															 <Card.Description>PC LAB 9</Card.Description>
-																</Card.Content>
-														 </Card>
-													</Grid.Column>
-
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-														 <Card.Content>
-														 <Card.Header>CMSC 11 UV-4L</Card.Header>
-														 <Card.Meta>4:00-7:00</Card.Meta>
-														 <Card.Description>PC LAB 2</Card.Description>
-															</Card.Content>
-														 </Card>
-													</Grid.Column>
-
-												</Grid.Row>
-											</Grid>
-
-
-										 </Modal.Description>
-									</Container>
-								 </Modal.Content>
-							 	</Modal>
-						        </Button.Group>
-						        </Accordion.Content>
-
-						        <Accordion.Title active={activeIndex === 2} index={2} onClick={this.handleClick}>
-						          <Icon name='dropdown' />
-						          CMSC 21: Fundamentals of Programming
-						        </Accordion.Title>
-						        <Accordion.Content active={activeIndex === 2}>
-						        <Button.Group vertical fluid>
-						          	<Modal style={inlineStyle.modal} trigger={
-								<Button color='teal' >CMSC 21 U</Button>
-							}>
-								 <Modal.Header >
-								 	<Header textAlign='center'>CMSC 21: Fundamentals of Programming</Header>
-								 	<center><p textAlign='center'>
-								 	Patrick Albacea<br/>
-								 	TTh 3:00pm-4:00pm | ICSMH</p></center>
-								 </Modal.Header>
-								 <Modal.Content image>
-								 	<Container>
-										 <Modal.Description>
-										 	<Grid columns={3} divided>
-											 	<Grid.Row>
-											 		<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-																 <Card.Header>CMSC 21 U-2L</Card.Header>
-																 <Card.Meta>10:00-1:00</Card.Meta>
-																 <Card.Description>PC LAB 8</Card.Description>
-															 </Card.Content>
-														 </Card>
-													</Grid.Column>
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-															 <Card.Header>CMSC 21 U-3L</Card.Header>
-															 <Card.Meta>1:00-4:00</Card.Meta>
-															 <Card.Description>PC LAB 9</Card.Description>
-																</Card.Content>
-														 </Card>
-													</Grid.Column>
-
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-														 <Card.Content>
-														 <Card.Header>CMSC 21 U-4L</Card.Header>
-														 <Card.Meta>4:00-7:00</Card.Meta>
-														 <Card.Description>PC LAB 2</Card.Description>
-															</Card.Content>
-														 </Card>
-													</Grid.Column>
-
-												</Grid.Row>
-											</Grid>
-
-
-										 </Modal.Description>
-									</Container>
-								 </Modal.Content>
-							 	</Modal>
-						          <Modal style={inlineStyle.modal} trigger={
-								<Button color='teal' >CMSC 21 V</Button>
-							}>
-								 <Modal.Header >
-								 	<Header textAlign='center'>CMSC 21: Fundamentals of Programming</Header>
-								 	<center><p textAlign='center'>
-								 	Patrick Albacea<br/>
-								 	TTh 3:00pm-4:00pm | ICSMH</p></center>
-								 </Modal.Header>
-								 <Modal.Content image>
-								 	<Container>
-										 <Modal.Description>
-										 	<Grid columns={3} divided>
-											 	<Grid.Row>
-											 		<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-																 <Card.Header>CMSC 21 V-2L</Card.Header>
-																 <Card.Meta>10:00-1:00</Card.Meta>
-																 <Card.Description>PC LAB 8</Card.Description>
-															 </Card.Content>
-														 </Card>
-													</Grid.Column>
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-															 <Card.Content>
-															 <Card.Header>CMSC 21 V-3L</Card.Header>
-															 <Card.Meta>1:00-4:00</Card.Meta>
-															 <Card.Description>PC LAB 9</Card.Description>
-																</Card.Content>
-														 </Card>
-													</Grid.Column>
-
-													<Grid.Column>
-														 <Card id = "cardMargin" href='#card-example-link-card'>
-														 <Card.Content>
-														 <Card.Header>CMSC 21 V-4L</Card.Header>
-														 <Card.Meta>4:00-7:00</Card.Meta>
-														 <Card.Description>PC LAB 2</Card.Description>
-															</Card.Content>
-														 </Card>
-													</Grid.Column>
-
-												</Grid.Row>
-											</Grid>
-
-
-										 </Modal.Description>
-									</Container>
-								 </Modal.Content>
-							 	</Modal>
-						        </Button.Group>
-						        </Accordion.Content>
-						      </Accordion>
-						</Grid.Column>
-					</Grid.Row>
-				</Grid>
-				</Container>
+				<br />
+				{this.state.courses.map((item, index)=>
+				<CourseCard course_instructor={item.course_instructor} course_number={item.course_number} course_instructor={item.course_instructor} course_title={item.course_title} course_schedule={item.course_schedule} course_instructor_room={item.course_instructor_room} course_room={item.course_room}/>
+				
+			)}
+			</div>
 			</div>
 		);
 	}
 }
 
-export default CoursesTab;
+export default CourseTab;

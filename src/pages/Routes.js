@@ -14,6 +14,7 @@ import Login from './Homepage/Login';
 import Admin from './Admin/Admin';
 import RegCom from './RegCom/RegCom';
 import Faculty from './Faculty/Faculty';
+import Section from './Homepage/Section';
 
 const authenticator = {
   user: 3,
@@ -54,6 +55,7 @@ class Routes extends Component {
 					<PrivateRoute exact path='/admin/home' component={ Admin } securityLevel={3}/>
 					<PrivateRoute exact path='/regcom/home' component={ RegCom } securityLevel={2}/>
 					<PrivateRoute exact path='/faculty/home' component={ Faculty } securityLevel={1}/>
+					<PrivateRoute exact path='/section' component={ Section } securityLevel={1}/>
 				</Switch>
 			</main>
 		)

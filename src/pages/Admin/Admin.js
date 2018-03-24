@@ -2,22 +2,21 @@ import React, { Component } from 'react';
 import { Grid, Container, Header, Table, Button, Card, Input, Modal, Segment, Form} from 'semantic-ui-react';
 import CourseRow from '../../components/CourseRow';
 import LoggedInNavBar from '../../components/LoggedInNavBar';
+import AddCourseModal from './AddCourseModal';
 import autobind from 'react-autobind';
-const inlineStyle={
-	modal :{
-		marginTop: '0px !important',
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		color: 'black'
 
-	}
-};
 
 class Admin extends Component {
 	constructor(){
 		super()
 
 		this.state = {
+			courses : [
+			
+				{"course_title":"Object Oriented Programming", "course_number": "CMSC 22", "time_start": "10:00AM", "time_end" : "1:00PM", "room" : "PC2L", "day" : "M", "section" : "ST3L", "unit" : "3.00", "max_capacity" : 20, "population":4, "status":true},
+				{"course_title":"Object Oriented Programming", "course_number": "CMSC 22", "time_start": "10:00AM", "time_end" : "1:00PM", "room" : "PC2L", "day" : "T", "section" : "ST4L", "unit" : "3.00", "max_capacity" : 20, "population":2, "status":true},
+				{"course_title":"Object Oriented Programming", "course_number": "CMSC 22", "time_start": "1:00PM", "time_end" : "4:00PM", "room" : "PC4L", "day" : "T", "section" : "ST5L", "unit" : "3.00", "max_capacity" : 20, "population":14, "status":false}
+			],
 			course_id: '',
 			time_start: '',
 			time_end: '',
@@ -32,49 +31,16 @@ class Admin extends Component {
 
 
 	}
-
-
-		handleCourseId(e){
-			this.setState( {course_id : e.target.value} );
-		}
-
-		handleTimeStart(e){
-			this.setState( {time_start : e.target.value} );
-		}
-
-		handleTimeEnd(e){
-			this.setState( {time_end : e.target.value} );
-		}
-
-		handleRoom(e){
-			this.setState( {room : e.target.value} );
-		}
-
-		handleDay(e){
-			this.setState( {day : e.target.value} );
-		}
-
-		handleSection(e){
-			this.setState( {section : e.target.value} );
-		}
-
-		handleUnit(e){
-			this.setState( {unit : e.target.value} );
-		}
-
-		handleMaxCapacity(e){
-			this.setState( {max_capacity : e.target.value} );
-		}
-
+		
 		handleChange = (e, {name, value}) => {
 			this.setState({[name]: value})
 		}
 
 		handleSubmit = () => {
-			const{course_id, time_start, time_end, room, day, section, unit, max_capacity} = this.state
+			const{course_number, time_start, time_end, room, day, section, unit, max_capacity} = this.state
 
 			this.setState(
-				{course_id:course_id,
+				{course_number:course_number,
 				time_start:time_start,
 				time_end:time_end,
 				room:room,
@@ -83,6 +49,15 @@ class Admin extends Component {
 				unit:unit,
 				max_capacity:max_capacity}
 			)
+			
+			var newcourse = [{course_number:'', max_capacity:''}];
+			newcourse.course_number = course_number;
+			newcourse.time_start = time_start;
+			newcourse.time_end = time_end;
+			newcourse.capacity = max_capacity;
+			
+			this.state.courses.push(newcourse);
+			
 		}
 
 		close = () =>
@@ -103,60 +78,24 @@ class Admin extends Component {
     return(
       <div className='Admin'>
       <LoggedInNavBar />
-      <Container>
+     
        <Grid>
       	 <Grid.Column width={6}> </Grid.Column>
       	  <Grid.Column width={10}>
+      	   <Segment padded transparent basic>
 						 <Header as="h1" textAlign="left">
 						 	Faculty Workload
 						</Header>
 
-
+					
             <Card centered>
             	<Card.Content>
             		<Input icon="search" transparent fluid/>
             	</Card.Content>
             </Card>
 
-            <Modal style={inlineStyle.modal} onClose={this.close} trigger={<Button floated="right" positive content="Add course" />} basic size = 'small'>
-            	<Modal.Content>
-            	<Segment>
-            	<Grid>
-            		<Grid.Row>
-            			<Header as="h2">Lecture </Header>
-            		</Grid.Row>
-            		<Grid.Row>
-									<Form onSubmit={this.handleSubmit}>
-										<Form.Group>
-		            			<Form.Input placeholder="Course ID" name="course_id" value={course_id} onChange={this.handleChange}/>
-		            			<Form.Input placeholder="Course section" name="section" value={section} onChange={this.handleChange}/>
-		            			<Form.Input placeholder="Time start" name="time_start" value={time_start} onChange={this.handleChange}/>
-										</Form.Group>
-										<Form.Group>
-											<Form.Input placeholder="Time end" name="time_end" value={time_end} onChange={this.handleChange}/>
-		            			<Form.Input placeholder="Days" name="day" value={day} onChange={this.handleChange}/>
-		            			<Form.Input placeholder="Room" name="room" value={room} onChange={this.handleChange}/>
-										</Form.Group>
-										<Form.Group>
-											<Form.Input placeholder="Max Capacity" name="max_capacity" value={max_capacity} onChange={this.handleChange}/>
-		            			<Form.Input placeholder="Units" name="unit" value={unit} onChange={this.handleChange}/>
-											<Form.Button content="Add" />
-										</Form.Group>
-									</Form>
-
-									<strong>onChange:</strong>
-					        <pre>{JSON.stringify({ course_id, time_start, time_end, room, day, section, unit, max_capacity }, null, 8)}</pre>
-					        <strong>onSubmit:</strong>
-					        <pre>{JSON.stringify({ course_id, time_start, time_end, room, day, section, unit, max_capacity }, null, 8)}</pre>
-            		</Grid.Row>
-
-            		<Grid.Row>
-            		<Header as="h2">Laboratory </Header>
-            		</Grid.Row>
-            	</Grid>
-            	</Segment>
-            	</Modal.Content>
-            </Modal>
+            <AddCourseModal handler={this.handleChange} submit={this.handleSubmit} />
+            
             <Table textAlign="center">
               <Table.Header>
                 <Table.Row>
@@ -165,22 +104,23 @@ class Admin extends Component {
                   <Table.HeaderCell>Time</Table.HeaderCell>
                   <Table.HeaderCell>Room</Table.HeaderCell>
                   <Table.HeaderCell>Students</Table.HeaderCell>
+                  <Table.HeaderCell>Max Capacity</Table.HeaderCell>
                   <Table.HeaderCell>Actions</Table.HeaderCell>
                 </Table.Row>
                 </Table.Header>
 
                 <Table.Body>
-                  <CourseRow coursecode="CMSC 128" section="a8l" time="1:00-4:00" room="ics pc4" students="15"/>
+                 	{this.state.courses.map( (data, index) => <CourseRow negative={data.status} course_number={data.course_number} section={data.section} time_start={data.time_start} time_end={data.time_end} room={data.room} students={data.population} max_capacity={data.max_capacity}/> )}
                 </Table.Body>
             </Table>
+            </Segment>
 				</Grid.Column>
 
 
 			</Grid>
-      </Container>
-      </div>
-    );
-  }
+      
+	</div>
+	);
+	}
 }
-
 export default Admin;
