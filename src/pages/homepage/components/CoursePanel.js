@@ -5,10 +5,10 @@ const square = { width: 100, height: 100 };
 const square1 = { width: 50, height: 50 };
 
 const courses = [
-	{ key: 1, course: "CMSC 128: Introduction to Software Engineering", desc: "Principles and methods for the design, implementation, validation, evaluation and maintenance of software systems.", prof: "Mr. Reginald Recario", profroom: "C-114", room: "ICSMH"},
-	{ key: 2, course: "CMSC 128: Introduction to Software Engineering", desc: "Principles and methods for the design, implementation, validation, evaluation and maintenance of software systems.", prof: "Mr. Reginald Recario", profroom: "C-114", room: "ICSMH"},
+	{ key: 1, course: "CMSC 128: Introduction to Software Engineering", desc: "Principles and methods for the design, implementation, validation, evaluation and maintenance of software systems.", prof: "Mr. Reginald Recario", profroom: "C-114", room: "ICSMH", time: "2:00PM-4:00PM"},
+	{ key: 2, course: "CMSC 128: Introduction to Software Engineering", desc: "Principles and methods for the design, implementation, validation, evaluation and maintenance of software systems.", prof: "Mr. Reginald Recario", profroom: "C-114", room: "ICSMH", time: "2:00PM-4:00PM"},
 
-	{ key: 3, course: "CMSC 128: Introduction to Software Engineering", desc: "Principles and methods for the design, implementation, validation, evaluation and maintenance of software systems.", prof: "Mr. Reginald Recario", profroom: "C-114", room: "ICSMH"}
+	{ key: 3, course: "CMSC 128: Introduction to Software Engineering", desc: "Principles and methods for the design, implementation, validation, evaluation and maintenance of software systems.", prof: "Mr. Reginald Recario", profroom: "C-114", room: "ICSMH", time: "2:00PM-4:00PM"}
 ];
 
 class CoursePanel extends Component {
@@ -35,11 +35,14 @@ class CoursePanel extends Component {
 										</Header>
 										<Grid divided>
 											<Grid.Row>
-												<Grid.Column width={8}>
-													<Header textAlign='left' size='small' icon="user outline" content={course.prof} subheader={course.profroom} />
+												<Grid.Column width={5}>
+													<Header textAlign='left' size='small' icon="user" content={course.prof} subheader={course.profroom} />
 												</Grid.Column>
-												<Grid.Column width={8}>
-													<Header textAlign='left' size='small' icon="users" content={course.room} subheader="Room" />
+												<Grid.Column width={6}>
+													<Header textAlign='left' size='small' icon="marker" content={course.room} subheader="Room" />
+												</Grid.Column>
+												<Grid.Column width={5}>
+													<Header textAlign='left' size='small' icon="clock" content={course.time} subheader="Time" />
 												</Grid.Column>
 											</Grid.Row>
 										</Grid>
