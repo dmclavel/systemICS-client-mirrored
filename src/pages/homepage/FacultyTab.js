@@ -70,7 +70,7 @@ class FacultyTab extends Component {
 							<Grid.Row>
 								<Card id = "marginSearch" fluid={true} raised={true}>
 					              <Card.Content>
-					                <Input transparent={true} fluid={true} icon='search' iconPosition='left'/>
+					                <Input transparent={true} fluid={true} icon='search' iconPosition='left' placeholder = "search faculty..."/>
 					              </Card.Content>
 					            </Card>
 				            </Grid.Row>

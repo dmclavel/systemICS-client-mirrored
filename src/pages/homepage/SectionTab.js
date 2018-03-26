@@ -4,9 +4,9 @@ import { Grid } from 'semantic-ui-react';
 import Navbar from '../components/Navbar';
 import Heading from '../components/Heading';
 import CoursePanel from './components/CoursePanel';
+import Section from './Section';
 
-
-class Homepage extends Component {
+class SectionTab extends Component {
 	render() {
 		return (
 			<Grid>
@@ -15,11 +15,11 @@ class Homepage extends Component {
 					<Heading />
 				</Grid.Row>
 				<Grid.Row centered>
-					<CoursePanel/>
+					<Section/>
 				</Grid.Row>
 			</Grid>
 		);
 	}
 }
 
-export default Homepage;
+export default SectionTab;

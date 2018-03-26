@@ -51,7 +51,7 @@ class Section extends Component {
 							<Grid.Row>
 								<Card id = "marginSearch" fluid={true} raised={true}>
 					              <Card.Content>
-					                <Input transparent={true} fluid={true} icon='search' iconPosition='left'/>
+					                <Input transparent={true} fluid={true} icon='search' iconPosition='left' placeholder = "search laboratory sections..."/>
 					              </Card.Content>
 					            </Card>
 				            </Grid.Row>
@@ -86,13 +86,15 @@ class Section extends Component {
 										<SectionCard/>
 									</Grid.Column>
 								</Grid.Row>
-								<Grid.Row>
-									<Button primary textAlign="center">
-									Back to lecture
-									</Button>
-								</Grid.Row>
+								
 							</Grid>
 						</Grid.Column>
+				</Grid.Row>
+				<Grid.Row>
+					<Button primary textAlign="center" onClick={()=>{window.location = "/"}}>
+					Back to lecture
+
+					</Button>
 				</Grid.Row>
       		</Grid>
       	</Container>
