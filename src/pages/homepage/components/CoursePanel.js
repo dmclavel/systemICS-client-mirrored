@@ -45,7 +45,7 @@ class CoursePanel extends Component {
 										</Grid>
 									</Grid.Column>
 									<Grid.Column width={3} verticalAlign='middle'>
-										<Button content='Learn More' basic />
+										<Button content='Learn More' basic onClick={()=>{window.location = "/section"}}/>
 									</Grid.Column>
 								</Grid.Row>
 							</Grid>
