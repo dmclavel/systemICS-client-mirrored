@@ -31,3 +31,20 @@
   background-color: #d6d6c2;
   border-radius: 10px;
 }
+.Fixed{
+   positon: fixed;
+}
+#cardMargin{
+   padding-top: 10px;
+   padding-bottom: 10px;
+}
+#stuckSearch{
+   position: fixed;
+    left: 0;
+    top: 0;
+    width: 61.5%;
+    z-index: 999;
+}
+#marginTop{
+   margin-top: 50px;
+}
