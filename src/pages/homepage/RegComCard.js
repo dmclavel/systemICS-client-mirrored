@@ -3,11 +3,14 @@ import {Label, Image, Card, Button, Input, Grid, Container, Search, Header, Moda
 import React, { Component } from 'react';
 import './FacultyTab.css';
 
-class FacultyCard extends Component {
+class RegComCard extends Component {
   render() {
     return(
       <Card className = "cardSize">
       <Segment basic={true}>
+        <Card.Content>
+          <Label corner='right' icon="star" color={"yellow"}></Label>
+        </Card.Content>
         <Image src={image} centered={true} circular={true}  rounded={true} size='medium'/>
       </Segment>
         <Card.Content>
@@ -25,4 +28,4 @@ class FacultyCard extends Component {
   }
 }
 
-export default FacultyCard;
+export default RegComCard;
