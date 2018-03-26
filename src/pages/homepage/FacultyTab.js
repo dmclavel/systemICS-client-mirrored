@@ -14,7 +14,7 @@ import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
 import './FacultyTab.css';
 import FacultyCard from './FacultyCard';
-
+import RegComCard from './RegComCard';
 import Navbar from '../components/Navbar';
 import Heading from '../components/Heading';
 
@@ -28,14 +28,9 @@ class FacultyTab extends Component {
 	    this.state = {
 	        endpoint:  'http://10.0.5.153:3000', // the address of the server
 	        faculty: [
-	        {"name": "Kim Ezekiel del Mundo", "email": "kldelmundo@up.edu.ph", "committee": "Registration Committee"},
-	        {"name": "Ciara Mae Gotis", "email": "crgotis@up.edu.ph", "committee": "Faculty"},
-	        {"name": "Dannah Esperanza", "email": "dfsesperanza@up.edu.ph", "committee": "Registration Committee"},
-	        {"name": "Cedric Gaza", "email": "cgaza@up.edu.ph", "committee": "Registration Committee"},
-	        {"name": "Jem Torres", "email": "jtorres@up.edu.ph", "committee": "Faculty"},
-	        {"name": "Aaron Lagazon", "email": "alagazon@up.edu.ph", "committee": "Registration Committee"},
-	        {"name": "Jem Torres", "email": "jtorres@up.edu.ph", "committee": "Faculty"},
-	        {"name": "Aaron Lagazon", "email": "alagazon@up.edu.ph", "committee": "Registration Committee"}
+	        {"Employee Name": "",
+           "Employee Email": "",
+           "Employee Number": ""}
 	        ]
 
 	    }
@@ -46,9 +41,10 @@ class FacultyTab extends Component {
 	componentDidMount = () =>{
 		    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
 		    // listens on an endpoint and executes fallback function
-		    socket.emit('view_all_faculty', 'this is my data');//send data to 'login' endpoint in server
-		    socket.on('view_all_faculty', (returnValueFromServer) => {
+		    socket.emit('view_all_active_faculty_members', 'dfesperanza@up.edu.ph');//send data to 'login' endpoint in server
+		    socket.on('view_all_active_faculty_members', (returnValueFromServer) => {
 		      console.log(returnValueFromServer);
+          this.setState({faculty: returnValueFromServer});
 		    });
 		  }
 		  //a function for sending data to server.you can have many of these
@@ -76,15 +72,17 @@ class FacultyTab extends Component {
 				            </Grid.Row>
 						</Grid.Column>
 						<Grid.Column width={16} textAlign = "center">
-							<Grid columns={4} divided>
-									<Card.Group itemsPerRow={3}>
-									{this.state.faculty.map((item, index)=>
-										
-										<FacultyCard name={item.name} email={item.email} committee={item.committee}/>
-										
-									)}
+							<Grid columns={4} divided centered>
+                <Container centered>
+									<Card.Group itemsPerRow={4}>
+  									{this.state.faculty.map((item, index)=>
+  										<FacultyCard name={item['Employee Name']} email={item['Employee Email']}/>
+  										
+  										
+  									)}
 
 									</Card.Group>
+                </Container>
 
 							</Grid>
 						</Grid.Column>
