@@ -87,8 +87,9 @@ class Section extends Component {
 									</Grid.Column>
 								</Grid.Row>
 								<Grid.Row>
-									<Button primary textAlign="center">
+									<Button primary textAlign="center" onClick={()=>{window.location = "/"}}>
 									Back to lecture
+
 									</Button>
 								</Grid.Row>
 							</Grid>

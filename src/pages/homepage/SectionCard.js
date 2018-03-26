@@ -9,7 +9,7 @@ class SectionCard extends Component {
     return(
      <Card>
       <Card.Content  textAlign="left">
-        <Image circular floated='left' size='tiny' src={image} />
+        <Image circular floated='right' size='tiny' src={image} />
         <Card.Header>
           CMSC 128 A-8L
         </Card.Header>
