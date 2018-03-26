@@ -6,6 +6,7 @@ import Heading from '../components/Heading';
 import Sidebar from '../components/Sidebar';
 import AddCourseModal from './AddCourseModal';
 import autobind from 'react-autobind';
+import socketIOClient from 'socket.io-client';
 const inlineStyle={
 	modal :{
 		marginTop: '0px !important',
@@ -17,10 +18,14 @@ const inlineStyle={
 };
 
 class AdminCard extends Component {
+
 constructor(){
 		super()
 
 		this.state = {
+			address: 'https://sleepy-falls-95372.herokuapp.com/',
+			coursesX : [],
+			
 			courses : [
 			
 				{"course_title":"Object Oriented Programming", "course_number": "CMSC 22", "time_start": "10:00AM", "time_end" : "1:00PM", "room" : "PC2L", "day" : "M", "section" : "ST3L", "unit" : "3.00", "max_capacity" : 20, "population":4, "status":true},
@@ -41,6 +46,15 @@ constructor(){
 
 
 	}
+		componentDidMount(){
+			const socket = socketIOClient(this.state.address);
+			const data = {email: 'pvgrubat@up.edu.ph'};
+			socket.emit("view_all_active_course_offerings", data);
+			socket.on("view_all_active_course_offerings", (course) => {
+				this.setState({coursesX:course});
+				console.log(this.state.coursesX);
+			});
+		}
 		
 		handleChange = (e, {name, value}) => {
 			this.setState({[name]: value})
@@ -83,7 +97,7 @@ constructor(){
 			)
 
   render() {
-		const{course_id, time_start, time_end, room, day, section, unit, max_capacity} = this.state
+		const{course_id, time_start, time_end, room, day, section, unit, max_capacity, coursesX} = this.state
 
 
     return(
@@ -107,7 +121,11 @@ constructor(){
                 </Table.Header>
 
                 <Table.Body>
-                  <CourseRow coursecode="CMSC 128" section="a8l" time="1:00-4:00" room="ics pc4" students="15"/>
+                	{coursesX.map((course) => {
+                	console.log(course)
+                		return <CourseRow coursecode={course.course_name} section={course.section} time_start={course.time_start} time_end={course.time_end} room={course.room} students="15"/>
+                	})}
+                  
                 </Table.Body>
             </Table>
       		</Grid.Column>
