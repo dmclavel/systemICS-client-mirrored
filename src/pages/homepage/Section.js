@@ -86,14 +86,15 @@ class Section extends Component {
 										<SectionCard/>
 									</Grid.Column>
 								</Grid.Row>
-								<Grid.Row>
-									<Button primary textAlign="center" onClick={()=>{window.location = "/"}}>
-									Back to lecture
-
-									</Button>
-								</Grid.Row>
+								
 							</Grid>
 						</Grid.Column>
+				</Grid.Row>
+				<Grid.Row>
+					<Button primary textAlign="center" onClick={()=>{window.location = "/"}}>
+					Back to lecture
+
+					</Button>
 				</Grid.Row>
       		</Grid>
       	</Container>
