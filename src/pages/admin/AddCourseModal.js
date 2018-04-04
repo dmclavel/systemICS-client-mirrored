@@ -14,22 +14,20 @@ class AddCourseModal extends Component {
 
 	state = { course_number: '', time_start: '', time_end: '', room: '', day:'', section:'', unit:'',max_capacity:'' }
 
-  handleChange = (e, { name, value }) => this.setState({ [name]: value })
-
-		handleChange = (e, {name, value}) => {
-			this.setState({[name]: value})
-		}
-close = () =>
-			this.setState(
-				{course_number:'',
-				time_start:'',
-				time_end:'',
-				room:'',
-				day:'',
-				section:'',
-				unit:'',
-				max_capacity:''}
-			)
+	handleChange = (e, {name, value}) => {
+		this.setState({[name]: value})
+	}
+	close = () =>
+		this.setState(
+			{course_number:'',
+			time_start:'',
+			time_end:'',
+			room:'',
+			day:'',
+			section:'',
+			unit:'',
+			max_capacity:''}
+		)
 
   render() {
   const { course_number, time_start, time_end, room, day, section, unit,max_capacity} = this.state;
@@ -51,7 +49,46 @@ close = () =>
 		            			<Form.Input label="Time start" placeholder="Time start" name="time_start" value={time_start} onChange={this.handleChange}/>
 
 											<Form.Input label="Time end" Input placeholder="Time end" name="time_end" value={time_end} onChange={this.handleChange}/>
-										
+
+										</Form.Group>
+										<Form.Group>
+		            			<Form.Field label="Days"> </Form.Field>
+		            		</Form.Group>
+		            		<Form.Group>
+		            			<Form.Field>
+		            			 <Button toggle circular size="tiny" content='M' />
+		            			 <Button toggle circular size="tiny" content='T' />
+		            			 <Button toggle  circular size="tiny" content='W' />
+		            		   <Button toggle circular size="tiny" content='Th' />
+		            		   <Button toggle circular size="tiny" content='F' />
+		            		</Form.Field>
+										</Form.Group>
+										<Form.Group>
+										<Form.Input label="Room" placeholder="Room" name="room" value={room} onChange={this.handleChange}/>
+											<Form.Input min={0} type="number" label="Maximum Capacity" placeholder="Max Capacity" name="max_capacity" value={max_capacity} onChange={this.handleChange}/>
+		            			<Form.Input min={0} max={5}type="number" label="Units" name="unit" placeholder="Units" width={2} value={unit} onChange={this.handleChange}/>
+
+										</Form.Group>
+									</Form>
+					      </Grid.Row>
+								<Grid.Row>
+									<Form onSubmit={this.props.submit}>
+										<Form.Button content="Add Lecture" floated="right" positive/ >
+									</Form>
+								</Grid.Row>
+								<Divider />
+            		<Grid.Row>
+            		<Header as="h2">Add New Laboratory </Header>
+            		</Grid.Row>
+								<Grid.Row>
+									<Form >
+										<Form.Group>
+		            			<Form.Input label="Course number" placeholder="Course number" name="course_number" value={course_number} onChange={this.handleChange}/>
+		            			<Form.Input label="Course section" placeholder="Course section" name="section" value={section} onChange={this.handleChange}/>
+		            			<Form.Input label="Time start" placeholder="Time start" name="time_start" value={time_start} onChange={this.handleChange}/>
+
+											<Form.Input label="Time end" Input placeholder="Time end" name="time_end" value={time_end} onChange={this.handleChange}/>
+
 										</Form.Group>
 										<Form.Group>
 		            			<Form.Field label="Days"> </Form.Field>
@@ -69,20 +106,16 @@ close = () =>
 										<Form.Input label="Room" placeholder="Room" name="room" value={room} onChange={this.handleChange}/>
 											<Form.Input min={0} type="number" label="Maximum Capacity" placeholder="Max Capacity" name="max_capacity" value={max_capacity} onChange={this.handleChange}/>
 		            			<Form.Input min={0} max={5}type="number" label="Units" name="unit" placeholder="Units" width={2} value={unit} onChange={this.handleChange}/>
-											
+
 										</Form.Group>
-										<strong>onChange:</strong>
-        <pre>{JSON.stringify({ max_capacity }, null, 2)}</pre>
-									</Form>
-										
-									<Form onSubmit={this.props.submit}>
-										<Form.Button content="Add" floated="right" positive/ >
+
 									</Form>
 					      </Grid.Row>
-								<Divider />
-            		<Grid.Row>
-            		<Header as="h2">Add New Laboratory </Header>
-            		</Grid.Row>
+								<Grid.Row>
+									<Form onSubmit={this.props.submit}>
+										<Form.Button content="Add Laboratory" floated="right" positive/ >
+									</Form>
+								</Grid.Row>
             	</Grid>
             	</Segment>
             	</Container>
