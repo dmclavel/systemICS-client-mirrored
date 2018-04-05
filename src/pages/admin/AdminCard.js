@@ -110,7 +110,8 @@ class AdminCard extends Component {
                 <Table.Body>
                 	{coursesX.map((course) => {
                 	console.log(course)
-                		return <CourseRow coursecode={course.course_name} section={course.section} time_start={course.time_start} time_end={course.time_end} room={course.room} students="15"/>
+                		return( <CourseRow coursecode={course.course_name} section={course.section} time_start={course.time_start} time_end={course.time_end} room={course.room} section_type={course.section_type} students="15"/> );
+                	
                 	})}
 
 									{courses.map((newcourse) => {
