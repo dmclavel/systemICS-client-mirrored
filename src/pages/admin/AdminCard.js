@@ -26,14 +26,22 @@ class AdminCard extends Component {
 			address: 'https://sleepy-falls-95372.herokuapp.com/',
 			coursesX : [],
 			courses : [],
+			course_offering_id: '',
+			course_title: '',
+			emp_no: '',
+			acad_year: '',
+			semester: '',
+			no_of_students: '',
 			course_id: '',
+			course_name: '',
 			time_start: '',
 			time_end: '',
 			room: '',
 			day:'',
 			section: '',
 			unit:'',
-			max_capacity: ''
+			max_capacity: '',
+			description: ''
 		}
 		autobind(this);
 	}
@@ -47,44 +55,8 @@ class AdminCard extends Component {
 			});
 		}
 
-		handleChange = (e, {name, value}) => {
-			this.setState({[name]: value})
-		}
-
-		handleSubmit = () => {
-			const{course_number, time_start, time_end, room, day, section, unit, max_capacity} = this.state
-
-			this.setState(
-				{course_number:course_number,
-				time_start:time_start,
-				time_end:time_end,
-				room:room,
-				day:day,
-				section:section,
-				unit:unit,
-				max_capacity:max_capacity}
-			)
-
-			var newcourse = [{course_number:course_number, time_start:time_start, time_end:time_end, room:room, day:day, section:section, unit:unit, max_capacity:max_capacity}];
-
-			this.state.courses.push(newcourse)
-			this.setState({courses:newcourse});
-		}
-
-		close = () =>
-				this.setState(
-					{course_number:'',
-					time_start:'',
-					time_end:'',
-					room:'',
-					day:'',
-					section:'',
-					unit:'',
-					max_capacity:''}
-				)
-
   render() {
-		const{course_id, time_start, time_end, room, day, section, unit, max_capacity, coursesX, courses} = this.state
+		const{course_id, time_start, time_end, room, day, section, unit, max_capacity, status, description, coursesX, courses} = this.state
 
 
     return(
@@ -93,7 +65,7 @@ class AdminCard extends Component {
 							 	Faculty Workload
 							</Header>
 	            		<Input icon="search" width={12}/>
-	            <AddCourseModal handler={this.handleChange} submit={this.handleSubmit} close={this.close}/>
+	            <AddCourseModal />
 
       				<Table textAlign="center">
               <Table.Header>
@@ -109,15 +81,11 @@ class AdminCard extends Component {
 
                 <Table.Body>
                 	{coursesX.map((course) => {
-                	console.log(course)
-                		return( <CourseRow coursecode={course.course_name} section={course.section} time_start={course.time_start} time_end={course.time_end} room={course.room} section_type={course.section_type} students="15"/> );
-                	
+                		return( <CourseRow description={course.description} course={course.course_id} coursecode={course.course_name} section={course.section} time_start={course.time_start} time_end={course.time_end} room={course.room} section_type={course.section_type} maxcapacity={course.max_capacity} status={course.status} students={course.no_of_students} acadyear={course.acad_year} sem={course.semester} unit={course.unit} title={course.course_title} empno={course.emp_no} courseoffering={course.course_offering_id}/> );
+
                 	})}
 
-									{courses.map((newcourse) => {
-									console.log(newcourse)
-									  return <CourseRow coursecode={newcourse.course_number} section={newcourse.section} time_start={newcourse.time_start} time_end={newcourse.time_end} room={newcourse.room} students="15"/>
-									})}
+
                 </Table.Body>
             </Table>
       		</Grid.Column>

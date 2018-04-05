@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal, Form, Grid, Segment, Header, Divider, Container, Checkbox } from 'semantic-ui-react';
+import autobind from 'react-autobind';
 
 const inlineStyle={
 	modal :{
@@ -11,40 +12,59 @@ const inlineStyle={
 	}
 };
 class EditCourse extends Component {
+	constructor(props){
+		super(props)
 
-	state = { course_number: '', time_start: '', time_end: '', room: '', day:'', section:'', unit:'',max_capacity:'' }
+		this.state = {
+			address: 'https://sleepy-falls-95372.herokuapp.com/',
+			coursesX : [],
+			courses : [],
+			course_offering_id: this.props.courseoffering,
+			emp_no: this.props.emp_no,
+			acad_year: this.props.acadyear,
+			semester: this.props.sem,
+			no_of_students: this.props.noofstudents,
+			course_id: this.props.course,
+			course_name: this.props.coursecode,
+			time_start:this.props.timestart,
+			time_end: this.props.timeend,
+			room: this.props.room,
+			day:this.props.day,
+			section: this.props.section,
+			unit: this.props.unit,
+			max_capacity: this.props.maxcapacity,
+			status:this.props.status,
+			course_title: this.props.title,
+			description: this.props.desc
+		}
+		autobind(this);
+	}
+
 
 	handleChange = (e, {name, value}) => {
 		this.setState({[name]: value})
 	}
-	close = () =>
-		this.setState(
-			{course_number:'',
-			time_start:'',
-			time_end:'',
-			room:'',
-			day:'',
-			section:'',
-			unit:'',
-			max_capacity:''}
-		)
+
+	componentDidMount(){
+
+	}
 
   render() {
-  const { course_number, time_start, time_end, room, day, section, unit,max_capacity} = this.state;
+  	const{course_offering_id, course_id, course_name, emp_no, acad_year, semester, no_of_students, time_start, time_end, room, day, section, unit, max_capacity, course_title, status, description} = this.state
     return(
 
-       <Modal size='large' style={inlineStyle.modal} onClose={this.close} trigger={<Button icon="pencil" color="teal" />} basic closeIcon>
+       <Modal size='large' style={inlineStyle.modal} trigger={<Button icon="pencil" color="teal" />} basic closeIcon>
            <Modal.Content>
             	<Container>
             		<Segment padded="very">
             	<Grid>
             		<Grid.Row>
-            		<Header as="h2">Edit {this.props.coursecode} {this.props.section} </Header>
+            		<Header as="h2">Edit {this.props.coursecode} {this.props.course} {this.props.section} </Header>
             		</Grid.Row>
 								<Grid.Row>
 									<Form >
 										<Form.Group>
-		            			<Form.Input label="Course number" placeholder="Course number" name="course_number" value={course_number} onChange={this.handleChange}/>
+		            			<Form.Input label="Course Name" placeholder="Course name" name="course_name" value={course_name} onChange={this.handleChange}/>
 		            			<Form.Input label="Course section" placeholder="Course section" name="section" value={section} onChange={this.handleChange}/>
 		            			<Form.Input label="Time start" placeholder="Time start" name="time_start" value={time_start} onChange={this.handleChange}/>
 
