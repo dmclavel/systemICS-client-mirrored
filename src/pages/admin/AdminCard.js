@@ -5,6 +5,7 @@ import NavbarIn from '../components/NavbarIn';
 import Heading from '../components/Heading';
 import Sidebar from '../components/Sidebar';
 import AddCourseModal from './AddCourseModal';
+import AddCourseLecture from './AddCourseLecture';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
 const inlineStyle={
@@ -65,7 +66,7 @@ class AdminCard extends Component {
 							 	Faculty Workload
 							</Header>
 	            		<Input icon="search" width={12}/>
-	            <AddCourseModal />
+	            <AddCourseModal /> <AddCourseLecture />
 
       				<Table textAlign="center">
               <Table.Header>
