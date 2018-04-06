@@ -11,9 +11,10 @@ class Advisee extends Component {
     return(
       <Card fluid id='cardMargin'>
          <List>
-            <List.Item>{this.props.adviseeName}</List.Item>
-            <List.Item>  {this.props.studentNumber}</List.Item>
-            <List.Item>{this.props.email}</List.Item>
+            <List.Item>Name: {this.props.name}</List.Item>
+            <List.Item>Student number: {this.props.student_number}</List.Item>
+            <List.Item>Email: {this.props.email}</List.Item>
+            <List.Item>Curriculum: {this.props.curriculum}</List.Item>
          </List>
       </Card>
     );
