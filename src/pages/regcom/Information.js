@@ -13,7 +13,7 @@ import React, { Component } from 'react';
 import Course from './Course';
 import img from './kobe.jpg';
 import autobind from 'react-autobind';
-
+import EditLoadModal from './EditLoadModal';
 // TODO:
 const inlineStyle = {
   modal: {
@@ -41,19 +41,8 @@ const options = [
   }
 ];
 class Information extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false
-    };
-    autobind(this);
-  }
-  open = () => this.setState({ open: true });
-  close = () => this.setState({ open: false });
-
   render() {
-    const { open } = this.state;
-    const { name, room, numStudents, teachingLoad } = this.props.object;
+    const { emp_no, name, room, email_add, teachingLoad } = this.props.object;
     return (
       <Container>
         <Segment>
@@ -74,7 +63,7 @@ class Information extends Component {
                         textAlign="left"
                         size="tiny"
                         icon="users"
-                        content={numStudents + ' students'}
+                        content={email_add}
                         subheader="Tentative"
                       />
                     </Grid.Column>
@@ -91,60 +80,13 @@ class Information extends Component {
                 </Grid>
               </Grid.Column>
               <Grid.Column width={3} verticalAlign="middle">
-                <Modal
-                  open={open}
-                  onOpen={this.open}
-                  onClose={this.close}
-                  size="small"
-                  style={inlineStyle.modal}
-                  trigger={<Button content="Edit Load" basic />}>
-                  <Modal.Header>
-                    <Grid>
-                      <Grid.Row>
-                        <Image floated="left" avatar src={img} />
-                        {name}
-                      </Grid.Row>
-                    </Grid>
-                  </Modal.Header>
-                  <Modal.Content>
-                    <Grid centered={true}>
-                      <Grid.Row>
-                        <Grid.Column width={16}>
-                          <Dropdown
-                            placeholder="Select course"
-                            fluid
-                            search
-                            selection
-                            options={options}
-                          />
-                        </Grid.Column>
-                      </Grid.Row>
-                      <Grid.Row>
-                        <Grid.Column width={16}>
-                          <Course
-                            subject="CMSC 128"
-                            room="PC LAB 8"
-                            day="M"
-                            time="1:00-4:00"
-                          />
-                          <Course
-                            subject="CMSC 170"
-                            room="PC LAB 4"
-                            day="T"
-                            time="4:00-7:00"
-                          />
-                        </Grid.Column>
-                      </Grid.Row>
-                    </Grid>
-                  </Modal.Content>
-                  <Modal.Actions>
-                    <Button
-                      icon="check"
-                      content="All Done"
-                      onClick={this.close}
-                    />
-                  </Modal.Actions>
-                </Modal>
+                <EditLoadModal
+                  emp_no={emp_no}
+                  button={<Button content="Edit Load" basic />}
+                  name={name}
+                  room={room}
+                  teachingLoad={email_add}
+                />
               </Grid.Column>
             </Grid.Row>
           </Grid>

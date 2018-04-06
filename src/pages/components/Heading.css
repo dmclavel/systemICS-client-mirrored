@@ -9,7 +9,7 @@
   width: 30vh;
   height: 30vh;
   background-color: orange;
-  margin-left: 10vh;
+  margin-left: 15vh;
   border-radius: 50%;
 }
 
@@ -63,4 +63,7 @@
 .App {
   background-color: #ede8e8;
   height: 100rem;
+}
+
+.no-padding {
 }
