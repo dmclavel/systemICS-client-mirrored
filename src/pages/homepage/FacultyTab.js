@@ -32,7 +32,14 @@ class FacultyTab extends Component {
            "email_add": "",
             "isRegCom": "" 
           }
-	        ]
+	        ],
+	        facultyQuery: "",
+	        facultyResult: [
+	        {"name": "",
+           "email_add": "",
+            "isRegCom": "" 
+          }
+	        ],
 
 	    }
 	    autobind(this);
@@ -53,6 +60,21 @@ class FacultyTab extends Component {
 		    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
 		    socket.emit('login', 'this is my data');//send data to 'login' endpoint in server
 	}
+
+	handleSearch = (e) => {
+		const socket = socketIOClient(this.state.endpoint); //establish connection to the server
+		    // listens on an endpoint and executes fallback function
+		this.setState({facultyQuery: e.target.value});
+		console.log(this.state.facultyQuery);
+		for (var j = 0; j < this.state.faculty.length; j++){
+		  // console.log(this.state.faculty[j].name);
+		  if (this.state.faculty[j].name.match(this.state.facultyQuery)){
+		  	this.state.facultyResult.unshift(this.state.faculty[j]);
+		  }
+		}
+		this.setState({faculty: this.state.facultyResult});
+	}
+
   render() {
     return(
       <div className='FacultyTab'>
@@ -66,7 +88,7 @@ class FacultyTab extends Component {
 					<Grid.Column width={9} verticalAlign="middle">
 						<Grid.Row>
               <Card fluid={true}  id="inputWidth" >
-                  <Input transparent={true} fluid={true} icon='search' iconPosition='left' placeholder = "Search faculty..."/>
+                  <Input transparent={true} fluid={true} icon='search' iconPosition='left' placeholder = "Search faculty..." onChange={this.handleSearch}/>
               </Card>
 			      </Grid.Row>
 					</Grid.Column>
