@@ -70,7 +70,7 @@ class Section extends Component {
 				            </Card>
 			            </Grid.Row>
 					</Grid.Column>
-					{this.props.section}
+					
 					<Grid.Column width={16} textAlign = "center">
 						<Grid columns={4} divided centered>
             				<Container centered>
