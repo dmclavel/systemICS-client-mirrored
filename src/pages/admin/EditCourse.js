@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Grid, Segment, Header, Divider, Container, Checkbox } from 'semantic-ui-react';
+import { Button, Modal, Form, Grid, Segment, Header, Divider, Container, Checkbox , Popup} from 'semantic-ui-react';
 import autobind from 'react-autobind';
 
 const inlineStyle={
@@ -53,7 +53,7 @@ class EditCourse extends Component {
   	const{course_offering_id, course_id, course_name, emp_no, acad_year, semester, no_of_students, time_start, time_end, room, day, section, unit, max_capacity, course_title, status, description} = this.state
     return(
 
-       <Modal size='large' style={inlineStyle.modal} trigger={<Button icon="pencil" color="teal" />} basic closeIcon>
+       <Modal size='large' style={inlineStyle.modal} trigger={ <Popup trigger={<Button icon="pencil" color="teal" />} content="Edit"  /> } basic closeIcon>
            <Modal.Content>
             	<Container>
             		<Segment padded="very">
