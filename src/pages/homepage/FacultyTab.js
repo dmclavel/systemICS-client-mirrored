@@ -63,14 +63,12 @@ class FacultyTab extends Component {
       			</Grid.Row>
 
       			<Grid.Row>
-					<Grid.Column width={12} verticalAlign="middle">
+					<Grid.Column width={9} verticalAlign="middle">
 						<Grid.Row>
-							<Card id = "marginSearch" fluid={true} raised={true}>
-				              <Card.Content>
-				                <Input transparent={true} fluid={true} icon='search' iconPosition='left' placeholder = "Search faculty..."/>
-				              </Card.Content>
-				            </Card>
-			            </Grid.Row>
+              <Card fluid={true}  id="inputWidth" >
+                  <Input transparent={true} fluid={true} icon='search' iconPosition='left' placeholder = "Search faculty..."/>
+              </Card>
+			      </Grid.Row>
 					</Grid.Column>
 					<Grid.Column width={16} textAlign = "center">
 						<Grid columns={4} divided centered>
