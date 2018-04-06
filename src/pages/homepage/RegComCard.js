@@ -20,8 +20,7 @@ class RegComCard extends Component {
           <Card.Meta>
             {this.props.email}
           </Card.Meta>
-        
-        {this.props.committee}
+        Registration Committee
         </Card.Content>
       </Card>
 );

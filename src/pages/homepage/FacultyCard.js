@@ -17,8 +17,7 @@ class FacultyCard extends Component {
           <Card.Meta>
             {this.props.email}
           </Card.Meta>
-        
-        {this.props.committee}
+        Faculty
         </Card.Content>
       </Card>
 );

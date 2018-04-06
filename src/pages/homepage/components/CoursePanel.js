@@ -49,7 +49,7 @@ class CoursePanel extends Component {
 				{
 					/* Hi, in the future, make it as another component */
 					this.state.lecture.map((item, index) =>
-						<Segment fluid>
+						<Segment fluid id = {item.course_name}>
 							<Grid divided>	
 								<Grid.Row>
 									<Grid.Column width={3}>
@@ -58,7 +58,7 @@ class CoursePanel extends Component {
 									<Grid.Column width={10}>
 										<Header textAlign='left'>
 											<Header.Content>
-												{item.course_name} | {item.course_title}
+												{item.course_name} ( {item.section} ) | {item.course_title}
 											</Header.Content>
 											<Header.Subheader>
 											{item.description}
@@ -81,7 +81,7 @@ class CoursePanel extends Component {
 										</Grid>
 									</Grid.Column>
 									<Grid.Column width={3} verticalAlign='middle'>
-										<Button content='Learn More' basic onClick={()=>{window.location = "/section"}}/>
+										<Button content='Learn More' basic onClick={()=>{window.location = "/section/"+item.course_name.replace(/\s+/, "") }}/>
 									</Grid.Column>
 								</Grid.Row>
 							</Grid>

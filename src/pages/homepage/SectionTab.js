@@ -15,7 +15,7 @@ class SectionTab extends Component {
 					<Heading />
 				</Grid.Row>
 				<Grid.Row centered>
-					<Section/>
+					<Section section={this.props.match.params._id}/>
 				</Grid.Row>
 			</Grid>
 		);

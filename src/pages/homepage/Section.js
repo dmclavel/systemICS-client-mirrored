@@ -33,7 +33,9 @@ class Section extends Component {
 			"course_name": "",
 			"course_title": "",
 			"name": ""}
-	        ]
+	        ],
+
+	        
 	    }
 	    autobind(this);
  	}
@@ -68,13 +70,17 @@ class Section extends Component {
 				            </Card>
 			            </Grid.Row>
 					</Grid.Column>
-
+					
 					<Grid.Column width={16} textAlign = "center">
 						<Grid columns={4} divided centered>
             				<Container centered>
 								<Card.Group itemsPerRow={4}>
 									{this.state.lab.map((item, index)=>
-										<SectionCard name={item['name']} course_name={item['course_name']} section={item['section']} day={item['day']} timestart={item['time_start']} timeend={item['time_end']} room={item['room']} />
+										<div>
+										{this.props.section == item.course_name.replace(/\s+/, "") && (
+											<SectionCard name={item['name']} course_name={item['course_name']} section={item['section']} day={item['day']} timestart={item['time_start']} timeend={item['time_end']} room={item['room']} />
+										)}
+										</div>
 									)}
 
 								</Card.Group>
