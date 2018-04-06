@@ -12,31 +12,30 @@ class SubjectCard extends Component {
       <Segment>
          <Grid>
             <Grid.Row>
-               <Grid.Column width={12}>
+               <Grid.Column width={3} textAlign='right'>
                   <Header as='h3'>{this.props.name}</Header>
                </Grid.Column>
-               <Grid.Column width={1}>
+               <Grid.Column width={9}>
+                  <Header as='h3'>{this.props.description}</Header>
                </Grid.Column>
-               <Grid.Column width={2}>
+               <Grid.Column width={3} textAlign='left'>
                   <Header as='h3'>{this.props.section}</Header>
-               </Grid.Column>
-               <Grid.Column width={1}>
-               </Grid.Column>
+                </Grid.Column>
 
             </Grid.Row>
             <Grid.Row>
-               <Grid.Column width={5}>
+                <Grid.Column width={4}>
                   <Header as='h5'>
                      <Icon name='time' />
                      <Header.Content>
-                        {this.props.time}
+                        {this.props.time_start}-{this.props.time_end}
                         <Header.Subheader>
                            Time
                         </Header.Subheader>
                      </Header.Content>
                   </Header>
                </Grid.Column>
-               <Grid.Column width={6}>
+               <Grid.Column width={4}>
                <Header as='h5'>
                   <Icon name='group' />
                   <Header.Content>
@@ -47,7 +46,18 @@ class SubjectCard extends Component {
                   </Header.Content>
                </Header>
                </Grid.Column>
-               <Grid.Column width={5}>
+               <Grid.Column width={4}>
+               <Header as='h5'>
+                  <Icon name='group' />
+                  <Header.Content>
+                     {this.props.no_of_students}
+                     <Header.Subheader>
+                        Number of students
+                     </Header.Subheader>
+                  </Header.Content>
+               </Header>
+               </Grid.Column>
+               <Grid.Column width={4}>
                   <Header as='h5'>
                      <Icon name='desktop' />
                      <Header.Content>
