@@ -10,13 +10,20 @@ class CoursePanel extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			endpoint: 'http://10.0.5.153:3000',
+			endpoint: 'https://sleepy-falls-95372.herokuapp.com/',
 			lecture: [
 			{
+				"course_offering": "",
 				"time_start": "",
 				"time_end": "",
 				"room": "",
-				"day": ""
+				"day": "",
+				"section": "",
+				"section_type": 0,
+				"course_name": "",
+				"course_title": "",
+				"description": "",
+				"name": ""
 			}
 			]
 		}
@@ -25,8 +32,8 @@ class CoursePanel extends Component {
 	componentDidMount = () =>{
 		    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
 		    // listens on an endpoint and executes fallback function
-		    socket.emit('view_all_lab_sections', 'dfesperanza@up.edu.ph');//send data to 'login' endpoint in server
-		    socket.on('view_all_lab_sections', (returnValueFromServer) => {
+		    socket.emit('view_all_lecture_sections', 'dfesperanza@up.edu.ph');//send data to 'login' endpoint in server
+		    socket.on('view_all_lecture_sections', (returnValueFromServer) => {
 		      console.log(returnValueFromServer);
           this.setState({lecture: returnValueFromServer});
 		    });
@@ -42,7 +49,7 @@ class CoursePanel extends Component {
 				{
 					/* Hi, in the future, make it as another component */
 					this.state.lecture.map((item, index) =>
-						<Segment fluid>
+						<Segment fluid id = {item.course_name}>
 							<Grid divided>	
 								<Grid.Row>
 									<Grid.Column width={3}>
@@ -51,30 +58,30 @@ class CoursePanel extends Component {
 									<Grid.Column width={10}>
 										<Header textAlign='left'>
 											<Header.Content>
-												{item.course}
+												{item.course_name} ( {item.section} ) | {item.course_title}
 											</Header.Content>
 											<Header.Subheader>
-											{item.desc}
+											{item.description}
 											</Header.Subheader>
 										</Header>
 										<Grid divided>
 											<Grid.Row>
 												<Grid.Column width={5}>
-													<Header textAlign='left' size='small' icon="user" content={item.prof} subheader={item.profroom} />
+													<Header textAlign='left' size='small' icon="user" content={item.name} subheader={item.profroom} />
 												</Grid.Column>
 												<Grid.Column width={6}>
-													<Header textAlign='left' size='small' icon="marker" content={item.room} subheader="Room" />
+													<Header textAlign='left' size='small' icon="marker" content={item.room} />
 												</Grid.Column>
 												<Grid.Column width={5}>
-													<Header textAlign='left' size='small' icon="clock" subheader="Time" >
-													{item.time_start}:{item.time_end}
-													</Header>
+													<Header textAlign='left' size='small' icon="clock" subheader={item.day} />
+													{item.time_start}-{item.time_end}
+													
 												</Grid.Column>
 											</Grid.Row>
 										</Grid>
 									</Grid.Column>
 									<Grid.Column width={3} verticalAlign='middle'>
-										<Button content='Learn More' basic onClick={()=>{window.location = "/section"}}/>
+										<Button content='Learn More' basic onClick={()=>{window.location = "/section/"+item.course_name.replace(/\s+/, "") }}/>
 									</Grid.Column>
 								</Grid.Row>
 							</Grid>

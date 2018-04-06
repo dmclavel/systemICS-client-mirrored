@@ -19,32 +19,31 @@ const inlineStyle={
 
 class AdminCard extends Component {
 
-constructor(){
+	constructor(){
 		super()
 
 		this.state = {
 			address: 'https://sleepy-falls-95372.herokuapp.com/',
 			coursesX : [],
-			
-			courses : [
-			
-				{"course_title":"Object Oriented Programming", "course_number": "CMSC 22", "time_start": "10:00AM", "time_end" : "1:00PM", "room" : "PC2L", "day" : "M", "section" : "ST3L", "unit" : "3.00", "max_capacity" : 20, "population":4, "status":true},
-				{"course_title":"Object Oriented Programming", "course_number": "CMSC 22", "time_start": "10:00AM", "time_end" : "1:00PM", "room" : "PC2L", "day" : "T", "section" : "ST4L", "unit" : "3.00", "max_capacity" : 20, "population":2, "status":true},
-				{"course_title":"Object Oriented Programming", "course_number": "CMSC 22", "time_start": "1:00PM", "time_end" : "4:00PM", "room" : "PC4L", "day" : "T", "section" : "ST5L", "unit" : "3.00", "max_capacity" : 20, "population":14, "status":false}
-			],
+			courses : [],
+			course_offering_id: '',
+			course_title: '',
+			emp_no: '',
+			acad_year: '',
+			semester: '',
+			no_of_students: '',
 			course_id: '',
+			course_name: '',
 			time_start: '',
 			time_end: '',
 			room: '',
 			day:'',
 			section: '',
 			unit:'',
-			max_capacity: ''
+			max_capacity: '',
+			description: ''
 		}
-
 		autobind(this);
-
-
 	}
 		componentDidMount(){
 			const socket = socketIOClient(this.state.address);
@@ -55,49 +54,9 @@ constructor(){
 				console.log(this.state.coursesX);
 			});
 		}
-		
-		handleChange = (e, {name, value}) => {
-			this.setState({[name]: value})
-		}
-
-		handleSubmit = () => {
-			const{course_number, time_start, time_end, room, day, section, unit, max_capacity} = this.state
-
-			this.setState(
-				{course_number:course_number,
-				time_start:time_start,
-				time_end:time_end,
-				room:room,
-				day:day,
-				section:section,
-				unit:unit,
-				max_capacity:max_capacity}
-			)
-			
-			var newcourse = [{course_number:'', max_capacity:''}];
-			newcourse.course_number = course_number;
-			newcourse.time_start = time_start;
-			newcourse.time_end = time_end;
-			newcourse.capacity = max_capacity;
-			
-			this.state.courses.push(newcourse);
-			
-		}
-
-		close = () =>
-			this.setState(
-				{course_id:'',
-				time_start:'',
-				time_end:'',
-				room:'',
-				day:'',
-				section:'',
-				unit:'',
-				max_capacity:''}
-			)
 
   render() {
-		const{course_id, time_start, time_end, room, day, section, unit, max_capacity, coursesX} = this.state
+		const{course_id, time_start, time_end, room, day, section, unit, max_capacity, status, description, coursesX, courses} = this.state
 
 
     return(
@@ -106,7 +65,7 @@ constructor(){
 							 	Faculty Workload
 							</Header>
 	            		<Input icon="search" width={12}/>
-	            <AddCourseModal handler={this.handleChange} submit={this.handleSubmit} />
+	            <AddCourseModal />
 
       				<Table textAlign="center">
               <Table.Header>
@@ -122,10 +81,11 @@ constructor(){
 
                 <Table.Body>
                 	{coursesX.map((course) => {
-                	console.log(course)
-                		return <CourseRow coursecode={course.course_name} section={course.section} time_start={course.time_start} time_end={course.time_end} room={course.room} students="15"/>
+                		return( <CourseRow description={course.description} course={course.course_id} coursecode={course.course_name} section={course.section} time_start={course.time_start} time_end={course.time_end} room={course.room} section_type={course.section_type} maxcapacity={course.max_capacity} status={course.status} students={course.no_of_students} acadyear={course.acad_year} sem={course.semester} unit={course.unit} title={course.course_title} empno={course.emp_no} courseoffering={course.course_offering_id}/> );
+
                 	})}
-                  
+
+
                 </Table.Body>
             </Table>
       		</Grid.Column>

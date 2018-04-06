@@ -26,11 +26,12 @@ class FacultyTab extends Component {
 	constructor(props){
 	    super(props);
 	    this.state = {
-	        endpoint:  'http://10.0.5.153:3000', // the address of the server
+	        endpoint:  'https://sleepy-falls-95372.herokuapp.com/', // the address of the server
 	        faculty: [
-	        {"Employee Name": "",
-           "Employee Email": "",
-           "Employee Number": ""}
+	        {"name": "",
+           "email_add": "",
+            "isRegCom": "" 
+          }
 	        ]
 
 	    }
@@ -62,30 +63,31 @@ class FacultyTab extends Component {
       			</Grid.Row>
 
       			<Grid.Row>
-						<Grid.Column width={12} verticalAlign="middle">
-							<Grid.Row>
-								<Card id = "marginSearch" fluid={true} raised={true}>
-					              <Card.Content>
-					                <Input transparent={true} fluid={true} icon='search' iconPosition='left' placeholder = "search faculty..."/>
-					              </Card.Content>
-					            </Card>
-				            </Grid.Row>
-						</Grid.Column>
-						<Grid.Column width={16} textAlign = "center">
-							<Grid columns={4} divided centered>
-                <Container centered>
-									<Card.Group itemsPerRow={4}>
-  									{this.state.faculty.map((item, index)=>
-  										<FacultyCard name={item['Employee Name']} email={item['Employee Email']}/>
-  										
-  										
-  									)}
+					<Grid.Column width={9} verticalAlign="middle">
+						<Grid.Row>
+              <Card fluid={true}  id="inputWidth" >
+                  <Input transparent={true} fluid={true} icon='search' iconPosition='left' placeholder = "Search faculty..."/>
+              </Card>
+			      </Grid.Row>
+					</Grid.Column>
+					<Grid.Column width={16} textAlign = "center">
+						<Grid columns={4} divided centered>
+            				<Container centered>
+      								<Card.Group itemsPerRow={4}>
+      									{this.state.faculty.map((item, index)=>
+      										<Card>
+                            { item.isRegCom === 0 ? (
+                                <FacultyCard name={item.name} email={item.email_add} isRegCom={item.isRegCom}/>
+                                ):(<RegComCard name={item.name} email={item.email_add} isRegCom={item.isRegCom}/>)
+                            }
+                          </Card>
+      									)}
 
-									</Card.Group>
-                </Container>
+      								</Card.Group>
+           					</Container>
 
-							</Grid>
-						</Grid.Column>
+						</Grid>
+					</Grid.Column>
 				</Grid.Row>
       		</Grid>
       </div>

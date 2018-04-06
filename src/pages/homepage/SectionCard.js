@@ -1,30 +1,28 @@
 import image from './sample.jpg';
 import {Label, Image, Card, Button, Input, Grid, Container, Search, Header, Modal, Icon, Checkbox, Accordion, Segment} from "semantic-ui-react";
 import React, { Component } from 'react';
-
+import './section.css'
 
 class SectionCard extends Component {
-  
   render() {
     return(
-     <Card>
+     <Card id = "margin">
       <Card.Content  textAlign="left">
         <Image circular floated='right' size='tiny' src={image} />
         <Card.Header>
-          CMSC 128 A-8L
+          {this.props.course_name} {this.props.section}
         </Card.Header>
         <Card.Meta>
           <Icon name="clock" />
-          2:00PM-4:00PM F
+          {this.props.day} | {this.props.timestart}-{this.props.timeend}
         </Card.Meta>
         <Card.Meta>
-          PC Lab 7
+          {this.props.room}
         </Card.Meta>
         <Card.Meta>
-          LK Lactuan
+          {this.props.name}
         </Card.Meta>
       </Card.Content>
-
     </Card>
 );
   }

@@ -9,6 +9,7 @@ import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 import socketIOClient from 'socket.io-client';
 
 import Homepage from './homepage/Homepage';
+import Classes from './homepage/Classes';
 import FacultyTab from './homepage/FacultyTab';
 import Login from './login/Login';
 import Faculty from './faculty/Faculty';
@@ -60,7 +61,8 @@ class Routes extends Component {
 					<PrivateRoute exact path='/dashboard' component={ Faculty } securityLevel={3}/>
 					{/*<PrivateRoute exact path='/regcom/home' component={ RegCom } securityLevel={2}/>
 					<PrivateRoute exact path='/faculty/home' component={ Faculty } securityLevel={1}/>*/}
-					<PrivateRoute exact path='/section' component={ SectionTab } securityLevel={1}/> 
+					<PrivateRoute exact path='/section/:_id' component={ SectionTab } securityLevel={1}/> 
+					<PrivateRoute exact path='/classes' component={ Classes } securityLevel={1}/> 
 				</Switch>
 			</main>
 		)
