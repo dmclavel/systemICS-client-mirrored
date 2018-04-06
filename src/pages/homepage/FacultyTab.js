@@ -81,7 +81,6 @@ class FacultyTab extends Component {
                                 ):(<RegComCard name={item.name} email={item.email_add} isRegCom={item.isRegCom}/>)
                             }
                           </Card>
-      										
       									)}
 
       								</Card.Group>
