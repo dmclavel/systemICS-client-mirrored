@@ -28,9 +28,10 @@ class FacultyTab extends Component {
 	    this.state = {
 	        endpoint:  'https://sleepy-falls-95372.herokuapp.com/', // the address of the server
 	        faculty: [
-	        {"Employee Name": "",
-           "Employee Email": "",
-           "Employee Number": ""}
+	        {"name": "",
+           "email_add": "",
+            "isRegCom": "" 
+          }
 	        ]
 
 	    }
@@ -74,14 +75,18 @@ class FacultyTab extends Component {
 					<Grid.Column width={16} textAlign = "center">
 						<Grid columns={4} divided centered>
             				<Container centered>
-								<Card.Group itemsPerRow={4}>
-									{this.state.faculty.map((item, index)=>
-										<FacultyCard name={item['Employee Name']} email={item['Employee Email']}/>
-										
-										
-									)}
+      								<Card.Group itemsPerRow={4}>
+      									{this.state.faculty.map((item, index)=>
+      										<Card>
+                            { item.isRegCom === 0 ? (
+                                <FacultyCard name={item.name} email={item.email_add} isRegCom={item.isRegCom}/>
+                                ):(<RegComCard name={item.name} email={item.email_add} isRegCom={item.isRegCom}/>)
+                            }
+                          </Card>
+      										
+      									)}
 
-								</Card.Group>
+      								</Card.Group>
            					</Container>
 
 						</Grid>
