@@ -16,12 +16,16 @@ class Login extends Component {
       activeItem : 'admin',
       profile : null,
       timestamp: 'no timestamp yet',
-      endpoint: 'http://localhost:3001',
+      endpoint: 'https://sleepy-falls-95372.herokuapp.com/',
     };
   }
 
   handleActiveItem = (e, { name }) => this.setState({ activeItem : name });
-  handleProfile = (googleUser) => this.setState({ profile: googleUser.getBasicProfile() });
+  handleProfile = (googleUser) => {
+    this.setState({ profile: googleUser.getBasicProfile() });
+    console.log(this.state.profile);
+    this.props.logInHanlder(this.state.profile.U3, 3);
+  };
 
   componentDidMount(){
     const socket = socketIOClient(this.state.endpoint)

@@ -48,21 +48,30 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 
 class Routes extends Component {
-	render() {
+  constructor(props){
+    super(props);
+  }
+
+  componentDidMount(){
+    authenticator.user = this.props.accessLvl;
+    console.log("accessLvl: " + authenticator.user);
+  }
+
+  render() {
 		return (
 			<main>
 				<Switch>
 					<Route exact path='/' component={ Homepage } securityLevel={0}/>
 					<Route exact path='/faculty' component={ FacultyTab } securityLevel={0}/>
-					<Route exact path='/login' component={ Login } securityLevel={0}/>
+					<Route exact path='/login' component={ () => <Login logInHanlder={this.props.logInHanlder}/> } securityLevel={0} />
 					{/*<PrivateRoute exact path='/faculty' component={ FacultyTab } securityLevel={1}/>*/}
 					<PrivateRoute exact path='/admin/home' component={ Admin } securityLevel={3}/>
 					<PrivateRoute exact path='/regcom/home' component={ RegCom } securityLevel={3}/>
 					<PrivateRoute exact path='/dashboard' component={ Faculty } securityLevel={3}/>
 					{/*<PrivateRoute exact path='/regcom/home' component={ RegCom } securityLevel={2}/>
 					<PrivateRoute exact path='/faculty/home' component={ Faculty } securityLevel={1}/>*/}
-					<PrivateRoute exact path='/section/:_id' component={ SectionTab } securityLevel={1}/> 
-					<PrivateRoute exact path='/classes' component={ Classes } securityLevel={1}/> 
+					<PrivateRoute exact path='/section/:_id' component={ SectionTab } securityLevel={1}/>
+					<PrivateRoute exact path='/classes' component={ Classes } securityLevel={1}/>
 				</Switch>
 			</main>
 		)
