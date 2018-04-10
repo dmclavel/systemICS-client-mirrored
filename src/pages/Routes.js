@@ -54,7 +54,6 @@ class Routes extends Component {
 
   componentDidMount(){
     authenticator.user = this.props.accessLvl;
-    console.log("accessLvl: " + authenticator.user);
   }
 
   render() {

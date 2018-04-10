@@ -8,6 +8,8 @@ import Routes from './pages/Routes';
 
 const browserHistory = createBrowserHistory();
 
+const loginCacheName = 'login';
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -18,12 +20,25 @@ class App extends Component {
     autobind(this);
   }
 
-  handleLogin(emailSrc, accessLvlSrc){
+  handleLogin = (emailSrc, accessLvlSrc) => {
     this.setState({email: emailSrc, accessLvl: accessLvlSrc});
-    console.log(this.state.email);
+    localStorage.setItem(loginCacheName, JSON.stringify(this.state));
   }
-
+  handleLogOut = () => {
+    localStorage.setItem(loginCacheName, null);
+  }
+  componentDidMount(){
+    // check if local storage has log-in session
+    const cachedLogIn = localStorage.getItem(loginCacheName);
+    if(cachedLogIn){
+      console.log("load saved sesion" + cachedLogIn);
+      const session = JSON.parse(cachedLogIn);
+      this.setState(session);
+      // console.log(JSON.parse(cachedLogIn));
+    }
+  }
   render() {
+    console.log(this.state);
     return (
       <div className="App">
       	<Router history={browserHistory} >
