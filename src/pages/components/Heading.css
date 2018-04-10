@@ -1,0 +1,69 @@
+.heading-main {
+  width: 100%;
+  height: 50vh;
+  padding-top: 20vh;
+  background-color: #83baf8;
+}
+
+.image {
+  width: 30vh;
+  height: 30vh;
+  background-color: orange;
+  margin-left: 15vh;
+  border-radius: 50%;
+}
+
+.heading-text {
+  font-size: 8vh;
+  margin-bottom: 0vh;
+  padding-left: 50vh;
+  text-align: left;
+}
+
+.subheading {
+  text-align: left;
+  font-size: 3vh;
+  margin-top: 0vh;
+  padding-left: 60vh;
+}
+
+.test {
+  position: fixed;
+  z-index: 1000;
+  width: 100vw;
+  margin-bottom: 0rem;
+}
+
+.sidebar {
+  margin-top: 15vh;
+}
+
+.options {
+  width: 50vh;
+  position: right;
+}
+
+.option-button {
+  width: 20vh;
+  height: 20vh;
+  background-color: orange;
+  border-radius: 50%;
+}
+
+.inline {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.courses {
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+.App {
+  background-color: #ede8e8;
+  height: 100rem;
+}
+
+.no-padding {
+}
