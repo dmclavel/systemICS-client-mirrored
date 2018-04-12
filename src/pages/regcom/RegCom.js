@@ -11,60 +11,10 @@ import Information from './Information';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
 
-import NavbarIn from '../components/NavbarIn';
+import NavbarIn from '../components/navbar/NavbarIn';
 import Heading from '../components/Heading';
 import Sidebar from '../components/Sidebar';
-
-const informations = [
-  {
-    name: 'Ariel Doria',
-    room: 'C-114',
-    numStudents: 200,
-    teachingLoad: 20
-  },
-  {
-    name: 'Gerald Benedict Emalada',
-    room: 'C-111',
-    numStudents: 175,
-    teachingLoad: 21
-  },
-  {
-    name: 'Lei Kristoffer Lactuan',
-    room: 'C-114',
-    numStudents: 75,
-    teachingLoad: 18
-  },
-  {
-    name: 'Gerald Benedict Emalada',
-    room: 'C-111',
-    numStudents: 175,
-    teachingLoad: 21
-  },
-  {
-    name: 'Gerald Benedict Emalada',
-    room: 'C-111',
-    numStudents: 175,
-    teachingLoad: 21
-  },
-  {
-    name: 'Gerald Benedict Emalada',
-    room: 'C-111',
-    numStudents: 175,
-    teachingLoad: 21
-  },
-  {
-    name: 'Gerald Benedict Emalada',
-    room: 'C-111',
-    numStudents: 175,
-    teachingLoad: 21
-  },
-  {
-    name: 'Gerald Benedict Emalada',
-    room: 'C-111',
-    numStudents: 175,
-    teachingLoad: 21
-  }
-];
+import ManageHeader from '../components/headers/ManageHeader';
 
 class RegCom extends Component {
   constructor(props) {
@@ -93,8 +43,8 @@ class RegCom extends Component {
       <div>
         <Grid>
           <Grid.Row>
-            <NavbarIn />
-            <Heading />
+            <NavbarIn user={this.props.user} />
+            <ManageHeader user={this.props.user} />
           </Grid.Row>
 
           <Grid.Row>
