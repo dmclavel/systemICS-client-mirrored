@@ -58,7 +58,7 @@ class Routes extends Component {
 				<Switch>
 					<Route exact path='/' component={ Homepage } securityLevel={0}/>
 					<Route exact path='/faculty' component={ FacultyTab } securityLevel={0}/>
-					<Route exact path='/login' component={ <Login profile={this.props.profile} /> } securityLevel={0}/>
+					<Route exact path='/login' component={ () => <Login profile={this.props.profile} /> } securityLevel={0}/>
 					
 					<PrivateRoute exact path='/admin/dashboard' component={ () => <Faculty user='admin' /> } securityLevel={3}/>
 					<PrivateRoute exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } securityLevel={3}/>
