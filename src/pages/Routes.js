@@ -58,8 +58,8 @@ class Routes extends Component {
 				<Switch>
 					<Route exact path='/' component={ Homepage } securityLevel={0}/>
 					<Route exact path='/faculty' component={ FacultyTab } securityLevel={0}/>
-					<Route exact path='/login' component={ () => <Login profile={this.props.profile} /> } securityLevel={0}/>
-					
+					<Route exact path='/login' component={ () => <Login logInHandler={this.props.logInHandler} /> } securityLevel={0}/>
+
 					<PrivateRoute exact path='/admin/dashboard' component={ () => <Faculty user='admin' /> } securityLevel={3}/>
 					<PrivateRoute exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } securityLevel={3}/>
 					<PrivateRoute exact path='/admin/manage/advisees' component={ () => <Advisees user='admin' />  } securityLevel={3}/>
@@ -70,7 +70,7 @@ class Routes extends Component {
 					<PrivateRoute exact path='/regcom/manage/teaching' component={ () => <RegCom user='regcom' />  } securityLevel={3}/>
 					<PrivateRoute exact path='/dashboard' component={ Faculty } securityLevel={3}/>
 
-					<PrivateRoute exact path='/section/:_id' component={ SectionTab } securityLevel={1}/> 
+					<PrivateRoute exact path='/section/:_id' component={ SectionTab } securityLevel={1}/>
 					<PrivateRoute exact path='/classes' component={ Classes } securityLevel={1}/>
 
 					<Route path="*" component={ NotFound } />

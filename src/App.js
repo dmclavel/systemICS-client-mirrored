@@ -45,7 +45,7 @@ class App extends Component {
     return (
       <div className="App">
       	<Router history={browserHistory} >
-          <Routes logInHanlder={this.handleLogin}  accessLvl={this.state.accessLvl}/>
+          <Routes logInHandler={this.handleLogin}  accessLvl={this.state.accessLvl}/>
       	</Router>
 
       </div>
