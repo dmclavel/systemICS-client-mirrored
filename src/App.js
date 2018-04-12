@@ -15,13 +15,17 @@ class App extends Component {
     super(props);
     this.state ={
       email: '',
-      accessLvl: 3
+      accessLvl: 3,
+      profile: null
     }
     autobind(this);
   }
 
-  handleLogin = (emailSrc, accessLvlSrc) => {
-    this.setState({email: emailSrc, accessLvl: accessLvlSrc});
+  handleLogin = (profileSrc) => {
+    const emailSrc = profileSrc.U3;
+    const accessLvlSrc = 3;
+    this.setState({email: emailSrc, accessLvl: accessLvlSrc, profile:profileSrc});
+
     localStorage.setItem(loginCacheName, JSON.stringify(this.state));
   }
   handleLogOut = () => {
