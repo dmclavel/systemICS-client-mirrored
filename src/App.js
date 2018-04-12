@@ -25,7 +25,6 @@ class App extends Component {
     const emailSrc = profileSrc.U3;
     const accessLvlSrc = 3;
     this.setState({email: emailSrc, accessLvl: accessLvlSrc, profile:profileSrc});
-
     localStorage.setItem(loginCacheName, JSON.stringify(this.state));
   }
   handleLogOut = () => {
