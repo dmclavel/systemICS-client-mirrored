@@ -93,10 +93,7 @@ class FacultyTab extends Component {
 					<Grid.Column width={9} verticalAlign="middle">
 						<Grid.Row>
               <Card fluid={true}  id="inputWidth" >
-                  <Input transparent={true} fluid={true} icon='search' iconPosition='left' placeholder = "Search faculty..." onChange={this.handleSearch}/>
-              		<Button basic onClick={this.searchFaculty}>
-              			Search
-              		</Button>
+                  <Input action={ <Button onClick={this.searchFaculty} basic icon='search' transparent={true} />} placeholder = "Search faculty..." onChange={this.handleSearch} />
               </Card>
 			      </Grid.Row>
 					</Grid.Column>
