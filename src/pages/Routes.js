@@ -18,7 +18,7 @@ import Advisees from './advisees/Advisees';
 import RegCom from './regcom/RegCom';
 import SectionTab from './homepage/SectionTab';
 import NotFound from './components/NotFound';
-import Users from './users/Users';
+import Users from './admin/users/Users';
 
 const authenticator = {
   user: 3,
