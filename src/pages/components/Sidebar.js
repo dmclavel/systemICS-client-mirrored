@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Segment, Header, Grid, Item } from 'semantic-ui-react';
 
+import DropFile from '../admin/DropFile';
+
 const items = [
 	{ key: 1, content: "Hello hello hello" },
 	{ key: 2, content: "Hello hello hello" },
@@ -47,6 +49,9 @@ class Sidebar extends Component {
 							}
 						</Item.Group>
 					</Segment>
+				</Grid.Row>
+				<Grid.Row>
+					<DropFile />
 				</Grid.Row>
 			</Grid>
 		);
