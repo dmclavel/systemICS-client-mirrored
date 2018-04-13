@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Grid} from 'semantic-ui-react';
+import {Table, Grid, Button, Icon} from 'semantic-ui-react';
 import autobind from 'react-autobind';
 
 
@@ -15,23 +15,6 @@ class UsersTable extends Component {
    }
     autobind(this);
   }
-  //handle table sorting
-  // handleSort = clickedColumn => () => {
-  //  const { column, data, direction } = this.state
-  //  if (column !== clickedColumn) {
-  //    this.setState({
-  //      column: clickedColumn,
-  //      data: _.sortBy(data, [clickedColumn]),
-  //      direction: 'ascending',
-  //    })
-  //    return
-  //  }
-  //
-  //  this.setState({
-  //    data: data.reverse(),
-  //    direction: direction === 'ascending' ? 'descending' : 'ascending',
-  //  })
-  // }
 
   render() {
     return(
@@ -40,6 +23,9 @@ class UsersTable extends Component {
           <Table.Row>
             <Table.HeaderCell>
               Name
+            </Table.HeaderCell>
+            <Table.HeaderCell>
+              ID
             </Table.HeaderCell>
             <Table.HeaderCell>
               Email
@@ -61,10 +47,21 @@ class UsersTable extends Component {
                     {user.name}
                   </Table.Cell>
                   <Table.Cell>
+                    {user.id}
+                  </Table.Cell>
+                  <Table.Cell>
                     {user.email}
                   </Table.Cell>
                   <Table.Cell>
                     {user.status}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Button color='yellow'>
+                      <Icon name='pencil'> </Icon>
+                    </Button>
+                    <Button color='red'>
+                      <Icon name='trash'> </Icon>
+                    </Button>
                   </Table.Cell>
                 </Table.Row>);
             })

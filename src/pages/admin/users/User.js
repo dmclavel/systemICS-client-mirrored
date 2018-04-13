@@ -6,10 +6,10 @@ import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
 const users = [
-  { name: 'John', email: 'jhon@up.edu.ph', status: 'student' },
-  { name: 'Amber', email: 'amber@up.edu.ph', status: 'faculty' },
-  { name: 'Leslie', email: 'leslie@up.edu.ph', status: 'student' },
-  { name: 'Ben', email: 'ben@up.edu.ph', status: 'faculty' },
+  { name: 'John', email: 'jhon@up.edu.ph', status: 'student', id: '2015-12345' },
+  { name: 'Amber', email: 'amber@up.edu.ph', status: 'faculty', id: '12317890' },
+  { name: 'Leslie', email: 'leslie@up.edu.ph', status: 'student', id: '20014-32343' },
+  { name: 'Ben', email: 'ben@up.edu.ph', status: 'faculty', id: '12379834' },
 ]
 class User extends Component {
 	constructor(props){
