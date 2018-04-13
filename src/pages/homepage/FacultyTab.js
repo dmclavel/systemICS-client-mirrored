@@ -34,12 +34,8 @@ class FacultyTab extends Component {
           }
 	        ],
 	        facultyQuery: "",
-	        facultyResult: [
-	        {"name": "",
-           "email_add": "",
-            "isRegCom": "" 
-          }
-	        ],
+	        facultyResult: [],
+	        originalFaculty: []
 
 	    }
 	    autobind(this);
@@ -53,6 +49,7 @@ class FacultyTab extends Component {
 		    socket.on('view_all_active_faculty_members', (returnValueFromServer) => {
 		      console.log(returnValueFromServer);
           this.setState({faculty: returnValueFromServer});
+          this.setState({originalFaculty: returnValueFromServer});
 		    });
 		  }
 		  //a function for sending data to server.you can have many of these
@@ -62,17 +59,25 @@ class FacultyTab extends Component {
 	}
 
 	handleSearch = (e) => {
-		const socket = socketIOClient(this.state.endpoint); //establish connection to the server
-		    // listens on an endpoint and executes fallback function
 		this.setState({facultyQuery: e.target.value});
-		console.log(this.state.facultyQuery);
-		for (var j = 0; j < this.state.faculty.length; j++){
-		  // console.log(this.state.faculty[j].name);
-		  if (this.state.faculty[j].name.match(this.state.facultyQuery)){
-		  	this.state.facultyResult.unshift(this.state.faculty[j]);
-		  }
+		this.setState({faculty: this.state.originalFaculty});
+
+	}
+
+	searchFaculty = (e) => {
+		if (this.state.facultyQuery != ""){
+			this.setState({facultyResult: []});
+			for (var j = 0; j < this.state.faculty.length; j++){
+			  if (this.state.faculty[j].name.match(this.state.facultyQuery)){
+			  	this.state.facultyResult.push(this.state.faculty[j]);
+			  	console.log("Found Match.");
+			  }
+			}
+			this.setState({faculty: this.state.facultyResult});
 		}
-		this.setState({faculty: this.state.facultyResult});
+
+		this.setState({facultyQuery: ""});
+			
 	}
 
   render() {
@@ -89,6 +94,9 @@ class FacultyTab extends Component {
 						<Grid.Row>
               <Card fluid={true}  id="inputWidth" >
                   <Input transparent={true} fluid={true} icon='search' iconPosition='left' placeholder = "Search faculty..." onChange={this.handleSearch}/>
+              		<Button basic onClick={this.searchFaculty}>
+              			Search
+              		</Button>
               </Card>
 			      </Grid.Row>
 					</Grid.Column>
@@ -107,7 +115,6 @@ class FacultyTab extends Component {
 
       								</Card.Group>
            					</Container>
-
 						</Grid>
 					</Grid.Column>
 				</Grid.Row>
