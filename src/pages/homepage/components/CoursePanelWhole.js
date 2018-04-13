@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Segment, Container, Grid, Image, Button, Header} from 'semantic-ui-react';
+import { Segment, Container, Grid, Image, Button, Header, Input} from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
 const square = { width: 100, height: 100 };
 const square1 = { width: 50, height: 50 };
 
-class CoursePanel extends Component {
+class CoursePanelWhole extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -46,10 +46,10 @@ class CoursePanel extends Component {
 	render() {
 		return (
 			<div className="courses">
-				
+				<Input fluid placeholder="Search classes..."/>
 				{
 					/* Hi, in the future, make it as another component */
-					this.state.lecture.slice(0,3).map((item, index) =>
+					this.state.lecture.map((item, index) =>
 						<Segment fluid id = {item.course_name}>
 							<Grid divided>	
 								<Grid.Row>
@@ -89,10 +89,10 @@ class CoursePanel extends Component {
 						</Segment>
 					)
 				}
-				<Button basic content='View More' />
+				
 			</div>
 		);
 	}
 }
 
-export default CoursePanel;
+export default CoursePanelWhole;
