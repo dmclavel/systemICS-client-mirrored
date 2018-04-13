@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Segment, Container, Grid, Image, Button, Header} from 'semantic-ui-react';
+import { Segment, Container, Grid, Image, Button, Header, Input} from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
 const square = { width: 100, height: 100 };
 const square1 = { width: 50, height: 50 };
 
-class CoursePanel extends Component {
+class CoursePanelWhole extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -25,7 +25,10 @@ class CoursePanel extends Component {
 				"description": "",
 				"name": ""
 			}
-			]
+			],
+			classQuery: "",
+			originalLecture: [],
+			lectureResult: []
 		}
 		autobind(this);
 	}
@@ -36,6 +39,7 @@ class CoursePanel extends Component {
 		    socket.on('view_all_lecture_sections', (returnValueFromServer) => {
 		      console.log(returnValueFromServer);
           this.setState({lecture: returnValueFromServer});
+          this.setState({originalLecture: returnValueFromServer});
 		    });
 		  }
 		  //a function for sending data to server.you can have many of these
@@ -43,13 +47,37 @@ class CoursePanel extends Component {
 		    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
 		    socket.emit('login', 'this is my data');//send data to 'login' endpoint in server
 	}
+
+	handleChange = (e) => {
+		console.log("yes");
+		this.setState({classQuery: e.target.value});
+		this.setState({lecture: this.state.originalLecture});
+		console.log(this.state.classQuery);
+	}
+
+	handleSearch = (e) => {
+		console.log("searching...");
+		if (this.state.classQuery != ""){
+			this.setState({lectureResult: []});
+			for (var j = 0; j < this.state.lecture.length; j++){
+			  if (this.state.lecture[j].course_name.match(this.state.classQuery)){
+			  	this.state.lectureResult.push(this.state.lecture[j]);
+			  	console.log("Found Match.");
+			  }
+			}
+			this.setState({lecture: this.state.lectureResult});
+		}
+
+		this.setState({classQuery: ""});
+			
+	}
 	render() {
 		return (
 			<div className="courses">
-				
+				<Input fluid action={ <Button onClick={this.handleSearch} basic icon='search' transparent={true} />} placeholder = "Search classes..." onChange={this.handleChange} />
 				{
 					/* Hi, in the future, make it as another component */
-					this.state.lecture.slice(0,3).map((item, index) =>
+					this.state.lecture.map((item, index) =>
 						<Segment fluid id = {item.course_name}>
 							<Grid divided>	
 								<Grid.Row>
@@ -89,10 +117,10 @@ class CoursePanel extends Component {
 						</Segment>
 					)
 				}
-				<Button basic content='View More' />
+				
 			</div>
 		);
 	}
 }
 
-export default CoursePanel;
+export default CoursePanelWhole;
