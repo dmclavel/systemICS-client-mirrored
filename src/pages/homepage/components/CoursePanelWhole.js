@@ -25,7 +25,10 @@ class CoursePanelWhole extends Component {
 				"description": "",
 				"name": ""
 			}
-			]
+			],
+			classQuery: "",
+			originalLecture: [],
+			lectureResult: []
 		}
 		autobind(this);
 	}
@@ -36,6 +39,7 @@ class CoursePanelWhole extends Component {
 		    socket.on('view_all_lecture_sections', (returnValueFromServer) => {
 		      console.log(returnValueFromServer);
           this.setState({lecture: returnValueFromServer});
+          this.setState({originalLecture: returnValueFromServer});
 		    });
 		  }
 		  //a function for sending data to server.you can have many of these
@@ -43,10 +47,34 @@ class CoursePanelWhole extends Component {
 		    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
 		    socket.emit('login', 'this is my data');//send data to 'login' endpoint in server
 	}
+
+	handleChange = (e) => {
+		console.log("yes");
+		this.setState({classQuery: e.target.value});
+		this.setState({lecture: this.state.originalLecture});
+		console.log(this.state.classQuery);
+	}
+
+	handleSearch = (e) => {
+		console.log("searching...");
+		if (this.state.classQuery != ""){
+			this.setState({lectureResult: []});
+			for (var j = 0; j < this.state.lecture.length; j++){
+			  if (this.state.lecture[j].course_name.match(this.state.classQuery)){
+			  	this.state.lectureResult.push(this.state.lecture[j]);
+			  	console.log("Found Match.");
+			  }
+			}
+			this.setState({lecture: this.state.lectureResult});
+		}
+
+		this.setState({classQuery: ""});
+			
+	}
 	render() {
 		return (
 			<div className="courses">
-				<Input fluid placeholder="Search classes..."/>
+				<Input fluid action={ <Button onClick={this.handleSearch} basic icon='search' transparent={true} />} placeholder = "Search classes..." onChange={this.handleChange} />
 				{
 					/* Hi, in the future, make it as another component */
 					this.state.lecture.map((item, index) =>
