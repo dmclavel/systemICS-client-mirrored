@@ -55,6 +55,15 @@ class AdminCard extends Component {
 				console.log(this.state.coursesX);
 			});
 		}
+		fetchCourse = () => {
+			const socket = socketIOClient(this.state.address);
+			const data = {email: 'pvgrubat@up.edu.ph'};
+			socket.emit("view_all_active_course_offerings", data);
+			socket.on("view_all_active_course_offerings", (course) => {
+				this.setState({coursesX:course});
+				console.log(this.state.coursesX);
+			});
+		}
 
   render() {
 		const{course_id, time_start, time_end, room, day, section, unit, max_capacity, status, description, coursesX, courses} = this.state
@@ -66,7 +75,7 @@ class AdminCard extends Component {
 							 	Faculty Workload
 							</Header>
 	            		<Input icon="search" width={12}/>
-	            <AddCourseModal /> <AddLectureSection />
+	            <AddCourseModal fetchCourse={this.fetchCourse}/> <AddLectureSection />
 
       				<Table textAlign="center">
               <Table.Header>

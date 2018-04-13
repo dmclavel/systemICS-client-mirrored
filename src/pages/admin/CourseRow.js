@@ -36,24 +36,22 @@ class CourseRow extends Component {
           <Table.Cell>{this.props.room}</Table.Cell>
           <Table.Cell>{this.props.students}</Table.Cell>
           <Table.Cell>
-						{console.log(this.props.course)}
-
             <AddLabSection/>
 
             <EditCourse
-              empno={this.props.empno} 
-              courseoffering={this.props.courseoffering} 
-              title={this.props.title} 
-              course={this.props.course} 
-              coursecode={this.props.coursecode} 
-              section={this.props.section} timestart={this.props.time_start} 
-              timeend={this.props.time_end} 
-              room={this.props.room} 
-              day={this.props.day} 
-              section={this.props.section} 
-              maxcapacity={this.props.maxcapacity} 
-              noofstudents={this.props.students} 
-              acadyear={this.props.acadyear} 
+              empno={this.props.empno}
+              courseoffering={this.props.courseoffering}
+              title={this.props.title}
+              course={this.props.course}
+              coursecode={this.props.coursecode}
+              section={this.props.section} timestart={this.props.time_start}
+              timeend={this.props.time_end}
+              room={this.props.room}
+              day={this.props.day}
+              section={this.props.section}
+              maxcapacity={this.props.maxcapacity}
+              noofstudents={this.props.students}
+              acadyear={this.props.acadyear}
               sem={this.props.sem} unit={this.props.unit}
             />
 
@@ -71,23 +69,21 @@ class CourseRow extends Component {
           <Table.Cell>{this.props.room}</Table.Cell>
           <Table.Cell>{this.props.students}</Table.Cell>
           <Table.Cell>
-						 {console.log(this.props.course)}
-
              <EditCourse 
-               desc={this.props.description} 
-               empno={this.props.empno} 
-               courseoffering={this.props.courseoffering} 
-               title={this.props.title} course={this.props.course} 
-               coursecode={this.props.coursecode} 
-               section={this.props.section} 
-               timestart={this.props.time_start} 
-               timeend={this.props.time_end} room={this.props.room} 
-               day={this.props.day} 
-               section={this.props.section} 
-               maxcapacity={this.props.maxcapacity} 
-               noofstudents={this.props.students} 
-               acadyear={this.props.acadyear} 
-               sem={this.props.sem} 
+               desc={this.props.description}
+               empno={this.props.empno}
+               courseoffering={this.props.courseoffering}
+               title={this.props.title} course={this.props.course}
+               coursecode={this.props.coursecode}
+               section={this.props.section}
+               timestart={this.props.time_start}
+               timeend={this.props.time_end} room={this.props.room}
+               day={this.props.day}
+               section={this.props.section}
+               maxcapacity={this.props.maxcapacity}
+               noofstudents={this.props.students}
+               acadyear={this.props.acadyear}
+               sem={this.props.sem}
                unit={this.props.unit}
             />
 
