@@ -1,0 +1,63 @@
+.manage-heading {
+	min-width: 50%;
+  max-width: 100%;
+  width: 100%;
+  height: 50vh;
+}
+
+.heading-background {
+	min-width: 50%;
+  max-width: 100%;
+  width: 100%;
+  height: 50vh;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  
+  position: relative;
+  margin-top: 3vh;    
+  background-image: url("./code.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+.heading-content {
+	left: 0;
+  right: 0;
+  top: 0;
+  padding-top: 20vh;
+  z-index: 2;
+  position: absolute;
+}
+
+.heading-message{
+	font-size: 8vh;
+  margin-top: 3vh;
+  margin-bottom: 0vh;
+  padding-left: 40vh;
+  text-align: left;
+  color: white;
+}
+
+.heading-submessage {
+	text-align: left;
+  font-size: 3vh;
+  margin-top: 0vh;
+  padding-left: 45vh;
+  color: white;
+}
+
+.admin-button {
+  width: 20vh;
+  height: 20vh;
+}
+
+.admin-button-caption {
+  padding-top: 10px;
+  color: white;
+}

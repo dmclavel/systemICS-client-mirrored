@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Grid, Container, Header, Table, Button, Card, Input, Modal, Segment} from 'semantic-ui-react';
 import CourseRow from './CourseRow';
-import NavbarIn from '../components/NavbarIn';
-import Heading from '../components/Heading';
+import NavbarIn from '../components/navbar/NavbarIn';
+import ManageHeader from '../components/headers/ManageHeader';
 import Sidebar from '../components/Sidebar';
 import AdminCard from './AdminCard.js';
 import autobind from 'react-autobind';
+
 const inlineStyle={
 	modal :{
 		marginTop: '0px !important',
@@ -17,14 +18,13 @@ const inlineStyle={
 };
 
 class Admin extends Component {
-
   render() {
     return(
       <div className='Admin'>
       	<Grid>
       		<Grid.Row>
-      			<NavbarIn />
-      			<Heading />
+      			<NavbarIn user={this.props.user} />
+      			<ManageHeader user={this.props.user} />
       		</Grid.Row>
       		<Grid.Row>
       			<Grid.Column width={1} />

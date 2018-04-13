@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Container, Header, Table, Button, Card, Input, Modal, Segment} from 'semantic-ui-react';
 import CourseRow from './CourseRow';
-import NavbarIn from '../components/NavbarIn';
+import NavbarIn from '../components/navbar/NavbarIn';
 import Heading from '../components/Heading';
 import Sidebar from '../components/Sidebar';
 import AddCourseModal from './AddCourseModal';

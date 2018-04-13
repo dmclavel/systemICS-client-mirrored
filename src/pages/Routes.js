@@ -14,10 +14,10 @@ import FacultyTab from './homepage/FacultyTab';
 import Login from './login/Login';
 import Faculty from './faculty/Faculty';
 import Admin from './admin/Admin';
+import Advisees from './advisees/Advisees';
 import RegCom from './regcom/RegCom';
 import SectionTab from './homepage/SectionTab';
-
-
+import NotFound from './components/NotFound';
 
 const authenticator = {
   user: 3,
@@ -48,29 +48,32 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 
 class Routes extends Component {
-  constructor(props){
-    super(props);
-  }
+	constructor(props) {
+		super(props);
+	}
 
-  componentDidMount(){
-    authenticator.user = this.props.accessLvl;
-  }
-
-  render() {
+	render() {
 		return (
 			<main>
 				<Switch>
 					<Route exact path='/' component={ Homepage } securityLevel={0}/>
 					<Route exact path='/faculty' component={ FacultyTab } securityLevel={0}/>
-					<Route exact path='/login' component={ () => <Login logInHanlder={this.props.logInHanlder}/> } securityLevel={0} />
-					{/*<PrivateRoute exact path='/faculty' component={ FacultyTab } securityLevel={1}/>*/}
-					<PrivateRoute exact path='/admin/home' component={ Admin } securityLevel={3}/>
-					<PrivateRoute exact path='/regcom/home' component={ RegCom } securityLevel={3}/>
+					<Route exact path='/login' component={ () => <Login logInHandler={this.props.logInHandler} /> } securityLevel={0}/>
+
+					<PrivateRoute exact path='/admin/dashboard' component={ () => <Faculty user='admin' /> } securityLevel={3}/>
+					<PrivateRoute exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } securityLevel={3}/>
+					<PrivateRoute exact path='/admin/manage/advisees' component={ () => <Advisees user='admin' />  } securityLevel={3}/>
+					<PrivateRoute exact path='/admin/manage/teaching' component={ () => <RegCom user='admin' />  } securityLevel={3}/>
+
+					<PrivateRoute exact path='/regcom/dashboard' component={ () => <Faculty user='regcom' /> } securityLevel={3}/>
+					<PrivateRoute exact path='/regcom/manage/advisees' component={ () => <Advisees user='regcom' /> } securityLevel={3}/>
+					<PrivateRoute exact path='/regcom/manage/teaching' component={ () => <RegCom user='regcom' />  } securityLevel={3}/>
 					<PrivateRoute exact path='/dashboard' component={ Faculty } securityLevel={3}/>
-					{/*<PrivateRoute exact path='/regcom/home' component={ RegCom } securityLevel={2}/>
-					<PrivateRoute exact path='/faculty/home' component={ Faculty } securityLevel={1}/>*/}
+
 					<PrivateRoute exact path='/section/:_id' component={ SectionTab } securityLevel={1}/>
 					<PrivateRoute exact path='/classes' component={ Classes } securityLevel={1}/>
+
+					<Route path="*" component={ NotFound } />
 				</Switch>
 			</main>
 		)
