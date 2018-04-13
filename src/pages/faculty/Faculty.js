@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import {Grid, Search, Card, Input, Header} from 'semantic-ui-react';
+import {Grid, Search, Card, Input, Header, Button} from 'semantic-ui-react';
 import './Faculty.css';
 import SubjectCard from './SubjectCard';
 import Advisee from './Advisee';
 import socketIOClient from 'socket.io-client';
+<<<<<<< HEAD
+import NavbarIn from '../components/navbar/NavbarIn';
+=======
 import SearchAdvisee from './SearchAdvisee';
 import SearchCourse from './SearchCourse';
-import NavbarIn from '../components/navbar/NavbarIn';
+import NavbarIn from '../components/NavbarIn';
+>>>>>>> 919a5259958f7a9972b1a9240b4041225b0df441
 import Heading from '../components/Heading';
 
 class Faculty extends Component {
@@ -15,7 +19,8 @@ class Faculty extends Component {
 	    this.state = {
 	        endpoint: 'https://sleepy-falls-95372.herokuapp.com/',// the address of the server
           courses: [],
-          advisees: []
+          advisees: [],
+          searchInput: ''
       }
  	 }
 
@@ -33,6 +38,9 @@ class Faculty extends Component {
           this.setState({advisees: returnValueFromServer})
 		    });
 		}
+    handleCourseClick(e){
+        this.setState({ searchInput: e.target.value });
+    }
 
 
   render() {
@@ -41,18 +49,18 @@ class Faculty extends Component {
         <section className= 'MainSection'>
           <Grid>
               <Grid.Row>
-                <NavbarIn user={this.props.user} />
-                <Heading user={this.props.user} />
+                <NavbarIn />
+                <Heading />
               </Grid.Row>
                <Grid.Row>
                   <Grid.Column width={1}></Grid.Column>
                   <Grid.Column width={8}>
-                      <SearchCourse/>
                      <Grid.Row>
-                        {this.state.courses.map ((course)=>{
-                            return <SubjectCard name={course.course_name} title={course.course_title} description={course.description} section={course.section} no_of_students={course.no_of_students} capacity={course.max_capacity} room={course.room} time_start={course.time_start} time_end={course.time_end}/>
-                          })
-                        }
+                       <Input fluid action={ <Button icon='search' onClick={ this.handleCourseClick } /> } placeholder='Search...' />
+                       {this.state.courses.map ((course)=>{
+                           return <SubjectCard name={course.course_name} title={course.course_title} description={course.description} section={course.section} no_of_students={course.no_of_students} capacity={course.max_capacity} room={course.room} time_start={course.time_start} time_end={course.time_end}/>
+                         })
+                       }
                      </Grid.Row>
                   </Grid.Column>
                   <Grid.Column width={1}>
@@ -61,7 +69,7 @@ class Faculty extends Component {
                     <Card fluid raised={true}>
                        <h2>Advisees</h2>
                     </Card>
-                    <SearchAdvisee/>
+                    <Input fluid action={ <Button icon='search' onClick={ this.handleClick } /> } placeholder='Search...' />
                       {this.state.advisees.map ((advisees)=>{
                           return <Advisee name={advisees.student_name} student_number={advisees.student_number} curriculum={advisees.curriculum} email={advisees.email_add}/>
                         })
