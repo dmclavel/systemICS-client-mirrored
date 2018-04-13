@@ -68,7 +68,7 @@ class FacultyTab extends Component {
 		if (this.state.facultyQuery != ""){
 			this.setState({facultyResult: []});
 			for (var j = 0; j < this.state.faculty.length; j++){
-			  if (this.state.faculty[j].name.match(this.state.facultyQuery)){
+			  if (this.state.faculty[j].name.toLowerCase().match(this.state.facultyQuery.toLowerCase())){
 			  	this.state.facultyResult.push(this.state.faculty[j]);
 			  	console.log("Found Match.");
 			  }

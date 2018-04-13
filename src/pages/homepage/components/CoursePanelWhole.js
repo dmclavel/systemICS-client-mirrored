@@ -60,7 +60,7 @@ class CoursePanelWhole extends Component {
 		if (this.state.classQuery != ""){
 			this.setState({lectureResult: []});
 			for (var j = 0; j < this.state.lecture.length; j++){
-			  if (this.state.lecture[j].course_name.match(this.state.classQuery)){
+			  if (this.state.lecture[j].course_name.toLowerCase().match(this.state.classQuery.toLowerCase())){
 			  	this.state.lectureResult.push(this.state.lecture[j]);
 			  	console.log("Found Match.");
 			  }
