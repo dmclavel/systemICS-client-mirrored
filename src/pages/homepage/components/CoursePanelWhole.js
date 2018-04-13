@@ -49,35 +49,26 @@ class CoursePanelWhole extends Component {
 	}
 
 	handleChange = (e) => {
-		console.log("yes");
 		this.setState({classQuery: e.target.value});
 		this.setState({lecture: this.state.originalLecture});
-		console.log(this.state.classQuery);
 	}
 
-	handleSearch = (e) => {
-		console.log("searching...");
-		if (this.state.classQuery != ""){
-			this.setState({lectureResult: []});
-			for (var j = 0; j < this.state.lecture.length; j++){
-			  if (this.state.lecture[j].course_name.toLowerCase().match(this.state.classQuery.toLowerCase())){
-			  	this.state.lectureResult.push(this.state.lecture[j]);
-			  	console.log("Found Match.");
-			  }
-			}
-			this.setState({lecture: this.state.lectureResult});
-		}
-
-		this.setState({classQuery: ""});
-			
-	}
 	render() {
 		return (
 			<div className="courses">
-				<Input fluid action={ <Button onClick={this.handleSearch} basic icon='search' transparent={true} />} placeholder = "Search classes..." onChange={this.handleChange} />
+				<Input raised={true} fluid icon="search" placeholder = "Search classes..." onChange={this.handleChange} />
 				{
 					/* Hi, in the future, make it as another component */
-					this.state.lecture.map((item, index) =>
+					this.state.lecture.filter(item => {
+                    if (
+                      item.course_name
+                        .toLowerCase()
+                        .includes(this.state.classQuery.toLowerCase())
+                    ) {
+                      return true;
+                    }
+                    return false;
+                  }).map((item, index) =>
 						<Segment fluid id = {item.course_name}>
 							<Grid divided>	
 								<Grid.Row>
