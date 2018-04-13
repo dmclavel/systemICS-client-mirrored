@@ -92,8 +92,8 @@ class FacultyTab extends Component {
       			<Grid.Row>
 					<Grid.Column width={9} verticalAlign="middle">
 						<Grid.Row>
-              <Card id="inputWidth" fluid={true}>
-                <Input action={ <Button onClick={this.searchFaculty} basic icon='search' transparent={true} />} placeholder = "Search faculty..." onChange={this.handleSearch} />
+              	<Card id="inputWidth" fluid={true}>
+                <Input raised={true} fluid icon="search" placeholder = "Search faculty..." onChange={this.handleSearch} />
                </Card>
 			      </Grid.Row>
 					</Grid.Column>
@@ -101,7 +101,16 @@ class FacultyTab extends Component {
 						<Grid columns={4} divided centered>
             				<Container centered>
       								<Card.Group itemsPerRow={4}>
-      									{this.state.faculty.map((item, index)=>
+      									{this.state.faculty.filter(item => {
+                    if (
+                      item.name
+                        .toLowerCase()
+                        .includes(this.state.facultyQuery.toLowerCase())
+                    ) {
+                      return true;
+                    }
+                    return false;
+                  }).map((item, index)=>
       										<Card>
                             { item.isRegCom === 0 ? (
                                 <FacultyCard name={item.name} email={item.email_add} isRegCom={item.isRegCom}/>
