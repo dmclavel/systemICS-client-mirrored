@@ -18,6 +18,7 @@ import Advisees from './advisees/Advisees';
 import RegCom from './regcom/RegCom';
 import SectionTab from './homepage/SectionTab';
 import NotFound from './components/NotFound';
+import Users from './users/Users';
 
 const authenticator = {
   user: 3,
@@ -64,6 +65,7 @@ class Routes extends Component {
 					<PrivateRoute exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } securityLevel={3}/>
 					<PrivateRoute exact path='/admin/manage/advisees' component={ () => <Advisees user='admin' />  } securityLevel={3}/>
 					<PrivateRoute exact path='/admin/manage/teaching' component={ () => <RegCom user='admin' />  } securityLevel={3}/>
+					<PrivateRoute exact path='/admin/manage/users' component={ () => <Users user='admin' />  } securityLevel={3}/>
 
 					<PrivateRoute exact path='/regcom/dashboard' component={ () => <Faculty user='regcom' /> } securityLevel={3}/>
 					<PrivateRoute exact path='/regcom/manage/advisees' component={ () => <Advisees user='regcom' /> } securityLevel={3}/>
