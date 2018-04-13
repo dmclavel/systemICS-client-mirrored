@@ -4,7 +4,13 @@ import './Faculty.css';
 import SubjectCard from './SubjectCard';
 import Advisee from './Advisee';
 import socketIOClient from 'socket.io-client';
+<<<<<<< HEAD
 import NavbarIn from '../components/navbar/NavbarIn';
+=======
+import SearchAdvisee from './SearchAdvisee';
+import SearchCourse from './SearchCourse';
+import NavbarIn from '../components/NavbarIn';
+>>>>>>> 919a5259958f7a9972b1a9240b4041225b0df441
 import Heading from '../components/Heading';
 
 class Faculty extends Component {
@@ -43,8 +49,8 @@ class Faculty extends Component {
         <section className= 'MainSection'>
           <Grid>
               <Grid.Row>
-                <NavbarIn user={this.props.user} />
-                <Heading user={this.props.user} />
+                <NavbarIn />
+                <Heading />
               </Grid.Row>
                <Grid.Row>
                   <Grid.Column width={1}></Grid.Column>
