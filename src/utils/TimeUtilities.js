@@ -4,7 +4,68 @@
 //      (time1: {day: 'val', time_start: 'val', time_end: 'val'}, time2: {day: 'val', time_start: 'val', time_end: 'val'})
 //      time_start && time_end type is in military format HH:MM:ss
 // return value : boolean value that returns true if it is conflict, and false otherwise 
-export const isConflicting = (time1, time2) => {
+export const isScheduleConflict = (time1, time2) => {
+    let days = new Array(5);
+    let size = 5;
+    // Initialized days array to 0 -> each index correspond to day 
+    while(size--) days[size] = false;
+
+    const splittedDays1 = time1.day.split("-");
+    const splittedDays2 = time2.day.split("-");
+    
+    splittedDays1.forEach((day) => {
+        // Set all days in time1
+        switch(day){
+            case "M": 
+                    days[0] = true;
+                    break;
+            case "T":
+                    days[1] = true;
+                    break;
+            case "W":
+                    days[2] = true;
+                    break;
+            case "Th":
+                    days[3] = true;
+                    break;
+            case "F":
+                    days[4] = true;
+                    break;
+        }
+    });
+    for(let i = 0; i < splittedDays2.length; i++){
+        switch(splittedDays2[0]){
+            case "M": 
+                    if(days[0]){
+                        if(isTimeConflict(time1, time2)) return true;
+                    }
+                    break;
+            case "T":
+                    if(days[1]){
+                        if(isTimeConflict(time1, time2)) return true;
+                    }
+                    break;
+            case "W":
+                    if(days[2]){
+                        if(isTimeConflict(time1, time2)) return true;
+                    }
+                    break;
+            case "Th":
+                    if(days[3]){
+                        if(isTimeConflict(time1, time2)) return true;
+                    }
+                    break;
+            case "F":
+                    if(days[4]){
+                        if(isTimeConflict(time1, time2)) return true;
+                    }
+                    break;
+        }
+    }
+    return false;
+}
+
+export const isTimeConflict = (time1, time2) => {
     const separator = ":";
     const splittedStringStart1 = time1.time_start.split(separator, 2);
     const splittedStringStart2 = time2.time_start.split(separator, 2);
@@ -14,7 +75,7 @@ export const isConflicting = (time1, time2) => {
     const totalMinsStart2 = splittedStringStart2[0] * 60 + Number(splittedStringStart2[1]);
     const totalMinsEnd1 = splittedStringEnd1[0] * 60 + Number(splittedStringEnd1[1]);
     const totalMinsEnd2 = splittedStringEnd2[0] * 60 + Number(splittedStringEnd2[1]);
-    return !(totalMinsStart1 >= totalMinsEnd2 || totalMinsStart2 >= totalMinsEnd1);
+    return !(totalMinsStart1 >= totalMinsEnd2 || totalMinsStart2 >= totalMinsEnd1);   
 }
 
 // Given a time in military time, convert it to general time (with am/pm)

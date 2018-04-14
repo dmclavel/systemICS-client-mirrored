@@ -22,9 +22,9 @@ class DeleteModal extends Component {
   handleOpen = () => this.setState({ open: true });
   handleClose = () => this.setState({ open: false });
   handleOkay(e) {
-    const { course_offering_id} = this.props;
+    const { course_offering_id } = this.props;
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('unlink_course_offering', {
+    socket.emit('unassign_section', {
       course_offering_id
     });
     this.handleClose();

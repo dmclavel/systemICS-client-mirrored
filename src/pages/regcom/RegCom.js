@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import {
   Grid,
-  Container,
-  Header,
   Input,
   Segment,
-  Dropdown
 } from 'semantic-ui-react';
 import Information from './Information';
 import autobind from 'react-autobind';

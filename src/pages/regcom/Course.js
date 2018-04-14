@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Grid, Container, Icon, Segment } from 'semantic-ui-react';
+import { Button, Grid, Container, Icon} from 'semantic-ui-react';
 import DeleteModal from './DeleteModal';
 
 class Course extends Component {
-  unlinkCourseOffering(e) {}
-
   render() {
     const {course_name, section, room, day, time, no_of_students, course_offering_id } = this.props;
     return (

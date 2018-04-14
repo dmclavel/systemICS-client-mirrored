@@ -11,7 +11,7 @@ import {
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
 import Course from './Course';
-import { isConflicting, convertToGeneralTime } from '../../utils/TimeUtilities';
+import { isScheduleConflict, convertToGeneralTime } from '../../utils/TimeUtilities';
 import img from './kobe.jpg';
 
 // Modal inlineStyle to fix centering
@@ -40,16 +40,18 @@ class EditLoadModal extends Component {
   }
   componentDidMount() {
     const socket = socketIOClient(this.state.endpoint);
+    const {emp_no} = this.props;
     // For the client to be aware of the changes in the database
     socket.on('update_alert', update => {
-      socket.emit('view_all_active_courses_with_unlinked_sections', {});
-      socket.emit('search_course_offerings_of_specific_faculty', {
-        emp_no: this.props.emp_no
+      // These are all the emits that needs to be redone when update is available
+      socket.emit('view_available_courses_with_unassigned_sections', {});
+      socket.emit('search_sections_of_specific_faculty', {
+        emp_no
       });
     });
     // Retrieve courses with unlinked sections
-    socket.emit('view_all_active_courses_with_unlinked_sections', {});
-    socket.on('view_all_active_courses_with_unlinked_sections', courses => {
+    socket.emit('view_available_courses_with_unassigned_sections', {});
+    socket.on('view_available_courses_with_unassigned_sections', courses => {
       let codesAndDescription = [];
       // For each courses, concat course name with course id e.g. CMSC 22 - Intro to OOP
       courses.forEach((course, index) => {
@@ -65,10 +67,10 @@ class EditLoadModal extends Component {
       });
     });
     // For a specific faculty show their assigned courses
-    socket.emit('search_course_offerings_of_specific_faculty', {
-      emp_no: this.props.emp_no
+    socket.emit('search_sections_of_specific_faculty', {
+      emp_no
     });
-    socket.on('search_course_offerings_of_specific_faculty', courses => {
+    socket.on('search_sections_of_specific_faculty', courses => {
       this.setState({
         courses
       });
@@ -85,7 +87,7 @@ class EditLoadModal extends Component {
     // For each id values from multiple dropdown, send it to the database
     //      to assign the employee with the course_offering
     this.state.selectedCourseOfferingIds.forEach(course_offering_id => {
-      socket.emit('link_course_offering', {
+      socket.emit('assign_section', {
         emp_no: this.props.emp_no,
         course_offering_id
       });
@@ -96,11 +98,11 @@ class EditLoadModal extends Component {
 
   codesAndDescriptionHandleOnChange(e, data) {
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('view_all_unlinked_course_offerings', {
+    socket.emit('search_all_unassigned_sections_via_course_id', {
       course_id: data.value
     });
 
-    socket.on('view_all_unlinked_course_offerings', course_offerings => {
+    socket.on('search_all_unassigned_sections_via_course_id', course_offerings => {
       let timeAndSections = [];
       course_offerings.forEach((course_offering, index) => {
         const { time_start, time_end, day, section } = course_offering;
@@ -119,16 +121,16 @@ class EditLoadModal extends Component {
   }
   timeAndSectionsHandleOnChange(e, data) {
     const objTest = {
-      day: 'M',
+      day: 'M-W',
       time_start: '8:00:00',
       time_end: '11:00:00'
     }
     const objTest2 = {
-      day: 'M',
-      time_start: '12:00:00',
-      time_end: '1:00:00'
+      day: 'M-W ',
+      time_start: '10:30:00',
+      time_end: '12:00:00'
     }
-    console.log(isConflicting(objTest, objTest2));
+    console.log(isScheduleConflict(objTest, objTest2));
     this.setState({ selectedCourseOfferingIds: data.value });
   }
   render() {
@@ -207,6 +209,7 @@ class EditLoadModal extends Component {
                     }}>
                     {courses.map((course, index) => {
                       const { course_offering_id, no_of_students, section, course_name, subject, room, day, time_start, time_end } = course;
+                      // console.log(course_offering_id);
                       return (
                         <Course
                           key={index}
