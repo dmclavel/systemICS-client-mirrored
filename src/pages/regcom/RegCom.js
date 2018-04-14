@@ -34,7 +34,7 @@ class RegCom extends Component {
     socket.emit('view_all_regcom', {});
     socket.on('view_all_regcom', informations => {
       this.setState({
-        informations: informations
+        informations
       });
     });
   }
@@ -58,7 +58,7 @@ class RegCom extends Component {
                   placeholder="Search faculty"
                   icon="search"
                   iconPosition="left"
-                  fluid
+                  fluid="true"
                   transparent
                   onChange={this.handleSearch}
                 />
@@ -75,9 +75,9 @@ class RegCom extends Component {
                     }
                     return false;
                   })
-                  .map(information => {
+                  .map((information, index) => {
                     return (
-                      <Grid.Column width={11} stretched={true}>
+                      <Grid.Column width={11} stretched={true} key={index}>
                         <Information object={information} />
                       </Grid.Column>
                     );
