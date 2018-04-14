@@ -34,7 +34,8 @@ class EditLoadModal extends Component {
       timeAndSections: [],                        // list of options for time and sections available for course
       courses: [],                                // courses assigned to a faculty 
       open: false,                                // state of the modal
-      endpoint: 'https://sleepy-falls-95372.herokuapp.com'  // endpoint 
+      endpoint: 'https://sleepy-falls-95372.herokuapp.com',  // endpoint 
+      conflict: false
     };
     autobind(this);
   }
@@ -59,7 +60,7 @@ class EditLoadModal extends Component {
         codesAndDescription.push({
           key: course_id,
           text: `${course_name} - ${course_title}`,
-          value: `${course_id}`
+          value: course_id
         });
       });
       this.setState({
@@ -120,17 +121,27 @@ class EditLoadModal extends Component {
     });
   }
   timeAndSectionsHandleOnChange(e, data) {
-    const objTest = {
-      day: 'M-W',
-      time_start: '8:00:00',
-      time_end: '11:00:00'
-    }
-    const objTest2 = {
-      day: 'M-W ',
-      time_start: '10:30:00',
-      time_end: '12:00:00'
-    }
-    console.log(isScheduleConflict(objTest, objTest2));
+    const socket = socketIOClient(this.state.endpoint);
+    const socket2 = socketIOClient(this.state.endpoint);
+    let conflict = false;
+    socket.emit('get_unarchived_section_by_id', { course_offering_id: data.value});
+    socket.on('get_unarchived_section_by_id', source => {
+      console.log("Adas");
+      const { day: source_days, time_start: source_time_start, time_end: source_time_end } = source;
+      this.state.selectedCourseOfferingIds.forEach((id, index) => {
+        socket2.emit('get_unarchived_section_by_id', { course_offering_id: id });
+        socket2.on('get_unarchived_section_by_id', target => {
+          const { day: target_days, time_start: target_time_start, time_end: target_time_end } = target;
+          const arg1 = { day: source_days, time_start: source_time_start, time_end: source_time_end };
+          const arg2 = { day: target_days, time_start: target_time_start, time_end: target_time_end }
+          console.log(`${source_days}, ${source_time_start}, ${source_time_end}, ${target_days}, ${target_time_start}, ${target_time_end}`);
+          if(isScheduleConflict(arg1, arg2)){
+            this.setState({conflict: true});
+          }    
+        });
+      });
+    });
+    if(this.state.conflict) console.log("enlo");
     this.setState({ selectedCourseOfferingIds: data.value });
   }
   render() {

@@ -28,8 +28,8 @@ class RegCom extends Component {
   }
   componentDidMount() {
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('view_all_regcom', {});
-    socket.on('view_all_regcom', informations => {
+    socket.emit('view_all_active_faculty_members', {});
+    socket.on('view_all_active_faculty_members', informations => {
       this.setState({
         informations
       });
