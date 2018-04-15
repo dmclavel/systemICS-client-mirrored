@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Table, Grid} from 'semantic-ui-react';
+import { Table, Grid, Button, Popup, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 
 
@@ -15,6 +15,7 @@ class UsersTable extends Component {
    }
     autobind(this);
   }
+
   //handle table sorting
   // handleSort = clickedColumn => () => {
   //  const { column, data, direction } = this.state
@@ -37,17 +38,17 @@ class UsersTable extends Component {
     return(
       <Table sortable celled fixed>
         <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>
+          <Table.Row textAlign='center'>
+            <Table.HeaderCell width={5}>
               Name
             </Table.HeaderCell>
-            <Table.HeaderCell>
+            <Table.HeaderCell width={5}>
               Email
             </Table.HeaderCell>
-            <Table.HeaderCell>
+            <Table.HeaderCell width={2}>
               Status
             </Table.HeaderCell>
-            <Table.HeaderCell>
+            <Table.HeaderCell width={4}>
               Actions
             </Table.HeaderCell>
           </Table.Row>
@@ -63,8 +64,33 @@ class UsersTable extends Component {
                   <Table.Cell>
                     {user.email}
                   </Table.Cell>
-                  <Table.Cell>
+                  <Table.Cell textAlign="center">
                     {user.status}
+                  </Table.Cell>
+                  <Table.Cell textAlign="center">
+                    <Grid>
+                      <Grid.Row centered columns={3}>
+                        <Grid.Column>
+                          <Popup
+                            trigger={
+                              <Button positive>
+                                <Icon.Group>
+                                  <Icon name="user" />
+                                  <Icon corner inverted name="arrow circle outline up" />
+                                </Icon.Group>
+                              </Button>
+                            }
+                            content='Promote user'
+                          />
+                        </Grid.Column>
+                        <Grid.Column>
+                          <Popup
+                            trigger={<Button icon='add' negative />}
+                            content='Archive user'
+                          />
+                        </Grid.Column>
+                      </Grid.Row>
+                    </Grid>
                   </Table.Cell>
                 </Table.Row>);
             })

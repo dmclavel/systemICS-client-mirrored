@@ -5,6 +5,7 @@ FILE: Login, for the basic log-in page. Includes google sign-in.
 
 import React, { Component } from 'react';
 import { Grid, Button, Form, Segment, Header, Image, Divider } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 import socketIOClient from 'socket.io-client';
 import './Login.css';
@@ -70,7 +71,11 @@ class Login extends Component {
                         </div>
                     </GoogleAPI>
                   </div>
-              </Segment> 
+              </Segment>
+
+              <Link to="/">
+                <Button icon="arrow outline left" content="Back to Homepage" /> 
+              </Link>
             </Grid.Column>
             <Grid.Column width={5} />
           </Grid.Row>

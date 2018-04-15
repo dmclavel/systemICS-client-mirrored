@@ -16,7 +16,7 @@ import './FacultyTab.css';
 import FacultyCard from './FacultyCard';
 import RegComCard from './RegComCard';
 import NavbarHome from '../components/navbar/NavbarHome';
-import Heading from '../components/Heading';
+import ClassesHeader from '../components/headers/ClassesHeader';
 
 /*
 If you wish to import other JS files, do it here.
@@ -71,7 +71,7 @@ class FacultyTab extends Component {
       		<Grid centered={true}>
       			<Grid.Row>
       				<NavbarHome active='faculty' />
-      				<Heading />
+      				<ClassesHeader />
       			</Grid.Row>
 
       			<Grid.Row>

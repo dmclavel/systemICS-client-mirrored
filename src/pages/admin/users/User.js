@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Grid} from 'semantic-ui-react';
-import SearchCard from '../../../components/SearchCard';
-import UsersTable from '../../../components/UsersTable';
+import SearchCard from './SearchCard';
+import UsersTable from './UsersTable';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
@@ -26,6 +26,7 @@ class User extends Component {
 		// const socket = socketIOClient(this.state.address);
 		// socket.emit('');
 	}
+
 	handleSearch = (query) => {
 		if(query.length == 0){
 			this.setState({visibleData: this.state.data})
@@ -45,16 +46,13 @@ class User extends Component {
 		}
 		console.log(this.state.visibleData);
 	}
+
 	render() {
 		return (
-			<Grid>
-				<Grid.Row>
-					<SearchCard fluid={true} handleSearch={this.handleSearch}/>
-				</Grid.Row>
-				<Grid.Row>
-					<UsersTable data={this.state.visibleData}/>
-				</Grid.Row>
-			</Grid>
+			<div>
+				<SearchCard fluid={true} handleSearch={this.handleSearch}/>
+				<UsersTable data={this.state.visibleData}/>
+			</div>
 		);
 	}
 }

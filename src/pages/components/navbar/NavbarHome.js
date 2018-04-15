@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Segment, Label, Menu, Button, Container, Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import './NavbarHome.css';
-import Logo from './logo-with-white-stroke.png';
+import Logo from './logo-transparent-no-stroke.png';
 
 class NavbarHome extends Component {
 	constructor(props) {

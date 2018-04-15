@@ -3,11 +3,11 @@ import { Grid, Image, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import './ManageHeader.css';
 
-class HomepageHeader extends Component {
+class SectionHeader extends Component {
 	render() {
 		return (
 			<div className="home-heading">
-				<div className="home-background bg-color-header-home" />
+				<div className="home-background" />
 				<div className="home-content">
 					<Grid>
 						<Grid.Row divided>
@@ -21,4 +21,4 @@ class HomepageHeader extends Component {
 	}
 }
 
-export default HomepageHeader;
+export default SectionHeader;

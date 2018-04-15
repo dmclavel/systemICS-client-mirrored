@@ -18,6 +18,12 @@
 	margin: auto !important;
 }
 
+.nav-menu-in {
+	width: 240px !important;
+	padding-top: 10px;
+	margin: auto !important;
+}
+
 .nav-logo {
 	height: 60px !important;
 	width: auto !important;
