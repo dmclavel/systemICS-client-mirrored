@@ -2,8 +2,18 @@ import React, { Component } from 'react';
 import { Grid, Input, Button } from 'semantic-ui-react';
 import AdviseeTable from './AdviseeTable';
 import AddAdvisee from './AddAdvisee';
-
+import autobind from 'react-autobind';
 class Advisee extends Component {
+	constructor(props){
+		super(props);
+		this.state={
+			searchInput: ''
+		}
+		autobind(this);
+	}
+	handleSearch(e){
+		this.setState({searchInput: e.target.value});
+	}
 	render() {
 		return (
 			<div>
@@ -11,7 +21,7 @@ class Advisee extends Component {
 					<Grid.Row>
 						<Grid.Column width={2} />
 						<Grid.Column width={9}>
-							<Input placeholder='Search advisee here' icon='search' fluid />
+							<Input placeholder='Search advisee here' icon='search' onChange={this.handleSearch} fluid />
 						</Grid.Column>
 						<Grid.Column width={1} />
 						<Grid.Column width={3}>
@@ -20,7 +30,7 @@ class Advisee extends Component {
 					</Grid.Row>
 					<Grid.Row>
 						<Grid.Column width={16}>
-							<AdviseeTable />
+							<AdviseeTable search={this.state.searchInput} />
 						</Grid.Column>
 					</Grid.Row>
 				</Grid>

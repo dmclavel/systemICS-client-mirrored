@@ -1,45 +1,13 @@
 import {
   Button,
-  Input,
   Grid,
   Container,
   Segment,
-  Image,
   Header,
-  Dropdown
 } from 'semantic-ui-react';
-import { Icon, Modal } from 'semantic-ui-react';
 import React, { Component } from 'react';
-import Course from './Course';
-import img from './kobe.jpg';
-import autobind from 'react-autobind';
 import EditLoadModal from './EditLoadModal';
-// TODO:
-const inlineStyle = {
-  modal: {
-    marginTop: 'auto',
-    marginLeft: 'auto',
-    marginRight: 'auto'
-  }
-};
 
-const options = [
-  {
-    key: 1,
-    value: 'cs22',
-    text: 'CMSC 22 - Intro to OOP'
-  },
-  {
-    key: 1,
-    value: 'cs22',
-    text: 'CMSC 22 - Intro to OOP'
-  },
-  {
-    key: 1,
-    value: 'cs22',
-    text: 'CMSC 22 - Intro to OOP'
-  }
-];
 class Information extends Component {
   render() {
     const { emp_no, name, room, email_add, teachingLoad } = this.props.object;
