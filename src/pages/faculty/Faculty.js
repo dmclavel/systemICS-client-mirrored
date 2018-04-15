@@ -6,8 +6,8 @@ import Advisee from './Advisee';
 import socketIOClient from 'socket.io-client';
 import SearchAdvisee from './SearchAdvisee';
 import SearchCourse from './SearchCourse';
-import NavbarIn from '../components/NavbarIn';
-import Heading from '../components/Heading';
+import NavbarIn from '../components/navbar/NavbarIn';
+import DashboardHeader from '../components/headers/DashboardHeader';
 
 class Faculty extends Component {
    constructor(props){
@@ -45,8 +45,8 @@ class Faculty extends Component {
         <section className= 'MainSection'>
           <Grid>
               <Grid.Row>
-                <NavbarIn />
-                <Heading />
+                <NavbarIn active='dashboard' />
+                <DashboardHeader />
               </Grid.Row>
                <Grid.Row>
                   <Grid.Column width={1}></Grid.Column>

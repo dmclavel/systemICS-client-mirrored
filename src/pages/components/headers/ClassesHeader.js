@@ -7,7 +7,7 @@ class ClassesHeader extends Component {
 	render() {
 		return (
 			<div className="home-heading">
-				<div className="home-background" />
+				<div className="home-background bg-color-header-home" />
 				<div className="home-content">
 					<Grid>
 						<Grid.Row divided>

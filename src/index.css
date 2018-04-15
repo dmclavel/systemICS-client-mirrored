@@ -15,6 +15,26 @@ body {
 	background-color: #ede8e8 !important;
 }
 
+.bg-color-nav-home {
+	background-color: #283546 !important;
+}
+
+.bg-color-nav-faculty {
+	background-color: #462835 !important;
+}
+
+.bg-color-nav-admin {
+	background-color: #2a2846 !important;
+}
+
+.bg-color-nav-admin {
+	background-color: #1f3353 !important;
+}
+
+.bg-color-header-home {
+	background-color: #284446 !important;
+}
+
 /* for fonts and font colors */
 @import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700');
 

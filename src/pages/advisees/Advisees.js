@@ -11,7 +11,7 @@ class Advisees extends Component {
                   <div className='Advisees'>
             <Grid>
                   <Grid.Row>
-                        <NavbarIn user={this.props.user} />
+                        <NavbarIn user={this.props.user} active='manage' />
                         <ManageHeader user={this.props.user} />
                   </Grid.Row>
                   <Grid.Row>
