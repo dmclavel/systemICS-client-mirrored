@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 
-import Navbar from '../components/Navbar';
+import NavbarHome from '../components/navbar/NavbarHome';
 import Heading from '../components/Heading';
 import CoursePanel from './components/CoursePanel';
 import Section from './Section';
@@ -11,7 +11,7 @@ class SectionTab extends Component {
 		return (
 			<Grid>
 				<Grid.Row>
-					<Navbar />
+					<NavbarHome active='classes' />
 					<Heading />
 				</Grid.Row>
 				<Grid.Row centered>

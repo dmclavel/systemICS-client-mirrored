@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 
-import Navbar from '../components/Navbar';
-import Heading from '../components/Heading';
+import NavbarHome from '../components/navbar/NavbarHome';
+import HomepageHeader from '../components/headers/HomepageHeader';
 import CoursePanel from './components/CoursePanel';
-
 
 class Homepage extends Component {
 	render() {
 		return (
 			<Grid>
 				<Grid.Row>
-					<Navbar />
-					<Heading />
+					<NavbarHome active='home' />
+					<HomepageHeader />
 				</Grid.Row>
 				<Grid.Row centered>
 					<CoursePanel/>
