@@ -43,7 +43,7 @@ class App extends Component {
   render() {
     console.log(this.state);
     return (
-      <div className="App">
+      <div className="App bg-color-main">
       	<Router history={browserHistory} >
           <Routes logInHandler={this.handleLogin}  accessLvl={this.state.accessLvl}/>
       	</Router>

@@ -15,7 +15,7 @@ import socketIOClient from 'socket.io-client';
 import './FacultyTab.css';
 import FacultyCard from './FacultyCard';
 import RegComCard from './RegComCard';
-import Navbar from '../components/Navbar';
+import NavbarHome from '../components/navbar/NavbarHome';
 import Heading from '../components/Heading';
 
 /*
@@ -70,7 +70,7 @@ class FacultyTab extends Component {
       <div className='FacultyTab'>
       		<Grid centered={true}>
       			<Grid.Row>
-      				<Navbar />
+      				<NavbarHome active='faculty' />
       				<Heading />
       			</Grid.Row>
 

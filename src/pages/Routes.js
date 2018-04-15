@@ -60,7 +60,6 @@ class Routes extends Component {
 					<Route exact path='/' component={ Homepage } securityLevel={0}/>
 					<Route exact path='/faculty' component={ FacultyTab } securityLevel={0}/>
 					<Route exact path='/login' component={ () => <Login logInHandler={this.props.logInHandler} /> } securityLevel={0}/>
-
 					<PrivateRoute exact path='/admin/dashboard' component={ () => <Faculty user='admin' /> } securityLevel={3}/>
 					<PrivateRoute exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } securityLevel={3}/>
 					<PrivateRoute exact path='/admin/manage/advisees' component={ () => <Advisees user='admin' />  } securityLevel={3}/>
