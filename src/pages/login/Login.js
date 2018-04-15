@@ -23,7 +23,7 @@ class Login extends Component {
   handleProfile = (googleUser) => {
     this.setState({ profile: googleUser.getBasicProfile() });
     console.log(this.state.profile);
-    this.props.logInHanlder(this.state.profile.U3, 3);
+    this.props.logInHandler(this.state.profile);
   };
 
   componentDidMount(){

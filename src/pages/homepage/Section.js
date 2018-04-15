@@ -104,6 +104,3 @@ class Section extends Component {
 
 export default Section;
 
-/*
-DELETE THE COMMENTS AFTER.
-*/

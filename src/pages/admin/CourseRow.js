@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Table } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
-import AddCourseLab from './AddCourseLab';
+import AddLabSection from './AddLabSection';
 import EditCourse from './EditCourse';
 import DeleteCourse from './DeleteCourse';
 class CourseRow extends Component {
@@ -24,6 +24,7 @@ class CourseRow extends Component {
 			});
 		}
 
+  //if section_type == 0 then LECTURE
   render() {
   	if(this.props.section_type == 0)
     return(
@@ -35,8 +36,26 @@ class CourseRow extends Component {
           <Table.Cell>{this.props.room}</Table.Cell>
           <Table.Cell>{this.props.students}</Table.Cell>
           <Table.Cell>
-						{console.log(this.props.course)}
-            <AddCourseLab/> <EditCourse empno={this.props.empno} courseoffering={this.props.courseoffering} title={this.props.title} course={this.props.course} coursecode={this.props.coursecode} section={this.props.section} timestart={this.props.time_start} timeend={this.props.time_end} room={this.props.room} day={this.props.day} section={this.props.section} maxcapacity={this.props.maxcapacity} noofstudents={this.props.students} acadyear={this.props.acadyear} sem={this.props.sem} unit={this.props.unit}/> <DeleteCourse coursecode={this.props.coursecode} section={this.props.section}/>
+            <AddLabSection/>
+
+            <EditCourse
+              empno={this.props.empno}
+              courseoffering={this.props.courseoffering}
+              title={this.props.title}
+              course={this.props.course}
+              coursecode={this.props.coursecode}
+              section={this.props.section} timestart={this.props.time_start}
+              timeend={this.props.time_end}
+              room={this.props.room}
+              day={this.props.day}
+              section={this.props.section}
+              maxcapacity={this.props.maxcapacity}
+              noofstudents={this.props.students}
+              acadyear={this.props.acadyear}
+              sem={this.props.sem} unit={this.props.unit}
+            />
+
+            <DeleteCourse coursecode={this.props.coursecode} section={this.props.section}/>
           </Table.Cell>
         </Table.Row>
     );
@@ -50,9 +69,28 @@ class CourseRow extends Component {
           <Table.Cell>{this.props.room}</Table.Cell>
           <Table.Cell>{this.props.students}</Table.Cell>
           <Table.Cell>
-						 {console.log(this.props.course)}
-             <EditCourse desc={this.props.description} empno={this.props.empno} courseoffering={this.props.courseoffering} title={this.props.title} course={this.props.course} coursecode={this.props.coursecode} section={this.props.section} timestart={this.props.time_start} timeend={this.props.time_end} room={this.props.room} day={this.props.day} section={this.props.section} maxcapacity={this.props.maxcapacity} noofstudents={this.props.students} acadyear={this.props.acadyear} sem={this.props.sem} unit={this.props.unit}/> <DeleteCourse coursecode={this.props.coursecode} section={this.props.section}/>
+             <EditCourse 
+               desc={this.props.description}
+               empno={this.props.empno}
+               courseoffering={this.props.courseoffering}
+               title={this.props.title} course={this.props.course}
+               coursecode={this.props.coursecode}
+               section={this.props.section}
+               timestart={this.props.time_start}
+               timeend={this.props.time_end} room={this.props.room}
+               day={this.props.day}
+               section={this.props.section}
+               maxcapacity={this.props.maxcapacity}
+               noofstudents={this.props.students}
+               acadyear={this.props.acadyear}
+               sem={this.props.sem}
+               unit={this.props.unit}
+            />
+
+            <DeleteCourse coursecode={this.props.coursecode} section={this.props.section}/>
+
           </Table.Cell>
+
         </Table.Row>
     );
   }

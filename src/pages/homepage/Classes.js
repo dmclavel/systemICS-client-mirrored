@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import NavbarHome from '../components/navbar/NavbarHome';
-import CoursePanel from './components/CoursePanel';
-
+import CoursePanelWhole from './components/CoursePanelWhole';
 
 class Classes extends Component {
 	render() {
@@ -13,7 +12,7 @@ class Classes extends Component {
 					<NavbarHome active='classes' />
 				</Grid.Row>
 				<Grid.Row centered>
-					<CoursePanel/>
+					<CoursePanelWhole/>
 				</Grid.Row>
 			</Grid>
 		);
