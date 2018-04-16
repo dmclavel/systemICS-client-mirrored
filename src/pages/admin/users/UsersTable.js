@@ -16,24 +16,6 @@ class UsersTable extends Component {
     autobind(this);
   }
 
-  //handle table sorting
-  // handleSort = clickedColumn => () => {
-  //  const { column, data, direction } = this.state
-  //  if (column !== clickedColumn) {
-  //    this.setState({
-  //      column: clickedColumn,
-  //      data: _.sortBy(data, [clickedColumn]),
-  //      direction: 'ascending',
-  //    })
-  //    return
-  //  }
-  //
-  //  this.setState({
-  //    data: data.reverse(),
-  //    direction: direction === 'ascending' ? 'descending' : 'ascending',
-  //  })
-  // }
-
   render() {
     return(
       <Table sortable celled fixed>
@@ -60,6 +42,9 @@ class UsersTable extends Component {
                 <Table.Row>
                   <Table.Cell>
                     {user.name}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {user.id}
                   </Table.Cell>
                   <Table.Cell>
                     {user.email}

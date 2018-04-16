@@ -55,7 +55,7 @@ class Routes extends Component {
 
 	render() {
 		// non-user
-		if (this.props.accessLvl === 0) 
+		if (this.props.accessLvl === 0)
 			return (
 				<Switch>
 					<Route exact path='/' component={ Homepage } />
@@ -71,6 +71,7 @@ class Routes extends Component {
 		else if (this.props.accessLvl === 1)
 			return (
 				<Switch>
+          <Redirect exact from="/" to="/faculty/dashboard" />
 					<Route exact path="/faculty/dashboard" component={ () => <Faculty user='admin' />} />
 					<Route path="*" component={ NotFound } />
 				</Switch>
@@ -80,17 +81,19 @@ class Routes extends Component {
 		else if (this.props.accessLvl === 2)
 			return (
 				<Switch>
+          <Redirect exact from="/" to="/regcom/dashboard" />
 					<Route exact path='/regcom/dashboard' component={ () => <Faculty user='regcom' /> } />
 					<Route exact path='/regcom/manage/advisees' component={ () => <Advisees user='regcom' /> } />
 					<Route exact path='/regcom/manage/teaching' component={ () => <RegCom user='regcom' />  } />
 					<Route path="*" component={ NotFound } />
 				</Switch>
 			)
-		
+
 		// ADMIN
 		else if (this.props.accessLvl === 3)
 			return (
 				<Switch>
+          <Redirect exact from="/" to="/admin/dashboard" />
 					<Route exact path='/admin/dashboard' component={ () => <Faculty user='admin' /> } />
 					<Route exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } />
 					<Route exact path='/admin/manage/advisees' component={ () => <Advisees user='admin' />  } />
@@ -99,7 +102,7 @@ class Routes extends Component {
 					<Route path="*" component={ NotFound } />
 				</Switch>
 			)
-			
+
 		// everything else, return not found
 		return <Route path="*" component={ NotFound } />
 	}

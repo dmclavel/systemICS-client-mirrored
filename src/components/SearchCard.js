@@ -34,13 +34,12 @@ class SearchCard extends Component {
 	render() {
 
     return (
-      <Card fluid={this.props.fluid} >
+      <Card fluid={this.props.fluid} raised>
         <Card.Content fluid>
           <Input transparent fluid
-            action={
-              <Button> <Icon name='search'> </Icon></Button>
-            }
+            icon='search'
             onChange={this.handleInputChange}
+						placeholder={this.props.placeholder}
           />
         </Card.Content>
       </Card>

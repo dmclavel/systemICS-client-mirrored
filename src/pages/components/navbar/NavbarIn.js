@@ -119,6 +119,7 @@ class NavbarIn extends Component {
       localStorage.setItem('login', null);
       this.setState({ isLoggedIn : false });
     }
+
   }
 
   render() {
@@ -152,7 +153,7 @@ class NavbarIn extends Component {
             </Grid.Column>
             <Grid.Column width={2} />
             <Grid.Column width={1} float='right'>
-              <Dropdown icon='bell outline large bg-color-login notif-button' pointing='right' labeled button className='icon width notif-button-container bg-color-login' scrolling options={options} />  
+              <Dropdown icon='bell outline large bg-color-login notif-button' pointing='right' labeled button className='icon width notif-button-container bg-color-login' scrolling options={options} />
             </Grid.Column>
             <Grid.Column width={2}>
               <Button className="notif-button-container bg-color-logout" content='Log out' icon="sign out alternate" onClick={this.handleLogout} />
