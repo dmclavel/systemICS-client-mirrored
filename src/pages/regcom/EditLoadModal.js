@@ -148,7 +148,10 @@ class EditLoadModal extends Component {
 
   codesAndDescriptionHandleOnChange(e, data) {
     this.setState({
-      sectionsDropdownLoading: true
+      sectionsDropdownLoading: true,
+      conflict: false,
+      message: '',
+      details: ''
     });
     const socket = socketIOClient(this.state.endpoint);
     const value = JSON.parse(data.value);
@@ -175,7 +178,8 @@ class EditLoadModal extends Component {
           timeAndSections,
           selectedCourse: data.value,
           sectionsDropdownLoading: false,
-          coursesDropdownError: false
+          coursesDropdownError: false,
+          selectedCourseOfferings: []
         });
       }
     );
@@ -185,7 +189,6 @@ class EditLoadModal extends Component {
     // const socket2 = socketIOClient(this.state.endpoint);
     let conflict = false;
     let details = '';
-    console.log(data.value);
     for (let i = 0; i < data.value.length; i++) {
       if (conflict) break;
       const source = JSON.parse(data.value[i]);
@@ -337,6 +340,7 @@ class EditLoadModal extends Component {
                   loading={coursesDropdownLoading}
                   noResultsMessage="No available courses found."
                   error={coursesDropdownError}
+                  scrolling
                 />
               </Grid.Column>
             </Grid.Row>
@@ -354,6 +358,7 @@ class EditLoadModal extends Component {
                   onChange={this.timeAndSectionsHandleOnChange}
                   loading={sectionsDropdownLoading}
                   error={sectionsDropdownError}
+                  scrolling
                 />
               </Grid.Column>
               <Grid.Column width={3}>
@@ -410,7 +415,6 @@ class EditLoadModal extends Component {
                           time_start,
                           time_end
                         } = course;
-                        // console.log(course_offering_id);
                         return (
                           <Course
                             key={index}
@@ -435,7 +439,7 @@ class EditLoadModal extends Component {
           </Grid>
         </Modal.Content>
         <Modal.Actions>
-          <Button icon="check" content="All Done" onClick={this.close} />
+          <Button icon="check" content="All Done" onClick={this.handleClose} />
         </Modal.Actions>
       </Modal>
     );
