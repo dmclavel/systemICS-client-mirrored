@@ -16,7 +16,7 @@ import Faculty from './faculty/Faculty';
 import Admin from './admin/Admin';
 import Advisees from './advisees/Advisees';
 import RegCom from './regcom/RegCom';
-import SectionTab from './homepage/SectionTab';
+import Section from './homepage/Section';
 import NotFound from './components/NotFound';
 import Users from './admin/users/Users';
 
@@ -62,7 +62,7 @@ class Routes extends Component {
 					<Route exact path='/faculty' component={ FacultyTab } />
 					<Route exact path='/login' component={ () => <Login logInHandler={this.props.logInHandler} /> } />
 					<Route exact path='/classes' component={ Classes } />
-					<Route exact path='/section/:_id' component={ SectionTab } />
+					<Route exact path='/section/:_id' component={ Section } />
 					<Route path="*" component={ NotFound } />
 				</Switch>
 			)

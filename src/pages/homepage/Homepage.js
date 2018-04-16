@@ -4,6 +4,7 @@ import { Grid } from 'semantic-ui-react';
 import NavbarHome from '../components/navbar/NavbarHome';
 import HomepageHeader from '../components/headers/HomepageHeader';
 import Footer from '../components/Footer';
+import FacultyPanel from './components/FacultyPanel'
 import CoursePanel from './components/CoursePanel';
 import './Homepage.css';
 
@@ -17,6 +18,9 @@ class Homepage extends Component {
 				</Grid.Row>
 				<Grid.Row centered id="content">
 					<CoursePanel/>
+				</Grid.Row>
+				<Grid.Row>
+					<FacultyPanel />
 				</Grid.Row>
 			</Grid>
 		);
