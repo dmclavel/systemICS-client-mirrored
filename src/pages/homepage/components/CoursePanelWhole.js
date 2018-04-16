@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Segment, Container, Grid, Image, Button, Header, Input} from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
+import { convertToGeneralTime } from './../../../utils/TimeUtilities';
 
 const square = { width: 100, height: 100 };
 const square1 = { width: 50, height: 50 };
@@ -96,7 +97,7 @@ class CoursePanelWhole extends Component {
 												</Grid.Column>
 												<Grid.Column width={5}>
 													<Header textAlign='left' size='small' icon="clock" subheader={item.day} />
-													{item.time_start}-{item.time_end}
+													{convertToGeneralTime(item.time_start)}-{convertToGeneralTime(item.time_end)}
 													
 												</Grid.Column>
 											</Grid.Row>
