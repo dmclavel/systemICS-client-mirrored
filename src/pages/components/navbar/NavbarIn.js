@@ -9,8 +9,95 @@ import {
   Dropdown,
   Icon
 } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Logo from './logo-transparent-no-stroke.png';
+
+const options = [
+  {
+    key: 'today',
+    text: 'today',
+    value: 'today',
+    content: 'Today',
+    disabled : true
+  },
+  {
+    key: 'this week',
+    text: 'this week',
+    value: 'this week',
+    content: 'This Week',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'You are appointed as the lecturer for CMSC 22.',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  }
+]
 
 
 class NavbarIn extends Component {
@@ -18,14 +105,31 @@ class NavbarIn extends Component {
     super(props);
     this.state = {
       user : this.props.user,
-      activeItem : this.props.active
+      activeItem : this.props.active,
+      isLoggedIn : true
     };
+
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem : name });
+  handleLogout = () => {
+    const cachedLoggedIn = localStorage.getItem('login');
+    if (cachedLoggedIn) {
+      localStorage.setItem('login', null);
+      this.setState({ isLoggedIn : false });
+    }
+  }
 
   render() {
     const { activeItem } = this.state;
+
+    if (!this.state.isLoggedIn) {
+      return (
+        <Redirect to="/" push />
+      )
+    }
+
     return (
       <div className='nav-home'>
         <Grid>
@@ -46,7 +150,12 @@ class NavbarIn extends Component {
                 </Link>
               </Menu>
             </Grid.Column>
-            <Grid.Column width={5}>
+            <Grid.Column width={2} />
+            <Grid.Column width={1} float='right'>
+              <Dropdown icon='bell outline large bg-color-login notif-button' pointing='right' labeled button className='icon width notif-button-container bg-color-login' scrolling options={options} />  
+            </Grid.Column>
+            <Grid.Column width={2}>
+              <Button className="notif-button-container bg-color-logout" content='Log out' icon="sign out alternate" onClick={this.handleLogout} />
             </Grid.Column>
           </Grid.Row>
         </Grid>
