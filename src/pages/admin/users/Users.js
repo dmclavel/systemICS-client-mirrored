@@ -13,7 +13,7 @@ class RegCom extends Component {
       <div>
         <Grid>
           <Grid.Row>
-            <NavbarIn user={this.props.user} active='manage' />
+            <NavbarIn logOutHandler={() => this.props.logOutHandler} user={this.props.user} active='manage' />
             <ManageHeader user={this.props.user} />
           </Grid.Row>
 

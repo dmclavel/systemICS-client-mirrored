@@ -35,6 +35,14 @@ body {
 	background-color: #284446 !important;
 }
 
+.bg-color-login {
+	background-color: #408E74 !important;
+}
+
+.bg-color-logout {
+	background-color: #F28576 !important;
+}
+
 /* for fonts and font colors */
 @import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700');
 
