@@ -1,16 +1,16 @@
-import {
-  Button,
-  Grid,
-  Container,
-  Segment,
-  Header,
-} from 'semantic-ui-react';
+import { Button, Grid, Container, Segment, Header } from 'semantic-ui-react';
 import React, { Component } from 'react';
 import EditLoadModal from './EditLoadModal';
 
 class Information extends Component {
   render() {
-    const { emp_no, name, room, email_add, teachingLoad } = this.props.object;
+    const {
+      emp_no,
+      name,
+      room,
+      email_add,
+      teaching_load = 0
+    } = this.props.data;
     return (
       <Container>
         <Segment>
@@ -30,18 +30,18 @@ class Information extends Component {
                       <Header
                         textAlign="left"
                         size="tiny"
-                        icon="users"
+                        icon="mail"
                         content={email_add}
-                        subheader="Tentative"
+                        subheader="Email Address"
                       />
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <Header
                         textAlign="left"
                         size="tiny"
-                        icon="users"
-                        content={teachingLoad + ' teaching load'}
-                        subheader="Tentative"
+                        icon="tasks"
+                        content={teaching_load + ' units'}
+                        subheader="Teaching Load"
                       />
                     </Grid.Column>
                   </Grid.Row>
@@ -53,7 +53,7 @@ class Information extends Component {
                   button={<Button content="Edit Load" basic />}
                   name={name}
                   room={room}
-                  teachingLoad={email_add}
+                  teaching_Load={teaching_load}
                 />
               </Grid.Column>
             </Grid.Row>

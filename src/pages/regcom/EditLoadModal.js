@@ -7,7 +7,8 @@ import {
   Button,
   Segment,
   Header,
-  Message
+  Message,
+  Container
 } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
@@ -45,7 +46,8 @@ class EditLoadModal extends Component {
       details: '',
       coursesDropdownError: false,
       sectionsDropdownError: false,
-      conflict: false
+      conflict: false,
+      warning: false
     };
     autobind(this);
   }
@@ -99,16 +101,23 @@ class EditLoadModal extends Component {
       this.setState({
         coursesDropdownError: true,
         message: 'Some required field is missing',
-        details: ''
+        details: '',
+        warning: true
       });
     }
     if (this.state.selectedCourseOfferings.length === 0) {
       this.setState({
         sectionsDropdownError: true,
         message: 'Some required field is missing',
-        details: ''
+        details: '',
+        warning: true
       });
-    } else {
+    }
+    if (
+      this.state.selectedCourse &&
+      this.state.selectedCourseOfferings.length !== 0 &&
+      !this.state.conflict
+    ) {
       const socket = socketIOClient(this.state.endpoint);
       // For each id values from multiple dropdown, send it to the database
       //      to assign the employee with the course_offering
@@ -131,14 +140,18 @@ class EditLoadModal extends Component {
         selectedCourse: undefined,
         timeAndSections: [],
         message: 'Successfully assigned subjects!',
-        details
+        details,
+        warning: false
       });
     }
   }
 
   codesAndDescriptionHandleOnChange(e, data) {
     this.setState({
-      sectionsDropdownLoading: true
+      sectionsDropdownLoading: true,
+      conflict: false,
+      message: '',
+      details: ''
     });
     const socket = socketIOClient(this.state.endpoint);
     const value = JSON.parse(data.value);
@@ -165,7 +178,8 @@ class EditLoadModal extends Component {
           timeAndSections,
           selectedCourse: data.value,
           sectionsDropdownLoading: false,
-          coursesDropdownError: false
+          coursesDropdownError: false,
+          selectedCourseOfferings: []
         });
       }
     );
@@ -175,7 +189,6 @@ class EditLoadModal extends Component {
     // const socket2 = socketIOClient(this.state.endpoint);
     let conflict = false;
     let details = '';
-    console.log(data.value);
     for (let i = 0; i < data.value.length; i++) {
       if (conflict) break;
       const source = JSON.parse(data.value[i]);
@@ -241,14 +254,17 @@ class EditLoadModal extends Component {
         selectedCourseOfferings: data.value,
         conflict,
         message: 'Conflicting time schedules',
-        details
+        details,
+        warning: true
       });
     } else {
       this.setState({
         selectedCourseOfferings: data.value,
         sectionsDropdownError: false,
         message: '',
-        details: ''
+        details: '',
+        warning: false,
+        conflict
       });
     }
   }
@@ -266,7 +282,8 @@ class EditLoadModal extends Component {
       message,
       details,
       coursesDropdownError,
-      sectionsDropdownError
+      sectionsDropdownError,
+      warning
     } = this.state;
     return (
       <Modal
@@ -303,7 +320,7 @@ class EditLoadModal extends Component {
             {message && (
               <Grid.Row>
                 <Grid.Column width={16}>
-                  <Message warning={!details} success={!!details}>
+                  <Message warning={warning} success={!warning}>
                     <Message.Header>{message}</Message.Header>
                     {details && <p>{details}</p>}
                   </Message>
@@ -323,6 +340,7 @@ class EditLoadModal extends Component {
                   loading={coursesDropdownLoading}
                   noResultsMessage="No available courses found."
                   error={coursesDropdownError}
+                  scrolling
                 />
               </Grid.Column>
             </Grid.Row>
@@ -340,6 +358,7 @@ class EditLoadModal extends Component {
                   onChange={this.timeAndSectionsHandleOnChange}
                   loading={sectionsDropdownLoading}
                   error={sectionsDropdownError}
+                  scrolling
                 />
               </Grid.Column>
               <Grid.Column width={3}>
@@ -349,8 +368,8 @@ class EditLoadModal extends Component {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column width={16}>
-                {!!courses.length && (
+              {!!courses.length && (
+                <Grid.Column width={16}>
                   <Segment>
                     <div
                       style={{
@@ -359,6 +378,31 @@ class EditLoadModal extends Component {
                         maxHeight: 200
                       }}
                     >
+                      <Container>
+                        <Grid>
+                          <Grid.Row>
+                            <Grid.Column width={3}>
+                              <Header as="h4">Course name</Header>
+                            </Grid.Column>
+                            <Grid.Column width={2}>
+                              <Header as="h4">Section</Header>
+                            </Grid.Column>
+                            <Grid.Column width={2}>
+                              <Header as="h4">Room</Header>
+                            </Grid.Column>
+                            <Grid.Column width={2}>
+                              <Header as="h4">Day</Header>
+                            </Grid.Column>
+                            <Grid.Column width={4}>
+                              <Header as="h4">Time</Header>
+                            </Grid.Column>
+                            <Grid.Column width={2}>
+                              <Header as="h4">Students</Header>
+                            </Grid.Column>
+                            <Grid.Column width={1} />
+                          </Grid.Row>
+                        </Grid>
+                      </Container>
                       {courses.map((course, index) => {
                         const {
                           course_offering_id,
@@ -371,7 +415,6 @@ class EditLoadModal extends Component {
                           time_start,
                           time_end
                         } = course;
-                        // console.log(course_offering_id);
                         return (
                           <Course
                             key={index}
@@ -390,13 +433,13 @@ class EditLoadModal extends Component {
                       })}
                     </div>
                   </Segment>
-                )}
-              </Grid.Column>
+                </Grid.Column>
+              )}
             </Grid.Row>
           </Grid>
         </Modal.Content>
         <Modal.Actions>
-          <Button icon="check" content="All Done" onClick={this.close} />
+          <Button icon="check" content="All Done" onClick={this.handleClose} />
         </Modal.Actions>
       </Modal>
     );
