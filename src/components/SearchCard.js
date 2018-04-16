@@ -34,7 +34,7 @@ class SearchCard extends Component {
 	render() {
 
     return (
-      <Card fluid={this.props.fluid} >
+      <Card fluid={this.props.fluid} raised>
         <Card.Content fluid>
           <Input transparent fluid
             action={
