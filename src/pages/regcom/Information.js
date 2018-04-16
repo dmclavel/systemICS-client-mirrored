@@ -53,7 +53,8 @@ class Information extends Component {
                   button={<Button content="Edit Load" basic />}
                   name={name}
                   room={room}
-                  teaching_Load={teaching_load}
+                  teaching_load={teaching_load}
+                  email_add={email_add}
                 />
               </Grid.Column>
             </Grid.Row>
