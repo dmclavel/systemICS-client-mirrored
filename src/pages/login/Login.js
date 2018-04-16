@@ -30,7 +30,6 @@ class Login extends Component {
     const socket = socketIOClient(this.state.endpoint);
     socket.emit('email_privilege', { email_add : this.state.profile.U3 });
     socket.on('email_privilege', privilege => {
-      alert(privilege.result);
       this.setState({ accessLvl : privilege, success : true });
     })
 

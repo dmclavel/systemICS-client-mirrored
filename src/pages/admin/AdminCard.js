@@ -49,8 +49,8 @@ class AdminCard extends Component {
 		componentDidMount(){
 			const socket = socketIOClient(this.state.address);
 			const data = {email: 'pvgrubat@up.edu.ph'};
-			socket.emit("view_all_active_course_offerings", data);
-			socket.on("view_all_active_course_offerings", (course) => {
+			socket.emit("view_all_available_sections", data);
+			socket.on("view_all_available_sections", (course) => {
 				this.setState({coursesX:course});
 				console.log(this.state.coursesX);
 			});
@@ -58,8 +58,8 @@ class AdminCard extends Component {
 		fetchCourse = () => {
 			const socket = socketIOClient(this.state.address);
 			const data = {email: 'pvgrubat@up.edu.ph'};
-			socket.emit("view_all_active_course_offerings", data);
-			socket.on("view_all_active_course_offerings", (course) => {
+			socket.emit("view_all_available_sections", data);
+			socket.on("view_all_available_sections", (course) => {
 				this.setState({coursesX:course});
 				console.log(this.state.coursesX);
 			});
