@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import {
   Grid,
-  Container,
-  Header,
   Input,
   Segment,
-  Dropdown
 } from 'semantic-ui-react';
 import Information from './Information';
 import autobind from 'react-autobind';
@@ -31,10 +28,10 @@ class RegCom extends Component {
   }
   componentDidMount() {
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('view_all_regcom', {});
-    socket.on('view_all_regcom', informations => {
+    socket.emit('view_all_active_faculty_members', {});
+    socket.on('view_all_active_faculty_members', informations => {
       this.setState({
-        informations: informations
+        informations
       });
     });
   }
@@ -58,7 +55,7 @@ class RegCom extends Component {
                   placeholder="Search faculty"
                   icon="search"
                   iconPosition="left"
-                  fluid
+                  fluid="true"
                   transparent
                   onChange={this.handleSearch}
                 />
@@ -75,9 +72,9 @@ class RegCom extends Component {
                     }
                     return false;
                   })
-                  .map(information => {
+                  .map((information, index) => {
                     return (
-                      <Grid.Column width={11} stretched={true}>
+                      <Grid.Column width={11} stretched={true} key={index}>
                         <Information object={information} />
                       </Grid.Column>
                     );

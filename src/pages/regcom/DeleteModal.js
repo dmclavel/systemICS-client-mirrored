@@ -19,33 +19,35 @@ class DeleteModal extends Component {
     };
     autobind(this);
   }
-  open = () => this.setState({ open: true });
-  close = () => this.setState({ open: false });
+  handleOpen = () => this.setState({ open: true });
+  handleClose = () => this.setState({ open: false });
   handleOkay(e) {
+    const { course_offering_id } = this.props;
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('unlink_course_offering', {
-      course_offering_id: this.props.course_offering_id
+    socket.emit('unassign_section', {
+      course_offering_id
     });
-    this.close();
+    this.handleClose();
   }
   render() {
     const { open } = this.state;
-
+    const { button } = this.props;
     return (
       <div>
         <Modal
           size="tiny"
-          onOpen={this.open}
+          onOpen={this.handleOpen}
           open={open}
-          onClose={this.close}
-          trigger={this.props.button}
-          style={inlineStyle.modal}>
+          onClose={this.handleClose}
+          trigger={button}
+          style={inlineStyle.modal}
+        >
           <Modal.Header>Delete Course</Modal.Header>
           <Modal.Content>
             <p>Are you sure you want to delete the course?</p>
           </Modal.Content>
           <Modal.Actions>
-            <Button negative onClick={this.close}>
+            <Button negative onClick={this.handleClose}>
               No
             </Button>
             <Button
