@@ -1,0 +1,21 @@
+.login-logo {
+	height: 100px !important;
+	width: auto !important;
+	float: left;
+	padding-left: 10%;
+}
+
+.login-name {
+	margin: auto;
+}
+
+.login-logo-name {
+	font-family: 'PT Sans Narrow', sans-serif;
+	font-size: 70px;
+	font-weight: 700;
+	color: #1976D2;
+}
+
+.login-logo-name:hover {
+	color: #1976D2;
+}

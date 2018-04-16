@@ -9,93 +9,156 @@ import {
   Dropdown,
   Icon
 } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-
-const inlinestyle = {
-  'padding-top': '0rem',
-  'padding-bottom': '0rem'
-};
-
-const trigger = (
-  <Button icon='user' />
-)
+import { Link, Redirect } from 'react-router-dom';
+import Logo from './logo-transparent-no-stroke.png';
 
 const options = [
   {
-    key: 'user',
-    text: <span>Signed in as <strong>Bob Smith</strong></span>,
-    disabled: true,
+    key: 'today',
+    text: 'today',
+    value: 'today',
+    content: 'Today',
+    disabled : true
   },
-  { key: 'profile', text: 'Your Profile' },
-  { key: 'stars', text: 'Your Stars' },
-  { key: 'explore', text: 'Explore' },
-  { key: 'integrations', text: 'Integrations' },
-  { key: 'help', text: 'Help' },
-  { key: 'settings', text: 'Settings' },
-  { key: 'sign-out', text: 'Sign Out' },
+  {
+    key: 'this week',
+    text: 'this week',
+    value: 'this week',
+    content: 'This Week',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'You are appointed as the lecturer for CMSC 22.',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  },
+  {
+    key: 'this month',
+    text: 'this month',
+    value: 'this month',
+    content: 'This Month',
+    disabled : true
+  }
 ]
+
 
 class NavbarIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activetab: 'dashboard'
+      user : this.props.user,
+      activeItem : this.props.active,
+      isLoggedIn : true
     };
+
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleContextRef = contextRef => this.setState({ contextRef });
-  handleItemClick = (e, { name }) => this.setState({ activetab: name });
+  handleItemClick = (e, { name }) => this.setState({ activeItem : name });
+  handleLogout = () => {
+    const cachedLoggedIn = localStorage.getItem('login');
+    if (cachedLoggedIn) {
+      localStorage.setItem('login', null);
+      this.setState({ isLoggedIn : false });
+    }
+  }
 
   render() {
-    const { contextRef } = this.state;
+    const { activeItem } = this.state;
+
+    if (!this.state.isLoggedIn) {
+      return (
+        <Redirect to="/" push />
+      )
+    }
+
     return (
-      <div ref={this.handleContextRef} className="test">
-        <Segment inverted className="navbar-color">
-          <Menu inverted fluid={true} pointing secondary attached="top">
-            <Menu.Item name="SystemICS" position="left" />
-            <Menu.Menu>
-              <Link to="dashboard">
-                <Menu.Item
-                  name="dashboard"
-                  active={this.state.activetab === 'dashboard'}
-                  onClick={this.handleItemClick}
-                />
-              </Link>
-
-              <Link to={this.props.user.localeCompare('admin') === 0? "manage/courses" : "manage/teaching"}>
-                <Menu.Item
-                  name='manage'
-                  active={this.state.activetab === 'manage'}
-                  onClick={this.handleItemClick}
-                />
-              </Link>
-            </Menu.Menu>
-            <Menu.Item
-              name="log in button"
-              position="right"
-              children={
-                <Grid>
-                  <Grid.Row style={inlinestyle}>
-                    <Grid.Column width={8}>
-                      {/*<Button icon="bell outline" circular />
-                      <Label
-                        attached="top right"
-                        content="2"
-                        color="red"
-                        circular
-                      />*/}
-
-                    <Dropdown simple trigger={trigger} options={options} direction='left' />
-                    </Grid.Column>
-                    <Grid.Column width={8}>
-                      <Button icon="setting" circular />
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              }
-            />
-          </Menu>
-        </Segment>
+      <div className='nav-home'>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={5}>
+              <a href="/"><img src={Logo} className="nav-logo" /></a>
+              <div className="nav-name-container">
+                <a href="/" className="nav-logo-name">SYSTEM<span className="font-white">ICS</span></a>
+              </div>
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <Menu className="nav-menu-in" pointing secondary>
+                <Link to="/admin/dashboard">
+                  <Menu.Item className="nav-item" name='dashboard' active={activeItem === 'dashboard'} onClick={this.handleItemClick} />
+                </Link>
+                <Link to="/admin/manage/courses">
+                  <Menu.Item className="nav-item" name='manage' active={activeItem === 'manage'} onClick={this.handleItemClick} />
+                </Link>
+              </Menu>
+            </Grid.Column>
+            <Grid.Column width={2} />
+            <Grid.Column width={1} float='right'>
+              <Dropdown icon='bell outline large bg-color-login notif-button' pointing='right' labeled button className='icon width notif-button-container bg-color-login' scrolling options={options} />  
+            </Grid.Column>
+            <Grid.Column width={2}>
+              <Button className="notif-button-container bg-color-logout" content='Log out' icon="sign out alternate" onClick={this.handleLogout} />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     );
   }

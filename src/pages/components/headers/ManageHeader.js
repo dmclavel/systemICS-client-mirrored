@@ -4,42 +4,58 @@ import { Link } from 'react-router-dom';
 import image from './GAZA.jpg';
 import './ManageHeader.css';
 
+const user = {
+	name: 'Reginald'
+}
+
 class ManageHeader extends Component {
 	render() {
 		return (
-			<div className="manage-heading">
-				<div className="heading-background" />
+			<div className="db-heading">
+				<div className="db-background bg-color-nav-admin" />
 				<div className="heading-content">
 					<Grid>
-						<Grid.Row divided>
-							<Grid.Column width={9}>
-								<Image src={image} size='small' bordered circular={true} floated='left' rounded={true} />
+						<Grid.Row>
+							<Grid.Column width={1} />
+							<Grid.Column width={7}>
 								<p className="heading-message">
-									Ready to work, Ced?<br/>
+									Ready to work, {user.name}?<br/>
 								</p>
 								<p class="heading-submessage">You are working as the {this.props.user.localeCompare('admin') === 0 ? 'administrator' : 'registration committee.'}</p> 
 							</Grid.Column>
 							<Grid.Column width={2}>
-								{ console.log(this.props) }
 								{
 									this.props.user.localeCompare('admin') === 0 ?
 										<div>
-											<Link to='courses'>
-												<Button className='admin-button' circular icon='book huge' />
+											<Link to='/admin/manage/courses'>
+												<Button className='centered-h' circular icon='book huge' />
 											</Link>
 											<p className="admin-button-caption">Course Offering</p>
 										</div>
 									: null
 								}
 							</Grid.Column>
+							<Grid.Column width={2} className="remove-padding">
+								{
+									this.props.user.localeCompare('admin') === 0 ?
+										<div>
+											<Link to='/admin/manage/users'>
+												<Button className='admin-button centered-h' circular icon='id badge outline huge' />
+											</Link>
+											<p className="admin-button-caption">Users</p>
+										</div>
+									: null
+								}
+							</Grid.Column>
 							<Grid.Column width={2}>
-								<Link to='advisees'>
-									<Button className='admin-button' circular icon='user plus huge' />
+								<Link to={`/${this.props.user}/manage/advisees`}>
+									<Button className='admin-button centered-h' circular icon='user plus huge' />
 								</Link>
 								<p className="admin-button-caption">Advisees</p>
 							</Grid.Column>
-							<Grid.Column width={2}>
-								<Link to='teaching'>
+
+							<Grid.Column width={2} className="remove-padding">
+								<Link to={`/${this.props.user}/manage/teaching`}>
 									<Button className='admin-button' circular icon='clipboard huge' />
 								</Link>
 								<p className="admin-button-caption">Teaching Load</p>

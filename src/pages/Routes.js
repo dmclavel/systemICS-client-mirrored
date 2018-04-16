@@ -54,31 +54,57 @@ class Routes extends Component {
 	}
 
 	render() {
-		return (
-			<main>
+		// non-user
+		if (this.props.accessLvl === 0)
+			return (
 				<Switch>
-					<Route exact path='/' component={ Homepage } securityLevel={0}/>
-					<Route exact path='/faculty' component={ FacultyTab } securityLevel={0}/>
-					<Route exact path='/login' component={ () => <Login logInHandler={this.props.logInHandler} /> } securityLevel={0}/>
-
-					<PrivateRoute exact path='/admin/dashboard' component={ () => <Faculty user='admin' /> } securityLevel={3}/>
-					<PrivateRoute exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } securityLevel={3}/>
-					<PrivateRoute exact path='/admin/manage/advisees' component={ () => <Advisees user='admin' />  } securityLevel={3}/>
-					<PrivateRoute exact path='/admin/manage/teaching' component={ () => <RegCom user='admin' />  } securityLevel={3}/>
-					<PrivateRoute exact path='/admin/manage/users' component={ () => <Users user='admin' />  } securityLevel={3}/>
-
-					<PrivateRoute exact path='/regcom/dashboard' component={ () => <Faculty user='regcom' /> } securityLevel={3}/>
-					<PrivateRoute exact path='/regcom/manage/advisees' component={ () => <Advisees user='regcom' /> } securityLevel={3}/>
-					<PrivateRoute exact path='/regcom/manage/teaching' component={ () => <RegCom user='regcom' />  } securityLevel={3}/>
-					<PrivateRoute exact path='/dashboard' component={ Faculty } securityLevel={3}/>
-
-					<PrivateRoute exact path='/section/:_id' component={ SectionTab } securityLevel={1}/>
-					<PrivateRoute exact path='/classes' component={ Classes } securityLevel={1}/>
-
+					<Route exact path='/' component={ Homepage } />
+					<Route exact path='/faculty' component={ FacultyTab } />
+					<Route exact path='/login' component={ () => <Login logInHandler={this.props.logInHandler} /> } />
+					<Route exact path='/classes' component={ Classes } />
+					<Route exact path='/section/:_id' component={ SectionTab } />
 					<Route path="*" component={ NotFound } />
 				</Switch>
-			</main>
-		)
+			)
+
+		// faculty
+		else if (this.props.accessLvl === 1)
+			return (
+				<Switch>
+          <Redirect exact from="/" to="/faculty/dashboard" />
+					<Route exact path="/faculty/dashboard" component={ () => <Faculty user='admin' />} />
+					<Route path="*" component={ NotFound } />
+				</Switch>
+			)
+
+		// regcom
+		else if (this.props.accessLvl === 2)
+			return (
+				<Switch>
+          <Redirect exact from="/" to="/regcom/dashboard" />
+					<Route exact path='/regcom/dashboard' component={ () => <Faculty user='regcom' /> } />
+					<Route exact path='/regcom/manage/advisees' component={ () => <Advisees user='regcom' /> } />
+					<Route exact path='/regcom/manage/teaching' component={ () => <RegCom user='regcom' />  } />
+					<Route path="*" component={ NotFound } />
+				</Switch>
+			)
+
+		// ADMIN
+		else if (this.props.accessLvl === 3)
+			return (
+				<Switch>
+          <Redirect exact from="/" to="/admin/dashboard" />
+					<Route exact path='/admin/dashboard' component={ () => <Faculty user='admin' /> } />
+					<Route exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } />
+					<Route exact path='/admin/manage/advisees' component={ () => <Advisees user='admin' />  } />
+					<Route exact path='/admin/manage/teaching' component={ () => <RegCom user='admin' />  } />
+					<Route exact path='/admin/manage/users' component={ () => <Users user='admin' />  } />
+					<Route path="*" component={ NotFound } />
+				</Switch>
+			)
+
+		// everything else, return not found
+		return <Route path="*" component={ NotFound } />
 	}
 }
 

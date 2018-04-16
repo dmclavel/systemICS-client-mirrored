@@ -15,8 +15,8 @@ import socketIOClient from 'socket.io-client';
 import './FacultyTab.css';
 import FacultyCard from './FacultyCard';
 import RegComCard from './RegComCard';
-import Navbar from '../components/Navbar';
-import Heading from '../components/Heading';
+import NavbarHome from '../components/navbar/NavbarHome';
+import ClassesHeader from '../components/headers/ClassesHeader';
 
 /*
 If you wish to import other JS files, do it here.
@@ -70,8 +70,8 @@ class FacultyTab extends Component {
       <div className='FacultyTab'>
       		<Grid centered={true}>
       			<Grid.Row>
-      				<Navbar />
-      				<Heading />
+      				<NavbarHome active='faculty' />
+      				<ClassesHeader />
       			</Grid.Row>
 
       			<Grid.Row>

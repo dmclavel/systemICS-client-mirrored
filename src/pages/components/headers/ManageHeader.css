@@ -30,34 +30,89 @@
 	left: 0;
   right: 0;
   top: 0;
-  padding-top: 20vh;
+  padding-top: 100px;
   z-index: 2;
   position: absolute;
 }
 
 .heading-message{
-	font-size: 8vh;
-  margin-top: 3vh;
+	font-size: 50px;
+  margin-top: 100px;
   margin-bottom: 0vh;
-  padding-left: 40vh;
+  padding-left: 10px;
   text-align: left;
   color: white;
 }
 
 .heading-submessage {
 	text-align: left;
-  font-size: 3vh;
+  font-size: 25px;
   margin-top: 0vh;
-  padding-left: 45vh;
+  padding-left: 50px;
   color: white;
 }
 
 .admin-button {
-  width: 20vh;
-  height: 20vh;
+  height: 100px;
+  width: 100px;
 }
 
 .admin-button-caption {
+  text-align: center !important;
   padding-top: 10px;
   color: white;
+}
+
+.home-heading {
+  min-width: 50%;
+  max-width: 100%;
+  width: 100%;
+  height: 300px;
+}
+
+.db-heading {
+  min-width: 50%;
+  max-width: 100%;
+  width: 100%;
+  height: 200px;
+}
+
+.home-background {
+  min-width: 50%;
+  max-width: 100%;
+  width: 100%;
+  height: 300px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.db-background {
+  min-width: 50%;
+  max-width: 100%;
+  width: 100%;
+  height: 200px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+.db-name {
+  font-family: "PT Sans Narrow", sans serif;
+  font-weight: 700;
+  font-size: 60px;
+  margin-top: 100px;
+  margin-bottom: 0vh;
+  text-align: center;
+}
+
+.db-email {
+  font-size: 25px;
+  text-align: center;
+}
+
+.centered-h {
+  margin-left: 20px !important;
+  width: 100px !important;
+  height: 100px !important;
 }

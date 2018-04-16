@@ -1,5 +1,52 @@
 body {
-  margin: 0;
-  padding: 0;
+	height: 100%;
+	min-height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
   font-family: sans-serif;
+  background-color: #ede8e8;
+}
+
+.remove-padding {
+	padding: 0px !important;
+}
+
+.bg-color-main {
+	background-color: #ede8e8 !important;
+}
+
+.bg-color-nav-home {
+	background-color: #283546 !important;
+}
+
+.bg-color-nav-faculty {
+	background-color: #462835 !important;
+}
+
+.bg-color-nav-admin {
+	background-color: #2a2846 !important;
+}
+
+.bg-color-nav-admin {
+	background-color: #1f3353 !important;
+}
+
+.bg-color-header-home {
+	background-color: #284446 !important;
+}
+
+.bg-color-login {
+	background-color: #408E74 !important;
+}
+
+.bg-color-logout {
+	background-color: #F28576 !important;
+}
+
+/* for fonts and font colors */
+@import url('https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700');
+
+
+.font-white {
+	color: white !important;
 }
