@@ -65,6 +65,13 @@ class Section extends Component {
       			<Grid.Row>
 					<NavbarHome active='classes' />
 					<SectionHeader />
+					{this.state.lab.map((item, index)=>
+						<div>
+						{this.props.match.params._id == item.course_name.replace(/\s+/, "") && (
+							<SectionHeader course_no={item['course_name']} section={item.section.split('-')[0]} course_title={item.course_title} />
+						)}
+						</div>
+					)}
 				</Grid.Row>
       			<Grid.Row>
 					<Grid.Column width={16} textAlign = "center">

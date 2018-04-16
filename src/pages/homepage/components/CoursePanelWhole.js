@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Segment, Container, Grid, Image, Button, Header, Input} from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
+import { convertToGeneralTime } from './../../../utils/TimeUtilities';
 
 const square = { width: 100, height: 100 };
 const square1 = { width: 50, height: 50 };
@@ -55,8 +56,10 @@ class CoursePanelWhole extends Component {
 
 	render() {
 		return (
-			<div className="courses">
-				<Input raised={true} fluid icon="search" placeholder = "Search classes..." onChange={this.handleChange} />
+				<div className="courses">
+				<div width={16}>
+				<Input raised={true} width={16} icon="search" placeholder = "Search classes..." onChange={this.handleChange} />
+				</div>
 				{
 					/* Hi, in the future, make it as another component */
 					this.state.lecture.filter(item => {
@@ -94,7 +97,7 @@ class CoursePanelWhole extends Component {
 												</Grid.Column>
 												<Grid.Column width={5}>
 													<Header textAlign='left' size='small' icon="clock" subheader={item.day} />
-													{item.time_start.slice(0,-3)}-{item.time_end.slice(0,-3)}
+													{convertToGeneralTime(item.time_start)}-{convertToGeneralTime(item.time_end)}
 													
 												</Grid.Column>
 											</Grid.Row>
@@ -108,7 +111,9 @@ class CoursePanelWhole extends Component {
 						</Segment>
 					)
 				}
+				
 			</div>
+		
 		);
 	}
 }
