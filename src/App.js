@@ -37,7 +37,7 @@ class App extends Component {
   componentDidMount(){
     // check if local storage has log-in session
     const cachedLogIn = localStorage.getItem(loginCacheName);
-    if (cachedLogIn.localeCompare("null") !== 0){
+    if (cachedLogIn != null && cachedLogIn.localeCompare("null") !== 0){
       console.log("load saved session" + cachedLogIn);
       const session = JSON.parse(cachedLogIn);
       this.setState(session);
