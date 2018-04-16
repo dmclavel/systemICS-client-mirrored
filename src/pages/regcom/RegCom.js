@@ -3,6 +3,7 @@ import {
   Grid,
   Input,
   Segment,
+  Dropdown
 } from 'semantic-ui-react';
 import Information from './Information';
 import autobind from 'react-autobind';
