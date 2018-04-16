@@ -45,7 +45,7 @@ class EditLoadModal extends Component {
       details: '',
       coursesDropdownError: false,
       sectionsDropdownError: false,
-      messageColor: undefined
+      conflict: false
     };
     autobind(this);
   }
@@ -131,8 +131,7 @@ class EditLoadModal extends Component {
         selectedCourse: undefined,
         timeAndSections: [],
         message: 'Successfully assigned subjects!',
-        details,
-        messageColor: 'green'
+        details
       });
     }
   }
@@ -173,54 +172,85 @@ class EditLoadModal extends Component {
   }
   timeAndSectionsHandleOnChange(e, data) {
     const socket = socketIOClient(this.state.endpoint);
-    const socket2 = socketIOClient(this.state.endpoint);
+    // const socket2 = socketIOClient(this.state.endpoint);
     let conflict = false;
-    // socket.emit('get_unarchived_section_by_id', {
-    //   course_offering_id: data.value.course_offering_id
-    // });
-    // socket.on('get_unarchived_section_by_id', source => {
-    //   const {
-    //     day: source_days,
-    //     time_start: source_time_start,
-    //     time_end: source_time_end
-    //   } = source;
-    //   this.state.selectedCourseOfferings.forEach((id, index) => {
-    //     socket2.emit('get_unarchived_section_by_id', {
-    //       course_offering_id: id
-    //     });
-    //     socket2.on('get_unarchived_section_by_id', target => {
-    //       const {
-    //         day: target_days,
-    //         time_start: target_time_start,
-    //         time_end: target_time_end
-    //       } = target;
-    //       const arg1 = {
-    //         day: source_days,
-    //         time_start: source_time_start,
-    //         time_end: source_time_end
-    //       };
-    //       const arg2 = {
-    //         day: target_days,
-    //         time_start: target_time_start,
-    //         time_end: target_time_end
-    //       };
-    //       console.log(
-    //         `${source_days}, ${source_time_start}, ${source_time_end}, ${target_days}, ${target_time_start}, ${target_time_end}`
-    //       );
-    //       if (isScheduleConflict(arg1, arg2)) {
-    //         this.setState({ conflict: true });
-    //       }
-    //     });
-    //   });
-    // });
-    // if (this.state.conflict) console.log('enlo');
-
-    // TODO: insert time conflict algorithm here
+    let details = '';
     console.log(data.value);
-    this.setState({
-      selectedCourseOfferings: data.value,
-      sectionsDropdownError: false
-    });
+    for (let i = 0; i < data.value.length; i++) {
+      if (conflict) break;
+      const source = JSON.parse(data.value[i]);
+      const {
+        day: source_days,
+        time_start: source_time_start,
+        time_end: source_time_end
+      } = source;
+      for (let j = 0; j < i; j++) {
+        const target = JSON.parse(data.value[j]);
+        const {
+          day: target_days,
+          time_start: target_time_start,
+          time_end: target_time_end
+        } = target;
+        const arg1 = {
+          day: source_days,
+          time_start: source_time_start,
+          time_end: source_time_end
+        };
+        const arg2 = {
+          day: target_days,
+          time_start: target_time_start,
+          time_end: target_time_end
+        };
+        if (isScheduleConflict(arg1, arg2)) {
+          conflict = true;
+          details += `${source.course_name} ${
+            source.section
+          } has a conflict with ${target.course_name} ${target.section}`;
+          break;
+        }
+      }
+      for (let j = 0; j < this.state.courses.length; j++) {
+        if (conflict) break;
+        const target = this.state.courses[j];
+        const {
+          day: target_days,
+          time_start: target_time_start,
+          time_end: target_time_end
+        } = target;
+        const arg1 = {
+          day: source_days,
+          time_start: source_time_start,
+          time_end: source_time_end
+        };
+        const arg2 = {
+          day: target_days,
+          time_start: target_time_start,
+          time_end: target_time_end
+        };
+        if (isScheduleConflict(arg1, arg2)) {
+          conflict = true;
+          details += `${source.course_name} ${
+            source.section
+          } has a conflict with ${target.course_name} ${target.section}`;
+          break;
+        }
+      }
+    }
+    if (conflict) {
+      this.setState({
+        selectedCourseOfferings: data.value,
+        conflict,
+        message: 'Conflicting time schedules',
+        details
+      });
+    } else {
+      this.setState({
+        selectedCourseOfferings: data.value,
+        sectionsDropdownError: false,
+        message: '',
+        details: ''
+      });
+    }
   }
   render() {
     const { open } = this.state;
@@ -236,8 +266,7 @@ class EditLoadModal extends Component {
       message,
       details,
       coursesDropdownError,
-      sectionsDropdownError,
-      messageColor
+      sectionsDropdownError
     } = this.state;
     return (
       <Modal

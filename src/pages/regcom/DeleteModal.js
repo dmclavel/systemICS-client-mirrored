@@ -31,7 +31,7 @@ class DeleteModal extends Component {
   }
   render() {
     const { open } = this.state;
-    const {button} = this.props;
+    const { button } = this.props;
     return (
       <div>
         <Modal
@@ -40,13 +40,14 @@ class DeleteModal extends Component {
           open={open}
           onClose={this.handleClose}
           trigger={button}
-          style={inlineStyle.modal}>
+          style={inlineStyle.modal}
+        >
           <Modal.Header>Delete Course</Modal.Header>
           <Modal.Content>
             <p>Are you sure you want to delete the course?</p>
           </Modal.Content>
           <Modal.Actions>
-            <Button negative onClick={this.close}>
+            <Button negative onClick={this.handleClose}>
               No
             </Button>
             <Button
