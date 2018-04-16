@@ -94,7 +94,7 @@ class CoursePanelWhole extends Component {
 												</Grid.Column>
 												<Grid.Column width={5}>
 													<Header textAlign='left' size='small' icon="clock" subheader={item.day} />
-													{item.time_start}-{item.time_end}
+													{item.time_start.slice(0,-3)}-{item.time_end.slice(0,-3)}
 													
 												</Grid.Column>
 											</Grid.Row>
@@ -108,7 +108,6 @@ class CoursePanelWhole extends Component {
 						</Segment>
 					)
 				}
-				
 			</div>
 		);
 	}

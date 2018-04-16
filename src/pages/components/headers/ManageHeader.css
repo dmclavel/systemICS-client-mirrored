@@ -116,3 +116,28 @@
   width: 100px !important;
   height: 100px !important;
 }
+
+.section-heading-content {
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  padding-top: 17vh;
+  position: absolute;
+}
+
+.section-heading-message{
+  font-size: 8vh;
+  margin-top: 3vh;
+  margin-bottom: 0vh;
+  padding-left: 40vh;
+  text-align: left;
+  color: white;
+}
+
+.section-heading-submessage {
+  text-align: left;
+  font-size: 3vh;
+  margin-top: 0vh;
+  padding-left: 45vh;
+  color: white;
+}

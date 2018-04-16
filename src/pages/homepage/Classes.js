@@ -5,6 +5,7 @@ import NavbarHome from '../components/navbar/NavbarHome';
 import CoursePanelWhole from './components/CoursePanelWhole';
 import ClassesHeader from '../components/headers/ClassesHeader'
 
+
 class Classes extends Component {
 	render() {
 		return (
