@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Grid} from 'semantic-ui-react';
-import SearchCard from './SearchCard';
+import SearchCard from '../../../components/SearchCard';
 import UsersTable from './UsersTable';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
@@ -34,7 +34,7 @@ class User extends Component {
 			this.setState(
 				{
 					visibleData: this.state.data.filter( (user) =>{
-						if( user.name.toLowerCase().includes(query.toLowerCase()) ){
+						if( user.name.toLowerCase().includes(query.toLowerCase()) || user.email.toLowerCase().includes(query.toLowerCase()) || user.id.toLowerCase().includes(query.toLowerCase())){
 							return true;
 						}else{
 							return false;
@@ -50,7 +50,7 @@ class User extends Component {
 	render() {
 		return (
 			<div>
-				<SearchCard fluid={true} handleSearch={this.handleSearch}/>
+				<SearchCard fluid={true} handleSearch={this.handleSearch} placeholder="name, email, or id number"/>
 				<UsersTable data={this.state.visibleData}/>
 			</div>
 		);
