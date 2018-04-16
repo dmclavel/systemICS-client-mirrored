@@ -56,8 +56,8 @@ class CoursePanelWhole extends Component {
 
 	render() {
 		return (
-				<div>
-				<div>
+				<div className="courses">
+				<div width={16}>
 				<Input raised={true} width={16} icon="search" placeholder = "Search classes..." onChange={this.handleChange} />
 				</div>
 				{
