@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Grid, Segment, Header, Divider, Container, Checkbox, Input } from 'semantic-ui-react';
+import { Button, Modal, Form, Grid, Segment, Header, Container, Input } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
@@ -9,9 +9,9 @@ const inlineStyle={
 		marginLeft: 'auto',
 		marginRight: 'auto',
 		color: 'black'
-
 	}
 };
+
 class AddCourseModal extends Component {
 
 	constructor(){
@@ -25,6 +25,7 @@ class AddCourseModal extends Component {
 			course_name: '',
 			course_title: '',
 			description: '',
+			uniqueCourse: true,
 			error:''
 
 		}
@@ -32,32 +33,43 @@ class AddCourseModal extends Component {
 	}
 
 	handleChange = (e, {name, value} ) => {
-		// const{course_name, course_title, description, coursename_error, coursetitle_error, desc_error} = this.state
 		this.setState({[name]: value})
 	}
 
 	handleSubmit = (evt) => {
-		const{course_name, course_title, description, coursename_error, coursetitle_error, desc_error, course} = this.state
+		const{course_name, course_title, description, course, uniqueCourse} = this.state
+		this.setState({uniqueCourse:true});
 
-		// this.setState(
-		// 	{
-		// 	course_title:course_title,
-		// 	course_name:course_name,
-		// 	description:description,
-		// }
-
-		// this.setState({[name]: value})
 		if(this.state.course_name == '' || this.state.course_title=='' || this.state.description=='') {
 			this.setState({error:'Please fill all the fields!'})
-		}else{
-		this.setState({error:''})
+		}
 
-		console.log(data);
-		const socket = socketIOClient(this.state.address);
-		const data = {email: 'pvgrubat@up.edu.ph', course_name:course_name, course_title:course_title, description:description};
-		socket.emit("insert_course", data);
-		this.props.fetchCourse();
-		this.close()
+		else{
+			this.setState({error:''})
+			const socket = socketIOClient(this.state.address);
+			const data = {email: 'pvgrubat@up.edu.ph', course_name:course_name, course_title:course_title, description:description};
+			
+
+			socket.emit("view_existing_courses", data);
+			socket.on("view_existing_courses", (course) => {
+
+			course.forEach((c) => {
+
+				if(c.course_name === course_name){ //same course name is found in the database
+
+					this.setState({uniqueCourse:false}); //unique == false
+					console.log("Course name " + course_name + "Unique: " + this.state.uniqueCourse);
+				}
+
+				})
+			});
+
+			//Check if inputted course is not yet in the database
+			if(this.state.uniqueCourse == true) {
+				socket.emit("create_course", data); //if course not in database, proceed to creating a new course
+				this.close();
+			}else if(this.state.uniqueCourse == false) this.setState({error: 'Course already exists'}); //else, prompt error
+
 		}
 	}
 
