@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, Container, Icon } from 'semantic-ui-react';
+import { Button, Grid, Container, Icon, Table } from 'semantic-ui-react';
 import DeleteModal from './DeleteModal';
 
 class Course extends Component {
@@ -14,35 +14,28 @@ class Course extends Component {
       course_offering_id
     } = this.props;
     return (
-      <Container>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column width={3}>{course_name}</Grid.Column>
-            <Grid.Column width={2}>{section}</Grid.Column>
-            <Grid.Column width={2}>{room}</Grid.Column>
-            <Grid.Column width={2}>{day}</Grid.Column>
-            <Grid.Column width={4}>{time}</Grid.Column>
-            <Grid.Column width={2}>
-              <Icon name="users" />
-              {no_of_students + '  '}
-            </Grid.Column>
-            <Grid.Column width={1}>
-              <DeleteModal
-                course_offering_id={course_offering_id}
-                button={
-                  <Button
-                    basic
-                    circular
-                    icon="trash outline"
-                    size="mini"
-                    negative
-                  />
-                }
+      <Table.Row>
+        <Table.Cell>{course_name}</Table.Cell>
+        <Table.Cell>{section}</Table.Cell>
+        <Table.Cell>{room}</Table.Cell>
+        <Table.Cell>{day}</Table.Cell>
+        <Table.Cell>{time}</Table.Cell>
+        <Table.Cell>{no_of_students}</Table.Cell>
+        <Table.Cell>
+          <DeleteModal
+            course_offering_id={course_offering_id}
+            button={
+              <Button
+                basic
+                circular
+                icon="trash outline"
+                size="mini"
+                negative
               />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Container>
+            }
+          />
+        </Table.Cell>
+      </Table.Row>
     );
   }
 }
