@@ -31,6 +31,8 @@ export const isScheduleConflict = (time1, time2) => {
       case 'F':
         days[4] = true;
         break;
+      default:
+        break;
     }
   });
   for (let i = 0; i < splittedDays2.length; i++) {
@@ -59,6 +61,8 @@ export const isScheduleConflict = (time1, time2) => {
         if (days[4]) {
           if (isTimeConflict(time1, time2)) return true;
         }
+        break;
+      default:
         break;
     }
   }
@@ -89,7 +93,6 @@ export const convertToGeneralTime = time => {
   const separator = ':';
   // Split only up to hours and minutes; ignore the seconds
   const splittedString = time.split(separator, 2);
-  let result = '';
   if (splittedString[0] < 12) {
     // if it has 0 at the beginning, trim the zero
     return `${splittedString[0].replace(/^0*/, '')}:${splittedString[1]}AM`;

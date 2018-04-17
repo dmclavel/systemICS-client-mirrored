@@ -8,7 +8,8 @@ import {
   Segment,
   Header,
   Message,
-  Container
+  Label,
+  Table
 } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
@@ -185,8 +186,6 @@ class EditLoadModal extends Component {
     );
   }
   timeAndSectionsHandleOnChange(e, data) {
-    const socket = socketIOClient(this.state.endpoint);
-    // const socket2 = socketIOClient(this.state.endpoint);
     let conflict = false;
     let details = '';
     for (let i = 0; i < data.value.length; i++) {
@@ -270,7 +269,7 @@ class EditLoadModal extends Component {
   }
   render() {
     const { open } = this.state;
-    const { button, name, teachingLoad } = this.props;
+    const { button, name, teaching_load, email_add } = this.props;
     const {
       selectedCourseOfferings,
       selectedCourse,
@@ -298,20 +297,28 @@ class EditLoadModal extends Component {
         <Modal.Header>
           <Grid centered={true}>
             <Grid.Row fluid="true">
-              <Grid.Column width={3}>
-                <Image floated="left" avatar src={img} />
-              </Grid.Column>
-              <Header textAlign="left">
-                <Header.Content>{name}</Header.Content>
-                <Header.Subheader>
-                  <Header
-                    textAlign="left"
-                    size="tiny"
-                    icon="users"
-                    subheader={teachingLoad}
+              <Grid.Column width={10}>
+                <div>
+                  <Image
+                    verticalAlign="middle"
+                    floated="left"
+                    avatar
+                    src={img}
+                    size="mini"
                   />
-                </Header.Subheader>
-              </Header>
+                  <Header textAlign="left">
+                    <Header.Content>{name}</Header.Content>
+                    <Header.Subheader>
+                      <Header
+                        textAlign="left"
+                        size="tiny"
+                        icon="mail"
+                        subheader={email_add}
+                      />
+                    </Header.Subheader>
+                  </Header>
+                </div>
+              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Modal.Header>
@@ -340,11 +347,12 @@ class EditLoadModal extends Component {
                   loading={coursesDropdownLoading}
                   noResultsMessage="No available courses found."
                   error={coursesDropdownError}
-                  scrolling
                 />
               </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
+              <br />
+              <br />
+              <br />
+
               <Grid.Column width={13}>
                 <Dropdown
                   multiple
@@ -358,7 +366,6 @@ class EditLoadModal extends Component {
                   onChange={this.timeAndSectionsHandleOnChange}
                   loading={sectionsDropdownLoading}
                   error={sectionsDropdownError}
-                  scrolling
                 />
               </Grid.Column>
               <Grid.Column width={3}>
@@ -371,6 +378,9 @@ class EditLoadModal extends Component {
               {!!courses.length && (
                 <Grid.Column width={16}>
                   <Segment>
+                    <Label as="a" color="orange" ribbon="right">
+                      Total: {teaching_load} units
+                    </Label>
                     <div
                       style={{
                         padding: '20px',
@@ -378,59 +388,49 @@ class EditLoadModal extends Component {
                         maxHeight: 200
                       }}
                     >
-                      <Container>
-                        <Grid>
-                          <Grid.Row>
-                            <Grid.Column width={3}>
-                              <Header as="h4">Course name</Header>
-                            </Grid.Column>
-                            <Grid.Column width={2}>
-                              <Header as="h4">Section</Header>
-                            </Grid.Column>
-                            <Grid.Column width={2}>
-                              <Header as="h4">Room</Header>
-                            </Grid.Column>
-                            <Grid.Column width={2}>
-                              <Header as="h4">Day</Header>
-                            </Grid.Column>
-                            <Grid.Column width={4}>
-                              <Header as="h4">Time</Header>
-                            </Grid.Column>
-                            <Grid.Column width={2}>
-                              <Header as="h4">Students</Header>
-                            </Grid.Column>
-                            <Grid.Column width={1} />
-                          </Grid.Row>
-                        </Grid>
-                      </Container>
-                      {courses.map((course, index) => {
-                        const {
-                          course_offering_id,
-                          no_of_students,
-                          section,
-                          course_name,
-                          subject,
-                          room,
-                          day,
-                          time_start,
-                          time_end
-                        } = course;
-                        return (
-                          <Course
-                            key={index}
-                            course_offering_id={course_offering_id}
-                            no_of_students={no_of_students}
-                            section={section}
-                            course_name={course_name}
-                            subject={subject}
-                            room={room}
-                            day={day}
-                            time={`${convertToGeneralTime(
-                              time_start
-                            )}-${convertToGeneralTime(time_end)}`}
-                          />
-                        );
-                      })}
+                      <Table textAlign="center">
+                        <Table.Header>
+                          <Table.Row>
+                            <Table.HeaderCell>Course Code</Table.HeaderCell>
+                            <Table.HeaderCell>Section</Table.HeaderCell>
+                            <Table.HeaderCell>Room</Table.HeaderCell>
+                            <Table.HeaderCell>Day</Table.HeaderCell>
+                            <Table.HeaderCell>Time</Table.HeaderCell>
+                            <Table.HeaderCell>Students</Table.HeaderCell>
+                          </Table.Row>
+                        </Table.Header>
+
+                        <Table.Body>
+                          {courses.map((course, index) => {
+                            const {
+                              course_offering_id,
+                              no_of_students,
+                              section,
+                              course_name,
+                              subject,
+                              room,
+                              day,
+                              time_start,
+                              time_end
+                            } = course;
+                            return (
+                              <Course
+                                key={index}
+                                course_offering_id={course_offering_id}
+                                no_of_students={no_of_students}
+                                section={section}
+                                course_name={course_name}
+                                subject={subject}
+                                room={room}
+                                day={day}
+                                time={`${convertToGeneralTime(
+                                  time_start
+                                )}-${convertToGeneralTime(time_end)}`}
+                              />
+                            );
+                          })}
+                        </Table.Body>
+                      </Table>
                     </div>
                   </Segment>
                 </Grid.Column>
@@ -439,7 +439,7 @@ class EditLoadModal extends Component {
           </Grid>
         </Modal.Content>
         <Modal.Actions>
-          <Button icon="check" content="All Done" onClick={this.handleClose} />
+          <Button icon="check" content="All Done" onClick={this.close} />
         </Modal.Actions>
       </Modal>
     );
