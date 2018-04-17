@@ -62,28 +62,10 @@ class AdminCard extends Component {
 			socket.emit("view_all_unarchived_sections", data);
 			socket.on("view_all_unarchived_sections", (course) => {
 				this.setState({coursesX:course});
-				
+
 			});
 			console.log("Data changed");
 		}
-
-		// fetchSection = () => {
-		// 	const socket = socketIOClient(this.state.address);
-		// 	const data = {email: 'pvgrubat@up.edu.ph'};
-		// 	socket.emit("view_existing_courses", data);
-		// 	socket.on("view_existing_courses", (course) => {
-
-		// 	const tempArray = [];
-		// 	course.forEach((c) => {
-		// 		tempArray.push({
-		// 		key: c.course_id,
-		// 		value: c.course_name,
-		// 		text: c.course_name
-		// 		})
-		// 	});
-		// 	this.setState({courses:tempArray});
-		// });
-		// }
 
 
 
@@ -116,21 +98,21 @@ class AdminCard extends Component {
 
                 <Table.Body>
                 	{coursesX.map((course) => {
-                		return( <CourseRow 
+                		return( <CourseRow
                 			fetch_Course={this.fetchCourse}
-                			description={course.description} 
-                			course={course.course_id} 
-                			coursecode={course.course_name} 
+                			description={course.description}
+                			course={course.course_id}
+                			coursecode={course.course_name}
                 			day={course.day}
-                			section={course.section} 
+                			section={course.section}
                 			time_start={course.time_start}
                 			time_end={course.time_end}
                 			room={course.room}
                 			section_type={course.section_type}
-                			maxcapacity={course.max_capacity} 
-                			status={course.status} 
-                			students={course.no_of_students} 
-                			acadyear={course.acad_year} 
+                			maxcapacity={course.max_capacity}
+                			status={course.status}
+                			students={course.no_of_students}
+                			acadyear={course.acad_year}
                 			sem={course.semester}
                 			unit={course.unit}
                 			title={course.course_title}
