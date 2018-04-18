@@ -8,19 +8,13 @@ class SectionHeader extends Component {
 		return (
 			<div className="home-heading">
 				<div className="home-background bg-color-header-home" />
-				<div className="heading-content">
-					<Grid>
-						<Grid.Row divided>
-							<Grid.Column width={9}>
-								<p className="section-heading-message">
-									{this.props.course_no} {this.props.section}<br/>
-								</p>
-								<p class="section-heading-submessage">
-									{this.props.course_title}
-								</p>
-							</Grid.Column>
-						</Grid.Row>
-					</Grid>
+				<div className="heading-content font-white">
+					<p className="db-name">
+						{this.props.course_no} {this.props.section}<br/>
+					</p>
+					<p class="db-email">
+						{this.props.course_title}
+					</p>
 				</div>
 			</div>
 		);

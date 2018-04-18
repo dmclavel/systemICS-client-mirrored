@@ -50,23 +50,10 @@ class Login extends Component {
   }
 
   render() {
-    if (this.state.success && this.state.accessLvl === 1) {
+    if (this.state.success)
       return (
-        <Redirect to='/faculty/dashboard' push />
+        <Redirect to='/' push />
       );
-    }
-
-    if (this.state.success && this.state.accessLvl === 2 ) {
-      return (
-        <Redirect to="/regcom/dashboard" push />
-      )
-    }
-
-    if (this.state.success && this.state.accessLvl === 3) {
-      return (
-        <Redirect to="/admin/dashboard" push />
-      )
-    }
 
     const { activeItem } = this.state;
 
