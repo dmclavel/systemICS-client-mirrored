@@ -72,7 +72,7 @@ class Routes extends Component {
 			return (
 				<Switch>
           <Redirect exact from="/" to="/faculty/dashboard" />
-					<Route exact path="/faculty/dashboard" component={ () => <Faculty user='admin' />} />
+					<Route exact path="/faculty/dashboard" component={ () => <Faculty user={this.props.user} />} />
 					<Route path="*" component={ NotFound } />
 				</Switch>
 			)
@@ -82,9 +82,9 @@ class Routes extends Component {
 			return (
 				<Switch>
           <Redirect exact from="/" to="/regcom/dashboard" />
-					<Route exact path='/regcom/dashboard' component={ () => <Faculty user='regcom' /> } />
-					<Route exact path='/regcom/manage/advisees' component={ () => <Advisees user='regcom' /> } />
-					<Route exact path='/regcom/manage/teaching' component={ () => <RegCom user='regcom' />  } />
+					<Route exact path='/regcom/dashboard' component={ () => <Faculty user={this.props.user} /> } />
+					<Route exact path='/regcom/manage/advisees' component={ () => <Advisees user={this.props.user} /> } />
+					<Route exact path='/regcom/manage/teaching' component={ () => <RegCom user={this.props.user} />  } />
 					<Route path="*" component={ NotFound } />
 				</Switch>
 			)
@@ -94,11 +94,11 @@ class Routes extends Component {
 			return (
 				<Switch>
           <Redirect exact from="/" to="/admin/dashboard" />
-					<Route exact path='/admin/dashboard' component={ () => <Faculty user='admin' /> } />
-					<Route exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } />
-					<Route exact path='/admin/manage/advisees' component={ () => <Advisees user='admin' />  } />
-					<Route exact path='/admin/manage/teaching' component={ () => <RegCom user='admin' />  } />
-					<Route exact path='/admin/manage/users' component={ () => <Users user='admin' />  } />
+					<Route exact path='/admin/dashboard' component={ () => <Faculty user={this.props.user} /> } />
+					<Route exact path='/admin/manage/courses' component={ () => <Admin user={this.props.user} />  } />
+					<Route exact path='/admin/manage/advisees' component={ () => <Advisees user={this.props.user} />  } />
+					<Route exact path='/admin/manage/teaching' component={ () => <RegCom user={this.props.user} />  } />
+					<Route exact path='/admin/manage/users' component={ () => <Users user={this.props.user} />  } />
 					<Route path="*" component={ NotFound } />
 				</Switch>
 			)
