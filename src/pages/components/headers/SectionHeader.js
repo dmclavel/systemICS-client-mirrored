@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Image, Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Grid, Header } from 'semantic-ui-react';
 import './ManageHeader.css';
 
 class SectionHeader extends Component {
@@ -9,12 +8,35 @@ class SectionHeader extends Component {
 			<div className="home-heading">
 				<div className="home-background bg-color-header-home" />
 				<div className="heading-content font-white">
-					<p className="db-name">
-						{this.props.course_no} {this.props.section}<br/>
-					</p>
-					<p class="db-email">
-						{this.props.course_title}
-					</p>
+					<p className="section-name">CMSC 128</p>
+					<p class="section-email">Introduction to Software Engineering</p>
+
+					<Grid>
+						<Grid.Row>
+							<Grid.Column width={3} />
+							<Grid.Column width={4}>
+								<Header
+									className="font-white"
+									content="7:00AM-8:00AM"
+									icon="clock"
+								/>
+							</Grid.Column>
+							<Grid.Column width={5}>
+								<Header
+									className="font-white"
+									content="Reginald Recario"
+									icon="user outline"
+								/>
+							</Grid.Column>
+							<Grid.Column width={4}>
+								<Header
+									className="font-white"
+									content="ICSMH"
+									icon="building"
+								/>
+							</Grid.Column>
+						</Grid.Row>
+					</Grid>
 				</div>
 			</div>
 		);

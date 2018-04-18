@@ -7,8 +7,6 @@ import {
 	Segment,
 	Header,
 	Container,
-	Input,
-	Label,
 	Message
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
@@ -49,18 +47,12 @@ class AddCourseModal extends Component {
 	};
 
 	handleSubmit = evt => {
-		const {
-			course_name,
-			course_title,
-			description,
-			course,
-			uniqueCourse
-		} = this.state;
+		const { course_name, course_title, description } = this.state;
 
 		if (
-			this.state.course_name == '' ||
-			this.state.course_title == '' ||
-			this.state.description == ''
+			this.state.course_name === '' ||
+			this.state.course_title === '' ||
+			this.state.description === ''
 		) {
 			this.setState({ error: 'Please fill all the fields!' });
 		} else {

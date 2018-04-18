@@ -5,7 +5,6 @@ import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
 
 import NavbarIn from '../components/navbar/NavbarIn';
-import Heading from '../components/Heading';
 import Sidebar from '../components/Sidebar';
 import ManageHeader from '../components/headers/ManageHeader';
 

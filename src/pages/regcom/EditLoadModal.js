@@ -361,7 +361,6 @@ class EditLoadModal extends Component {
                   placeholder="Select section and time"
                   fluid
                   value={selectedCourseOfferings}
-                  selection
                   options={timeAndSections}
                   onChange={this.timeAndSectionsHandleOnChange}
                   loading={sectionsDropdownLoading}
