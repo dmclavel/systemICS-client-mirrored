@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Grid, Image, Button } from 'semantic-ui-react';
+import { Grid, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import image from './GAZA.jpg';
 import './ManageHeader.css';
 
 const user = {
 	name: 'Reginald'
-}
+};
 
 class ManageHeader extends Component {
 	render() {
@@ -19,44 +18,61 @@ class ManageHeader extends Component {
 							<Grid.Column width={1} />
 							<Grid.Column width={7}>
 								<p className="heading-message">
-									Ready to work, {user.name}?<br/>
+									Ready to work, {user.name}?<br />
 								</p>
-								<p class="heading-submessage">You are working as the {this.props.user.localeCompare('admin') === 0 ? 'administrator' : 'registration committee.'}</p> 
+								<p class="heading-submessage">
+									You are working as the{' '}
+									{this.props.user.localeCompare('admin') === 0
+										? 'administrator'
+										: 'registration committee.'}
+								</p>
 							</Grid.Column>
 							<Grid.Column width={2}>
-								{
-									this.props.user.localeCompare('admin') === 0 ?
-										<div>
-											<Link to='/admin/manage/courses'>
-												<Button className='centered-h' circular icon='book huge' />
-											</Link>
-											<p className="admin-button-caption">Course Offering</p>
-										</div>
-									: null
-								}
+								{this.props.user.localeCompare('admin') === 0 ? (
+									<div>
+										<Link to="/admin/manage/courses">
+											<Button
+												className="centered-h"
+												circular
+												icon="book huge"
+											/>
+										</Link>
+										<p className="admin-button-caption">Course Offering</p>
+									</div>
+								) : null}
 							</Grid.Column>
 							<Grid.Column width={2} className="remove-padding">
-								{
-									this.props.user.localeCompare('admin') === 0 ?
-										<div>
-											<Link to='/admin/manage/users'>
-												<Button className='admin-button centered-h' circular icon='id badge outline huge' />
-											</Link>
-											<p className="admin-button-caption">Users</p>
-										</div>
-									: null
-								}
+								{this.props.user.localeCompare('admin') === 0 ? (
+									<div>
+										<Link to="/admin/manage/users">
+											<Button
+												className="admin-button centered-h"
+												circular
+												icon="id badge outline huge"
+											/>
+										</Link>
+										<p className="admin-button-caption">Users</p>
+									</div>
+								) : null}
 							</Grid.Column>
 							<Grid.Column width={2}>
 								<Link to={`/${this.props.user}/manage/advisees`}>
-									<Button className='admin-button centered-h' circular icon='user plus huge' />
+									<Button
+										className="admin-button centered-h"
+										circular
+										icon="user plus huge"
+									/>
 								</Link>
 								<p className="admin-button-caption">Advisees</p>
 							</Grid.Column>
 
 							<Grid.Column width={2} className="remove-padding">
 								<Link to={`/${this.props.user}/manage/teaching`}>
-									<Button className='admin-button' circular icon='clipboard huge' />
+									<Button
+										className="admin-button"
+										circular
+										icon="clipboard huge"
+									/>
 								</Link>
 								<p className="admin-button-caption">Teaching Load</p>
 							</Grid.Column>

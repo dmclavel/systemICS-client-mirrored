@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Image, Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Grid } from 'semantic-ui-react';
 import './ManageHeader.css';
 
 class HomepageHeader extends Component {
@@ -11,8 +10,7 @@ class HomepageHeader extends Component {
 				<div className="home-content">
 					<Grid>
 						<Grid.Row divided>
-							<Grid.Column width={9}> 
-							</Grid.Column>
+							<Grid.Column width={9} />
 						</Grid.Row>
 					</Grid>
 				</div>
