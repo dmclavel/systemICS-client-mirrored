@@ -44,9 +44,6 @@ class UsersTable extends Component {
                     {user.name}
                   </Table.Cell>
                   <Table.Cell>
-                    {user.id}
-                  </Table.Cell>
-                  <Table.Cell>
                     {user.email}
                   </Table.Cell>
                   <Table.Cell textAlign="center">
