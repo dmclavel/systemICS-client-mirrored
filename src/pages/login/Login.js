@@ -28,9 +28,8 @@ class Login extends Component {
     console.log(this.state.profile);
 
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('email_privilege', { email : this.state.profile.U3 });
+    socket.emit('email_privilege', { email_add : this.state.profile.U3 });
     socket.on('email_privilege', privilege => {
-      console.log(privilege);
       this.setState({ accessLvl : privilege, success : true });
     })
 
@@ -40,7 +39,7 @@ class Login extends Component {
   componentDidMount(){
     const socket = socketIOClient(this.state.endpoint)
     socket.on('login', (name) => {
-      console.log(name);
+      alert(name);
     });
   }
 
@@ -88,7 +87,7 @@ class Login extends Component {
               </Segment>
 
               <Link to="/">
-                <Button icon="arrow outline left" content="Back to Homepage" /> 
+                <Button icon="arrow outline left" content="Back to Homepage" />
               </Link>
             </Grid.Column>
             <Grid.Column width={5} />

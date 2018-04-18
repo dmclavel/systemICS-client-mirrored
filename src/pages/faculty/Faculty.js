@@ -46,7 +46,7 @@ class Faculty extends Component {
           <Grid>
               <Grid.Row>
                 <NavbarIn active='dashboard' />
-                <DashboardHeader />
+                <DashboardHeader user={this.props.user}/>
               </Grid.Row>
                <Grid.Row>
                   <Grid.Column width={1}></Grid.Column>

@@ -50,7 +50,7 @@ class App extends Component {
     return (
       <div className="App bg-color-main">
       	<Router history={browserHistory} >
-          <Routes logInHandler={this.handleLogin} accessLvl={this.state.accessLvl} />
+          <Routes logInHandler={this.handleLogin} accessLvl={this.state.accessLvl} profile={this.state.profile}/>
       	</Router>
       </div>
     );

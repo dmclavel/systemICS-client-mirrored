@@ -51,7 +51,22 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 class Routes extends Component {
 	constructor(props) {
 		super(props);
+    this.state = {
+      profile: {}
+    }
+
 	}
+  // componentDidMount = () => {
+  //   const gProfile ={
+  //
+  //       fullname: this.props.profile.ig,
+  //       firstName: this.props.profile.ofa,
+  //       lastName: this.props.profile.wea,
+  //       picURL: this.props.profile.Paa,
+  //       profileNum: this.props.profile.eea
+  //   }
+  //   this.setState({profile: gProfile});
+  // }
 
 	render() {
 		// non-user
@@ -94,7 +109,7 @@ class Routes extends Component {
 			return (
 				<Switch>
           <Redirect exact from="/" to="/admin/dashboard" />
-					<Route exact path='/admin/dashboard' component={ () => <Faculty user='admin' /> } />
+					<Route exact path='/admin/dashboard' component={ () => <Faculty user={this.props.profile} /> } />
 					<Route exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } />
 					<Route exact path='/admin/manage/advisees' component={ () => <Advisees user='admin' />  } />
 					<Route exact path='/admin/manage/teaching' component={ () => <RegCom user='admin' />  } />
