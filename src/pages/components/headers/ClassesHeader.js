@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
-import { Grid, Image, Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Input } from 'semantic-ui-react';
 import './ManageHeader.css';
 
 class ClassesHeader extends Component {
+	handleChange = e => {
+		this.props.updateSearch(e.target.value);
+	};
+
 	render() {
+		const value = this.props.search;
 		return (
 			<div className="home-heading">
 				<div className="home-background bg-color-header-home" />
-				<div className="home-content">
-					<Grid>
-						<Grid.Row divided>
-							<Grid.Column width={9}> 
-							</Grid.Column>
-						</Grid.Row>
-					</Grid>
+				<div className="heading-content font-white">
+					<p className="section-name">CLASSES</p>
+					<div className="center-content" width={16}>
+						<Input
+							fluid
+							raised={true}
+							width={16}
+							value={value}
+							icon="search"
+							placeholder="Search classes..."
+							onChange={this.handleChange}
+						/>
+					</div>
 				</div>
 			</div>
 		);

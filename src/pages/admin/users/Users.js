@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 
 import NavbarIn from '../../components/navbar/NavbarIn';
-import Heading from '../../components/Heading';
 import Sidebar from '../../components/Sidebar';
 import ManageHeader from '../../components/headers/ManageHeader';
 import User from './User';
@@ -13,7 +12,11 @@ class RegCom extends Component {
       <div>
         <Grid>
           <Grid.Row>
-            <NavbarIn logOutHandler={() => this.props.logOutHandler} user={this.props.user} active='manage' />
+            <NavbarIn
+              logOutHandler={() => this.props.logOutHandler}
+              user={this.props.user}
+              active="manage"
+            />
             <ManageHeader user={this.props.user} />
           </Grid.Row>
 

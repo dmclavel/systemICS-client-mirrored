@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, Container, Icon, Table } from 'semantic-ui-react';
+import { Button, Table } from 'semantic-ui-react';
 import DeleteModal from './DeleteModal';
 
 class Course extends Component {

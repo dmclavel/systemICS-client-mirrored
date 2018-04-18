@@ -1,70 +1,10 @@
 import React, { Component } from 'react';
-import {
-	Grid,
-	Container,
-	Header,
-	Table,
-	Button,
-	Card,
-	Input,
-	Modal,
-	Segment,
-	Dropdown
-} from 'semantic-ui-react';
+import { Grid, Header, Table, Input } from 'semantic-ui-react';
 import CourseRow from './CourseRow';
-import NavbarIn from '../components/navbar/NavbarIn';
-import Heading from '../components/Heading';
-import Sidebar from '../components/Sidebar';
 import AddCourseModal from './AddCourseModal';
 import AddLectureSection from './AddLectureSection';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
-const inlineStyle = {
-	modal: {
-		marginTop: '0px !important',
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		color: 'black'
-	}
-};
-
-const options = [
-	{
-		key: 1,
-		value: 'test',
-		text: '1st Semester 17-18'
-	},
-	{
-		key: 2,
-		value: 'test',
-		text: '1st Semester 17-18'
-	},
-	{
-		key: 3,
-		value: 'test',
-		text: '1st Semester 17-18'
-	},
-	{
-		key: 4,
-		value: 'test',
-		text: '1st Semester 17-18'
-	},
-	{
-		key: 5,
-		value: 'test',
-		text: '1st Semester 17-18'
-	},
-	{
-		key: 6,
-		value: 'test',
-		text: '1st Semester 17-18'
-	},
-	{
-		key: 7,
-		value: 'test',
-		text: '1st Semester 17-18'
-	}
-];
 
 class AdminCard extends Component {
 	constructor() {
@@ -80,7 +20,6 @@ class AdminCard extends Component {
 			acad_year: '',
 			semester: '',
 			no_of_students: '',
-			course_id: '',
 			course_name: '',
 			time_start: '',
 			time_end: '',
@@ -114,31 +53,10 @@ class AdminCard extends Component {
 	};
 
 	render() {
-		const {
-			course_id,
-			time_start,
-			time_end,
-			room,
-			day,
-			section,
-			unit,
-			max_capacity,
-			status,
-			description,
-			coursesX,
-			courses
-		} = this.state;
+		const { coursesX } = this.state;
 
 		return (
 			<Grid.Column width={10}>
-				<Button icon="arrow left" />
-				<Dropdown
-					fluid
-					placeholder="Select Friend"
-					selection
-					options={options}
-				/>
-				<Button icon="arrow right" />
 				<Header as="h1" textAlign="left">
 					Faculty Workload
 				</Header>

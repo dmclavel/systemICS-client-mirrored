@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Icon, Button } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 import './ManageHeader.css';
 
 const faculty = {

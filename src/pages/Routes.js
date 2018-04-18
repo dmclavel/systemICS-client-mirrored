@@ -51,7 +51,22 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 class Routes extends Component {
 	constructor(props) {
 		super(props);
+    this.state = {
+      profile: {}
+    }
+
 	}
+  // componentDidMount = () => {
+  //   const gProfile ={
+  //
+  //       fullname: this.props.profile.ig,
+  //       firstName: this.props.profile.ofa,
+  //       lastName: this.props.profile.wea,
+  //       picURL: this.props.profile.Paa,
+  //       profileNum: this.props.profile.eea
+  //   }
+  //   this.setState({profile: gProfile});
+  // }
 
 	render() {
 		// non-user
