@@ -79,7 +79,7 @@ class Faculty extends Component {
           <Grid>
               <Grid.Row>
                 <NavbarIn active='dashboard' />
-                <DashboardHeader user={this.props.user}/>
+                <DashboardHeader user={this.props.user} accessLvl={this.props.accessLvl}/>
               </Grid.Row>
                <Grid.Row>
                   <Grid.Column width={1}></Grid.Column>

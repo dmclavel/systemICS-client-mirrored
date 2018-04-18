@@ -9,6 +9,7 @@ const user = {
 
 class ManageHeader extends Component {
 	render() {
+		alert(this.props.accessLvl);
 		return (
 			<div className="db-heading">
 				<div className="db-background bg-color-nav-admin" />
@@ -22,13 +23,13 @@ class ManageHeader extends Component {
 								</p>
 								<p class="heading-submessage">
 									You are working as the{' '}
-									{this.props.user.localeCompare('admin') === 0
+									{this.props.accessLvl === 3
 										? 'administrator'
 										: 'registration committee.'}
 								</p>
 							</Grid.Column>
 							<Grid.Column width={2}>
-								{this.props.user.localeCompare('admin') === 0 ? (
+								{this.props.accessLvl === 3 ? (
 									<div>
 										<Link to="/admin/manage/courses">
 											<Button
@@ -42,7 +43,7 @@ class ManageHeader extends Component {
 								) : null}
 							</Grid.Column>
 							<Grid.Column width={2} className="remove-padding">
-								{this.props.user.localeCompare('admin') === 0 ? (
+								{this.props.accessLvl === 3 ? (
 									<div>
 										<Link to="/admin/manage/users">
 											<Button

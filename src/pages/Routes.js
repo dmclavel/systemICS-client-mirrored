@@ -87,7 +87,7 @@ class Routes extends Component {
 			return (
 				<Switch>
           <Redirect exact from="/" to="/faculty/dashboard" />
-					<Route exact path="/faculty/dashboard" component={ () => <Faculty user={this.props.user} />} />
+					<Route exact path="/faculty/dashboard" component={ () => <Faculty user={this.props.user} accessLvl={this.props.accessLvl}/>} />
 					<Route path="*" component={ NotFound } />
 				</Switch>
 			)
@@ -97,9 +97,9 @@ class Routes extends Component {
 			return (
 				<Switch>
           <Redirect exact from="/" to="/regcom/dashboard" />
-					<Route exact path='/regcom/dashboard' component={ () => <Faculty user={this.props.user} /> } />
-					<Route exact path='/regcom/manage/advisees' component={ () => <Advisees user={this.props.user} /> } />
-					<Route exact path='/regcom/manage/teaching' component={ () => <RegCom user={this.props.user} />  } />
+					<Route exact path='/regcom/dashboard' component={ () => <Faculty user={this.props.user} accessLvl={this.props.accessLvl}/> } />
+					<Route exact path='/regcom/manage/advisees' component={ () => <Advisees user={this.props.user} accessLvl={this.props.accessLvl}/> } />
+					<Route exact path='/regcom/manage/teaching' component={ () => <RegCom accessLvl={this.props.accessLvl} user={this.props.user} />  } />
 					<Route path="*" component={ NotFound } />
 				</Switch>
 			)
@@ -109,11 +109,11 @@ class Routes extends Component {
 			return (
 				<Switch>
           <Redirect exact from="/" to="/admin/dashboard" />
-					<Route exact path='/admin/dashboard' component={ () => <Faculty user={this.props.user} /> } />
-					<Route exact path='/admin/manage/courses' component={ () => <Admin user={this.props.user} />  } />
-					<Route exact path='/admin/manage/advisees' component={ () => <Advisees user={this.props.user} />  } />
-					<Route exact path='/admin/manage/teaching' component={ () => <RegCom user={this.props.user} />  } />
-					<Route exact path='/admin/manage/users' component={ () => <Users user={this.props.user} />  } />
+					<Route exact path='/admin/dashboard' component={ () => <Faculty accessLvl={this.props.accessLvl} user={this.props.user} /> } />
+					<Route exact path='/admin/manage/courses' component={ () => <Admin accessLvl={this.props.accessLvl} user={this.props.user} />  } />
+					<Route exact path='/admin/manage/advisees' component={ () => <Advisees accessLvl={this.props.accessLvl} user={this.props.user} />  } />
+					<Route exact path='/admin/manage/teaching' component={ () => <RegCom accessLvl={this.props.accessLvl} user={this.props.user} />  } />
+					<Route exact path='/admin/manage/users' component={ () => <Users  accessLvl={this.props.accessLvl}user={this.props.user} />  } />
 					<Route path="*" component={ NotFound } />
 				</Switch>
 			)
