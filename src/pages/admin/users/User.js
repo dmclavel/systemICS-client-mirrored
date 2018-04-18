@@ -34,7 +34,7 @@ class User extends Component {
 			this.setState(
 				{
 					visibleData: this.state.data.filter( (user) =>{
-						if( user.name.toLowerCase().includes(query.toLowerCase()) || user.email.toLowerCase().includes(query.toLowerCase()) || user.id.toLowerCase().includes(query.toLowerCase())){
+						if( user.name.toLowerCase().includes(query.toLowerCase()) || user.id.toLowerCase().includes(query.toLowerCase())){
 							return true;
 						}else{
 							return false;
