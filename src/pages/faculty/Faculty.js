@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Grid, Search, Card, Input, Header, Button} from 'semantic-ui-react';
+import { Grid, Card, Input, Button } from 'semantic-ui-react';
 import './Faculty.css';
 import SubjectCard from './SubjectCard';
 import Advisee from './Advisee';
@@ -79,7 +79,7 @@ class Faculty extends Component {
           <Grid>
               <Grid.Row>
                 <NavbarIn active='dashboard' />
-                <DashboardHeader />
+                <DashboardHeader user={this.props.user}/>
               </Grid.Row>
                <Grid.Row>
                   <Grid.Column width={1}></Grid.Column>
@@ -110,7 +110,7 @@ class Faculty extends Component {
         </Grid>
 
         </section>
-     </div>
+      </div>
     );
   }
 }

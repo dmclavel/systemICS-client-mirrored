@@ -19,13 +19,8 @@ class Advisee extends Component {
 			<div>
 				<Grid>
 					<Grid.Row>
-						<Grid.Column width={2} />
-						<Grid.Column width={9}>
+						<Grid.Column width={16}>
 							<Input placeholder='Search advisee here' icon='search' onChange={this.handleSearch} fluid />
-						</Grid.Column>
-						<Grid.Column width={1} />
-						<Grid.Column width={3}>
-							<AddAdvisee />
 						</Grid.Column>
 					</Grid.Row>
 					<Grid.Row>

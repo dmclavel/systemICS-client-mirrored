@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import {
-  Grid,
-  Input,
-  Segment,
-} from 'semantic-ui-react';
+import { Grid, Input, Segment } from 'semantic-ui-react';
 import Information from './Information';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
 
 import NavbarIn from '../components/navbar/NavbarIn';
-import Heading from '../components/Heading';
 import Sidebar from '../components/Sidebar';
 import ManageHeader from '../components/headers/ManageHeader';
 
@@ -36,11 +31,12 @@ class RegCom extends Component {
     });
   }
   render() {
+    const { informations, searchInput } = this.state;
     return (
       <div>
         <Grid>
           <Grid.Row>
-            <NavbarIn user={this.props.user} active='manage' />
+            <NavbarIn user={this.props.user} active="manage" />
             <ManageHeader user={this.props.user} />
           </Grid.Row>
 
@@ -61,12 +57,12 @@ class RegCom extends Component {
                 />
               </Segment>
               <Grid.Row>
-                {this.state.informations
+                {informations
                   .filter(information => {
                     if (
                       information.name
                         .toLowerCase()
-                        .includes(this.state.searchInput.toLowerCase())
+                        .includes(searchInput.toLowerCase())
                     ) {
                       return true;
                     }
@@ -75,7 +71,7 @@ class RegCom extends Component {
                   .map((information, index) => {
                     return (
                       <Grid.Column width={11} stretched={true} key={index}>
-                        <Information object={information} />
+                        <Information data={information} />
                       </Grid.Column>
                     );
                   })}
