@@ -16,7 +16,7 @@ import Faculty from './faculty/Faculty';
 import Admin from './admin/Admin';
 import Advisees from './advisees/Advisees';
 import RegCom from './regcom/RegCom';
-import SectionTab from './homepage/SectionTab';
+import Section from './homepage/Section';
 import NotFound from './components/NotFound';
 import Users from './admin/users/Users';
 
@@ -51,7 +51,22 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 class Routes extends Component {
 	constructor(props) {
 		super(props);
+    this.state = {
+      profile: {}
+    }
+
 	}
+  // componentDidMount = () => {
+  //   const gProfile ={
+  //
+  //       fullname: this.props.profile.ig,
+  //       firstName: this.props.profile.ofa,
+  //       lastName: this.props.profile.wea,
+  //       picURL: this.props.profile.Paa,
+  //       profileNum: this.props.profile.eea
+  //   }
+  //   this.setState({profile: gProfile});
+  // }
 
 	render() {
 		// non-user
@@ -62,7 +77,7 @@ class Routes extends Component {
 					<Route exact path='/faculty' component={ FacultyTab } />
 					<Route exact path='/login' component={ () => <Login logInHandler={this.props.logInHandler} /> } />
 					<Route exact path='/classes' component={ Classes } />
-					<Route exact path='/section/:_id' component={ SectionTab } />
+					<Route exact path='/section/:_id' component={ Section } />
 					<Route path="*" component={ NotFound } />
 				</Switch>
 			)
@@ -94,7 +109,7 @@ class Routes extends Component {
 			return (
 				<Switch>
           <Redirect exact from="/" to="/admin/dashboard" />
-					<Route exact path='/admin/dashboard' component={ () => <Faculty user='admin' /> } />
+					<Route exact path='/admin/dashboard' component={ () => <Faculty user={this.props.profile} /> } />
 					<Route exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } />
 					<Route exact path='/admin/manage/advisees' component={ () => <Advisees user='admin' />  } />
 					<Route exact path='/admin/manage/teaching' component={ () => <RegCom user='admin' />  } />

@@ -7,7 +7,9 @@ import {
   Button,
   Segment,
   Header,
-  Message
+  Message,
+  Label,
+  Table
 } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
@@ -45,7 +47,8 @@ class EditLoadModal extends Component {
       details: '',
       coursesDropdownError: false,
       sectionsDropdownError: false,
-      conflict: false
+      conflict: false,
+      warning: false
     };
     autobind(this);
   }
@@ -99,16 +102,23 @@ class EditLoadModal extends Component {
       this.setState({
         coursesDropdownError: true,
         message: 'Some required field is missing',
-        details: ''
+        details: '',
+        warning: true
       });
     }
     if (this.state.selectedCourseOfferings.length === 0) {
       this.setState({
         sectionsDropdownError: true,
         message: 'Some required field is missing',
-        details: ''
+        details: '',
+        warning: true
       });
-    } else {
+    }
+    if (
+      this.state.selectedCourse &&
+      this.state.selectedCourseOfferings.length !== 0 &&
+      !this.state.conflict
+    ) {
       const socket = socketIOClient(this.state.endpoint);
       // For each id values from multiple dropdown, send it to the database
       //      to assign the employee with the course_offering
@@ -131,14 +141,18 @@ class EditLoadModal extends Component {
         selectedCourse: undefined,
         timeAndSections: [],
         message: 'Successfully assigned subjects!',
-        details
+        details,
+        warning: false
       });
     }
   }
 
   codesAndDescriptionHandleOnChange(e, data) {
     this.setState({
-      sectionsDropdownLoading: true
+      sectionsDropdownLoading: true,
+      conflict: false,
+      message: '',
+      details: ''
     });
     const socket = socketIOClient(this.state.endpoint);
     const value = JSON.parse(data.value);
@@ -165,17 +179,15 @@ class EditLoadModal extends Component {
           timeAndSections,
           selectedCourse: data.value,
           sectionsDropdownLoading: false,
-          coursesDropdownError: false
+          coursesDropdownError: false,
+          selectedCourseOfferings: []
         });
       }
     );
   }
   timeAndSectionsHandleOnChange(e, data) {
-    const socket = socketIOClient(this.state.endpoint);
-    // const socket2 = socketIOClient(this.state.endpoint);
     let conflict = false;
     let details = '';
-    console.log(data.value);
     for (let i = 0; i < data.value.length; i++) {
       if (conflict) break;
       const source = JSON.parse(data.value[i]);
@@ -241,20 +253,23 @@ class EditLoadModal extends Component {
         selectedCourseOfferings: data.value,
         conflict,
         message: 'Conflicting time schedules',
-        details
+        details,
+        warning: true
       });
     } else {
       this.setState({
         selectedCourseOfferings: data.value,
         sectionsDropdownError: false,
         message: '',
-        details: ''
+        details: '',
+        warning: false,
+        conflict
       });
     }
   }
   render() {
     const { open } = this.state;
-    const { button, name, teachingLoad } = this.props;
+    const { button, name, teaching_load, email_add } = this.props;
     const {
       selectedCourseOfferings,
       selectedCourse,
@@ -266,7 +281,8 @@ class EditLoadModal extends Component {
       message,
       details,
       coursesDropdownError,
-      sectionsDropdownError
+      sectionsDropdownError,
+      warning
     } = this.state;
     return (
       <Modal
@@ -281,20 +297,28 @@ class EditLoadModal extends Component {
         <Modal.Header>
           <Grid centered={true}>
             <Grid.Row fluid="true">
-              <Grid.Column width={3}>
-                <Image floated="left" avatar src={img} />
-              </Grid.Column>
-              <Header textAlign="left">
-                <Header.Content>{name}</Header.Content>
-                <Header.Subheader>
-                  <Header
-                    textAlign="left"
-                    size="tiny"
-                    icon="users"
-                    subheader={teachingLoad}
+              <Grid.Column width={10}>
+                <div>
+                  <Image
+                    verticalAlign="middle"
+                    floated="left"
+                    avatar
+                    src={img}
+                    size="mini"
                   />
-                </Header.Subheader>
-              </Header>
+                  <Header textAlign="left">
+                    <Header.Content>{name}</Header.Content>
+                    <Header.Subheader>
+                      <Header
+                        textAlign="left"
+                        size="tiny"
+                        icon="mail"
+                        subheader={email_add}
+                      />
+                    </Header.Subheader>
+                  </Header>
+                </div>
+              </Grid.Column>
             </Grid.Row>
           </Grid>
         </Modal.Header>
@@ -303,7 +327,7 @@ class EditLoadModal extends Component {
             {message && (
               <Grid.Row>
                 <Grid.Column width={16}>
-                  <Message warning={!details} success={!!details}>
+                  <Message warning={warning} success={!warning}>
                     <Message.Header>{message}</Message.Header>
                     {details && <p>{details}</p>}
                   </Message>
@@ -325,8 +349,10 @@ class EditLoadModal extends Component {
                   error={coursesDropdownError}
                 />
               </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
+              <br />
+              <br />
+              <br />
+
               <Grid.Column width={13}>
                 <Dropdown
                   multiple
@@ -349,9 +375,12 @@ class EditLoadModal extends Component {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column width={16}>
-                {!!courses.length && (
+              {!!courses.length && (
+                <Grid.Column width={16}>
                   <Segment>
+                    <Label as="a" color="orange" ribbon="right">
+                      Total: {teaching_load} units
+                    </Label>
                     <div
                       style={{
                         padding: '20px',
@@ -359,39 +388,53 @@ class EditLoadModal extends Component {
                         maxHeight: 200
                       }}
                     >
-                      {courses.map((course, index) => {
-                        const {
-                          course_offering_id,
-                          no_of_students,
-                          section,
-                          course_name,
-                          subject,
-                          room,
-                          day,
-                          time_start,
-                          time_end
-                        } = course;
-                        // console.log(course_offering_id);
-                        return (
-                          <Course
-                            key={index}
-                            course_offering_id={course_offering_id}
-                            no_of_students={no_of_students}
-                            section={section}
-                            course_name={course_name}
-                            subject={subject}
-                            room={room}
-                            day={day}
-                            time={`${convertToGeneralTime(
-                              time_start
-                            )}-${convertToGeneralTime(time_end)}`}
-                          />
-                        );
-                      })}
+                      <Table textAlign="center">
+                        <Table.Header>
+                          <Table.Row>
+                            <Table.HeaderCell>Course Code</Table.HeaderCell>
+                            <Table.HeaderCell>Section</Table.HeaderCell>
+                            <Table.HeaderCell>Room</Table.HeaderCell>
+                            <Table.HeaderCell>Day</Table.HeaderCell>
+                            <Table.HeaderCell>Time</Table.HeaderCell>
+                            <Table.HeaderCell>Students</Table.HeaderCell>
+                          </Table.Row>
+                        </Table.Header>
+
+                        <Table.Body>
+                          {courses.map((course, index) => {
+                            const {
+                              course_offering_id,
+                              no_of_students,
+                              section,
+                              course_name,
+                              subject,
+                              room,
+                              day,
+                              time_start,
+                              time_end
+                            } = course;
+                            return (
+                              <Course
+                                key={index}
+                                course_offering_id={course_offering_id}
+                                no_of_students={no_of_students}
+                                section={section}
+                                course_name={course_name}
+                                subject={subject}
+                                room={room}
+                                day={day}
+                                time={`${convertToGeneralTime(
+                                  time_start
+                                )}-${convertToGeneralTime(time_end)}`}
+                              />
+                            );
+                          })}
+                        </Table.Body>
+                      </Table>
                     </div>
                   </Segment>
-                )}
-              </Grid.Column>
+                </Grid.Column>
+              )}
             </Grid.Row>
           </Grid>
         </Modal.Content>

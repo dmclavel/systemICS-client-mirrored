@@ -7,14 +7,14 @@ class SectionHeader extends Component {
 	render() {
 		return (
 			<div className="home-heading">
-				<div className="home-background" />
-				<div className="home-content">
-					<Grid>
-						<Grid.Row divided>
-							<Grid.Column width={9}> 
-							</Grid.Column>
-						</Grid.Row>
-					</Grid>
+				<div className="home-background bg-color-header-home" />
+				<div className="heading-content font-white">
+					<p className="db-name">
+						{this.props.course_no} {this.props.section}<br/>
+					</p>
+					<p class="db-email">
+						{this.props.course_title}
+					</p>
 				</div>
 			</div>
 		);

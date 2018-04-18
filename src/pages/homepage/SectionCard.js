@@ -1,7 +1,7 @@
 import image from './sample.jpg';
 import {Label, Image, Card, Button, Input, Grid, Container, Search, Header, Modal, Icon, Checkbox, Accordion, Segment} from "semantic-ui-react";
 import React, { Component } from 'react';
-import './section.css'
+import './Section.css'
 
 class SectionCard extends Component {
   render() {
@@ -14,7 +14,7 @@ class SectionCard extends Component {
         </Card.Header>
         <Card.Meta>
           <Icon name="clock" />
-          {this.props.day} | {this.props.timestart}-{this.props.timeend}
+          {this.props.day} | {this.props.timestart.slice(0,-3)}-{this.props.timeend.slice(0,-3)}
         </Card.Meta>
         <Card.Meta>
           {this.props.room}

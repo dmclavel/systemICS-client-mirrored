@@ -13,7 +13,10 @@ import {Image, Card, Button, Input, Grid, Container, Search, Header, Modal, Icon
 import React, { Component } from 'react';
 import autobind from 'react-autobind';
 import SectionCard from './SectionCard';
+import NavbarHome from '../components/navbar/NavbarHome';
+import SectionHeader from '../components/headers/SectionHeader'
 import socketIOClient from 'socket.io-client';
+import './Section.css';
 /*
 If you wish to import other JS files, do it here.
 */
@@ -58,26 +61,26 @@ class Section extends Component {
   render() {
     return(
       <div className='LabSectionTab'>
-      	<Container>
       		<Grid centered={true}>
       			<Grid.Row>
-					<Grid.Column width={12} verticalAlign="middle">
-						<Grid.Row>
-							<Card id = "marginSearch" fluid={true} raised={true}>
-				              <Card.Content>
-				                <Input transparent={true} fluid={true} icon='search' iconPosition='left' placeholder = "Search laboratory sections..."/>
-				              </Card.Content>
-				            </Card>
-			            </Grid.Row>
-					</Grid.Column>
-					
+					<NavbarHome active='classes' />
+					<SectionHeader />
+					{this.state.lab.map((item, index)=>
+						<div>
+						{this.props.match.params._id == item.course_name.replace(/\s+/, "") && (
+							<SectionHeader course_no={item['course_name']} section={item.section.split('-')[0]} course_title={item.course_title} />
+						)}
+						</div>
+					)}
+				</Grid.Row>
+      			<Grid.Row>
 					<Grid.Column width={16} textAlign = "center">
 						<Grid columns={4} divided centered>
             				<Container centered>
 								<Card.Group itemsPerRow={4}>
 									{this.state.lab.map((item, index)=>
 										<div>
-										{this.props.section == item.course_name.replace(/\s+/, "") && (
+										{this.props.match.params._id == item.course_name.replace(/\s+/, "") && (
 											<SectionCard name={item['name']} course_name={item['course_name']} section={item['section']} day={item['day']} timestart={item['time_start']} timeend={item['time_end']} room={item['room']} />
 										)}
 										</div>
@@ -90,13 +93,11 @@ class Section extends Component {
 					</Grid.Column>
 				</Grid.Row>
 				<Grid.Row>
-					<Button primary textAlign="center" onClick={()=>{window.location = "/"}}>
-					Back to lecture
-
+					<Button basic textAlign="center" onClick={()=>{window.location = "/"}}>
+					Back
 					</Button>
 				</Grid.Row>
       		</Grid>
-      	</Container>
       </div>
     );
   }
