@@ -26,14 +26,12 @@ class Faculty extends Component {
         console.log("componentDidMount");
 		    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
 		    // listens on an endpoint and executes fallback function
-        console.log("START");
 		    socket.emit('search_assigned_sections_via_email', {email_add: this.state.email_add});//send data to 'login' endpoint in server
         socket.on('search_assigned_sections_via_email', (returnValueFromServer) => {
           this.setState({courses: returnValueFromServer, visibleCourses: returnValueFromServer})
 		    });
         socket.emit('view_adviser_advisee_information_all', 'gpas@asdf.com');//send data to 'login' endpoint in server
 		    socket.on('view_adviser_advisee_information_all', (returnValueFromServer) => {
-		      console.log(returnValueFromServer);
           this.setState({advisees: returnValueFromServer, visibleAdvisees: returnValueFromServer})
 		    });
 		}
@@ -74,6 +72,7 @@ class Faculty extends Component {
   	}
 
   render() {
+    console.log(this.state.advisees);
     return(
      <div>
         <section className= 'MainSection'>
