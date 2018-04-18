@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Input, Button } from 'semantic-ui-react';
 import AdviseeTable from './AdviseeTable';
-import AddAdvisee from './AddAdvisee';
 import autobind from 'react-autobind';
 class Advisee extends Component {
 	constructor(props){
