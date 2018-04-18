@@ -36,8 +36,8 @@ class RegCom extends Component {
       <div>
         <Grid>
           <Grid.Row>
-            <NavbarIn user={this.props.user} active="manage" />
-            <ManageHeader user={this.props.user} />
+            <NavbarIn user={this.props.user} accessLvl={this.props.accessLvl} active="manage" />
+            <ManageHeader user={this.props.user} accessLvl={this.props.accessLvl}/>
           </Grid.Row>
 
           <Grid.Row>

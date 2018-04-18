@@ -78,7 +78,7 @@ class Faculty extends Component {
         <section className= 'MainSection'>
           <Grid>
               <Grid.Row>
-                <NavbarIn active='dashboard' />
+                <NavbarIn active='dashboard' accessLvl={this.props.accessLvl}/>
                 <DashboardHeader user={this.props.user} accessLvl={this.props.accessLvl}/>
               </Grid.Row>
                <Grid.Row>

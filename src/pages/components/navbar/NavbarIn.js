@@ -96,10 +96,18 @@ class NavbarIn extends Component {
     this.state = {
       user: this.props.user,
       activeItem: this.props.active,
+      dashboardLink: '/admin/dashboard',
+      manageLink: '/admin/manage/courses',
       isLoggedIn: true
     };
 
     this.handleLogout = this.handleLogout.bind(this);
+  }
+  componentDidMount = () =>{
+    this.setState({
+      dashboardLink: this.props.accessLvl === 3 ? '/admin/dashboard' : '/regcom/dashboard',
+      manageLink: this.props.accessLvl === 3 ? '/admin/manage/courses' : '/regcom/manage/teaching'
+    });
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
@@ -142,7 +150,7 @@ class NavbarIn extends Component {
                     onClick={this.handleItemClick}
                   />
                 </Link>
-                <Link to="/admin/manage/courses">
+                <Link to={this.state.manageLink}>
                   <Menu.Item
                     className="nav-item"
                     name="manage"
