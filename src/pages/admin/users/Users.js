@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 
 import NavbarIn from '../../components/navbar/NavbarIn';
-import Heading from '../../components/Heading';
 import Sidebar from '../../components/Sidebar';
 import ManageHeader from '../../components/headers/ManageHeader';
 import User from './User';
@@ -13,8 +12,15 @@ class RegCom extends Component {
       <div>
         <Grid>
           <Grid.Row>
-            <NavbarIn logOutHandler={() => this.props.logOutHandler} user={this.props.user} active='manage' />
-            <ManageHeader user={this.props.user} />
+            <NavbarIn
+              logOutHandler={() => this.props.logOutHandler}
+              user={this.props.user}
+              active="manage"
+            />
+            <ManageHeader
+              user={this.props.user}
+              accessLvl={this.props.accessLvl}
+            />
           </Grid.Row>
 
           <Grid.Row>
@@ -23,7 +29,16 @@ class RegCom extends Component {
               <Sidebar />
             </Grid.Column>
             <Grid.Column width={10}>
-              <User />
+              <Grid className="admin-container">
+                <Grid.Row>
+                  <Header as="h1" textAlign="left">
+                    Users
+                  </Header>
+                </Grid.Row>
+                <Grid.Row>
+                  <User />
+                </Grid.Row>
+              </Grid>
             </Grid.Column>
           </Grid.Row>
         </Grid>

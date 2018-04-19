@@ -19,7 +19,7 @@ class DeleteCourse extends Component {
 	super();
 
 	this.state =
-		{ 
+		{
 		address: 'https://sleepy-falls-95372.herokuapp.com/',
 		open:false
 		}
@@ -29,10 +29,11 @@ class DeleteCourse extends Component {
 	close = () => this.setState({open:false});
 
 	handleDelete = () => {
-
-		// const socket = socketIOClient(this.state.address);
-		// socket.emit("", course_id:this.props.course_id);
-
+		const data = {email: 'pvgrubat@up.edu.ph', course_offering_id:this.props.coursecodeid};
+		console.log(data);
+		const socket = socketIOClient(this.state.address);
+		socket.emit("remove_section", data);
+		this.props.fetchCourse();
 		this.close();
 
 	}
@@ -53,13 +54,13 @@ class DeleteCourse extends Component {
 
 				<Divider/>
 
-					<Grid.Row>		
+					<Grid.Row>
 						<Button content="Cancel" floated="right" inverted color='red' onClick={this.close}/ >
 						<Form>
 							<Button content="Proceed" floated="right" inverted color='green' onClick={this.handleDelete}/ >
 						</Form>
 					</Grid.Row>
-								
+
             	</Grid>
 
             	</Segment>
