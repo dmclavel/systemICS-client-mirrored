@@ -61,10 +61,10 @@ class CourseRow extends Component {
           />
 
           <DeleteCourse
-            coursecode={this.props.course}
+            coursecodeid={this.props.courseoffering}
             section={this.props.section}
             fetchCourse={this.props.fetch_Course}
-            coursecode={this.props.course}
+            coursecode={this.props.coursecode}
             section_type={this.props.section_type}
           />
         </Table.Cell>

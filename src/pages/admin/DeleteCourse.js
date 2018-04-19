@@ -37,7 +37,7 @@ class DeleteCourse extends Component {
 		const socket = socketIOClient(this.state.address);
 		const data = {
 			email: 'jcgaza@up.edu.ph',
-			course_offering_id: this.props.coursecode
+			course_offering_id: this.props.coursecodeid
 		};
 		console.log(data);
 		socket.emit('remove_section', data);
