@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, Grid, Button, Popup, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 
-class UsersTable extends Component {
+class StudentTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,4 +70,4 @@ class UsersTable extends Component {
   }
 }
 
-export default UsersTable;
+export default StudentTable;

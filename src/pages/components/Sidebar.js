@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Header, Grid, Item } from 'semantic-ui-react';
+import { Segment, Header, Grid, Item, Dropdown, Button } from 'semantic-ui-react';
 
 import DropFile from '../admin/DropFile';
 
@@ -40,7 +40,7 @@ class Sidebar extends Component {
 									<Dropdown
 										placeholder="Change semester"
 										inline
-										options={options}
+										
 										header={
 											<div>
 												<Button.Group>
