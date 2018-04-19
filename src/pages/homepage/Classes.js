@@ -23,7 +23,11 @@ class Classes extends Component {
 			<Grid>
 				<Grid.Row>
 					<NavbarHome active="classes" />
-					<ClassesHeader search={search} updateSearch={this.updateSearch} />
+					<ClassesHeader
+						search={search}
+						updateSearch={this.updateSearch}
+						type="classes"
+					/>
 				</Grid.Row>
 				<Grid.Row centered>
 					<CoursePanelWhole search={search} updateSearch={this.updateSearch} />

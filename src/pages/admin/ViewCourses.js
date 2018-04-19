@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'semantic-ui-react';
+import { Table, Button, Label } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import './ViewCourses.css';
 
@@ -30,7 +30,9 @@ class ViewCourses extends Component {
 						<Table.HeaderCell width={3}>Course ID</Table.HeaderCell>
 						<Table.HeaderCell width={3}>Course Title</Table.HeaderCell>
 						<Table.HeaderCell width={6}>Course Description</Table.HeaderCell>
-						<Table.HeaderCell width={2}>Actions</Table.HeaderCell>
+						<Table.HeaderCell width={2}>
+							<Label ribbon="right" color="red" content="Units: 0" />
+						</Table.HeaderCell>
 					</Table.Header>
 				</Table>
 				<div className="courses-table">

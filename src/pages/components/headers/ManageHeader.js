@@ -12,6 +12,7 @@ class ManageHeader extends Component {
 		// alert(this.props.accessLvl);
 		return (
 			<div className="db-heading">
+				{console.log(this.props.accessLvl)}
 				<div className="db-background bg-color-nav-admin" />
 				<div className="heading-content">
 					<Grid>
@@ -57,7 +58,11 @@ class ManageHeader extends Component {
 								) : null}
 							</Grid.Column>
 							<Grid.Column width={2}>
-								<Link to={`/${this.props.user}/manage/advisees`}>
+								<Link
+									to={`/${
+										this.props.accessLvl === 2 ? 'regcom' : 'admin'
+									}/manage/advisees`}
+								>
 									<Button
 										className="admin-button centered-h"
 										circular
@@ -68,7 +73,11 @@ class ManageHeader extends Component {
 							</Grid.Column>
 
 							<Grid.Column width={2} className="remove-padding">
-								<Link to={`/${this.props.user}/manage/teaching`}>
+								<Link
+									to={`/${
+										this.props.accessLvl === 2 ? 'regcom' : 'admin'
+									}/manage/teaching`}
+								>
 									<Button
 										className="admin-button"
 										circular

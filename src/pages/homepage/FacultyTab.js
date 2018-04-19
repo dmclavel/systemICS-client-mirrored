@@ -34,9 +34,7 @@ class FacultyTab extends Component {
           isRegCom: ''
         }
       ],
-      facultyQuery: '',
-      facultyResult: [],
-      originalFaculty: []
+      search: ''
     };
     autobind(this);
   }
@@ -49,7 +47,6 @@ class FacultyTab extends Component {
     socket.on('view_all_active_faculty_members', returnValueFromServer => {
       console.log(returnValueFromServer);
       this.setState({ faculty: returnValueFromServer });
-      this.setState({ originalFaculty: returnValueFromServer });
     });
   };
   //a function for sending data to server.you can have many of these
@@ -58,49 +55,35 @@ class FacultyTab extends Component {
     socket.emit('login', 'this is my data'); //send data to 'login' endpoint in server
   };
 
-  handleSearch = e => {
-    this.setState({ facultyQuery: e.target.value });
-    this.setState({ faculty: this.state.originalFaculty });
+  updateSearch = search => {
+    this.setState({ search: search });
   };
 
   render() {
+    const { search } = this.state;
     return (
       <div className="FacultyTab">
         <Grid centered={true}>
           <Grid.Row>
             <NavbarHome active="faculty" />
-            <ClassesHeader />
+            <ClassesHeader
+              search={search}
+              updateSearch={this.updateSearch}
+              type="faculty"
+            />
           </Grid.Row>
 
           <Grid.Row>
-            <Grid.Column width={9} verticalAlign="middle">
-              <Grid.Row>
-                <Card id="inputWidth" fluid={true}>
-                  <Input
-                    raised={true}
-                    fluid
-                    icon="search"
-                    placeholder="Search faculty..."
-                    onChange={this.handleSearch}
-                  />
-                </Card>
-              </Grid.Row>
-            </Grid.Column>
             <Grid.Column width={16} textAlign="center">
               <Grid columns={4} divided centered>
                 <Container centered>
                   <Card.Group itemsPerRow={4}>
                     {this.state.faculty
-                      .filter(item => {
-                        if (
-                          item.name
-                            .toLowerCase()
-                            .includes(this.state.facultyQuery.toLowerCase())
-                        ) {
-                          return true;
-                        }
-                        return false;
-                      })
+                      .filter(item =>
+                        item.name
+                          .toLowerCase()
+                          .includes(this.state.search.toLowerCase())
+                      )
                       .map((item, index) => (
                         <Card>
                           {item.isRegCom === 0 ? (
@@ -130,7 +113,3 @@ class FacultyTab extends Component {
 }
 
 export default FacultyTab;
-
-/*
-DELETE THE COMMENTS AFTER.
-*/
