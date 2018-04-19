@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Grid, Header, Dropdown } from 'semantic-ui-react';
+import {
+	Button,
+	Modal,
+	Form,
+	Grid,
+	Segment,
+	Header,
+	Container,
+	Dropdown
+} from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
@@ -11,24 +20,6 @@ const inlineStyle = {
 		color: 'black'
 	}
 };
-
-const semester = [
-	{
-		key: 1,
-		value: 1,
-		text: '1st Semester'
-	},
-	{
-		key: 1,
-		value: 2,
-		text: '2nd Semester'
-	},
-	{
-		key: 1,
-		value: 1,
-		text: 'Midyear'
-	}
-];
 
 class AddCourseLecture extends Component {
 	constructor() {
@@ -50,8 +41,8 @@ class AddCourseLecture extends Component {
 			no_of_students: 0,
 			course_id: '',
 			course_name: '',
-			time_start: '07:00',
-			time_end: '19:00',
+			time_start: '',
+			time_end: '',
 			room: '',
 			day: '',
 			section: '',
@@ -151,7 +142,7 @@ class AddCourseLecture extends Component {
 			time_end === '' ||
 			max_capacity === ''
 		) {
-			console.log(data);
+			// console.log(data);
 			this.setState({ error: 'Fill all fields!' });
 		} else if (this.state.error === '') {
 			console.log(data);
@@ -235,167 +226,155 @@ class AddCourseLecture extends Component {
 				trigger={
 					<Button floated="right" positive content="Add Lecture Section" />
 				}
+				basic
 			>
-				<Modal.Header>Add New Lecture</Modal.Header>
 				<Modal.Content>
-					<Grid>
-						<Form className="form-lecture">
-							<Grid.Row>
-								<Form.Group>
-									<Form.Dropdown
-										search
-										selection
-										width={10}
-										label="Course name"
-										placeholder="Pick course name"
-										options={courses}
-										onChange={this.handleDropdownChange}
-									/>
-									<Form.Input
-										label="Section"
-										placeholder="Section"
-										name="section"
-										value={section}
-										width={3}
-										onChange={this.handleChange}
-									/>
-									<Form.Input
-										label="Room"
-										placeholder="Room"
-										name="room"
-										width={3}
-										value={room}
-										onChange={this.handleChange}
-									/>
-								</Form.Group>
-							</Grid.Row>
+					<Container>
+						<Segment padded="very">
+							<Grid>
+								<Grid.Row>
+									<Header as="h2">Add New Lecture </Header>
+								</Grid.Row>
 
-							<Grid.Row>
-								<Form.Group>
-									<Form.Input
-										type="time"
-										label="Time start"
-										placeholder="Time start"
-										name="time_start"
-										width={4}
-										value={time_start}
-										onChange={this.handleChange}
-									/>
-									<Form.Input
-										type="time"
-										label="Time end"
-										Input
-										placeholder="Time end"
-										name="time_end"
-										width={4}
-										value={time_end}
-										onChange={this.handleChange}
-									/>
+								<Grid.Row>
+									<Form>
+										<Form.Group>
+											<Dropdown
+												search
+												selection
+												label="Course name"
+												placeholder="Pick course name"
+												options={courses}
+												onChange={this.handleDropdownChange}
+											/>
+											<Form.Input
+												label="Section"
+												placeholder="Section"
+												name="section"
+												value={section}
+												onChange={this.handleChange}
+											/>
+											<Form.Input
+												label="Room"
+												placeholder="Room"
+												name="room"
+												value={room}
+												onChange={this.handleChange}
+											/>
+											<Form.Input
+												type="time"
+												label="Time start"
+												placeholder="Time start"
+												name="time_start"
+												value={time_start}
+												onChange={this.handleChange}
+											/>
+											<Form.Input
+												type="time"
+												label="Time end"
+												Input
+												placeholder="Time end"
+												name="time_end"
+												value={time_end}
+												onChange={this.handleChange}
+											/>
+										</Form.Group>
 
-									<div className="form-days">
-										<Form.Field label="Days" />
-										<Form.Field>
-											<Button
-												toggle
-												circular
-												size="medium"
-												content="M"
-												active={M}
-												onClick={this.handleDayChange}
+										<Form.Group>
+											<Form.Input
+												min={0}
+												type="number"
+												label="Maximum Capacity"
+												placeholder="Max Capacity"
+												name="max_capacity"
+												value={max_capacity}
+												onChange={this.handleChange}
 											/>
-											<Button
-												toggle
-												circular
-												size="medium"
-												content="T"
-												active={T}
-												onClick={this.handleDayChange}
+											<Form.Input
+												width={3}
+												min={0}
+												max={5}
+												type="number"
+												label="Units"
+												name="unit"
+												placeholder="Units"
+												value={unit}
+												onChange={this.handleChange}
 											/>
-											<Button
-												toggle
-												circular
-												size="medium"
-												content="W"
-												active={W}
-												onClick={this.handleDayChange}
+											<Form.Input
+												width={3}
+												min={2000}
+												max={2500}
+												type="number"
+												label="Year"
+												name="acad_year"
+												placeholder="Year"
+												value={acad_year}
+												onChange={this.handleChange}
 											/>
-											<Button
-												toggle
-												circular
-												size="medium"
-												content="Th"
-												active={Th}
-												onClick={this.handleDayChange}
-											/>
-											<Button
-												toggle
-												circular
-												size="medium"
-												content="F"
-												active={F}
-												onClick={this.handleDayChange}
-											/>
-										</Form.Field>
-									</div>
-								</Form.Group>
-							</Grid.Row>
+											<Form.Field label="Days"> </Form.Field>
 
-							<Grid.Row>
-								<Form.Group />
+											<Form.Field>
+												<Button
+													toggle
+													circular
+													size="medium"
+													content="M"
+													active={M}
+													onClick={this.handleDayChange}
+												/>
+												<Button
+													toggle
+													circular
+													size="medium"
+													content="T"
+													active={T}
+													onClick={this.handleDayChange}
+												/>
+												<Button
+													toggle
+													circular
+													size="medium"
+													content="W"
+													active={W}
+													onClick={this.handleDayChange}
+												/>
+												<Button
+													toggle
+													circular
+													size="medium"
+													content="Th"
+													active={Th}
+													onClick={this.handleDayChange}
+												/>
+												<Button
+													toggle
+													circular
+													size="medium"
+													content="F"
+													active={F}
+													onClick={this.handleDayChange}
+												/>
+											</Form.Field>
+										</Form.Group>
+									</Form>
+								</Grid.Row>
 
-								<Form.Group>
-									<Form.Input
-										min={0}
-										type="number"
-										label="Maximum Capacity"
-										placeholder="Max Capacity"
-										name="max_capacity"
-										value={max_capacity}
-										onChange={this.handleChange}
-									/>
-									<Form.Input
-										width={3}
-										min={0}
-										max={5}
-										type="number"
-										label="Units"
-										name="unit"
-										placeholder="Units"
-										value={unit}
-										onChange={this.handleChange}
-									/>
-									<Form.Input
-										width={3}
-										min={2000}
-										max={2500}
-										type="number"
-										label="Academic Year"
-										name="acad_year"
-										placeholder="Year"
-										value={acad_year}
-										onChange={this.handleChange}
-									/>
-									<Form.Dropdown
-										width={4}
-										search
-										selection
-										label="Semester"
-										options={semester}
-										placeholder="Semester"
-									/>
-								</Form.Group>
-							</Grid.Row>
-						</Form>{' '}
-					</Grid>
+								<Grid.Row>
+									<Form>
+										<Button
+											content="Submit"
+											floated="right"
+											positive
+											onClick={this.handleSubmit}
+										/>
+										<Container text> {error} </Container>
+									</Form>
+								</Grid.Row>
+							</Grid>
+						</Segment>
+					</Container>
 				</Modal.Content>
-				<Modal.Actions className="modal-actions">
-					<Button
-						content="Submit"
-						floated="right"
-						positive
-						onClick={this.handleSubmit}
-					/>
-				</Modal.Actions>
 			</Modal>
 		);
 	}

@@ -8,11 +8,25 @@ const user = {
 };
 
 class ManageHeader extends Component {
+	constructor(props){
+		super(props)
+		this.state = {
+			userType: ''
+		}
+	}
+	componentDidMount = () => {
+		var userType = '';
+		if(this.props.accessLvl === 1) userType= 'faculty';
+		else if (this.props.accessLvl === 2) userType= 'regcom';
+		else userType= 'admin'
+		this.setState({
+			userType:userType
+		});
+	}
+
 	render() {
-		// alert(this.props.accessLvl);
 		return (
 			<div className="db-heading">
-				{console.log(this.props.accessLvl)}
 				<div className="db-background bg-color-nav-admin" />
 				<div className="heading-content">
 					<Grid>
@@ -58,11 +72,7 @@ class ManageHeader extends Component {
 								) : null}
 							</Grid.Column>
 							<Grid.Column width={2}>
-								<Link
-									to={`/${
-										this.props.accessLvl === 2 ? 'regcom' : 'admin'
-									}/manage/advisees`}
-								>
+								<Link to={`/${this.state.userType}/manage/advisees`}>
 									<Button
 										className="admin-button centered-h"
 										circular
@@ -73,11 +83,7 @@ class ManageHeader extends Component {
 							</Grid.Column>
 
 							<Grid.Column width={2} className="remove-padding">
-								<Link
-									to={`/${
-										this.props.accessLvl === 2 ? 'regcom' : 'admin'
-									}/manage/teaching`}
-								>
+								<Link to={`/${this.state.userType}/manage/teaching`}>
 									<Button
 										className="admin-button"
 										circular
