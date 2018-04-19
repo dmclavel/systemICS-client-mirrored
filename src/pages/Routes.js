@@ -19,6 +19,7 @@ import RegCom from './regcom/RegCom';
 import Section from './homepage/Section';
 import NotFound from './components/NotFound';
 import Users from './admin/users/Users';
+import GeneratePDF from './generate-pdf/GeneratePDF';
 
 const authenticator = {
 	user: 3,
@@ -59,17 +60,6 @@ class Routes extends Component {
 			profile: {}
 		};
 	}
-	// componentDidMount = () => {
-	//   const gProfile ={
-	//
-	//       fullname: this.props.profile.ig,
-	//       firstName: this.props.profile.ofa,
-	//       lastName: this.props.profile.wea,
-	//       picURL: this.props.profile.Paa,
-	//       profileNum: this.props.profile.eea
-	//   }
-	//   this.setState({profile: gProfile});
-	// }
 
 	render() {
 		// non-user
@@ -187,6 +177,8 @@ class Routes extends Component {
 							<Users accessLvl={this.props.accessLvl} user={this.props.user} />
 						)}
 					/>
+
+					<Route exact path="/gen" component={GeneratePDF} />
 					<Route path="*" component={NotFound} />
 				</Switch>
 			);
