@@ -6,11 +6,12 @@ import {
 	Grid,
 	Segment,
 	Header,
-	Container
+	Container,
+	Divider
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
-import {convertToGeneralTime} from '../../utils/TimeUtilities';
+import { convertToGeneralTime } from '../../utils/TimeUtilities';
 
 const inlineStyle = {
 	modal: {
@@ -63,8 +64,8 @@ class AddCourseLab extends Component {
 			no_of_students: '',
 			course_id: '',
 			course_name: '',
-			time_start: '',
-			time_end: '',
+			time_start: '07:00',
+			time_end: '19:00',
 			room: '',
 			day: '',
 			section: '',
@@ -84,7 +85,7 @@ class AddCourseLab extends Component {
 
 	labSectionFormat() {
 		const { labSectionAppend } = this.state;
-		let tempStr = this.props.section
+		let tempStr = this.props.section;
 		let labSection = tempStr + '-' + labSectionAppend;
 		return labSection;
 	}
@@ -186,12 +187,19 @@ class AddCourseLab extends Component {
 			max_capacity === ''
 		) {
 			this.setState({ error: 'Please fill all fields!' });
-		} else if (this.state.error === '' && (parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity))) {
+		} else if (
+			this.state.error === '' &&
+			parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity)
+		) {
 			socket.emit('create_section', data);
 			this.props.fetchCourse();
 			this.close();
-		} else if (parseInt(this.state.no_of_students) > parseInt(this.state.max_capacity)) {
-			this.setState({ error: 'Number of students allowed is beyond the maximum capacity!' });
+		} else if (
+			parseInt(this.state.no_of_students) > parseInt(this.state.max_capacity)
+		) {
+			this.setState({
+				error: 'Number of students allowed is beyond the maximum capacity!'
+			});
 		}
 	};
 
@@ -255,175 +263,178 @@ class AddCourseLab extends Component {
 				closeIcon
 			>
 				<Modal.Content>
-						<Segment padded="very">
-							<Header as="h2">Add New Laboratory </Header>
-							<Divider/>
-							<Form>
-								<Form.Group>
-									<Form.Input
-										label="Section"
-										placeholder={this.props.section}
-										readOnly
-										width={2}
-									/>
-									<br/>
-									<br/>
-									―
-									<Form.Input
-										label="Lab Section"
-										placeholder=""
-										name="labSectionAppend"
-										value={labSectionAppend}
-										onChange={this.handleChange}
-										width={4}
-									/>
-									<Form.Input
-										label="Room"
-										placeholder="Room"
-										name="room"
-										value={room}
-										onChange={this.handleChange}
-										width={6}
-									/>
-									<Form.Input
-										min={0}
-										type="number"
-										label="Maximum Capacity"
-										placeholder="Max Capacity"
-										name="max_capacity"
-										value={max_capacity}
-										onChange={this.handleChange}
-										width={4}
-									/>
-								</Form.Group>
+					<Segment padded="very">
+						<Header as="h2">Add New Laboratory </Header>
+						<Divider />
+						<Form>
+							<Form.Group>
+								<Form.Input
+									label="Section"
+									placeholder={this.props.section}
+									readOnly
+									width={2}
+								/>
+								<br />
+								<br />
+								―
+								<Form.Input
+									label="Lab Section"
+									placeholder=""
+									name="labSectionAppend"
+									value={labSectionAppend}
+									onChange={this.handleChange}
+									width={4}
+								/>
+								<Form.Input
+									label="Room"
+									placeholder="Room"
+									name="room"
+									value={room}
+									onChange={this.handleChange}
+									width={6}
+								/>
+								<Form.Input
+									min={0}
+									type="number"
+									label="Maximum Capacity"
+									placeholder="Max Capacity"
+									name="max_capacity"
+									value={max_capacity}
+									onChange={this.handleChange}
+									width={4}
+								/>
+							</Form.Group>
 
-								<Form.Group>
-									<Form.Input
-										width={3}
-										min={0}
-										max={max_capacity}
-										type="number"
-										label="Number of Students"
-										name="no_of_students"
-										placeholder="Number of Students"
-										value={no_of_students}
-										onChange={this.handleChange}
-										width={3}
-									/>
-
-									<Form.Input
-										type="time"
-										label="Time start"
-										placeholder="Time start"
-										name="time_start"
-										value={time_start}
-										onChange={this.handleChange}
-										width={5}
-									/>
-									<Form.Input
-										type="time"
-										label="Time end"
-										Input
-										placeholder="Time end"
-										name="time_end"
-										value={time_end}
-										onChange={this.handleChange}
-										width={5}
-									/>
-
-									<Form.Input
-										min={0}
-										max={5}
-										type="number"
-										label="Units"
-										name="unit"
-										placeholder="Units"
-										value={unit}
-										onChange={this.handleChange}
-										width={3}
-									/>
-								</Form.Group>
-
-								<Form.Group>
-									<Form.Input
-										type="number"
-										label="Acad Year"
-										name="acad_year"
-										placeholder="Acad Year"
-										value={acad_year}
-										onChange={this.handleChange}
-										width={7}
-									/>
-									<Form.Dropdown
-										width={4}
-										search
-										selection
-										label="Semester"
-										name="semester"
-										value={semesterOptions.value}
-										options={semesterOptions}
-										placeholder="Semester"
-										onChange={this.handleChange}
-									/>
-									<div className="form-days">
-										<Form.Field label="Days" />
-										<Form.Field>
-											<Button
-												toggle
-												circular
-												size="medium"
-												content="M"
-												active={M}
-												onClick={this.handleDayChange}
-											/>
-											<Button
-												toggle
-												circular
-												size="medium"
-												content="T"
-												active={T}
-												onClick={this.handleDayChange}
-											/>
-											<Button
-												toggle
-												circular
-												size="medium"
-												content="W"
-												active={W}
-												onClick={this.handleDayChange}
-											/>
-											<Button
-												toggle
-												circular
-												size="medium"
-												content="Th"
-												active={Th}
-												onClick={this.handleDayChange}
-											/>
-											<Button
-												toggle
-												circular
-												size="medium"
-												content="F"
-												active={F}
-												onClick={this.handleDayChange}
-											/>
-										</Form.Field>
-									</div>
-								</Form.Group>
-
-								<Divider />
-
-								<Button
-									content="Submit"
-									floated="right"
-									positive
-									onClick={this.handleSubmit}
+							<Form.Group>
+								<Form.Input
+									width={3}
+									min={0}
+									max={max_capacity}
+									type="number"
+									label="Number of Students"
+									name="no_of_students"
+									placeholder="Number of Students"
+									value={no_of_students}
+									onChange={this.handleChange}
+									width={3}
 								/>
 
-							  <Container text textAlign="left"> {this.state.error} </Container>
-							</Form>
-						</Segment>
+								<Form.Input
+									type="time"
+									label="Time start"
+									placeholder="Time start"
+									name="time_start"
+									value={time_start}
+									onChange={this.handleChange}
+									width={5}
+								/>
+								<Form.Input
+									type="time"
+									label="Time end"
+									Input
+									placeholder="Time end"
+									name="time_end"
+									value={time_end}
+									onChange={this.handleChange}
+									width={5}
+								/>
+
+								<Form.Input
+									min={0}
+									max={5}
+									type="number"
+									label="Units"
+									name="unit"
+									placeholder="Units"
+									value={unit}
+									onChange={this.handleChange}
+									width={3}
+								/>
+							</Form.Group>
+
+							<Form.Group>
+								<Form.Input
+									type="number"
+									label="Acad Year"
+									name="acad_year"
+									placeholder="Acad Year"
+									value={acad_year}
+									onChange={this.handleChange}
+									width={7}
+								/>
+								<Form.Dropdown
+									width={4}
+									search
+									selection
+									label="Semester"
+									name="semester"
+									value={semesterOptions.value}
+									options={semesterOptions}
+									placeholder="Semester"
+									onChange={this.handleChange}
+								/>
+								<div className="form-days">
+									<Form.Field label="Days" />
+									<Form.Field>
+										<Button
+											toggle
+											circular
+											size="medium"
+											content="M"
+											active={M}
+											onClick={this.handleDayChange}
+										/>
+										<Button
+											toggle
+											circular
+											size="medium"
+											content="T"
+											active={T}
+											onClick={this.handleDayChange}
+										/>
+										<Button
+											toggle
+											circular
+											size="medium"
+											content="W"
+											active={W}
+											onClick={this.handleDayChange}
+										/>
+										<Button
+											toggle
+											circular
+											size="medium"
+											content="Th"
+											active={Th}
+											onClick={this.handleDayChange}
+										/>
+										<Button
+											toggle
+											circular
+											size="medium"
+											content="F"
+											active={F}
+											onClick={this.handleDayChange}
+										/>
+									</Form.Field>
+								</div>
+							</Form.Group>
+
+							<Divider />
+
+							<Button
+								content="Submit"
+								floated="right"
+								positive
+								onClick={this.handleSubmit}
+							/>
+
+							<Container text textAlign="left">
+								{' '}
+								{this.state.error}{' '}
+							</Container>
+						</Form>
+					</Segment>
 				</Modal.Content>
 			</Modal>
 		);
