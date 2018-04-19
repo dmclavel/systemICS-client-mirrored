@@ -23,7 +23,6 @@ const inlineStyle = {
 class DeleteCourse extends Component {
 	constructor() {
 		super();
-
 		this.state = {
 			address: 'https://sleepy-falls-95372.herokuapp.com/',
 			open: false

@@ -12,20 +12,20 @@ const inlineStyle = {
 	}
 };
 
-const semester = [
+const semesterOptions = [
 	{
 		key: 1,
 		value: 1,
 		text: '1st Semester'
 	},
 	{
-		key: 1,
+		key: 2,
 		value: 2,
 		text: '2nd Semester'
 	},
 	{
-		key: 1,
-		value: 1,
+		key: 3,
+		value: 3,
 		text: 'Midyear'
 	}
 ];
@@ -122,13 +122,14 @@ class AddCourseLecture extends Component {
 			room,
 			section,
 			unit,
-			max_capacity
+			max_capacity,
+			semester
 		} = this.state;
 		const socket = socketIOClient(this.state.address);
 		const data = {
 			email: 'pvgrubat@up.edu.ph',
 			acad_year: acad_year,
-			semester: 2,
+			semester: semester,
 			time_start: time_start,
 			time_end: time_end,
 			room: room,
@@ -139,7 +140,8 @@ class AddCourseLecture extends Component {
 			max_capacity: max_capacity,
 			emp_no: emp_no,
 			course_id: course_id,
-			unit: unit
+			unit: unit,
+			section_type: 0
 		};
 		// console.log(data);
 		this.setState({ error: '' });
@@ -380,8 +382,11 @@ class AddCourseLecture extends Component {
 										search
 										selection
 										label="Semester"
-										options={semester}
+										name="semester"
+										value={semesterOptions.value}
+										options={semesterOptions}
 										placeholder="Semester"
+										onChange={this.handleChange}
 									/>
 								</Form.Group>
 							</Grid.Row>

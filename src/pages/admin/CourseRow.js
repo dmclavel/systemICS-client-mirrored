@@ -40,6 +40,7 @@ class CourseRow extends Component {
               section={this.props.section}
               acadyear={this.props.acad_year}
               sem={this.props.semester}
+              courseoffering={this.props.courseoffering}
             />
           ) : null}
 
