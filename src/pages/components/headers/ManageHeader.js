@@ -11,6 +11,7 @@ class ManageHeader extends Component {
 	render() {
 		return (
 			<div className="db-heading">
+				{console.log(this.props.accessLvl)}
 				<div className="db-background bg-color-nav-admin" />
 				<div className="heading-content">
 					<Grid>
@@ -22,13 +23,13 @@ class ManageHeader extends Component {
 								</p>
 								<p class="heading-submessage">
 									You are working as the{' '}
-									{this.props.user.localeCompare('admin') === 0
+									{this.props.accessLvl === 3
 										? 'administrator'
 										: 'registration committee.'}
 								</p>
 							</Grid.Column>
 							<Grid.Column width={2}>
-								{this.props.user.localeCompare('admin') === 0 ? (
+								{this.props.accessLvl === 3 ? (
 									<div>
 										<Link to="/admin/manage/courses">
 											<Button
@@ -42,7 +43,7 @@ class ManageHeader extends Component {
 								) : null}
 							</Grid.Column>
 							<Grid.Column width={2} className="remove-padding">
-								{this.props.user.localeCompare('admin') === 0 ? (
+								{this.props.accessLvl === 3 ? (
 									<div>
 										<Link to="/admin/manage/users">
 											<Button
@@ -56,7 +57,11 @@ class ManageHeader extends Component {
 								) : null}
 							</Grid.Column>
 							<Grid.Column width={2}>
-								<Link to={`/${this.props.user}/manage/advisees`}>
+								<Link
+									to={`/${
+										this.props.accessLvl === 2 ? 'regcom' : 'admin'
+									}/manage/advisees`}
+								>
 									<Button
 										className="admin-button centered-h"
 										circular
@@ -67,7 +72,11 @@ class ManageHeader extends Component {
 							</Grid.Column>
 
 							<Grid.Column width={2} className="remove-padding">
-								<Link to={`/${this.props.user}/manage/teaching`}>
+								<Link
+									to={`/${
+										this.props.accessLvl === 2 ? 'regcom' : 'admin'
+									}/manage/teaching`}
+								>
 									<Button
 										className="admin-button"
 										circular

@@ -32,11 +32,12 @@ class AdminCard extends Component {
 		};
 		autobind(this);
 	}
+
 	componentDidMount() {
 		const socket = socketIOClient(this.state.address);
-		const data = { email: 'pvgrubat@up.edu.ph' };
-		socket.emit('view_all_unarchived_sections', data);
-		socket.on('view_all_unarchived_sections', course => {
+		const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
+		socket.emit('view_sections', data);
+		socket.on('view_sections', course => {
 			this.setState({ coursesX: course });
 			console.log(this.state.coursesX);
 		});
@@ -44,9 +45,9 @@ class AdminCard extends Component {
 
 	fetchCourse = () => {
 		const socket = socketIOClient(this.state.address);
-		const data = { email: 'pvgrubat@up.edu.ph' };
-		socket.emit('view_all_unarchived_sections', data);
-		socket.on('view_all_unarchived_sections', course => {
+		const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
+		socket.emit('view_sections', data);
+		socket.on('view_sections', course => {
 			this.setState({ coursesX: course });
 		});
 		console.log('Data changed');
