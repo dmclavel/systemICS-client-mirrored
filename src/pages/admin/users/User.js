@@ -7,8 +7,8 @@ import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
 const dummyStudents = [
-  { name: 'John', student_number: '2015-10323', email: 'jhon@up.edu.ph', status: 'student', id: '2015-12345' },
-  { name: 'Leslie', email: 'leslie@up.edu.ph', status: 'student', id: '20014-32343' },
+  { name: 'John', student_number: '2015-10323', email_add: 'jhon@up.edu.ph', status: 'student', curriculum: '1-A'},
+  { name: 'Leslie', student_number: '2015-10353', email_add: 'leslie@up.edu.ph', status: 'student', curriculum: '2-C'},
 ]
 
 const dummyFaculty = [
