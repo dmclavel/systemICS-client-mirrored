@@ -11,7 +11,8 @@ class Course extends Component {
       day,
       time,
       no_of_students,
-      course_offering_id
+      course_offering_id,
+      name
     } = this.props;
     return (
       <Table.Row>
@@ -23,16 +24,12 @@ class Course extends Component {
         <Table.Cell width={2}>{no_of_students}</Table.Cell>
         <Table.Cell width={2}>
           <DeleteModal
+            name={name}
+            section={section}
+            course_name={course_name}
+            alertMessage={this.props.alertMessage}
             course_offering_id={course_offering_id}
-            button={
-              <Button
-                basic
-                circular
-                icon="trash outline"
-                size="mini"
-                negative
-              />
-            }
+            button={<Button basic icon="trash outline" size="mini" negative />}
           />
         </Table.Cell>
       </Table.Row>

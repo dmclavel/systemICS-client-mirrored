@@ -28,7 +28,6 @@ class RegCom extends Component {
       this.setState({
         informations
       });
-      console.log('dsaiufhas');
     });
   }
   render() {

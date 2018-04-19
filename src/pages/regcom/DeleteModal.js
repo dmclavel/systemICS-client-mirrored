@@ -4,7 +4,7 @@ import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 const inlineStyle = {
   modal: {
-    marginTop: '350px',
+    marginTop: '35vh',
     marginLeft: 'auto',
     marginRight: 'auto'
   }
@@ -22,12 +22,16 @@ class DeleteModal extends Component {
   handleOpen = () => this.setState({ open: true });
   handleClose = () => this.setState({ open: false });
   handleOkay(e) {
-    const { course_offering_id } = this.props;
+    const { course_offering_id, course_name, section, name } = this.props;
     const socket = socketIOClient(this.state.endpoint);
     socket.emit('modify_section_2', {
       course_offering_id,
       unassignFaculty: true
     });
+    this.props.alertMessage(
+      `Successfully unassigned subjects.`,
+      `${course_name} ${section} has been unassigned from ${name}.`
+    );
     this.handleClose();
   }
   render() {

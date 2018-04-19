@@ -78,7 +78,6 @@ class EditLoadModal extends Component {
       unassignedOnly: true
     });
     socket.on('view_courses', courses => {
-      console.log(courses);
       let codesAndDescription = [];
       // For each courses, concat course name with course id e.g. CMSC 22 - Intro to OOP
       courses.forEach((course, index) => {
@@ -283,6 +282,9 @@ class EditLoadModal extends Component {
       });
     }
   }
+  alertMessage(message, details) {
+    this.setState({ message, details });
+  }
   render() {
     const { open } = this.state;
     const { button, name, teaching_load, email_add } = this.props;
@@ -394,22 +396,26 @@ class EditLoadModal extends Component {
                 <Grid.Column width={16}>
                   <Table className="remove-margin" textAlign="center">
                     <Table.Header textAlign="center">
-                      <Table.HeaderCell width={3}>Course Code</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Section</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Room</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Day</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Time</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>Students</Table.HeaderCell>
-                      <Table.HeaderCell width={2}>
-                        <Label
-                          as="a"
-                          color="orange"
-                          ribbon="right"
-                          size="small"
-                        >
-                          Total: {teaching_load} units
-                        </Label>
-                      </Table.HeaderCell>
+                      <Table.Row>
+                        <Table.HeaderCell width={3}>
+                          Course Code
+                        </Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Section</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Room</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Day</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Time</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Students</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>
+                          <Label
+                            as="a"
+                            color="orange"
+                            ribbon="right"
+                            size="medium"
+                          >
+                            Total: {teaching_load} units
+                          </Label>
+                        </Table.HeaderCell>
+                      </Table.Row>
                     </Table.Header>
                   </Table>
                   <div className="courses-table">
@@ -437,6 +443,8 @@ class EditLoadModal extends Component {
                               subject={subject}
                               room={room}
                               day={day}
+                              alertMessage={this.alertMessage}
+                              name={name}
                               time={`${convertToGeneralTime(
                                 time_start
                               )}-${convertToGeneralTime(time_end)}`}
