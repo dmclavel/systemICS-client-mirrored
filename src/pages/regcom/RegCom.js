@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Input, Segment } from 'semantic-ui-react';
+import { Grid, Input, Segment, Header } from 'semantic-ui-react';
 import Information from './Information';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
@@ -49,16 +49,23 @@ class RegCom extends Component {
               <Sidebar />
             </Grid.Column>
             <Grid.Column width={10}>
-              <Segment>
-                <Input
-                  placeholder="Search faculty"
-                  icon="search"
-                  iconPosition="left"
-                  fluid="true"
-                  transparent
-                  onChange={this.handleSearch}
-                />
-              </Segment>
+              <Grid.Row>
+                <Header as="h1" textAlign="left">
+                  Course Offering
+                </Header>
+              </Grid.Row>
+              <Grid.Row>
+                <Segment>
+                  <Input
+                    placeholder="Search faculty"
+                    icon="search"
+                    iconPosition="left"
+                    fluid="true"
+                    transparent
+                    onChange={this.handleSearch}
+                  />
+                </Segment>
+              </Grid.Row>
               <Grid.Row>
                 {informations
                   .filter(information => {

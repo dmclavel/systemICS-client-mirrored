@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Segment, Header, Grid, Item, Button } from 'semantic-ui-react';
+import {
+	Segment,
+	Header,
+	Grid,
+	Item,
+	Button,
+	Dropdown
+} from 'semantic-ui-react';
 
 import DropFile from '../admin/DropFile';
 
@@ -20,6 +27,44 @@ const items = [
 	{ key: 14, content: 'Hello hello hello' }
 ];
 
+const options = [
+	{
+		key: 1,
+		value: 'hello',
+		text: '1st Semester Ay 2017-2018'
+	},
+	{
+		key: 1,
+		value: 'hello',
+		text: '1st Semester Ay 2017-2018'
+	},
+	{
+		key: 1,
+		value: 'hello',
+		text: '1st Semester Ay 2017-2018'
+	},
+	{
+		key: 1,
+		value: 'hello',
+		text: '1st Semester Ay 2017-2018'
+	},
+	{
+		key: 1,
+		value: 'hello',
+		text: '1st Semester Ay 2017-2018'
+	},
+	{
+		key: 1,
+		value: 'hello',
+		text: '1st Semester Ay 2017-2018'
+	},
+	{
+		key: 1,
+		value: 'hello',
+		text: '1st Semester Ay 2017-2018'
+	}
+];
+
 const inline = {
 	width: '100rem',
 	height: '25rem',
@@ -32,19 +77,20 @@ class Sidebar extends Component {
 			<Grid>
 				<Grid.Row className="sidebar">
 					<Segment className="sidebar-container" fluid textAlign="right">
-						<Header
-							as="h3"
-							content="1st Semester AY 2017-2018"
-							subheader="Current Semester"
-						/>
+						<Header as="h2">
+							<Header.Content>1st Semester AY 2017-2018</Header.Content>
+							<Header.Subheader>
+								<span>
+									Current Semester{' '}
+									<Dropdown
+										placeholder="Change semester"
+										inline
+										options={options}
+									/>
+								</span>
+							</Header.Subheader>
+						</Header>
 					</Segment>
-				</Grid.Row>
-				<Grid.Row>
-					<Button.Group fluid>
-						<DropFile />
-						<Button.Or />
-						<Button color="teal" content="Generate Course Report" />
-					</Button.Group>
 				</Grid.Row>
 				<Grid.Row>
 					<Segment style={inline}>
@@ -58,6 +104,13 @@ class Sidebar extends Component {
 							))}
 						</Item.Group>
 					</Segment>
+				</Grid.Row>
+				<Grid.Row>
+					<Button.Group fluid>
+						<DropFile />
+						<Button.Or />
+						<Button color="teal" content="Generate Course Report" />
+					</Button.Group>
 				</Grid.Row>
 			</Grid>
 		);

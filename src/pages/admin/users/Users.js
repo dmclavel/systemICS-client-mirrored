@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 
 import NavbarIn from '../../components/navbar/NavbarIn';
 import Sidebar from '../../components/Sidebar';
@@ -29,7 +29,16 @@ class RegCom extends Component {
               <Sidebar />
             </Grid.Column>
             <Grid.Column width={10}>
-              <User />
+              <Grid className="admin-container">
+                <Grid.Row>
+                  <Header as="h1" textAlign="left">
+                    Users
+                  </Header>
+                </Grid.Row>
+                <Grid.Row>
+                  <User />
+                </Grid.Row>
+              </Grid>
             </Grid.Column>
           </Grid.Row>
         </Grid>

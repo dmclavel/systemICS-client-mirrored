@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Grid, Header, Table, Input } from 'semantic-ui-react';
+import {
+	Grid,
+	Header,
+	Table,
+	Input,
+	Button,
+	Dropdown
+} from 'semantic-ui-react';
 import CourseRow from './CourseRow';
 import AddCourseModal from './AddCourseModal';
 import AddLectureSection from './AddLectureSection';
@@ -57,23 +64,22 @@ class AdminCard extends Component {
 		const { coursesX } = this.state;
 
 		return (
-			<Grid.Column width={10}>
-				<Header as="h1" textAlign="left">
-					Faculty Workload
-				</Header>
+			<Grid className="admin-container">
+				<Grid.Row>
+					<Header as="h1" textAlign="left">
+						Course Offering
+					</Header>
+				</Grid.Row>
 
-				<Grid>
-					<Grid.Row width={16}>
-						<Grid.Column width={5}>
-							<Input icon="search" width={12} />
-						</Grid.Column>
-						<Grid.Column width={3} />
-						<Grid.Column width={8}>
-							<AddCourseModal />
-							<AddLectureSection />
-						</Grid.Column>
-					</Grid.Row>
-				</Grid>
+				<Grid.Row width={16}>
+					<Grid.Column width={9}>
+						<Input fluid icon="search" width={12} />
+					</Grid.Column>
+					<Grid.Column width={7}>
+						<AddCourseModal />
+						<AddLectureSection />
+					</Grid.Column>
+				</Grid.Row>
 
 				<Table textAlign="center">
 					<Table.Header>
@@ -118,7 +124,7 @@ class AdminCard extends Component {
 						})}
 					</Table.Body>
 				</Table>
-			</Grid.Column>
+			</Grid>
 		);
 	}
 }

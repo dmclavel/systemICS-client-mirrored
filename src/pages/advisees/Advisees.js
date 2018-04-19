@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 import NavbarIn from '../components/navbar/NavbarIn';
 import ManageHeader from '../components/headers/ManageHeader';
 import Sidebar from '../components/Sidebar';
@@ -26,7 +26,17 @@ class Advisees extends Component {
                                           <Sidebar />
                                     </Grid.Column>
                                     <Grid.Column width={10}>
-                                          <Advisee />
+                                          <Grid.Row>
+                                                <Header
+                                                      as="h1"
+                                                      textAlign="left"
+                                                >
+                                                      Course Offering
+                                                </Header>
+                                          </Grid.Row>
+                                          <Grid.Row>
+                                                <Advisee />
+                                          </Grid.Row>
                                     </Grid.Column>
                               </Grid.Row>
                         </Grid>
