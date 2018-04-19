@@ -18,7 +18,7 @@ class EditCourse extends Component {
 
 		this.state = {
 			open: false,
-			M:false,T:false,W:false,Th:false,F:false,
+			M:this.props.day.includes("M"),T:this.props.day.includes("T"),W:this.props.day.includes("W"),Th:this.props.day.includes("Th"),F:this.props.day.includes("F"),
 			statusOptions: [
 							{key: 1, text:"Active", value:"Active"},
 							{key: 2, text:"Dissolved", value:"Dissolved"},

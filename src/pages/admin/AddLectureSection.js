@@ -141,7 +141,8 @@ class AddCourseLecture extends Component {
 			max_capacity: max_capacity,
 			emp_no: emp_no,
 			course_id: course_id,
-			unit: unit
+			unit: unit,
+			section_type: 0
 		};
 		// console.log(data);
 		this.setState({ error: '' });

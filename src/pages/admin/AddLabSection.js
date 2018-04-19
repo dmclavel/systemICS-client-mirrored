@@ -14,6 +14,7 @@ import {
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
+import {convertToGeneralTime} from '../../utils/TimeUtilities';
 
 const inlineStyle = {
 	modal: {
@@ -162,8 +163,8 @@ class AddCourseLab extends Component {
 		const data = {
 			acad_year: acad_year,
 			semester: semester,
-			time_start: time_start,
-			time_end: time_end,
+			time_start: convertToGeneralTime(time_start),
+			time_end: convertToGeneralTime(time_end),
 			room: room,
 			no_of_students: no_of_students,
 			unit: unit,
@@ -176,8 +177,6 @@ class AddCourseLab extends Component {
 			status: 'Active',
 			lecture_id: lecSection
 		};
-
-		console.log(data);
 
 		this.setState({ error: '' });
 		if (
