@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Grid, Container, Icon, Table } from 'semantic-ui-react';
+import { Button, Table } from 'semantic-ui-react';
 import DeleteModal from './DeleteModal';
-
+import './RegCom.css';
 class Course extends Component {
   render() {
     const {
@@ -15,13 +15,13 @@ class Course extends Component {
     } = this.props;
     return (
       <Table.Row>
-        <Table.Cell>{course_name}</Table.Cell>
-        <Table.Cell>{section}</Table.Cell>
-        <Table.Cell>{room}</Table.Cell>
-        <Table.Cell>{day}</Table.Cell>
-        <Table.Cell>{time}</Table.Cell>
-        <Table.Cell>{no_of_students}</Table.Cell>
-        <Table.Cell>
+        <Table.Cell width={3}>{course_name}</Table.Cell>
+        <Table.Cell width={2}>{section}</Table.Cell>
+        <Table.Cell width={2}>{room}</Table.Cell>
+        <Table.Cell width={2}>{day}</Table.Cell>
+        <Table.Cell width={2}>{time}</Table.Cell>
+        <Table.Cell width={2}>{no_of_students}</Table.Cell>
+        <Table.Cell width={2}>
           <DeleteModal
             course_offering_id={course_offering_id}
             button={

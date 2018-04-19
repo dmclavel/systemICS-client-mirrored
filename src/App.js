@@ -15,39 +15,43 @@ class App extends Component {
     super(props);
     this.state ={
       email: '',
-      accessLvl: 3,
+      accessLvl: 0,
       profile: null
     }
+
     autobind(this);
   }
 
-  handleLogin = (profileSrc) => {
+  handleLogin = (profileSrc, accessLvl) => {
     const emailSrc = profileSrc.U3;
-    const accessLvlSrc = 3;
+    const accessLvlSrc = accessLvl;
     this.setState({email: emailSrc, accessLvl: accessLvlSrc, profile:profileSrc});
     localStorage.setItem(loginCacheName, JSON.stringify(this.state));
   }
+
   handleLogOut = () => {
+    console.log("Logging out...");
     localStorage.setItem(loginCacheName, null);
   }
+
   componentDidMount(){
     // check if local storage has log-in session
     const cachedLogIn = localStorage.getItem(loginCacheName);
-    if(cachedLogIn){
-      console.log("load saved sesion" + cachedLogIn);
+    if (cachedLogIn != null && cachedLogIn.localeCompare("null") !== 0){
+      console.log("load saved session" + cachedLogIn);
       const session = JSON.parse(cachedLogIn);
       this.setState(session);
       // console.log(JSON.parse(cachedLogIn));
     }
   }
+
   render() {
     console.log(this.state);
     return (
       <div className="App bg-color-main">
       	<Router history={browserHistory} >
-          <Routes logInHandler={this.handleLogin}  accessLvl={this.state.accessLvl}/>
+          <Routes logInHandler={this.handleLogin} accessLvl={this.state.accessLvl} user={this.state.profile}/>
       	</Router>
-
       </div>
     );
   }

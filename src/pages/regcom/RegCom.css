@@ -1,0 +1,5 @@
+.courses-table {
+  z-index: 999 !important;
+  max-height: 200px !important;
+  overflow: auto !important;
+}

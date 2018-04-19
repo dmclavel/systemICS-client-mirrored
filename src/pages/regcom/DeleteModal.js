@@ -24,8 +24,9 @@ class DeleteModal extends Component {
   handleOkay(e) {
     const { course_offering_id } = this.props;
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('unassign_section', {
-      course_offering_id
+    socket.emit('modify_section_2', {
+      course_offering_id,
+      unassignFaculty: true
     });
     this.handleClose();
   }

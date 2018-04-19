@@ -71,3 +71,20 @@ a.item.nav-item {
 	padding-left: 30px !important;
 	padding-right: 30px !important;
 }
+
+/*.width {
+	width: 300px !important;
+}*/
+
+.notif-button {
+	padding-left: 12px !important;
+}
+
+.notif-button-container {
+	margin-top: 10px !important;
+}
+
+.notif-logout-container {
+	margin-top: 10px !important;
+	color: white !important;
+}

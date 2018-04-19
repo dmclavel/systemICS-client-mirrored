@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
 
-import NavbarIn from '../components/navbar/NavbarIn';
-import Heading from '../components/Heading';
 import Sidebar from '../components/Sidebar';
 import ManageHeader from '../components/headers/ManageHeader';
 import User from './User';

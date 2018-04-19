@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Image, Button, Segment } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Grid } from 'semantic-ui-react';
 import './Footer.css';
 
 class Footer extends Component {
@@ -10,8 +9,7 @@ class Footer extends Component {
         <Grid>
           <Grid.Row>
             <Grid.Column width={16}>
-              <div>
-              </div>
+              <div />
             </Grid.Column>
           </Grid.Row>
         </Grid>

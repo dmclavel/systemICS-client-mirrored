@@ -8,7 +8,7 @@ Change name FacultyTab to the name of file.
 This will be updated for mapping, grid layouting, etc.
 Write the Author of the code at the top of the document.
 */
-import {Image, Card, Button, Input, Grid, Container, Search, Header, Modal, Icon, Checkbox, Accordion, Segment, List} from "semantic-ui-react";
+import { Card, Input, Grid, Container } from 'semantic-ui-react';
 import React, { Component } from 'react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
@@ -23,100 +23,93 @@ If you wish to import other JS files, do it here.
 */
 
 class FacultyTab extends Component {
-	constructor(props){
-	    super(props);
-	    this.state = {
-	        endpoint:  'https://sleepy-falls-95372.herokuapp.com/', // the address of the server
-	        faculty: [
-	        {"name": "",
-           "email_add": "",
-            "isRegCom": "" 
-          }
-	        ],
-	        facultyQuery: "",
-	        facultyResult: [],
-	        originalFaculty: []
-
-	    }
-	    autobind(this);
- 	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      endpoint: 'https://sleepy-falls-95372.herokuapp.com/', // the address of the server
+      faculty: [
+        {
+          name: '',
+          email_add: '',
+          isRegCom: ''
+        }
+      ],
+      search: ''
+    };
+    autobind(this);
+  }
 
   // what to do once the page (re)loads
-	componentDidMount = () =>{
-		    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
-		    // listens on an endpoint and executes fallback function
-		    socket.emit('view_all_active_faculty_members', 'dfesperanza@up.edu.ph');//send data to 'login' endpoint in server
-		    socket.on('view_all_active_faculty_members', (returnValueFromServer) => {
-		      console.log(returnValueFromServer);
-          this.setState({faculty: returnValueFromServer});
-          this.setState({originalFaculty: returnValueFromServer});
-		    });
-		  }
-		  //a function for sending data to server.you can have many of these
-		  sendData = () => {
-		    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
-		    socket.emit('login', 'this is my data');//send data to 'login' endpoint in server
-	}
+  componentDidMount = () => {
+    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
+    // listens on an endpoint and executes fallback function
+    socket.emit('view_all_active_faculty_members', 'dfesperanza@up.edu.ph'); //send data to 'login' endpoint in server
+    socket.on('view_all_active_faculty_members', returnValueFromServer => {
+      console.log(returnValueFromServer);
+      this.setState({ faculty: returnValueFromServer });
+    });
+  };
+  //a function for sending data to server.you can have many of these
+  sendData = () => {
+    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
+    socket.emit('login', 'this is my data'); //send data to 'login' endpoint in server
+  };
 
-	handleSearch = (e) => {
-		this.setState({facultyQuery: e.target.value});
-		this.setState({faculty: this.state.originalFaculty});
-
-	}
-
+  updateSearch = search => {
+    this.setState({ search: search });
+  };
 
   render() {
-    return(
-      <div className='FacultyTab'>
-      		<Grid centered={true}>
-      			<Grid.Row>
-      				<NavbarHome active='faculty' />
-      				<ClassesHeader />
-      			</Grid.Row>
+    const { search } = this.state;
+    return (
+      <div className="FacultyTab">
+        <Grid centered={true}>
+          <Grid.Row>
+            <NavbarHome active="faculty" />
+            <ClassesHeader
+              search={search}
+              updateSearch={this.updateSearch}
+              type="faculty"
+            />
+          </Grid.Row>
 
-      			<Grid.Row>
-					<Grid.Column width={9} verticalAlign="middle">
-						<Grid.Row>
-              	<Card id="inputWidth" fluid={true}>
-                <Input raised={true} fluid icon="search" placeholder = "Search faculty..." onChange={this.handleSearch} />
-               </Card>
-			      </Grid.Row>
-					</Grid.Column>
-					<Grid.Column width={16} textAlign = "center">
-						<Grid columns={4} divided centered>
-            				<Container centered>
-      								<Card.Group itemsPerRow={4}>
-      									{this.state.faculty.filter(item => {
-                    if (
-                      item.name
-                        .toLowerCase()
-                        .includes(this.state.facultyQuery.toLowerCase())
-                    ) {
-                      return true;
-                    }
-                    return false;
-                  }).map((item, index)=>
-      										<Card>
-                            { item.isRegCom === 0 ? (
-                                <FacultyCard name={item.name} email={item.email_add} isRegCom={item.isRegCom}/>
-                                ):(<RegComCard name={item.name} email={item.email_add} isRegCom={item.isRegCom}/>)
-                            }
-                          </Card>
-      									)}
-
-      								</Card.Group>
-           					</Container>
-						</Grid>
-					</Grid.Column>
-				</Grid.Row>
-      		</Grid>
+          <Grid.Row>
+            <Grid.Column width={16} textAlign="center">
+              <Grid columns={4} divided centered>
+                <Container centered>
+                  <Card.Group itemsPerRow={4}>
+                    {this.state.faculty
+                      .filter(item =>
+                        item.name
+                          .toLowerCase()
+                          .includes(this.state.search.toLowerCase())
+                      )
+                      .map((item, index) => (
+                        <Card>
+                          {item.isRegCom === 0 ? (
+                            <FacultyCard
+                              name={item.name}
+                              email={item.email_add}
+                              isRegCom={item.isRegCom}
+                            />
+                          ) : (
+                            <RegComCard
+                              name={item.name}
+                              email={item.email_add}
+                              isRegCom={item.isRegCom}
+                            />
+                          )}
+                        </Card>
+                      ))}
+                  </Card.Group>
+                </Container>
+              </Grid>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     );
   }
 }
 
 export default FacultyTab;
-
-/*
-DELETE THE COMMENTS AFTER.
-*/

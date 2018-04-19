@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Grid, Input, Segment } from 'semantic-ui-react';
+import { Grid, Input, Segment, Header } from 'semantic-ui-react';
 import Information from './Information';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
 
 import NavbarIn from '../components/navbar/NavbarIn';
-import Heading from '../components/Heading';
 import Sidebar from '../components/Sidebar';
 import ManageHeader from '../components/headers/ManageHeader';
 
@@ -24,11 +23,12 @@ class RegCom extends Component {
   }
   componentDidMount() {
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('view_all_active_faculty_members', {});
-    socket.on('view_all_active_faculty_members', informations => {
+    socket.emit('view_faculty', { active: true });
+    socket.on('view_faculty', informations => {
       this.setState({
         informations
       });
+      console.log('dsaiufhas');
     });
   }
   render() {
@@ -38,25 +38,34 @@ class RegCom extends Component {
         <Grid>
           <Grid.Row>
             <NavbarIn user={this.props.user} active="manage" />
-            <ManageHeader user={this.props.user} />
+            <ManageHeader
+              user={this.props.user}
+              accessLvl={this.props.accessLvl}
+            />
           </Grid.Row>
-
           <Grid.Row>
             <Grid.Column width={1} />
             <Grid.Column width={4}>
               <Sidebar />
             </Grid.Column>
             <Grid.Column width={10}>
-              <Segment>
-                <Input
-                  placeholder="Search faculty"
-                  icon="search"
-                  iconPosition="left"
-                  fluid="true"
-                  transparent
-                  onChange={this.handleSearch}
-                />
-              </Segment>
+              <Grid.Row>
+                <Header as="h1" textAlign="left">
+                  Course Offering
+                </Header>
+              </Grid.Row>
+              <Grid.Row>
+                <Segment>
+                  <Input
+                    placeholder="Search faculty"
+                    icon="search"
+                    iconPosition="left"
+                    fluid="true"
+                    transparent
+                    onChange={this.handleSearch}
+                  />
+                </Segment>
+              </Grid.Row>
               <Grid.Row>
                 {informations
                   .filter(information => {

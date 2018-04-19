@@ -4,8 +4,8 @@ FILE: Login, for the basic log-in page. Includes google sign-in.
 */
 
 import React, { Component } from 'react';
-import { Grid, Button, Form, Segment, Header, Image, Divider } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Grid, Button, Form, Segment, Image, Divider } from 'semantic-ui-react';
+import { Link, Redirect } from 'react-router-dom';
 import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 import socketIOClient from 'socket.io-client';
 import './Login.css';
@@ -15,66 +15,93 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile : null,
+      profile: null,
       timestamp: 'no timestamp yet',
       endpoint: 'https://sleepy-falls-95372.herokuapp.com/',
+      accessLvl: 0,
+      success: false
     };
   }
 
-  handleProfile = (googleUser) => {
+  handleProfile = googleUser => {
     this.setState({ profile: googleUser.getBasicProfile() });
     console.log(this.state.profile);
-    this.props.logInHandler(this.state.profile);
+
+    const socket = socketIOClient(this.state.endpoint);
+    socket.emit('email_privilege', { email_add : this.state.profile.U3 });
+    socket.on('email_privilege', privilege => {
+      this.setState({ accessLvl : privilege, success : true });
+    })
+
+    this.props.logInHandler(this.state.profile, 3);
   };
 
-  componentDidMount(){
-    const socket = socketIOClient(this.state.endpoint)
-    socket.on('login', (name) => {
+  componentDidMount() {
+    const socket = socketIOClient(this.state.endpoint);
+    socket.on('login', name => {
       console.log(name);
     });
   }
 
-  send = (e) => {
-    const socket = socketIOClient(this.state.endpoint)
-    socket.emit('login', e.target.value)
-  }
+  send = e => {
+    const socket = socketIOClient(this.state.endpoint);
+    socket.emit('login', e.target.value);
+  };
 
   render() {
+    if (this.state.success) return <Redirect to="/" push />;
 
-    const { activeItem } = this.state;
-
-    return(
-      <div className='login-form'>
-        <Grid textAlign='center' columns={3} verticalAlign='middle'>
+    return (
+      <div className="login-form">
+        <Grid textAlign="center" columns={3} verticalAlign="middle">
           <Grid.Row>
             <Grid.Column width={5} />
             <Grid.Column style={{ maxWidth: 450 }}>
               <div>
-                <Image className="login-name" src={Logo} size='small'/>
-                {' '}<p className="login-logo-name">SYSTEMICS</p>
+                <Image className="login-name" src={Logo} size="small" />{' '}
+                <p className="login-logo-name">SYSTEMICS</p>
               </div>
               <Segment stacked>
-                  <div>
-                    <Form>
-                      <Form.Input placeholder='Username' required icon='user' iconPosition='left' onChange={this.send}/>
-                      <Form.Input placeholder='Password' required icon='lock' iconPosition='left' type='password'/>
-                      <Button icon="sign in alternate" content='LOG IN' fluid color={'teal'}/>
-                    </Form>
-                  </div>
-                  <Divider horizontal>OR</Divider>
-                  <div>
-                    <GoogleAPI clientId="175573341301-f0qqirbda07fqsqam42vjpoi1kldjro4.apps.googleusercontent.com"
-                          onUpdateSigninStatus={Function}
-                          onInitFailure={Function} >
-                        <div>
-                             <Button color="google plus" icon="google" content="LOG IN USING UP MAIL" fluid onLoginSuccess={this.handleProfile}/>
-                        </div>
-                    </GoogleAPI>
-                  </div>
+                <div>
+                  <Form>
+                    <Form.Input
+                      placeholder="Username"
+                      required
+                      icon="user"
+                      iconPosition="left"
+                      onChange={this.send}
+                    />
+                    <Form.Input
+                      placeholder="Password"
+                      required
+                      icon="lock"
+                      iconPosition="left"
+                      type="password"
+                    />
+                    <Button
+                      icon="sign in alternate"
+                      content="LOG IN"
+                      fluid
+                      color={'teal'}
+                    />
+                  </Form>
+                </div>
+                <Divider horizontal>OR</Divider>
+                <div>
+                  <GoogleAPI
+                    clientId="175573341301-f0qqirbda07fqsqam42vjpoi1kldjro4.apps.googleusercontent.com"
+                    onUpdateSigninStatus={Function}
+                    onInitFailure={Function}
+                  >
+                    <div>
+                      <GoogleLogin onLoginSuccess={this.handleProfile} />
+                    </div>
+                  </GoogleAPI>
+                </div>
               </Segment>
 
               <Link to="/">
-                <Button icon="arrow outline left" content="Back to Homepage" /> 
+                <Button icon="arrow outline left" content="Back to Homepage" />
               </Link>
             </Grid.Column>
             <Grid.Column width={5} />
