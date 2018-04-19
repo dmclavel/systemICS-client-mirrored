@@ -297,7 +297,7 @@ class EditLoadModal extends Component {
         <Modal.Header>
           <Grid centered={true}>
             <Grid.Row fluid="true">
-              <Grid.Column width={16}>
+              <Grid.Column width={10}>
                 <div>
                   <Image
                     verticalAlign="middle"

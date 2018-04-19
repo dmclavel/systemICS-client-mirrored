@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-	Grid,
-	Header,
-	Table,
-	Input,
-	Button,
-	Dropdown
-} from 'semantic-ui-react';
+import { Grid, Header, Table, Input } from 'semantic-ui-react';
 import CourseRow from './CourseRow';
 import AddCourseModal from './AddCourseModal';
 import AddLectureSection from './AddLectureSection';
@@ -39,12 +32,11 @@ class AdminCard extends Component {
 		};
 		autobind(this);
 	}
-
 	componentDidMount() {
 		const socket = socketIOClient(this.state.address);
-		const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
-		socket.emit('view_sections', data);
-		socket.on('view_sections', course => {
+		const data = { email: 'pvgrubat@up.edu.ph' };
+		socket.emit('view_all_unarchived_sections', data);
+		socket.on('view_all_unarchived_sections', course => {
 			this.setState({ coursesX: course });
 			console.log(this.state.coursesX);
 		});
@@ -52,9 +44,9 @@ class AdminCard extends Component {
 
 	fetchCourse = () => {
 		const socket = socketIOClient(this.state.address);
-		const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
-		socket.emit('view_sections', data);
-		socket.on('view_sections', course => {
+		const data = { email: 'pvgrubat@up.edu.ph' };
+		socket.emit('view_all_unarchived_sections', data);
+		socket.on('view_all_unarchived_sections', course => {
 			this.setState({ coursesX: course });
 		});
 		console.log('Data changed');
@@ -64,22 +56,23 @@ class AdminCard extends Component {
 		const { coursesX } = this.state;
 
 		return (
-			<Grid className="admin-container">
-				<Grid.Row>
-					<Header as="h1" textAlign="left">
-						Course Offering
-					</Header>
-				</Grid.Row>
+			<Grid.Column width={10}>
+				<Header as="h1" textAlign="left">
+					Faculty Workload
+				</Header>
 
-				<Grid.Row width={16}>
-					<Grid.Column width={9}>
-						<Input fluid icon="search" width={12} />
-					</Grid.Column>
-					<Grid.Column width={7}>
-						<AddCourseModal />
-						<AddLectureSection />
-					</Grid.Column>
-				</Grid.Row>
+				<Grid>
+					<Grid.Row width={16}>
+						<Grid.Column width={5}>
+							<Input icon="search" width={12} />
+						</Grid.Column>
+						<Grid.Column width={3} />
+						<Grid.Column width={8}>
+							<AddCourseModal />
+							<AddLectureSection />
+						</Grid.Column>
+					</Grid.Row>
+				</Grid>
 
 				<Table textAlign="center">
 					<Table.Header>
@@ -124,7 +117,7 @@ class AdminCard extends Component {
 						})}
 					</Table.Body>
 				</Table>
-			</Grid>
+			</Grid.Column>
 		);
 	}
 }

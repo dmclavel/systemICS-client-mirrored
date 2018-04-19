@@ -13,7 +13,7 @@ class ClassesHeader extends Component {
 			<div className="home-heading">
 				<div className="home-background bg-color-header-home" />
 				<div className="heading-content font-white">
-					<p className="section-name">{this.props.type.toUpperCase()}</p>
+					<p className="section-name">CLASSES</p>
 					<div className="center-content" width={16}>
 						<Input
 							fluid
@@ -21,7 +21,7 @@ class ClassesHeader extends Component {
 							width={16}
 							value={value}
 							icon="search"
-							placeholder={`Search ${this.props.type}...`}
+							placeholder="Search classes..."
 							onChange={this.handleChange}
 						/>
 					</div>

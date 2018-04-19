@@ -42,7 +42,6 @@ class DeleteCourse extends Component {
 		console.log(data);
 		socket.emit('remove_section', data);
 		this.props.fetchCourse();
-
 		this.close();
 	};
 
