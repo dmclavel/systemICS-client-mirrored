@@ -22,7 +22,7 @@ import img from './kobe.jpg';
 // Modal inlineStyle to fix centering
 const inlineStyle = {
   modal: {
-    marginTop: '10vh',
+    marginTop: '5vh',
     marginLeft: 'auto',
     marginRight: 'auto'
   }

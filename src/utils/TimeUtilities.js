@@ -97,6 +97,10 @@ export const convertToGeneralTime = time => {
     // if it has 0 at the beginning, trim the zero
     return `${splittedString[0].replace(/^0*/, '')}:${splittedString[1]}AM`;
   } else {
-    return `${splittedString[0] - 12}:${splittedString[1]}PM`;
+    if (splittedString[0] - 12 === 0) {
+      return `12:${splittedString[1]}PM`;
+    } else {
+      return `${splittedString[0] - 12}:${splittedString[1]}PM`;
+    }
   }
 };
