@@ -29,15 +29,15 @@ class AddCourseModal extends Component {
 		this.state = {
 			open: false,
 			address: 'https://sleepy-falls-95372.herokuapp.com/',
-			coursesX: [],
-			courses: [],
+			course_id: '',
 			course_name: '',
 			course_title: '',
 			description: '',
 			uniqueCourse: true,
 			error: '',
 			message: '',
-			warning: false
+			warning: false,
+			isEditing: false
 		};
 		autobind(this);
 	}
@@ -47,19 +47,20 @@ class AddCourseModal extends Component {
 	};
 
 	handleSubmit = evt => {
-		const { course_name, course_title, description } = this.state;
+		const { course_name, course_title, description, course_id } = this.state;
 
 		if (
 			this.state.course_name === '' ||
 			this.state.course_title === '' ||
 			this.state.description === ''
 		) {
-			this.setState({ error: 'Please fill all the fields!' });
+			this.setState({ warning: true, message: 'Please fill all the fields!' });
 		} else {
 			this.setState({ error: '' });
 			const socket = socketIOClient(this.state.address);
 			const data = {
 				email: 'pvgrubat@up.edu.ph',
+				course_id: course_id,
 				course_name: course_name,
 				course_title: course_title,
 				description: description
@@ -96,8 +97,27 @@ class AddCourseModal extends Component {
 			open: false,
 			course_title: '',
 			course_name: '',
-			description: ''
+			description: '',
+			message: '',
+			isEditing: false
 		});
+
+	handleMessageChange = (message, warning) =>
+		this.setState({ message: message, warning: warning });
+
+	handleCourseName = name => this.setState({ course_name: name });
+	handleCourseTitle = title => this.setState({ course_title: title });
+	handleCourseDesc = description => this.setState({ description: description });
+	handleIsEditing = bool => this.setState({ isEditing: bool });
+	handleCourseID = id => this.setState({ course_id: id });
+	handleRevert = () => {
+		this.setState({
+			course_name: '',
+			course_title: '',
+			description: '',
+			isEditing: false
+		});
+	};
 
 	render() {
 		const {
@@ -106,7 +126,8 @@ class AddCourseModal extends Component {
 			course_title,
 			description,
 			message,
-			warning
+			warning,
+			isEditing
 		} = this.state;
 
 		return (
@@ -160,15 +181,19 @@ class AddCourseModal extends Component {
 													required
 												/>
 												<Form.Button
+													fluid
 													className="form-button"
 													width={2}
-													positive
+													color={isEditing ? 'blue' : 'green'}
 													onClick={this.handleSubmit}
-												>
-													{' '}
-													Submit
-												</Form.Button>
+													content={isEditing ? 'Edit' : 'Submit'}
+												/>
 											</Form.Group>
+											{isEditing && (
+												<a className="form-editing" onClick={this.handleRevert}>
+													Revert back to add
+												</a>
+											)}
 										</Form>
 									</Grid.Column>
 								</Grid.Row>
@@ -188,7 +213,15 @@ class AddCourseModal extends Component {
 
 								<Grid.Row>
 									<Grid.Column width={16}>
-										<ViewCourses />
+										<ViewCourses
+											message={message}
+											handleMessage={this.handleMessageChange}
+											handleCourseName={this.handleCourseName}
+											handleCourseTitle={this.handleCourseTitle}
+											handleCourseDesc={this.handleCourseDesc}
+											handleIsEditing={this.handleIsEditing}
+											handleCourseID={this.handleCourseID}
+										/>
 									</Grid.Column>
 								</Grid.Row>
 							</Grid>

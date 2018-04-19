@@ -31,8 +31,38 @@ class Sidebar extends Component {
 		return (
 			<Grid>
 				<Grid.Row className="sidebar">
-					<Segment fluid textAlign='right'>	
-						<Header as='h3' content='1st Semester AY 2017-2018' subheader='Current Semester' />
+					<Segment className="sidebar-container" fluid textAlign="right">
+						<Header as="h2">
+							<Header.Content>1st Semester AY 2017-2018</Header.Content>
+							<Header.Subheader>
+								<span>
+									Current Semester{' '}
+									<Dropdown
+										placeholder="Change semester"
+										inline
+										options={options}
+										header={
+											<div>
+												<Button.Group>
+													<Button
+														basic
+														positive
+														content="Add New Semester"
+														size="small"
+													/>
+													<Button
+														basic
+														negative
+														content="Delete Current Semester"
+														size="small"
+													/>
+												</Button.Group>
+											</div>
+										}
+									/>
+								</span>
+							</Header.Subheader>
+						</Header>
 					</Segment>
 				</Grid.Row>
 				<Grid.Row>
