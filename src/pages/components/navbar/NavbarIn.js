@@ -96,18 +96,24 @@ class NavbarIn extends Component {
     this.state = {
       user: this.props.user,
       activeItem: this.props.active,
-      dashboardLink: '/admin/dashboard',
-      manageLink: '/admin/manage/courses',
+      dashboardLink: `/${
+        this.props.accessLvl === 1
+          ? 'faculty'
+          : this.props.accessLvl === 2
+            ? 'regcom'
+            : 'admin'
+      }/dashboard`,
+      manageLink: `/${
+        this.props.accessLvl === 1
+          ? 'faculty'
+          : this.props.accessLvl === 2
+            ? 'regcom'
+            : 'admin'
+      }/manage/courses`,
       isLoggedIn: true
     };
 
     this.handleLogout = this.handleLogout.bind(this);
-  }
-  componentDidMount = () =>{
-    this.setState({
-      dashboardLink: this.props.accessLvl === 3 ? '/admin/dashboard' : '/regcom/dashboard',
-      manageLink: this.props.accessLvl === 3 ? '/admin/manage/courses' : '/regcom/manage/teaching'
-    });
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
@@ -142,7 +148,7 @@ class NavbarIn extends Component {
             </Grid.Column>
             <Grid.Column width={6}>
               <Menu className="nav-menu-in" pointing secondary>
-                <Link to="/admin/dashboard">
+                <Link to={this.state.dashboardLink}>
                   <Menu.Item
                     className="nav-item"
                     name="dashboard"
@@ -150,14 +156,16 @@ class NavbarIn extends Component {
                     onClick={this.handleItemClick}
                   />
                 </Link>
-                <Link to={this.state.manageLink}>
-                  <Menu.Item
-                    className="nav-item"
-                    name="manage"
-                    active={activeItem === 'manage'}
-                    onClick={this.handleItemClick}
-                  />
-                </Link>
+                {this.props.accessLvl !== 1 ? (
+                  <Link to={this.state.manageLink}>
+                    <Menu.Item
+                      className="nav-item"
+                      name="manage"
+                      active={activeItem === 'manage'}
+                      onClick={this.handleItemClick}
+                    />
+                  </Link>
+                ) : null}
               </Menu>
             </Grid.Column>
             <Grid.Column width={2} />

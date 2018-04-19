@@ -75,6 +75,7 @@ class Sidebar extends Component {
 	render() {
 		return (
 			<Grid>
+				{console.log('HEHEHEHHE' + this.props)}
 				<Grid.Row className="sidebar">
 					<Segment className="sidebar-container" fluid textAlign="right">
 						<Header as="h2">
@@ -82,29 +83,31 @@ class Sidebar extends Component {
 							<Header.Subheader>
 								<span>
 									Current Semester{' '}
-									<Dropdown
-										placeholder="Change semester"
-										inline
-										options={options}
-										header={
-											<div>
-												<Button.Group>
-													<Button
-														basic
-														positive
-														content="Add New Semester"
-														size="small"
-													/>
-													<Button
-														basic
-														negative
-														content="Delete Current Semester"
-														size="small"
-													/>
-												</Button.Group>
-											</div>
-										}
-									/>
+									{this.props.showSemester && (
+										<Dropdown
+											placeholder="Change semester"
+											inline
+											options={options}
+											header={
+												<div>
+													<Button.Group>
+														<Button
+															basic
+															positive
+															content="Add New Semester"
+															size="small"
+														/>
+														<Button
+															basic
+															negative
+															content="Delete Current Semester"
+															size="small"
+														/>
+													</Button.Group>
+												</div>
+											}
+										/>
+									)}
 								</span>
 							</Header.Subheader>
 						</Header>

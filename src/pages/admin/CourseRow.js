@@ -3,6 +3,8 @@ import { Table } from 'semantic-ui-react';
 import AddLabSection from './AddLabSection';
 import EditCourse from './EditCourse';
 import DeleteCourse from './DeleteCourse';
+import { convertToGeneralTime } from '../../utils/TimeUtilities';
+
 class CourseRow extends Component {
   constructor() {
     super();
@@ -21,7 +23,9 @@ class CourseRow extends Component {
         <Table.Cell>{this.props.section}</Table.Cell>
         <Table.Cell>{this.props.day}</Table.Cell>
         <Table.Cell>
-          {this.props.time_start}-{this.props.time_end}
+          {`${convertToGeneralTime(
+            this.props.time_start
+          )}-${convertToGeneralTime(this.props.time_end)}`}
         </Table.Cell>
         <Table.Cell>{this.props.room}</Table.Cell>
         <Table.Cell>{this.props.maxcapacity}</Table.Cell>
