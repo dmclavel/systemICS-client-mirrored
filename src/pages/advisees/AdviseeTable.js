@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Dropdown, Button, Grid, Icon } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 const x = [
 	{ key: 1, advisee: 'Aaron Louie Lagazon', advisers: [
@@ -19,7 +19,7 @@ const x = [
 	},
 	{ key: 2, advisee: 'Kobe Jee De Luna', advisers: [
 			{
-				adviser_name: 'Kristen Pelaez', 
+				adviser_name: 'Bernadette Pelaez', 
 				status: 'Current'
 			},
 			{
@@ -31,6 +31,33 @@ const x = [
 				status: 'Pending'
 			}
 		]
+	}
+]
+const advisers = [
+	{
+		key: 1,
+		value: "Reginald Recario",
+		text: "Reginald Recario"
+	},
+	{
+		key: 2,
+		value: "Rick Jason Obrero",
+		text: "Rick Jason Obrero"
+	},
+	{
+		key: 3,
+		value: "Miyah Queliste",
+		text: "Miyah Queliste"
+	},
+	{
+		key: 4,
+		value: "Bernadette Pelaez",
+		text: "Bernadette Pelaez"
+	},
+	{
+		key: 5,
+		value: "Patric Albacea",
+		text: "Patric Albacea"
 	}
 ]
 class AdviseeTable extends Component {
@@ -93,14 +120,27 @@ componentDidMount() {
                   .map((advisee) =>
 						<Table celled structured >
 							<Table.Row >
-								<Table.Cell width={4} rowspan={advisee.advisers.length}>{advisee.advisee}</Table.Cell>
+								<Table.Cell width={4} rowspan={advisee.advisers.length+1}>{advisee.advisee}</Table.Cell>
 								{
 									advisee.advisers[0].status==='Pending'?
-										<Table.Cell width={12} negative>{advisee.advisers[0].adviser_name}</Table.Cell>
+										<Table.Cell width={12} warning>
+										<Grid>
+											<Grid.Column width={5}>
+											{advisee.advisers[0].adviser_name}
+											</Grid.Column>
+											<Grid.Column width={4}>
+											<Button icon color="yellow" size="mini">
+												<Icon name='check circle' />
+												Confirm
+											</Button>
+											</Grid.Column>
+										</Grid>
+
+										</Table.Cell>
 										:
 									
 										advisee.advisers[0].status==='Previous'?
-										<Table.Cell width={12} warning>{advisee.advisers[0].adviser_name}</Table.Cell>
+										<Table.Cell width={12} negative>{advisee.advisers[0].adviser_name}</Table.Cell>
 										: 
 										<Table.Cell width={12}>{advisee.advisers[0].adviser_name}</Table.Cell>
 								}
@@ -111,17 +151,52 @@ componentDidMount() {
 									<Table.Row >
 									{
 										adviser.status==='Pending'?
-										<Table.Cell negative>{adviser.adviser_name}</Table.Cell>
+										<Table.Cell warning>
+										<Grid>
+											<Grid.Column width={5}>
+												{adviser.adviser_name}
+											</Grid.Column>
+											<Grid.Column width={4}>
+												<Button icon color="yellow" size="mini">
+													<Icon name='check circle' />
+													Confirm
+												</Button>
+											</Grid.Column>
+										</Grid>
+										</Table.Cell>
 										:
 										adviser.status==='Previous'?
-										<Table.Cell width={12} warning>{adviser.adviser_name}</Table.Cell>
+										<Table.Cell width={12} negative>{adviser.adviser_name}</Table.Cell>
 										: 
 										<Table.Cell width={12}>{adviser.adviser_name}</Table.Cell>
 									}
+
 									</Table.Row>
 								)
 
 							}
+							<Table.Row>
+								<Table.Cell width ={12}> 
+								<Grid>
+								<Grid.Column width={13}>
+									<Dropdown
+					                  placeholder="Select adviser"
+					                  fluid
+					                  search
+					                  selection
+					                  options={advisers}
+					                />
+					             </Grid.Column>
+								<Grid.Column width={2}>
+					                <Button color="green">
+						                Assign
+					                </Button>
+					            </Grid.Column>
+				                </Grid>
+								</Table.Cell>
+
+								</Table.Row>
+
 						</Table>
 					)	
 				}		

@@ -1,22 +1,22 @@
 .manage-heading {
-	min-width: 50%;
+  min-width: 50%;
   max-width: 100%;
   width: 100%;
   height: 50vh;
 }
 
 .heading-background {
-	min-width: 50%;
+  min-width: 50%;
   max-width: 100%;
   width: 100%;
   height: 50vh;
   left: 0;
   right: 0;
   z-index: 1;
-  
+
   position: relative;
-  margin-top: 3vh;    
-  background-image: url("./code.jpg");
+  margin-top: 3vh;
+  background-image: url('./code.jpg');
   background-repeat: no-repeat;
   background-size: 100%;
   -webkit-filter: blur(5px);
@@ -27,7 +27,7 @@
 }
 
 .heading-content {
-	left: 0;
+  left: 0;
   right: 0;
   top: 0;
   padding-top: 100px;
@@ -35,8 +35,8 @@
   position: absolute;
 }
 
-.heading-message{
-	font-size: 50px;
+.heading-message {
+  font-size: 50px;
   margin-top: 100px;
   margin-bottom: 0vh;
   padding-left: 10px;
@@ -45,7 +45,7 @@
 }
 
 .heading-submessage {
-	text-align: left;
+  text-align: left;
   font-size: 25px;
   margin-top: 0vh;
   padding-left: 50px;
@@ -98,7 +98,7 @@
 }
 
 .db-name {
-  font-family: "PT Sans Narrow", sans serif;
+  font-family: 'PT Sans Narrow', sans serif;
   font-weight: 700;
   font-size: 60px;
   margin-top: 100px;
@@ -116,3 +116,32 @@
   width: 100px !important;
   height: 100px !important;
 }
+
+.section-heading-content {
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  padding-top: 17vh;
+  position: absolute;
+}
+
+.section-name {
+  font-family: 'PT Sans Narrow', sans serif;
+  font-weight: 700;
+  font-size: 100px;
+  margin-top: 100px;
+  margin-bottom: 0vh;
+  text-align: center;
+}
+
+.section-email {
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 10px !important;
+}
+
+.center-content {
+  width: 800px !important;
+  margin: auto !important;
+}
+

@@ -125,7 +125,6 @@ class AddCourseLecture extends Component {
 			max_capacity,
 			semester
 		} = this.state;
-
 		const socket = socketIOClient(this.state.address);
 		const data = {
 			email: 'pvgrubat@up.edu.ph',

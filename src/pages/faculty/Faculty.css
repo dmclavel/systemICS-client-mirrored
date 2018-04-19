@@ -1,50 +1,49 @@
-
-
-.MainSection{
-     position: relative;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
+.MainSection {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
-#search1{
+#search1 {
   background: #e0e0d1;
 }
 
-#LeftSide{
-     max-height: 575px;
-     /*overflow-y: scroll;*/
-     /*background: rgb(255,255,255);*/
-     border-width: 1px;
-     /*border-color: gray;*/
+#LeftSide {
+  max-height: 575px;
+  /*overflow-y: scroll;*/
+  /*background: rgb(255,255,255);*/
+  border-width: 1px;
+  /*border-color: gray;*/
 }
-#RightSide{
-     max-height: 575px;
-     overflow-y: scroll;
-     background: rgb(255,255,255);
-     /*border-width: 1px;*/
-     /*border-color: gray;*/
+#RightSide {
+  max-height: 575px;
+  overflow-y: scroll;
+  background: rgb(255, 255, 255);
+  /*border-width: 1px;*/
+  /*border-color: gray;*/
 }
 
-#search-segment{
+#search-segment {
   background-color: #d6d6c2;
   border-radius: 10px;
 }
-.Fixed{
-   positon: fixed;
+.Fixed {
+  positon: fixed;
 }
-#cardMargin{
-   padding-top: 10px;
-   padding-bottom: 10px;
+
+#cardMargin {
+  padding: 10px !important;
 }
-#stuckSearch{
-   position: fixed;
-    left: 0;
-    top: 0;
-    width: 61.5%;
-    z-index: 999;
+
+#stuckSearch {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 61.5%;
+  z-index: 999;
 }
-#marginTop{
-   margin-top: 50px;
+#marginTop {
+  margin-top: 50px;
 }

@@ -16,12 +16,13 @@ import Faculty from './faculty/Faculty';
 import Admin from './admin/Admin';
 import Advisees from './advisees/Advisees';
 import RegCom from './regcom/RegCom';
-import SectionTab from './homepage/SectionTab';
+import Section from './homepage/Section';
 import NotFound from './components/NotFound';
 import Users from './admin/users/Users';
+import GeneratePDF from './generate-pdf/GeneratePDF';
 
 const authenticator = {
-  user: 3,
+	user: 3,
 	// level of user
 	// 0: general
 	// 1: faculty
@@ -29,28 +30,35 @@ const authenticator = {
 	// 3: Admin
 
 	authenticate(cb) {
-    this.isAuthenticated = 1
-    setTimeout(cb, 100) // fake async
-  },
+		this.isAuthenticated = 1;
+		setTimeout(cb, 100); // fake async
+	},
 
-  signout(cb) {
-    this.isAuthenticated = 0
-    setTimeout(cb, 100) // fake async
-  }
-}
+	signout(cb) {
+		this.isAuthenticated = 0;
+		setTimeout(cb, 100); // fake async
+	}
+};
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
-	<Route {...rest} render={(props) => (
-	    authenticator.user >= rest.securityLevel
-	      ? <Component {...props} />
-	      : <Redirect to='/login' />
-	  )} />
+	<Route
+		{...rest}
+		render={props =>
+			authenticator.user >= rest.securityLevel ? (
+				<Component {...props} />
+			) : (
+				<Redirect to="/login" />
+			)
+		}
+	/>
 );
-
 
 class Routes extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			profile: {}
+		};
 	}
 
 	render() {
@@ -58,53 +66,125 @@ class Routes extends Component {
 		if (this.props.accessLvl === 0)
 			return (
 				<Switch>
-					<Route exact path='/' component={ Homepage } />
-					<Route exact path='/faculty' component={ FacultyTab } />
-					<Route exact path='/login' component={ () => <Login logInHandler={this.props.logInHandler} /> } />
-					<Route exact path='/classes' component={ Classes } />
-					<Route exact path='/section/:_id' component={ SectionTab } />
-					<Route path="*" component={ NotFound } />
+					<Route exact path="/" component={Homepage} />
+					<Route exact path="/faculty" component={FacultyTab} />
+					<Route
+						exact
+						path="/login"
+						component={() => <Login logInHandler={this.props.logInHandler} />}
+					/>
+					<Route exact path="/classes" component={Classes} />
+					<Route exact path="/section/:_id" component={Section} />
+					<Route path="*" component={NotFound} />
 				</Switch>
-			)
-
+			);
 		// faculty
 		else if (this.props.accessLvl === 1)
 			return (
 				<Switch>
-          <Redirect exact from="/" to="/faculty/dashboard" />
-					<Route exact path="/faculty/dashboard" component={ () => <Faculty user='admin' />} />
-					<Route path="*" component={ NotFound } />
+					<Redirect exact from="/" to="/faculty/dashboard" />
+					<Route
+						exact
+						path="/faculty/dashboard"
+						component={() => (
+							<Faculty
+								accessLvl={this.props.accessLvl}
+								user={this.props.user}
+							/>
+						)}
+					/>
+					<Route path="*" component={NotFound} />
 				</Switch>
-			)
-
+			);
 		// regcom
 		else if (this.props.accessLvl === 2)
 			return (
 				<Switch>
-          <Redirect exact from="/" to="/regcom/dashboard" />
-					<Route exact path='/regcom/dashboard' component={ () => <Faculty user='regcom' /> } />
-					<Route exact path='/regcom/manage/advisees' component={ () => <Advisees user='regcom' /> } />
-					<Route exact path='/regcom/manage/teaching' component={ () => <RegCom user='regcom' />  } />
-					<Route path="*" component={ NotFound } />
+					<Redirect exact from="/" to="/regcom/dashboard" />
+					<Route
+						exact
+						path="/regcom/dashboard"
+						component={() => (
+							<Faculty
+								accessLvl={this.props.accessLvl}
+								user={this.props.user}
+							/>
+						)}
+					/>
+					<Route
+						exact
+						path="/regcom/manage/advisees"
+						component={() => (
+							<Advisees
+								accessLvl={this.props.accessLvl}
+								user={this.props.user}
+							/>
+						)}
+					/>
+					<Route
+						exact
+						path="/regcom/manage/teaching"
+						component={() => (
+							<RegCom accessLvl={this.props.accessLvl} user={this.props.user} />
+						)}
+					/>
+					<Route path="*" component={NotFound} />
 				</Switch>
-			)
-
+			);
 		// ADMIN
 		else if (this.props.accessLvl === 3)
 			return (
 				<Switch>
-          <Redirect exact from="/" to="/admin/dashboard" />
-					<Route exact path='/admin/dashboard' component={ () => <Faculty user='admin' /> } />
-					<Route exact path='/admin/manage/courses' component={ () => <Admin user='admin' />  } />
-					<Route exact path='/admin/manage/advisees' component={ () => <Advisees user='admin' />  } />
-					<Route exact path='/admin/manage/teaching' component={ () => <RegCom user='admin' />  } />
-					<Route exact path='/admin/manage/users' component={ () => <Users user='admin' />  } />
-					<Route path="*" component={ NotFound } />
+					<Redirect exact from="/" to="/admin/dashboard" />
+					<Route
+						exact
+						path="/admin/dashboard"
+						component={() => (
+							<Faculty
+								accessLvl={this.props.accessLvl}
+								user={this.props.user}
+							/>
+						)}
+					/>
+					<Route
+						exact
+						path="/admin/manage/courses"
+						component={() => (
+							<Admin accessLvl={this.props.accessLvl} user={this.props.user} />
+						)}
+					/>
+					<Route
+						exact
+						path="/admin/manage/advisees"
+						component={() => (
+							<Advisees
+								accessLvl={this.props.accessLvl}
+								user={this.props.user}
+							/>
+						)}
+					/>
+					<Route
+						exact
+						path="/admin/manage/teaching"
+						component={() => (
+							<RegCom accessLvl={this.props.accessLvl} user={this.props.user} />
+						)}
+					/>
+					<Route
+						exact
+						path="/admin/manage/users"
+						component={() => (
+							<Users accessLvl={this.props.accessLvl} user={this.props.user} />
+						)}
+					/>
+
+					<Route exact path="/gen" component={GeneratePDF} />
+					<Route path="*" component={NotFound} />
 				</Switch>
-			)
+			);
 
 		// everything else, return not found
-		return <Route path="*" component={ NotFound } />
+		return <Route path="*" component={NotFound} />;
 	}
 }
 

@@ -6,11 +6,7 @@ import {
 	Grid,
 	Segment,
 	Header,
-	Container,
-	Divider,
-	Label,
-	Message,
-	Dropdown
+	Container
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
@@ -130,7 +126,7 @@ class AddCourseLab extends Component {
 	}
 
 	handleChange = (e, { name, value }) => {
-			this.setState({ [name]: value });
+		this.setState({ [name]: value });
 	};
 
 	handleDayChange = (e, { content, active }) => {

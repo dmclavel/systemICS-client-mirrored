@@ -42,20 +42,22 @@ class AdminCard extends Component {
 
 	componentDidMount() {
 		const socket = socketIOClient(this.state.address);
-		const data = { acad_year: 2015, semester: 1 };
+		const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
 		socket.emit('view_sections', data);
 		socket.on('view_sections', course => {
 			this.setState({ coursesX: course });
+			console.log(this.state.coursesX);
 		});
 	}
 
 	fetchCourse = () => {
 		const socket = socketIOClient(this.state.address);
-		const data = { acad_year: 2015, semester: 1 };
+		const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
 		socket.emit('view_sections', data);
 		socket.on('view_sections', course => {
 			this.setState({ coursesX: course });
 		});
+		console.log('Data changed');
 	};
 
 	render() {
