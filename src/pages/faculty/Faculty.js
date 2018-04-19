@@ -8,74 +8,82 @@ import NavbarIn from '../components/navbar/NavbarIn';
 import DashboardHeader from '../components/headers/DashboardHeader';
 import SearchCard from '../../components/SearchCard';
 
-
 class Faculty extends Component {
-   constructor(props){
-	    super(props);
-	    this.state = {
-	        endpoint: 'https://sleepy-falls-95372.herokuapp.com/',// the address of the server
-          courses: [],
-          advisees: [],
-          visibleCourses: [],
-          visibleAdvisees: [],
-          email_add: 'nuzumaki@konoha.edu.lof'
-      }
- 	 }
+  constructor(props) {
+    super(props);
+    this.state = {
+      endpoint: 'https://sleepy-falls-95372.herokuapp.com/', // the address of the server
+      courses: [],
+      advisees: [],
+      visibleCourses: [],
+      visibleAdvisees: [],
+      email_add: 'nuzumaki@konoha.edu.lof'
+    };
+  }
 
-   componentDidMount = () =>{
-        console.log("componentDidMount");
-		    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
-		    // listens on an endpoint and executes fallback function
-		    socket.emit('search_assigned_sections_via_email', {email_add: this.state.email_add});//send data to 'login' endpoint in server
-        socket.on('search_assigned_sections_via_email', (returnValueFromServer) => {
-          this.setState({courses: returnValueFromServer, visibleCourses: returnValueFromServer})
-		    });
-        socket.emit('view_adviser_advisee_information_all', 'gpas@asdf.com');//send data to 'login' endpoint in server
-		    socket.on('view_adviser_advisee_information_all', (returnValueFromServer) => {
-          this.setState({advisees: returnValueFromServer, visibleAdvisees: returnValueFromServer})
-		    });
-		}
-    handleCourseSearch = (query) => {
-  		if(query.length == 0){
-        this.setState({visibleCourses: this.state.courses})
-        console.log(this.state.visibleCourses);
-  		}else{
-        this.setState(
-          {visibleCourses: this.state.courses.filter( (user) =>{
-              if( user.course_name.toLowerCase().includes(query.toLowerCase())){
-                console.log(this.state.visibleCourses);
-                return true;
-              }else{
-                return false;
-              }
-            })
+  componentDidMount = () => {
+    console.log('componentDidMount');
+    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
+    // listens on an endpoint and executes fallback function
+    socket.emit('search_assigned_sections_via_email', {
+      email_add: this.state.email_add
+    }); //send data to 'login' endpoint in server
+    socket.on('search_assigned_sections_via_email', returnValueFromServer => {
+      this.setState({
+        courses: returnValueFromServer,
+        visibleCourses: returnValueFromServer
+      });
+    });
+    socket.emit('view_adviser_advisee_information_all', 'gpas@asdf.com'); //send data to 'login' endpoint in server
+    socket.on('view_adviser_advisee_information_all', returnValueFromServer => {
+      this.setState({
+        advisees: returnValueFromServer,
+        visibleAdvisees: returnValueFromServer
+      });
+    });
+  };
+  handleCourseSearch = query => {
+    if (query.length == 0) {
+      this.setState({ visibleCourses: this.state.courses });
+      console.log(this.state.visibleCourses);
+    } else {
+      this.setState({
+        visibleCourses: this.state.courses.filter(user => {
+          if (user.course_name.toLowerCase().includes(query.toLowerCase())) {
+            console.log(this.state.visibleCourses);
+            return true;
+          } else {
+            return false;
           }
-        )
-  		}
+        })
+      });
     }
-    handleAdviseeSearch = (query) => {
-  		if(query.length == 0){
-        this.setState({visibleAdvisees: this.state.advisees})
-        console.log(this.state.visibleAdvisees);
-  		}else{
-        this.setState(
-          {visibleAdvisees: this.state.advisees.filter( (user) =>{
-              if( user.student_name.toLowerCase().includes(query.toLowerCase()) || user.email_add.toLowerCase().includes(query.toLowerCase())){
-                return true;
-              }else{
-                return false;
-              }
-            })
+  };
+  handleAdviseeSearch = query => {
+    if (query.length == 0) {
+      this.setState({ visibleAdvisees: this.state.advisees });
+      console.log(this.state.visibleAdvisees);
+    } else {
+      this.setState({
+        visibleAdvisees: this.state.advisees.filter(user => {
+          if (
+            user.student_name.toLowerCase().includes(query.toLowerCase()) ||
+            user.email_add.toLowerCase().includes(query.toLowerCase())
+          ) {
+            return true;
+          } else {
+            return false;
           }
-        )
-  		}
-  	}
+        })
+      });
+    }
+  };
 
   render() {
     console.log(this.state.advisees);
-    return(
-     <div>
-        <section className= 'MainSection'>
+    return (
+      <div>
+        <section className="MainSection">
           <Grid>
               <Grid.Row>
                 <NavbarIn active='dashboard' accessLvl={this.props.accessLvl}/>
@@ -108,7 +116,6 @@ class Faculty extends Component {
                 </Grid.Column>
              </Grid.Row>
         </Grid>
-
         </section>
      </div>
     );
