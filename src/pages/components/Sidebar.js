@@ -86,6 +86,24 @@ class Sidebar extends Component {
 										placeholder="Change semester"
 										inline
 										options={options}
+										header={
+											<div>
+												<Button.Group>
+													<Button
+														basic
+														positive
+														content="Add New Semester"
+														size="small"
+													/>
+													<Button
+														basic
+														negative
+														content="Delete Current Semester"
+														size="small"
+													/>
+												</Button.Group>
+											</div>
+										}
 									/>
 								</span>
 							</Header.Subheader>

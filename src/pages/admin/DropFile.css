@@ -32,3 +32,9 @@
 .admin-container {
 	margin-left: 10px !important;
 }
+
+.form-editing {
+	float: right;
+	cursor: pointer;
+}
+
