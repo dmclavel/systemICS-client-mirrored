@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Header } from 'semantic-ui-react';
+import { Segment, Grid } from 'semantic-ui-react';
 import NavbarIn from '../components/navbar/NavbarIn';
 import ManageHeader from '../components/headers/ManageHeader';
 import Sidebar from '../components/Sidebar';
@@ -16,8 +16,8 @@ class Advisees extends Component {
                                           active="manage"
                                     />
                                     <ManageHeader
-                                          user={this.props.user}
                                           accessLvl={this.props.accessLvl}
+                                          user={this.props.user}
                                     />
                               </Grid.Row>
                               <Grid.Row>
@@ -26,17 +26,7 @@ class Advisees extends Component {
                                           <Sidebar />
                                     </Grid.Column>
                                     <Grid.Column width={10}>
-                                          <Grid.Row>
-                                                <Header
-                                                      as="h1"
-                                                      textAlign="left"
-                                                >
-                                                      Course Offering
-                                                </Header>
-                                          </Grid.Row>
-                                          <Grid.Row>
-                                                <Advisee />
-                                          </Grid.Row>
+                                          <Advisee />
                                     </Grid.Column>
                               </Grid.Row>
                         </Grid>
