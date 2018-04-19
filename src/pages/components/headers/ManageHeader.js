@@ -9,6 +9,7 @@ const user = {
 
 class ManageHeader extends Component {
 	render() {
+		// alert(this.props.accessLvl);
 		return (
 			<div className="db-heading">
 				{console.log(this.props.accessLvl)}
@@ -19,7 +20,7 @@ class ManageHeader extends Component {
 							<Grid.Column width={1} />
 							<Grid.Column width={7}>
 								<p className="heading-message">
-									Ready to work, {user.name}?<br />
+									Ready to work, {this.props.user.ofa}?<br />
 								</p>
 								<p class="heading-submessage">
 									You are working as the{' '}

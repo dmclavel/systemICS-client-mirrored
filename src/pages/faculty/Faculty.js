@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Card, Input, Button } from 'semantic-ui-react';
+import {Grid, Search, Card, Input, Header, Button} from 'semantic-ui-react';
 import './Faculty.css';
 import SubjectCard from './SubjectCard';
 import Advisee from './Advisee';
@@ -85,65 +85,39 @@ class Faculty extends Component {
       <div>
         <section className="MainSection">
           <Grid>
-            <Grid.Row>
-              <NavbarIn active="dashboard" />
-              <DashboardHeader
-                user={this.props.user}
-                accessLvl={this.props.accessLvl}
-              />
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column width={1} />
-              <Grid.Column width={8}>
-                <Grid.Row>
-                  <SearchCard
-                    fluid={true}
-                    handleSearch={this.handleCourseSearch}
-                    placeholder="course name, course title, or section"
-                  />
-                  {this.state.visibleCourses.map(course => {
-                    return (
-                      <SubjectCard
-                        name={course.course_name}
-                        title={course.course_title}
-                        description={course.description}
-                        section={course.section}
-                        no_of_students={course.no_of_students}
-                        capacity={course.max_capacity}
-                        room={course.room}
-                        time_start={course.time_start}
-                        time_end={course.time_end}
-                      />
-                    );
-                  })}
-                </Grid.Row>
-              </Grid.Column>
-              <Grid.Column width={1} />
-              <Grid.Column width={5}>
-                <Card fluid raised={true}>
-                  <h2>Advisees</h2>
-                </Card>
-                <SearchCard
-                  fluid={true}
-                  handleSearch={this.handleAdviseeSearch}
-                  placeholder="name, email or student id"
-                />
-                {this.state.visibleAdvisees.map(advisees => {
-                  return (
-                    <Advisee
-                      name={advisees.student_name}
-                      student_number={advisees.student_number}
-                      curriculum={advisees.curriculum}
-                      email={advisees.email_add}
-                    />
-                  );
-                })}
-              </Grid.Column>
-              <Grid.Column width={1} />
-            </Grid.Row>
-          </Grid>
+              <Grid.Row>
+                <NavbarIn active='dashboard' accessLvl={this.props.accessLvl}/>
+                <DashboardHeader user={this.props.user} accessLvl={this.props.accessLvl}/>
+              </Grid.Row>
+               <Grid.Row>
+                  <Grid.Column width={1}></Grid.Column>
+                  <Grid.Column width={8}>
+                     <Grid.Row>
+                       <SearchCard fluid={true} handleSearch={this.handleCourseSearch} placeholder="course name, course title, or section"/>
+                       {this.state.visibleCourses.map ((course)=>{
+                          return <SubjectCard name={course.course_name} title={course.course_title} description={course.description} section={course.section} no_of_students={course.no_of_students} capacity={course.max_capacity} room={course.room} time_start={course.time_start} time_end={course.time_end}/>
+                        })
+                       }
+                     </Grid.Row>
+                  </Grid.Column>
+                  <Grid.Column width={1}>
+                  </Grid.Column>
+                  <Grid.Column width={5}>
+                    <Card fluid raised={true}>
+                       <h2>Advisees</h2>
+                    </Card>
+                    <SearchCard fluid={true} handleSearch={this.handleAdviseeSearch} placeholder="name, email or student id"/>
+                      {this.state.visibleAdvisees.map ((advisees)=>{
+                          return <Advisee name={advisees.student_name} student_number={advisees.student_number} curriculum={advisees.curriculum} email={advisees.email_add}/>
+                        })
+                      }
+                </Grid.Column>
+                <Grid.Column width={1}>
+                </Grid.Column>
+             </Grid.Row>
+        </Grid>
         </section>
-      </div>
+     </div>
     );
   }
 }

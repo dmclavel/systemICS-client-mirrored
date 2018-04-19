@@ -42,7 +42,6 @@ class RegCom extends Component {
               accessLvl={this.props.accessLvl}
             />
           </Grid.Row>
-
           <Grid.Row>
             <Grid.Column width={1} />
             <Grid.Column width={4}>
