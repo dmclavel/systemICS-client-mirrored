@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Grid, Button, Popup, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import StudentDelete from './StudentDelete';
+import StudentEdit from './StudentEdit';
 
 class StudentTable extends Component {
   constructor(props) {
@@ -23,8 +24,8 @@ class StudentTable extends Component {
             <Table.HeaderCell width={5}>Student Number</Table.HeaderCell>
             <Table.HeaderCell width={5}>Name</Table.HeaderCell>
             <Table.HeaderCell width={5}>Email</Table.HeaderCell>
-            <Table.HeaderCell width={5}> Curriculum </Table.HeaderCell>
-            <Table.HeaderCell width={2}>Status</Table.HeaderCell>
+            <Table.HeaderCell width={3}> Curriculum </Table.HeaderCell>
+            <Table.HeaderCell width={3}>Status</Table.HeaderCell>
             <Table.HeaderCell width={4}>Actions</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -44,10 +45,7 @@ class StudentTable extends Component {
                         <StudentDelete/>
                       </Grid.Column>
                       <Grid.Column>
-                        <Popup
-                          trigger={<Button icon="pencil" positive />}
-                          content="Edit"
-                        />
+                        <StudentEdit/>
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
