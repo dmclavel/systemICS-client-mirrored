@@ -30,7 +30,7 @@ class FacultyTable extends Component {
             return (
               <Table.Row>
                 <Table.Cell>{user.name}</Table.Cell>
-                <Table.Cell>{user.email}</Table.Cell>
+                <Table.Cell>{user.email_add}</Table.Cell>
                 <Table.Cell textAlign="center">{user.status}</Table.Cell>
                 <Table.Cell textAlign="center">
                   <Grid>

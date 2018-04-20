@@ -11,21 +11,11 @@ class User extends Component {
 		super(props);
 		this.state={
 			address: 'https://sleepy-falls-95372.herokuapp.com/',
-			studentData: [],
-			facultyData: [],
-			visibleData: [],
 			activeItem: 'Student',
-      dummyStudents: [
-        { name: 'John', student_number: '2015-10323', email_add: 'jhon@up.edu.ph', status: 'student', curriculum: '1-A'},
-        { name: 'Leslie', student_number: '2015-10353', email_add: 'leslie@up.edu.ph', status: 'student', curriculum: '2-C'},
-      ],
-      dummyFaculty: [
-        { name: 'Amber', email: 'amber@up.edu.ph', status: 'faculty', id: '12317890' },
-        { name: 'Ben', email: 'ben@up.edu.ph', status: 'faculty', id: '12379834' },
-      ],
+      dummyStudents: [],
+      dummyFaculty: [],
       origStudent: [],
       origFaculty: [],
-      queryString: ''
 		}
 		autobind(this);
 	}
@@ -68,7 +58,7 @@ class User extends Component {
         this.setState(
         {
           dummyFaculty: this.state.dummyFaculty.filter( (user) =>{
-            if(user.email.toLowerCase().includes(query.toLowerCase()) || user.name.toLowerCase().includes(query.toLowerCase()) || user.id.toLowerCase().includes(query.toLowerCase())){
+            if(user.email_add.toLowerCase().includes(query.toLowerCase()) || user.name.toLowerCase().includes(query.toLowerCase()) || user.emp_no.toLowerCase().includes(query.toLowerCase())){
               return true;
             }else{
               return false;
