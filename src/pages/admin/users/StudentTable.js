@@ -42,10 +42,10 @@ class StudentTable extends Component {
                      <Grid>
                     <Grid.Row centered columns={3}>
                       <Grid.Column>
-                        <StudentDelete/>
+                        <StudentDelete name={user.name} student_number={user.student_number} email_add={user.email_add} curriculum={user.curriculum} status={user.status}/>
                       </Grid.Column>
                       <Grid.Column>
-                        <StudentEdit/>
+                        <StudentEdit name={user.name} student_number={user.student_number} email_add={user.email_add} curriculum={user.curriculum} status={user.status}/>
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>

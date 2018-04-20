@@ -19,8 +19,18 @@ class StudentEdit extends Component {
             <Modal.Content>
               <Container>
                 <Segment padded="very">
+                    <Form>
+                      <Form.Group widths='equal'>
+                        <Form.Input fluid label='Name' placeholder='Name' />
+                        <Form.Input fluid label='Email address' placeholder='Address' />
+                      </Form.Group>
+                      <Form.Group widths='equal'>
+                        <Form.Select fluid label='Curriculum'  placeholder='Curriculum' />
+                        <Form.Select fluid label='Status'  placeholder='Status' />
+                      </Form.Group>
+                    </Form>
                     <h2>
-                     Are you sure you want to edit?
+                     Are you sure you want to edit {this.props.name}?
                     </h2>
                       <Grid.Row>
                         <Form>

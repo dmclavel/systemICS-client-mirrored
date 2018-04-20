@@ -12,7 +12,23 @@ const inlineStyle={
 
   }
 };
+
 class StudentDelete extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      
+    };
+    autobind(this);
+  }
+
+  handleDelete = (e) => {
+    alert("Deleting student....");
+  }
+
+  handleCancel = (e) => {
+    alert("Cancelling deletion..");
+  }
   render() {
     return(
        <Modal size='large' style={inlineStyle.modal} trigger={<Button icon="x" negative/>} basic>
@@ -20,12 +36,12 @@ class StudentDelete extends Component {
               <Container>
                 <Segment padded="very">
                     <h2>
-                     Are you sure you want to delete?
+                     Are you sure you want to delete {this.props.name}?
                     </h2>
                       <Grid.Row>
                         <Form>
-                          <Button negative content="Delete" floated="right" positive onClick={this.handleSubmit}/ >
-                          <Button positive content="Cancel" floated="right" positive onClick={this.handleSubmit}/ >
+                          <Button negative content="Delete" floated="right" positive onClick={this.handleDelete}/ >
+                          <Button positive content="Cancel" floated="right" positive onClick={this.handleCancel}/ >
                         </Form>
                     </Grid.Row>
                       
