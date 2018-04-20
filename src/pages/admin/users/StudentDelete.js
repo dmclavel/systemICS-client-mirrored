@@ -46,7 +46,7 @@ class StudentDelete extends Component {
   }
   render() {
     return(
-       <Modal size='large' style={inlineStyle.modal} trigger={<Button icon="x" negative onClick={this.handleOpen} open={this.state.modalOpen}
+       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button icon="x" negative onClick={this.handleOpen} open={this.state.modalOpen}
         onClose={this.handleCancel}/>} basic>
             <Modal.Content>
               <Container>

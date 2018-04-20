@@ -21,12 +21,12 @@ class StudentEdit extends Component {
                 <Segment padded="very">
                     <Form>
                       <Form.Group widths='equal'>
-                        <Form.Input fluid label='Name' placeholder='Name' />
-                        <Form.Input fluid label='Email address' placeholder='Address' />
+                        <Form.Input fluid label='Name' placeholder={this.props.name} />
+                        <Form.Input fluid label='Email address' placeholder={this.props.email_add} />
                       </Form.Group>
                       <Form.Group widths='equal'>
-                        <Form.Select fluid label='Curriculum'  placeholder='Curriculum' />
-                        <Form.Select fluid label='Status'  placeholder='Status' />
+                        <Form.Input fluid label='Curriculum' placeholder={this.props.curriculum} />
+                        <Form.Input fluid label='Status' placeholder={this.props.status} />
                       </Form.Group>
                     </Form>
                     <h2>

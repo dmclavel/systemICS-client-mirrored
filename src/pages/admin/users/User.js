@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {Grid, Menu} from 'semantic-ui-react';
+import {Grid, Menu, Button} from 'semantic-ui-react';
 import SearchCard from '../../../components/SearchCard';
 import StudentTable from './StudentTable';
 import FacultyTable from './FacultyTable';
+import StudentAdd from './StudentAdd';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
@@ -106,7 +107,11 @@ class User extends Component {
 		return (
 			<Grid>
 			<Grid.Row>
-				<SearchCard fluid={true} handleSearch={this.handleSearch} placeholder="name or email"/>
+				<SearchCard fluid handleSearch={this.handleSearch} placeholder="name or email"/>
+				
+			</Grid.Row>
+			<Grid.Row fluid>
+				<StudentAdd/>
 			</Grid.Row>
 			<Grid.Row>
 				<Menu fluid widths={2}>
