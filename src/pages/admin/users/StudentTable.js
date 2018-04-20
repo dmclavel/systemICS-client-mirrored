@@ -24,6 +24,7 @@ class StudentTable extends Component {
             <Table.HeaderCell width={5}>Email</Table.HeaderCell>
             <Table.HeaderCell width={5}> Curriculum </Table.HeaderCell>
             <Table.HeaderCell width={2}>Status</Table.HeaderCell>
+            <Table.HeaderCell width={4}>Actions</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -35,6 +36,24 @@ class StudentTable extends Component {
                 <Table.Cell textAlign="center">{user.email_add}</Table.Cell>
                  <Table.Cell textAlign="center">{user.curriculum}</Table.Cell>
                 <Table.Cell> {user.status} </Table.Cell>
+                <Table.Cell> 
+                     <Grid>
+                    <Grid.Row centered columns={3}>
+                      <Grid.Column>
+                        <Popup
+                          trigger={<Button icon="x" negative />}
+                          content="Delete"
+                        />
+                      </Grid.Column>
+                      <Grid.Column>
+                        <Popup
+                          trigger={<Button icon="pencil" positive />}
+                          content="Edit"
+                        />
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Table.Cell>
               </Table.Row>
             );
           })}
