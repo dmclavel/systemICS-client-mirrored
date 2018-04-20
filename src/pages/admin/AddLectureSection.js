@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Grid, Header, Dropdown } from 'semantic-ui-react';
+import { Button, Modal, Form, Grid, Header, Dropdown, Message } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
@@ -12,20 +12,20 @@ const inlineStyle = {
 	}
 };
 
-const semesterOptions = [
+const semesters = [
 	{
 		key: 1,
 		value: 1,
 		text: '1st Semester'
 	},
 	{
-		key: 2,
+		key: 1,
 		value: 2,
 		text: '2nd Semester'
 	},
 	{
-		key: 3,
-		value: 3,
+		key: 1,
+		value: 1,
 		text: 'Midyear'
 	}
 ];
@@ -35,7 +35,10 @@ class AddCourseLecture extends Component {
 		super();
 
 		this.state = {
+			hidden:true,
 			open: false,
+			negative: false,
+			positive: false,
 			M: false,
 			T: false,
 			W: false,
@@ -43,7 +46,7 @@ class AddCourseLecture extends Component {
 			F: false,
 			address: 'https://sleepy-falls-95372.herokuapp.com/',
 			courses: [],
-			section_type: 1,
+			section_type: 0,
 			emp_no: null,
 			acad_year: '',
 			semester: '',
@@ -57,7 +60,7 @@ class AddCourseLecture extends Component {
 			section: '',
 			unit: '',
 			max_capacity: '',
-			error: ''
+			message: ''
 		};
 		autobind(this);
 	}
@@ -95,8 +98,6 @@ class AddCourseLecture extends Component {
 				this.setState({ day: 'F' });
 			} else days = days + '-F';
 		}
-
-		console.log('Days ' + days);
 		return days;
 	}
 
@@ -108,6 +109,8 @@ class AddCourseLecture extends Component {
 		if (active === true) this.setState({ [content]: false });
 		else if (active === false) this.setState({ [content]: true });
 	};
+
+
 
 	handleSubmit = () => {
 		let days = this.dayFormat();
@@ -122,8 +125,8 @@ class AddCourseLecture extends Component {
 			room,
 			section,
 			unit,
-			max_capacity,
-			semester
+			semester,
+			max_capacity
 		} = this.state;
 		const socket = socketIOClient(this.state.address);
 		const data = {
@@ -141,39 +144,48 @@ class AddCourseLecture extends Component {
 			emp_no: emp_no,
 			course_id: course_id,
 			unit: unit,
-			section_type: 0
+			status: 'Pending'
 		};
-		// console.log(data);
-		this.setState({ error: '' });
+		this.setState({ message: '' });
 		if (
 			course_id === '' ||
 			section === '' ||
 			room === '' ||
 			time_start === '' ||
 			time_end === '' ||
-			max_capacity === ''
+			max_capacity === '' ||
+			unit === '' ||
+			acad_year === '' ||
+			semester === ''
 		) {
 			console.log(data);
-			this.setState({ error: 'Fill all fields!' });
-		} else if (this.state.error === '') {
+			this.setState({ hidden: false});
+			this.setState({message: "Please complete all the required fields!", positive: false, negative: true});
+		} else {
 			console.log(data);
-			socket.emit('create_section', data);
-			this.close();
+			this.setState({ hidden: false});
+			this.setState({message: "Successfully added a new lecture section!", positive: true, negative: false});
+			socket.emit('create_section_2', data);
+			this.props.fetchCourse()
 		}
 	};
+
+
 
 	close = () =>
 		this.setState({
 			open: false,
-
+			hidden: true,
+			negative: false,
+			positive: false,
 			M: false,
 			T: false,
 			W: false,
 			Th: false,
 			F: false,
 			course_id: '',
-			time_start: '',
-			time_end: '',
+			time_start: '7:00',
+			time_end: '19:00',
 			room: '',
 			day: '',
 			section: '',
@@ -208,10 +220,19 @@ class AddCourseLecture extends Component {
 		console.log(this.state.course_id);
 	}
 
+	handleSemester(e, data) {
+		const state = this.state;
+		state.semester = data.value;
+		this.setState(state);
+		console.log(this.state.semester);
+	}
+
 	render() {
 		const {
 			open,
-			error,
+			negative,
+			positive,
+			message,
 			M,
 			T,
 			W,
@@ -224,7 +245,8 @@ class AddCourseLecture extends Component {
 			room,
 			section,
 			unit,
-			max_capacity
+			max_capacity,
+			hidden
 		} = this.state;
 
 		return (
@@ -382,13 +404,16 @@ class AddCourseLecture extends Component {
 										search
 										selection
 										label="Semester"
-										name="semester"
-										value={semesterOptions.value}
-										options={semesterOptions}
+										options={semesters}
 										placeholder="Semester"
-										onChange={this.handleChange}
+										onChange={this.handleSemester}
 									/>
 								</Form.Group>
+							</Grid.Row>
+							<Grid.Row>
+							  <Message negative={negative} positive={positive} hidden={hidden}>
+							    <Message.Header>{message}</Message.Header>
+							  </Message>
 							</Grid.Row>
 						</Form>{' '}
 					</Grid>

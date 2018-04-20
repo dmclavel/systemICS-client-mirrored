@@ -77,7 +77,7 @@ class AdminCard extends Component {
 					</Grid.Column>
 					<Grid.Column width={7}>
 						<AddCourseModal />
-						<AddLectureSection />
+						<AddLectureSection fetchCourse={this.fetchCourse}/>
 					</Grid.Column>
 				</Grid.Row>
 
