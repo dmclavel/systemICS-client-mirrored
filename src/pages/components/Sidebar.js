@@ -7,6 +7,7 @@ import {
 	Button,
 	Dropdown
 } from 'semantic-ui-react';
+import socketIOClient from 'socket.io-client';
 
 import DropFile from '../admin/DropFile';
 
@@ -72,14 +73,46 @@ const inline = {
 };
 
 class Sidebar extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			address: 'https://sleepy-falls-95372.herokuapp.com',
+			semesters: []
+		};
+	}
+
+	componentDidMount() {
+		const socket = socketIOClient(this.state.address);
+		socket.emit('view_timeframe', null);
+		socket.on('view_timeframe', semesters => {
+			const tempSem = [];
+			semesters.forEach((semester, index) => {
+				tempSem.push({
+					key: index,
+					value: semester.timeframe_id,
+					text: `${
+						semester.semester === 1
+							? '1st Semester'
+							: semester.semester === 2
+								? '2nd Semester'
+								: 'Midyear'
+					} AY ${semester.acad_year}-${semester.acad_year + 1}`
+				});
+			});
+			console.log(tempSem);
+			this.setState({ semesters: tempSem });
+		});
+	}
+
 	render() {
+		const { semesters } = this.state;
+		console.log(semesters.length);
 		return (
 			<Grid>
-				{console.log('HEHEHEHHE' + this.props)}
 				<Grid.Row className="sidebar">
 					<Segment className="sidebar-container" fluid textAlign="right">
 						<Header as="h2">
-							<Header.Content>1st Semester AY 2017-2018</Header.Content>
+							<Header.Content>{`1st Semester AY 2017-2018`}</Header.Content>
 							<Header.Subheader>
 								<span>
 									Current Semester{' '}
@@ -87,7 +120,7 @@ class Sidebar extends Component {
 										<Dropdown
 											placeholder="Change semester"
 											inline
-											options={options}
+											options={semesters}
 											header={
 												<div>
 													<Button.Group>
