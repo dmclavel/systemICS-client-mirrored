@@ -7,8 +7,7 @@ import {
 	Segment,
 	Divider,
 	Header,
-	Container,
-	Divider
+	Container
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
