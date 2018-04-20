@@ -79,7 +79,7 @@ class ManageHeader extends Component {
 									}/manage/teaching`}
 								>
 									<Button
-										className="admin-button"
+										className="admin-button centered-h"
 										circular
 										icon="clipboard huge"
 									/>

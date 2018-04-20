@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Grid, Search, Card, Input, Header, Button} from 'semantic-ui-react';
+import { Grid, Search, Card, Input, Header, Button } from 'semantic-ui-react';
 import './Faculty.css';
 import SubjectCard from './SubjectCard';
 import Advisee from './Advisee';
@@ -25,17 +25,24 @@ class Faculty extends Component {
     console.log('componentDidMount');
     const socket = socketIOClient(this.state.endpoint); //establish connection to the server
     // listens on an endpoint and executes fallback function
-    socket.emit('search_assigned_sections_via_email', {
-      email_add: this.state.email_add
+    socket.emit('view_sections', {
+      email_add: this.props.user.U3,
+      active: true,
+      petitioned: true,
+      additional: true
     }); //send data to 'login' endpoint in server
-    socket.on('search_assigned_sections_via_email', returnValueFromServer => {
+    socket.on('view_sections', returnValueFromServer => {
       this.setState({
         courses: returnValueFromServer,
         visibleCourses: returnValueFromServer
       });
     });
-    socket.emit('view_adviser_advisee_information_all', 'gpas@asdf.com'); //send data to 'login' endpoint in server
-    socket.on('view_adviser_advisee_information_all', returnValueFromServer => {
+    socket.emit('view_adviser_advisees', {
+      current: true,
+      adviser_email_add: this.props.user.U3
+    }); //send data to 'login' endpoint in server
+    socket.on('view_adviser_advisees', returnValueFromServer => {
+      console.log(returnValueFromServer);
       this.setState({
         advisees: returnValueFromServer,
         visibleAdvisees: returnValueFromServer
@@ -85,39 +92,65 @@ class Faculty extends Component {
       <div>
         <section className="MainSection">
           <Grid>
-              <Grid.Row>
-                <NavbarIn active='dashboard' accessLvl={this.props.accessLvl}/>
-                <DashboardHeader user={this.props.user} accessLvl={this.props.accessLvl}/>
-              </Grid.Row>
-               <Grid.Row>
-                  <Grid.Column width={1}></Grid.Column>
-                  <Grid.Column width={8}>
-                     <Grid.Row>
-                       <SearchCard fluid={true} handleSearch={this.handleCourseSearch} placeholder="course name, course title, or section"/>
-                       {this.state.visibleCourses.map ((course)=>{
-                          return <SubjectCard name={course.course_name} title={course.course_title} description={course.description} section={course.section} no_of_students={course.no_of_students} capacity={course.max_capacity} room={course.room} time_start={course.time_start} time_end={course.time_end}/>
-                        })
-                       }
-                     </Grid.Row>
-                  </Grid.Column>
-                  <Grid.Column width={1}>
-                  </Grid.Column>
-                  <Grid.Column width={5}>
-                    <Card fluid raised={true}>
-                       <h2>Advisees</h2>
-                    </Card>
-                    <SearchCard fluid={true} handleSearch={this.handleAdviseeSearch} placeholder="name, email or student id"/>
-                      {this.state.visibleAdvisees.map ((advisees)=>{
-                          return <Advisee name={advisees.student_name} student_number={advisees.student_number} curriculum={advisees.curriculum} email={advisees.email_add}/>
-                        })
-                      }
-                </Grid.Column>
-                <Grid.Column width={1}>
-                </Grid.Column>
-             </Grid.Row>
-        </Grid>
+            <Grid.Row>
+              <NavbarIn active="dashboard" accessLvl={this.props.accessLvl} />
+              <DashboardHeader
+                user={this.props.user}
+                accessLvl={this.props.accessLvl}
+              />
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column width={1} />
+              <Grid.Column width={8}>
+                <Grid.Row>
+                  <SearchCard
+                    fluid={true}
+                    handleSearch={this.handleCourseSearch}
+                    placeholder="course name, course title, or section"
+                  />
+                  {this.state.visibleCourses.map(course => {
+                    return (
+                      <SubjectCard
+                        name={course.course_name}
+                        title={course.course_title}
+                        description={course.description}
+                        section={course.section}
+                        no_of_students={course.no_of_students}
+                        capacity={course.max_capacity}
+                        room={course.room}
+                        time_start={course.time_start}
+                        time_end={course.time_end}
+                      />
+                    );
+                  })}
+                </Grid.Row>
+              </Grid.Column>
+              <Grid.Column width={1} />
+              <Grid.Column width={5}>
+                <Card fluid raised={true}>
+                  <h2>Advisees</h2>
+                </Card>
+                <SearchCard
+                  fluid={true}
+                  handleSearch={this.handleAdviseeSearch}
+                  placeholder="name, email or student id"
+                />
+                {this.state.visibleAdvisees.map(advisees => {
+                  return (
+                    <Advisee
+                      name={advisees.advisee_name}
+                      student_number={advisees.advisee_student_number}
+                      curriculum={advisees.curriculum}
+                      email={advisees.advisee_email_add}
+                    />
+                  );
+                })}
+              </Grid.Column>
+              <Grid.Column width={1} />
+            </Grid.Row>
+          </Grid>
         </section>
-     </div>
+      </div>
     );
   }
 }

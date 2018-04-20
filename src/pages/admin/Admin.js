@@ -20,7 +20,7 @@ class Admin extends Component {
           <Grid.Row>
             <Grid.Column width={1} />
             <Grid.Column width={4}>
-              <Sidebar />
+              <Sidebar showSemester={true} />
             </Grid.Column>
             <Grid.Column width={10}>
               <AdminCard />

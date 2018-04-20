@@ -1,117 +1,58 @@
 import React, { Component } from 'react';
 import { Table, Dropdown, Button, Grid, Icon } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
-import AdviseeSingle from './AdviseeSingle'
-const x = [
-	{ key: 1, advisee: 'Aaron Louie Lagazon', advisers: [
-			{
-				adviser_name: 'Reginald Recario', 
-				status: 'Previous'
-			},
-			{
-				adviser_name: 'Miyah Queliste', 
-				status: 'Current'
-			},
-			{
-				adviser_name: 'Jason Obrero', 
-				status: 'Pending'
-			}
-		]
-	},
-	{ key: 2, advisee: 'Kobe Jee De Luna', advisers: [
-			{
-				adviser_name: 'Bernadette Pelaez', 
-				status: 'Current'
-			},
-			{
-				adviser_name: 'Patric Albacea', 
-				status: 'Previous'
-			},
-			{
-				adviser_name: 'Jason Obrero', 
-				status: 'Pending'
-			}
-		]
-	}
-]
-const advisers = [
-	{
-		key: 1,
-		value: "Reginald Recario",
-		text: "Reginald Recario"
-	},
-	{
-		key: 2,
-		value: "Rick Jason Obrero",
-		text: "Rick Jason Obrero"
-	},
-	{
-		key: 3,
-		value: "Miyah Queliste",
-		text: "Miyah Queliste"
-	},
-	{
-		key: 4,
-		value: "Bernadette Pelaez",
-		text: "Bernadette Pelaez"
-	},
-	{
-		key: 5,
-		value: "Patric Albacea",
-		text: "Patric Albacea"
-	}
-]
+import AdviseeSingle from './AdviseeSingle';
+import autobind from 'react-autobind';
+
 class AdviseeTable extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
-		this.state={
-	      endpoint: 'https://sleepy-falls-95372.herokuapp.com',
-	      advisees: []
-
-		}
+		this.state = {
+			endpoint: 'https://sleepy-falls-95372.herokuapp.com',
+			advisees: []
+		};
+		autobind(this);
 	}
-componentDidMount() {
-    const socket = socketIOClient(this.state.endpoint);
-    socket.emit('view_advisee_advisers',{enrolledOnly: true});
-    let advisees_list = [];
-	socket.on('view_advisee_advisers', advisees=>{
-		advisees.forEach((advisee)=>{
-			console.log(advisee.name);
-			advisees_list.push({
-				key:advisee.student_number,
-				name: advisee.name,
-				advisers: advisee.advisers
-			})
+	componentDidMount() {
+		const socket = socketIOClient(this.state.endpoint);
+
+		socket.on('update_alert', update => {
+			socket.emit('view_advisee_advisers', { enrolledOnly: true });
 		});
-		this.setState({advisees:advisees_list});
-		console.log(x);
-		console.log(this.state.advisees);
 
-	});	
-
-}
+		socket.emit('view_advisee_advisers', { enrolledOnly: true });
+		socket.on('view_advisee_advisers', advisees => {
+			console.log(advisees);
+			let advisees_list = [];
+			advisees.forEach(advisee => {
+				advisees_list.push({
+					key: advisee.student_number,
+					adviser_advisee_id: advisee.adviser_advisee_id,
+					name: advisee.name,
+					advisers: advisee.advisers
+				});
+			});
+			this.setState({ advisees: advisees_list });
+		});
+	}
 
 	render() {
 		return (
 			<div>
-				{
-					this.state.advisees
+				{this.state.advisees
 					.filter(information => {
-                    if (
-                      information.name
-                        .toLowerCase()
-                        .includes(this.props.search.toLowerCase())
-                    ) {
-                      return true;
-                    }
-                    return false;
-                  })
-                  .map((advisee_single) =>
-						<AdviseeSingle advisee={advisee_single} list_advisers={advisers}/>
-					)	
-				}		
+						if (
+							information.name
+								.toLowerCase()
+								.includes(this.props.search.toLowerCase())
+						) {
+							return true;
+						}
+						return false;
+					})
+					.map(advisee_single => <AdviseeSingle advisee={advisee_single} />)}
 			</div>
-		)	
+		);
 	}
 }
 

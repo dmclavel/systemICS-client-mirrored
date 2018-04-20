@@ -5,11 +5,13 @@ import {
 	Form,
 	Grid,
 	Segment,
+	Divider,
 	Header,
 	Container
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
+import { convertToGeneralTime } from '../../utils/TimeUtilities';
 
 const inlineStyle = {
 	modal: {
@@ -19,13 +21,34 @@ const inlineStyle = {
 		color: 'black'
 	}
 };
+
+const semesterOptions = [
+	{
+		key: 1,
+		value: 1,
+		text: '1st Semester'
+	},
+	{
+		key: 2,
+		value: 2,
+		text: '2nd Semester'
+	},
+	{
+		key: 3,
+		value: 3,
+		text: 'Midyear'
+	}
+];
+
 class AddCourseLab extends Component {
 	constructor() {
 		super();
 
 		this.state = {
 			address: 'https://sleepy-falls-95372.herokuapp.com/',
+			appendedSection: '',
 			error: '',
+			labSectionAppend: '',
 			M: false,
 			T: false,
 			W: false,
@@ -34,14 +57,15 @@ class AddCourseLab extends Component {
 			coursesX: [],
 			courses: [],
 			course_offering_id: '',
+			lecture_id: '',
 			emp_no: '',
 			acad_year: '',
 			semester: '',
 			no_of_students: '',
 			course_id: '',
 			course_name: '',
-			time_start: '',
-			time_end: '',
+			time_start: '07:00',
+			time_end: '19:00',
 			room: '',
 			day: '',
 			section: '',
@@ -49,7 +73,8 @@ class AddCourseLab extends Component {
 			max_capacity: '',
 			status: '',
 			course_title: '',
-			description: ''
+			description: '',
+			posted: ''
 		};
 		autobind(this);
 	}
@@ -57,6 +82,13 @@ class AddCourseLab extends Component {
 	handleChange = (e, { name, value }) => {
 		this.setState({ [name]: value });
 	};
+
+	labSectionFormat() {
+		const { labSectionAppend } = this.state;
+		let tempStr = this.props.section;
+		let labSection = tempStr + '-' + labSectionAppend;
+		return labSection;
+	}
 
 	dayFormat() {
 		const { M, T, W, Th, F } = this.state;
@@ -106,8 +138,12 @@ class AddCourseLab extends Component {
 	handleSubmit = () => {
 		let days = this.dayFormat();
 		let id = this.props.courseLecID;
+		let labSection = this.labSectionFormat();
+		let lecSection = this.props.courseoffering;
+		console.log(lecSection);
 		const {
 			course_offering_id,
+			lecture_id,
 			acad_year,
 			semester,
 			no_of_students,
@@ -122,24 +158,26 @@ class AddCourseLab extends Component {
 		const socket = socketIOClient(this.state.address);
 
 		const data = {
-			email: 'pvgrubat@up.edu.ph',
 			acad_year: acad_year,
 			semester: semester,
-			time_start: time_start,
-			time_end: time_end,
+			time_start: convertToGeneralTime(time_start),
+			time_end: convertToGeneralTime(time_end),
 			room: room,
 			no_of_students: no_of_students,
 			unit: unit,
 			day: days,
-			section: section,
+			section: labSection,
+			section_type: 1,
 			max_capacity: max_capacity,
 			course_id: id,
 			emp_no: null,
-			status: 'Pending'
+			status: 'Active',
+			lecture_id: lecSection
 		};
+
 		this.setState({ error: '' });
 		if (
-			section === '' ||
+			labSection === '' ||
 			room === '' ||
 			time_start === '' ||
 			time_end === '' ||
@@ -149,10 +187,19 @@ class AddCourseLab extends Component {
 			max_capacity === ''
 		) {
 			this.setState({ error: 'Please fill all fields!' });
-		} else if (this.state.error == '') {
-			socket.emit('create_lab_section', data);
+		} else if (
+			this.state.error === '' &&
+			parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity)
+		) {
+			socket.emit('create_section', data);
 			this.props.fetchCourse();
 			this.close();
+		} else if (
+			parseInt(this.state.no_of_students) > parseInt(this.state.max_capacity)
+		) {
+			this.setState({
+				error: 'Number of students allowed is beyond the maximum capacity!'
+			});
 		}
 	};
 
@@ -160,20 +207,21 @@ class AddCourseLab extends Component {
 		this.setState({
 			coursesX: [],
 			courses: [],
+			labSectionAppend: '',
+			error: '',
 			M: false,
 			T: false,
 			W: false,
 			Th: false,
 			F: false,
 			course_offering_id: '',
-			emp_no: '',
 			acad_year: '',
 			semester: '',
 			no_of_students: '',
 			course_id: '',
 			course_name: '',
-			time_start: '',
-			time_end: '',
+			time_start: '7:00',
+			time_end: '19:00',
 			room: '',
 			day: '',
 			section: '',
@@ -186,12 +234,14 @@ class AddCourseLab extends Component {
 
 	render() {
 		const {
+			labSectionAppend,
 			error,
 			M,
 			T,
 			W,
 			Th,
 			F,
+			no_of_students,
 			courses,
 			acad_year,
 			semester,
@@ -213,141 +263,178 @@ class AddCourseLab extends Component {
 				closeIcon
 			>
 				<Modal.Content>
-					<Container>
-						<Segment padded="very">
-							<Grid>
-								<Grid.Row>
-									<Header as="h2">Add New Laboratory </Header>
-								</Grid.Row>
-								<Grid.Row>
-									<Form>
-										<Form.Group>
-											<Form.Input
-												label="Section"
-												placeholder="Course section"
-												name="section"
-												value={section}
-												onChange={this.handleChange}
-											/>
-											<Form.Input
-												label="Room"
-												placeholder="Room"
-												name="room"
-												value={room}
-												onChange={this.handleChange}
-											/>
-											<Form.Input
-												min={0}
-												type="number"
-												label="Maximum Capacity"
-												placeholder="Max Capacity"
-												name="max_capacity"
-												value={max_capacity}
-												onChange={this.handleChange}
-											/>
-											<Form.Input
-												type="time"
-												label="Time start"
-												placeholder="Time start"
-												name="time_start"
-												value={time_start}
-												onChange={this.handleChange}
-											/>
-											<Form.Input
-												type="time"
-												label="Time end"
-												Input
-												placeholder="Time end"
-												name="time_end"
-												value={time_end}
-												onChange={this.handleChange}
-											/>
-										</Form.Group>
+					<Segment padded="very">
+						<Header as="h2">Add New Laboratory </Header>
+						<Divider />
+						<Form>
+							<Form.Group>
+								<Form.Input
+									label="Section"
+									placeholder={this.props.section}
+									readOnly
+									width={2}
+								/>
+								<br />
+								<br />
+								―
+								<Form.Input
+									label="Lab Section"
+									placeholder=""
+									name="labSectionAppend"
+									value={labSectionAppend}
+									onChange={this.handleChange}
+									width={4}
+								/>
+								<Form.Input
+									label="Room"
+									placeholder="Room"
+									name="room"
+									value={room}
+									onChange={this.handleChange}
+									width={6}
+								/>
+								<Form.Input
+									min={0}
+									type="number"
+									label="Maximum Capacity"
+									placeholder="Max Capacity"
+									name="max_capacity"
+									value={max_capacity}
+									onChange={this.handleChange}
+									width={4}
+								/>
+							</Form.Group>
 
-										<Form.Group>
-											<Form.Input
-												width={3}
-												min={0}
-												max={5}
-												type="number"
-												label="Units"
-												name="unit"
-												placeholder="Units"
-												value={unit}
-												onChange={this.handleChange}
-											/>
-											<Form.Input
-												type="number"
-												label="Acad Year"
-												name="acad_year"
-												placeholder="Acad Year"
-												value={acad_year}
-												onChange={this.handleChange}
-											/>
-											<Form.Input
-												type="number"
-												label="Semester"
-												name="semester"
-												placeholder="Semester"
-												value={semester}
-												onChange={this.handleChange}
-											/>
-											<Form.Field label="Days"> </Form.Field>
+							<Form.Group>
+								<Form.Input
+									width={3}
+									min={0}
+									max={max_capacity}
+									type="number"
+									label="Number of Students"
+									name="no_of_students"
+									placeholder="Number of Students"
+									value={no_of_students}
+									onChange={this.handleChange}
+									width={3}
+								/>
 
-											<Form.Field>
-												<Button
-													toggle
-													circular
-													size="medium"
-													content="M"
-													active={M}
-													onClick={this.handleDayChange}
-												/>
-												<Button
-													toggle
-													circular
-													size="medium"
-													content="T"
-													active={T}
-													onClick={this.handleDayChange}
-												/>
-												<Button
-													toggle
-													circular
-													size="medium"
-													content="W"
-													active={W}
-													onClick={this.handleDayChange}
-												/>
-												<Button
-													toggle
-													circular
-													size="medium"
-													content="Th"
-													active={Th}
-													onClick={this.handleDayChange}
-												/>
-												<Button
-													toggle
-													circular
-													size="medium"
-													content="F"
-													active={F}
-													onClick={this.handleDayChange}
-												/>
-											</Form.Field>
-										</Form.Group>
+								<Form.Input
+									type="time"
+									label="Time start"
+									placeholder="Time start"
+									name="time_start"
+									value={time_start}
+									onChange={this.handleChange}
+									width={5}
+								/>
+								<Form.Input
+									type="time"
+									label="Time end"
+									Input
+									placeholder="Time end"
+									name="time_end"
+									value={time_end}
+									onChange={this.handleChange}
+									width={5}
+								/>
+
+								<Form.Input
+									min={0}
+									max={5}
+									type="number"
+									label="Units"
+									name="unit"
+									placeholder="Units"
+									value={unit}
+									onChange={this.handleChange}
+									width={3}
+								/>
+							</Form.Group>
+
+							<Form.Group>
+								<Form.Input
+									type="number"
+									label="Acad Year"
+									name="acad_year"
+									placeholder="Acad Year"
+									value={acad_year}
+									onChange={this.handleChange}
+									width={7}
+								/>
+								<Form.Dropdown
+									width={4}
+									search
+									selection
+									label="Semester"
+									name="semester"
+									value={semesterOptions.value}
+									options={semesterOptions}
+									placeholder="Semester"
+									onChange={this.handleChange}
+								/>
+								<div className="form-days">
+									<Form.Field label="Days" />
+									<Form.Field>
 										<Button
-											content="Submit"
-											floated="left"
-											onClick={this.handleSubmit}
+											toggle
+											circular
+											size="medium"
+											content="M"
+											active={M}
+											onClick={this.handleDayChange}
 										/>
-										<Container text> {error} </Container>
-									</Form>
-								</Grid.Row>
-							</Grid>
-						</Segment>
-					</Container>
+										<Button
+											toggle
+											circular
+											size="medium"
+											content="T"
+											active={T}
+											onClick={this.handleDayChange}
+										/>
+										<Button
+											toggle
+											circular
+											size="medium"
+											content="W"
+											active={W}
+											onClick={this.handleDayChange}
+										/>
+										<Button
+											toggle
+											circular
+											size="medium"
+											content="Th"
+											active={Th}
+											onClick={this.handleDayChange}
+										/>
+										<Button
+											toggle
+											circular
+											size="medium"
+											content="F"
+											active={F}
+											onClick={this.handleDayChange}
+										/>
+									</Form.Field>
+								</div>
+							</Form.Group>
+
+							<Divider />
+
+							<Button
+								content="Submit"
+								floated="right"
+								positive
+								onClick={this.handleSubmit}
+							/>
+
+							<Container text textAlign="left">
+								{' '}
+								{this.state.error}{' '}
+							</Container>
+						</Form>
+					</Segment>
 				</Modal.Content>
 			</Modal>
 		);
