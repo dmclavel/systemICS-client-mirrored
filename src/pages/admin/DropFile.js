@@ -67,6 +67,14 @@ class DropFile extends Component {
 							</div>
 						</Dropzone>
 					</div>
+
+					<Button content="STUDENT" />
+					<Button content="ADMIN" />
+					<Button content="COURSE OFFERING" />
+					<Button content="COURSE" />
+					<Button content="FACULTY" />
+					<Button content="ADVISER-ADVISEE" />
+					<Button content="SENIOR-JUNIOR" />
 				</Modal.Content>
 			</Modal>
 		);

@@ -66,14 +66,19 @@ class AddCourseModal extends Component {
 				description: description
 			};
 
-			socket.emit('view_existing_courses', data);
+			socket.emit('view_existing_courses', {});
 			socket.on('view_existing_courses', course => {
 				//Check if inputted course is not yet in the database
 				const result = course.find(res => res.course_name === course_name);
 				if (!result) {
-					socket.emit('create_course', data); //if course not in database, proceed to creating a new course
+					socket.emit(
+						this.state.isEditing ? 'modify_course' : 'create_course_do',
+						data
+					); //if course not in database, proceed to creating a new course
 					this.setState({
-						message: `${course_name} has been successfully added!`,
+						message: `${course_name} has been successfully ${
+							this.state.isEditing ? 'edited' : 'added'
+						}!`,
 						warning: false
 					});
 				} else {

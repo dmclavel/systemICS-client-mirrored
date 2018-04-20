@@ -174,6 +174,14 @@ class EditLoadModal extends Component {
     socket.emit('search_all_unassigned_sections_via_course_id', {
       course_id: value.course_id
     });
+
+    // socket.emit('view_sections', {
+    //   course_id: value.course_id,
+    //   unassignedOnly: true,
+    //   acad_year:
+    //   semester:
+    // });
+
     socket.on(
       'search_all_unassigned_sections_via_course_id',
       course_offerings => {
