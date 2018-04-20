@@ -5,12 +5,12 @@ import socketIOClient from 'socket.io-client';
 import './DropFile.css';
 
 const inlineStyle = {
-	modal: {
-		marginTop: '10vh !important',
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		color: 'black'
-	}
+  modal: {
+    marginTop: '10vh !important',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    color: 'black'
+  }
 };
 
 class DropFile extends Component {
@@ -89,29 +89,29 @@ class DropFile extends Component {
     }
 	};
 
-	render() {
-		const { files } = this.state;
+  render() {
+    const { files } = this.state;
 
-		return (
-			<Modal
-				size="large"
-				style={inlineStyle.modal}
-				onClose={this.close}
-				trigger={<Button content="Import File" color="blue" />}
-				closeIcon
-			>
-				<Modal.Header>Drop Files Here</Modal.Header>
-				<Modal.Content>
-					<div>
-						<Dropzone
-							className="dropzone"
-							onDrop={files =>
-								files.length === 1 ? this.handleOnDrop(files) : null
-							}
-						>
-							<div className="dropzone-text">
-								<Header as="h1" content="Drop files here!" />
-								<Divider horizontal>OR</Divider>
+    return (
+      <Modal
+        size="large"
+        style={inlineStyle.modal}
+        onClose={this.close}
+        trigger={<Button content="Import File" color="blue" />}
+        closeIcon
+      >
+        <Modal.Header>Drop Files Here</Modal.Header>
+        <Modal.Content>
+          <div>
+            <Dropzone
+              className="dropzone"
+              onDrop={files =>
+                files.length === 1 ? this.handleOnDrop(files) : null
+              }
+            >
+              <div className="dropzone-text">
+                <Header as="h1" content="Drop files here!" />
+                <Divider horizontal>OR</Divider>
 
 								<div>
 									<Dropzone
