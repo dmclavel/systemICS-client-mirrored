@@ -12,25 +12,57 @@ const inlineStyle={
 
   }
 };
-class StudentEdit extends Component {
+class StudentAdd extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email_add: '',
+      curriculum: '',
+      status: ''
+    };
+    autobind(this);
+  }
+
+  handleName = (e) => {
+    this.setState({name: e.target.value});
+  }
+
+  handleEmail = (e) => {
+    this.setState({email_add: e.target.value});
+  }
+
+  handleCurriculum = (e) => {
+    this.setState({curriculum: e.target.value});
+  }
+
+  handleStatus = (e) => {
+    this.setState({status: e.target.value});
+  }
+
+  handleSubmit = (e) => {
+
+  }
+
+
   render() {
     return(
-       <Modal size='large' style={inlineStyle.modal} trigger={<Button icon="pencil" positive/>} basic>
+       <Modal size='large' style={inlineStyle.modal} trigger={<Button positive> Add Student </Button>} basic>
             <Modal.Content>
               <Container>
                 <Segment padded="very">
                     <Form>
                       <Form.Group widths='equal'>
-                        <Form.Input fluid label='Name' placeholder={this.props.name} />
-                        <Form.Input fluid label='Email address' placeholder={this.props.email_add} />
+                        <Form.Input fluid label='Name' placeholder='Name' onChange={this.handleName}/>
+                        <Form.Input fluid label='Email address' placeholder='Email address' onChange={this.handleEmail}/>
                       </Form.Group>
                       <Form.Group widths='equal'>
-                        <Form.Input fluid label='Curriculum' placeholder={this.props.curriculum} />
-                        <Form.Input fluid label='Status' placeholder={this.props.status} />
+                        <Form.Input fluid label='Curriculum' placeholder='Curriculum' onChange={this.handleCurriculum}/>
+                        <Form.Input fluid label='Status' placeholder='Status' onChange={this.handleStatus}/>
                       </Form.Group>
                     </Form>
                     <h2>
-                     Are you sure you want to edit {this.props.name}?
+                     Are you sure you want to add new student {this.state.name}?
                     </h2>
                       <Grid.Row>
                         <Form>
@@ -47,4 +79,4 @@ class StudentEdit extends Component {
   }
 }
 
-export default StudentEdit;
+export default StudentAdd;
