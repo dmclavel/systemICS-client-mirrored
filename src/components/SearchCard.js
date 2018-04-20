@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Input } from 'semantic-ui-react';
+import { Segment, Input, Card } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
@@ -33,13 +33,15 @@ class SearchCard extends Component {
 
   render() {
     return (
+    <Card fluid={this.props.fluid} raised>
       <Input
         fluid
         icon="search"
         onChange={this.handleInputChange}
         placeholder={this.props.placeholder}
       />
-    );
+  </Card>
+  );
   }
 }
 
