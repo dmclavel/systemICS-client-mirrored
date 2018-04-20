@@ -76,8 +76,8 @@ class AdminCard extends Component {
 						<Input fluid icon="search" width={12} />
 					</Grid.Column>
 					<Grid.Column width={7}>
-						<AddCourseModal />
-						<AddLectureSection />
+						<AddCourseModal fetchCourse={this.fetchCourse} />
+						<AddLectureSection fetchCourse={this.fetchCourse} />
 					</Grid.Column>
 				</Grid.Row>
 

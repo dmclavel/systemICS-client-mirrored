@@ -7,12 +7,12 @@ class HomepageHeader extends Component {
 		return (
 			<div className="home-heading">
 				<div className="home-background bg-color-header-home" />
-				<div className="home-content">
-					<Grid>
-						<Grid.Row divided>
-							<Grid.Column width={9} />
-						</Grid.Row>
-					</Grid>
+				<div className="heading-content font-white">
+					<p className="section-name">SYSTEMICS</p>
+					<p class="section-email">
+						The official Registration System for the Institute of Computer
+						Science
+					</p>
 				</div>
 			</div>
 		);

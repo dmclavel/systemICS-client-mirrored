@@ -126,7 +126,6 @@ class DropFile extends Component {
 							</div>
 						</Dropzone>
 					</div>
-
 					<Button content="Student" onClick={() => this.handleChangeFileTypeSelected(1)}/>
 					<Button content="Faculty" onClick={() => this.handleChangeFileTypeSelected(2)}/>
 					<Button content="Admin" onClick={() => this.handleChangeFileTypeSelected(3)}/>

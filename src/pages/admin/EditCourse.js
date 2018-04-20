@@ -166,8 +166,7 @@ class EditCourse extends Component {
 
 	close = () =>
 		this.setState({
-			open:false,
-			M:false,T:false,W:false,Th:false,F:false,
+			open:false
 	});
 
 

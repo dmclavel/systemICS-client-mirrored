@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button, Dropdown, Grid, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
+
 class AdviseeSingle extends Component {
 	constructor(props) {
 		super(props);
