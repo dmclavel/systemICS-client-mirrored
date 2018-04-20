@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
-import { Table, Grid, Button, Popup, Icon } from 'semantic-ui-react';
+import { Table, Grid, Button, Popup, Icon, Modal } from 'semantic-ui-react';
 import autobind from 'react-autobind';
+
+
+const ModalExampleShorthand = () => (
+  <Modal
+    trigger={<Button>Show Modal</Button>}
+    header='Reminder!'
+    content='Call Benjamin regarding the reports.'
+    actions={[
+      'Snooze',
+      { key: 'done', content: 'Done', positive: true },
+    ]}
+  />
+)
+
 
 class StudentTable extends Component {
   constructor(props) {
@@ -41,7 +55,7 @@ class StudentTable extends Component {
                     <Grid.Row centered columns={3}>
                       <Grid.Column>
                         <Popup
-                          trigger={<Button icon="x" negative />}
+                          trigger={<Button icon="x" negative onClick={()=>{ModalExampleShorthand}}/>}
                           content="Delete"
                         />
                       </Grid.Column>

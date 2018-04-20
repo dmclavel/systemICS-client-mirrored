@@ -36,13 +36,13 @@ class User extends Component {
     socket.emit('view_students', 'crgotis@up.edu.ph'); //send data to 'login' endpoint in server
     socket.on('view_students', returnValueFromServer => {
       console.log(returnValueFromServer);
-      this.setState({ studentData: returnValueFromServer });
+      this.setState({ dummyStudents: returnValueFromServer });
       this.setState({origStudent: this.state.dummyStudents});
     });
     socket.emit('view_faculty', 'crgotis@up.edu.ph'); //send data to 'login' endpoint in server
     socket.on('view_faculty', returnValueFromServer => {
       console.log(returnValueFromServer);
-      this.setState({ facultyData: returnValueFromServer });
+      this.setState({ dummyFaculty: returnValueFromServer });
       this.setState({origFaculty: this.state.dummyFaculty});
     });
   };
