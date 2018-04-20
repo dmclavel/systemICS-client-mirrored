@@ -30,7 +30,7 @@ class Classes extends Component {
 					/>
 				</Grid.Row>
 				<Grid.Row centered>
-					<CoursePanelWhole search={search} updateSearch={this.updateSearch} />
+					<CoursePanelWhole search={search} updateSearch={this.updateSearch} viewLabHandler={this.props.viewLabHandler}/>
 				</Grid.Row>
 			</Grid>
 		);
