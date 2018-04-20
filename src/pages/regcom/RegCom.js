@@ -50,7 +50,7 @@ class RegCom extends Component {
             <Grid.Column width={10}>
               <Grid.Row>
                 <Header as="h1" textAlign="left">
-                  Course Offering
+                  Teaching Load
                 </Header>
               </Grid.Row>
               <Grid.Row>
