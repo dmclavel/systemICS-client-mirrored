@@ -5,7 +5,6 @@ import {
   Image,
   Dropdown,
   Button,
-  Segment,
   Header,
   Message,
   Label,
@@ -23,7 +22,7 @@ import img from './kobe.jpg';
 // Modal inlineStyle to fix centering
 const inlineStyle = {
   modal: {
-    marginTop: '10vh',
+    marginTop: '5vh',
     marginLeft: 'auto',
     marginRight: 'auto'
   }
@@ -58,14 +57,27 @@ class EditLoadModal extends Component {
     // For the client to be aware of the changes in the database
     socket.on('update_alert', update => {
       // These are all the emits that needs to be redone when update is available
-      socket.emit('view_available_courses_with_unassigned_sections', {});
-      socket.emit('search_sections_of_specific_faculty', {
-        emp_no
+      socket.emit('view_courses', {
+        active: true,
+        petitioned: true,
+        additional: true,
+        unassignedOnly: true
+      });
+      socket.emit('view_sections', {
+        emp_no,
+        active: true,
+        petitioned: true,
+        additional: true
       });
     });
     // Retrieve courses with unlinked sections
-    socket.emit('view_available_courses_with_unassigned_sections', {});
-    socket.on('view_available_courses_with_unassigned_sections', courses => {
+    socket.emit('view_courses', {
+      active: true,
+      petitioned: true,
+      additional: true,
+      unassignedOnly: true
+    });
+    socket.on('view_courses', courses => {
       let codesAndDescription = [];
       // For each courses, concat course name with course id e.g. CMSC 22 - Intro to OOP
       courses.forEach((course, index) => {
@@ -83,10 +95,13 @@ class EditLoadModal extends Component {
       });
     });
     // For a specific faculty show their assigned courses
-    socket.emit('search_sections_of_specific_faculty', {
-      emp_no
+    socket.emit('view_sections', {
+      emp_no,
+      active: true,
+      petitioned: true,
+      additional: true
     });
-    socket.on('search_sections_of_specific_faculty', courses => {
+    socket.on('view_sections', courses => {
       this.setState({
         courses
       });
@@ -129,7 +144,7 @@ class EditLoadModal extends Component {
         if (index !== this.state.selectedCourseOfferings.length - 1) {
           details += ',';
         }
-        socket.emit('assign_section', {
+        socket.emit('modify_section_2', {
           emp_no: this.props.emp_no,
           course_offering_id: value.course_offering_id
         });
@@ -159,6 +174,14 @@ class EditLoadModal extends Component {
     socket.emit('search_all_unassigned_sections_via_course_id', {
       course_id: value.course_id
     });
+
+    // socket.emit('view_sections', {
+    //   course_id: value.course_id,
+    //   unassignedOnly: true,
+    //   acad_year:
+    //   semester:
+    // });
+
     socket.on(
       'search_all_unassigned_sections_via_course_id',
       course_offerings => {
@@ -267,6 +290,9 @@ class EditLoadModal extends Component {
       });
     }
   }
+  alertMessage(message, details) {
+    this.setState({ message, details });
+  }
   render() {
     const { open } = this.state;
     const { button, name, teaching_load, email_add } = this.props;
@@ -297,7 +323,7 @@ class EditLoadModal extends Component {
         <Modal.Header>
           <Grid centered={true}>
             <Grid.Row fluid="true">
-              <Grid.Column width={16}>
+              <Grid.Column width={10}>
                 <div>
                   <Image
                     verticalAlign="middle"
@@ -376,69 +402,73 @@ class EditLoadModal extends Component {
             <Grid.Row>
               {!!courses.length && (
                 <Grid.Column width={16}>
-                  <Segment>
-                    <Label as="a" color="orange" ribbon="right">
-                      Total: {teaching_load} units
-                    </Label>
-                    <div
-                      style={{
-                        padding: '20px',
-                        overflow: 'auto',
-                        maxHeight: 200
-                      }}
-                    >
-                      <Table textAlign="center">
-                        <Table.Header>
-                          <Table.Row>
-                            <Table.HeaderCell>Course Code</Table.HeaderCell>
-                            <Table.HeaderCell>Section</Table.HeaderCell>
-                            <Table.HeaderCell>Room</Table.HeaderCell>
-                            <Table.HeaderCell>Day</Table.HeaderCell>
-                            <Table.HeaderCell>Time</Table.HeaderCell>
-                            <Table.HeaderCell>Students</Table.HeaderCell>
-                          </Table.Row>
-                        </Table.Header>
-
-                        <Table.Body>
-                          {courses.map((course, index) => {
-                            const {
-                              course_offering_id,
-                              no_of_students,
-                              section,
-                              course_name,
-                              subject,
-                              room,
-                              day,
-                              time_start,
-                              time_end
-                            } = course;
-                            return (
-                              <Course
-                                key={index}
-                                course_offering_id={course_offering_id}
-                                no_of_students={no_of_students}
-                                section={section}
-                                course_name={course_name}
-                                subject={subject}
-                                room={room}
-                                day={day}
-                                time={`${convertToGeneralTime(
-                                  time_start
-                                )}-${convertToGeneralTime(time_end)}`}
-                              />
-                            );
-                          })}
-                        </Table.Body>
-                      </Table>
-                    </div>
-                  </Segment>
+                  <Table className="remove-margin" textAlign="center">
+                    <Table.Header textAlign="center">
+                      <Table.Row>
+                        <Table.HeaderCell width={3}>
+                          Course Code
+                        </Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Section</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Room</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Day</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Time</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>Students</Table.HeaderCell>
+                        <Table.HeaderCell width={2}>
+                          <Label
+                            as="a"
+                            color="orange"
+                            ribbon="right"
+                            size="medium"
+                          >
+                            Total: {teaching_load} units
+                          </Label>
+                        </Table.HeaderCell>
+                      </Table.Row>
+                    </Table.Header>
+                  </Table>
+                  <div className="courses-table">
+                    <Table textAlign="center">
+                      <Table.Body>
+                        {courses.map((course, index) => {
+                          const {
+                            course_offering_id,
+                            no_of_students,
+                            section,
+                            course_name,
+                            subject,
+                            room,
+                            day,
+                            time_start,
+                            time_end
+                          } = course;
+                          return (
+                            <Course
+                              key={index}
+                              course_offering_id={course_offering_id}
+                              no_of_students={no_of_students}
+                              section={section}
+                              course_name={course_name}
+                              subject={subject}
+                              room={room}
+                              day={day}
+                              alertMessage={this.alertMessage}
+                              name={name}
+                              time={`${convertToGeneralTime(
+                                time_start
+                              )}-${convertToGeneralTime(time_end)}`}
+                            />
+                          );
+                        })}
+                      </Table.Body>
+                    </Table>
+                  </div>
                 </Grid.Column>
               )}
             </Grid.Row>
           </Grid>
         </Modal.Content>
         <Modal.Actions>
-          <Button icon="check" content="All Done" onClick={this.close} />
+          <Button icon="check" content="All Done" onClick={this.handleClose} />
         </Modal.Actions>
       </Modal>
     );

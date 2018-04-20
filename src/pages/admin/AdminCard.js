@@ -68,21 +68,15 @@ class AdminCard extends Component {
           </Header>
         </Grid.Row>
 
-        <Grid.Row width={16}>
-          <Grid.Column width={9}>
-            <Input
-              placeholder="Search faculty"
-              icon="search"
-              iconPosition="left"
-              fluid="true"
-              onChange={this.handleSearch}
-            />
-          </Grid.Column>
-          <Grid.Column width={7}>
-            <AddCourseModal />
-            <AddLectureSection fetchCourse={this.fetchCourse} data={coursesX} />
-          </Grid.Column>
-        </Grid.Row>
+				<Grid.Row width={16}>
+					<Grid.Column width={9}>
+						<Input fluid icon="search" width={12} />
+					</Grid.Column>
+					<Grid.Column width={7}>
+						<AddCourseModal fetchCourse={this.fetchCourse} />
+						<AddLectureSection fetchCourse={this.fetchCourse} />
+					</Grid.Column>
+				</Grid.Row>
 
         <Table textAlign="center">
           <Table.Header>
