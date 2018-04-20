@@ -35,6 +35,7 @@ class StudentDelete extends Component {
     socket.on('remove_student', returnValueFromServer => {
       console.log(returnValueFromServer);
     });
+    this.props.fetchData();
     //function call to close the modal
     this.handleCancel();
   }
@@ -59,7 +60,7 @@ class StudentDelete extends Component {
                           <Button positive content="Cancel" floated="right" positive onClick={this.handleCancel}/ >
                         </Form>
                     </Grid.Row>
-                      
+
                 </Segment>
               </Container>
             </Modal.Content>
