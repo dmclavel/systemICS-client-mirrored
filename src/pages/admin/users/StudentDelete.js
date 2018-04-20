@@ -17,13 +17,19 @@ class StudentDelete extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+      address: 'https://sleepy-falls-95372.herokuapp.com/'
     };
     autobind(this);
   }
 
+
   handleDelete = (e) => {
-    alert("Deleting student....");
+    const socket = socketIOClient(this.state.address); //establish connection to the server
+    // listens on an endpoint and executes fallback function
+    socket.emit('remove_student', {student_number: this.props.student_number}); //send data to 'login' endpoint in server
+    socket.on('remove_student', returnValueFromServer => {
+      console.log(returnValueFromServer);
+    });
   }
 
   handleCancel = (e) => {
