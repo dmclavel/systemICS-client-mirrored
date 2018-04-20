@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Grid, Segment, Header, Dropdown, Container, Checkbox , Popup, Divider} from 'semantic-ui-react';
+import { Button, Modal, Form, Grid, Segment, Header, Dropdown, Container, Checkbox , Message, Divider} from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
@@ -17,6 +17,10 @@ class EditCourse extends Component {
 		super(props)
 
 		this.state = {
+			message: '',
+			negative: false,
+			positive: false,
+			hidden: true,
 			open: false,
 			M:this.props.day.includes("M"),T:this.props.day.includes("T"),W:this.props.day.includes("W"),Th:this.props.day.includes("Th"),F:this.props.day.includes("F"),
 			statusOptions: [
@@ -144,17 +148,18 @@ class EditCourse extends Component {
 			day:days,
 			section:section,
 			section_type:section_type,
-			max_capacity:max_capacity,
+			max_capacity:parseInt(max_capacity),
 			emp_no:emp_no,
 			status: status,
 			course_offering_id:course_offering_id
 		};
 		if ((parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity))) {
+			console.log(data);
 			socket.emit("modify_section_2", data);
 			this.props.fetchCourse();
-			this.close();
+			this.setState({message: 'Successfully edited section information!',hidden:false, positive: true, negative: false});
 		} else if (parseInt(this.state.no_of_students) > parseInt(this.state.max_capacity)) {
-			this.setState({ error: 'Number of students allowed is beyond the maximum capacity!' });
+			this.setState({message: 'Number of students allowed is beyond the maximum capacity!',hidden:false, positive: false, negative: true});
 		}
 	}
 
@@ -166,13 +171,17 @@ class EditCourse extends Component {
 
 	close = () =>
 		this.setState({
-			open:false
+			open:false,
+			message: '',
+			negative: false,
+			positive: false,
+			hidden: true
 	});
 
 
 
   render() {
-  	const{open, M,T,W,Th,F, statusOptions, emp_no, acad_year, semester, no_of_students, time_start, time_end, room, day, section, max_capacity, course_title, status} = this.state
+  	const{open, message, positive, negative, hidden, M,T,W,Th,F, statusOptions, emp_no, acad_year, semester, no_of_students, time_start, time_end, room, day, section, max_capacity, course_title, status} = this.state
     return(
 
        <Modal size='large' style={inlineStyle.modal} open={open} onOpen={this.open} onClose={this.close} trigger={ <Button icon="pencil" color="teal" /> } basic>
@@ -233,7 +242,11 @@ class EditCourse extends Component {
 			            			</Form.Field>
 											</div>
 										</Form.Group>
+
 									</Form>
+									<Message negative={negative} positive={positive} hidden={hidden}>
+								  	  <Message.Header>{message}</Message.Header>
+								  	</Message>
 									<Divider/>
 									<Form>
 										<Button content="Edit" floated="right" positive onClick={this.handleSubmit}/ >
