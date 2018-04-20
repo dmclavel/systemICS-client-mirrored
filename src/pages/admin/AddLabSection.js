@@ -5,6 +5,7 @@ import {
 	Form,
 	Grid,
 	Segment,
+	Divider,
 	Header,
 	Container,
 	Divider
@@ -220,8 +221,8 @@ class AddCourseLab extends Component {
 			no_of_students: '',
 			course_id: '',
 			course_name: '',
-			time_start: '',
-			time_end: '',
+			time_start: '7:00',
+			time_end: '19:00',
 			room: '',
 			day: '',
 			section: '',
