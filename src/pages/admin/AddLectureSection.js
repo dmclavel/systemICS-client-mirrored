@@ -44,7 +44,6 @@ const semesterOptions = [
 class AddLectureSection extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.data);
     this.state = {
       hidden: true,
       open: false,
@@ -79,7 +78,6 @@ class AddLectureSection extends Component {
   }
   componentWillReceiveProps(nextProps) {
     this.setState({ existingCourses: nextProps.data });
-    console.log('test');
   }
   dayFormat() {
     const { M, T, W, Th, F } = this.state;
@@ -114,8 +112,6 @@ class AddLectureSection extends Component {
         this.setState({ day: 'F' });
       } else days = days + '-F';
     }
-
-    console.log('Days ' + days);
     return days;
   }
 
@@ -129,7 +125,6 @@ class AddLectureSection extends Component {
   };
 
   handleSubmit = () => {
-    console.log(this.state.existingCourses);
     let days = this.dayFormat();
     const {
       section_type,
@@ -149,21 +144,20 @@ class AddLectureSection extends Component {
     const socket = socketIOClient(this.state.address);
     const data = {
       email: 'pvgrubat@up.edu.ph',
-      acad_year: acad_year,
-      semester: semester,
-      time_start: time_start,
-      time_end: time_end,
-      room: room,
-      no_of_students: no_of_students,
+      acad_year,
+      semester,
+      time_start,
+      time_end,
+      room,
+      no_of_students,
       day: days,
-      section: section,
-      section_type: section_type,
-      max_capacity: max_capacity,
-      emp_no: emp_no,
-      course_id: course_id,
-      unit: unit
+      section,
+      section_type,
+      max_capacity,
+      emp_no,
+      course_id,
+      unit
     };
-    console.log(data);
     let conflict = false;
     let conflictingRooms = [];
     let details = '';
@@ -172,14 +166,12 @@ class AddLectureSection extends Component {
         this.state.existingCourses[i].room.replace(/\s/g, '').toUpperCase() ===
         this.state.room.replace(/\s/g, '').toUpperCase()
       ) {
-        console.log('lol');
         // If room is conflict, we will check if their time is also conflict.
         const argc = {
           time_start,
           time_end,
           day: this.dayFormat()
         };
-        console.log(argc);
         if (isScheduleConflict(this.state.existingCourses[i], argc)) {
           conflict = true;
           const {
@@ -203,9 +195,9 @@ class AddLectureSection extends Component {
       room === '' ||
       time_start === '' ||
       time_end === '' ||
-      max_capacity === ''
+      max_capacity === '' ||
+      days === ''
     ) {
-      console.log('enlo');
       this.setState({ hidden: false });
       this.setState({
         message: 'Please complete all the required fields!',
@@ -220,9 +212,7 @@ class AddLectureSection extends Component {
         negative: true,
         hidden: false
       });
-      console.log(details);
     } else {
-      console.log(data);
       this.setState({ hidden: false });
       this.setState({
         message: 'Successfully added a new lecture section!',
@@ -279,7 +269,6 @@ class AddLectureSection extends Component {
     const state = this.state;
     state.course_id = data.value;
     this.setState(state);
-    console.log(this.state.course_id);
   }
 
   render() {
@@ -364,7 +353,6 @@ class AddLectureSection extends Component {
                   <Form.Input
                     type="time"
                     label="Time end"
-                    Input
                     placeholder="Time end"
                     name="time_end"
                     width={4}

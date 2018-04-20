@@ -97,9 +97,10 @@ class AdminCard extends Component {
           </Table.Header>
 
           <Table.Body>
-            {coursesX.map(course => {
+            {coursesX.map((course, index) => {
               return (
                 <CourseRow
+                  key={index}
                   fetch_Course={this.fetchCourse}
                   description={course.description}
                   course={course.course_id}
