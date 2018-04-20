@@ -17,9 +17,14 @@ class StudentDelete extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: 'https://sleepy-falls-95372.herokuapp.com/'
+      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      modalOpen: false
     };
     autobind(this);
+  }
+
+  handleOpen = (e) => {
+    this.setState({modalOpen: true});
   }
 
 
@@ -30,14 +35,18 @@ class StudentDelete extends Component {
     socket.on('remove_student', returnValueFromServer => {
       console.log(returnValueFromServer);
     });
+    //function call to close the modal
+    this.handleCancel();
   }
 
   handleCancel = (e) => {
-    alert("Cancelling deletion..");
+    //closes the modal
+    this.setState({modalOpen: false});
   }
   render() {
     return(
-       <Modal size='large' style={inlineStyle.modal} trigger={<Button icon="x" negative/>} basic>
+       <Modal size='large' style={inlineStyle.modal} trigger={<Button icon="x" negative onClick={this.handleOpen} open={this.state.modalOpen}
+        onClose={this.handleCancel}/>} basic>
             <Modal.Content>
               <Container>
                 <Segment padded="very">
