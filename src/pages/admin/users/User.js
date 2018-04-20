@@ -7,9 +7,9 @@ import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
 class User extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
-		this.state={
+		this.state = {
 			address: 'https://sleepy-falls-95372.herokuapp.com/',
 			activeItem: 'Student',
       dummyStudents: [],

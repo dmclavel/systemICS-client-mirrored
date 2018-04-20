@@ -11,13 +11,16 @@ class Admin extends Component {
       <div className="Admin">
         <Grid>
           <Grid.Row>
-            <NavbarIn user={this.props.user} accessLvl={this.props.accessLvl} active="manage" />
-            <ManageHeader accessLvl={this.props.accessLvl} user={this.props.user}/>
+            <NavbarIn user={this.props.user} active="manage" />
+            <ManageHeader
+              user={this.props.user}
+              accessLvl={this.props.accessLvl}
+            />
           </Grid.Row>
           <Grid.Row>
             <Grid.Column width={1} />
             <Grid.Column width={4}>
-              <Sidebar />
+              <Sidebar showSemester={true} />
             </Grid.Column>
             <Grid.Column width={10}>
               <AdminCard />

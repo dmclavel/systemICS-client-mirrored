@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
-import {List, Card} from 'semantic-ui-react';
+import { Card, Header } from 'semantic-ui-react';
 import './Faculty.css';
-
-/*
-If you wish to import other JS files, do it here.
-*/
 
 class Advisee extends Component {
   render() {
-    return(
-      <Card fluid id='cardMargin'>
-         <List>
-            <List.Item>Name: {this.props.name}</List.Item>
-            <List.Item>Student number: {this.props.student_number}</List.Item>
-            <List.Item>Email: {this.props.email}</List.Item>
-            <List.Item>Curriculum: {this.props.curriculum}</List.Item>
-         </List>
+    return (
+      <Card fluid id="cardMargin">
+        <Header
+          as="h4"
+          content={this.props.name}
+          subheader={this.props.student_number}
+        />
+        <Header
+          as="h6"
+          className="remove-margin"
+          icon="mail"
+          content={this.props.email}
+          size="tiny"
+        />
+        <Header
+          className="remove-margin"
+          as="h6"
+          icon="calendar"
+          content={this.props.curriculum}
+          size="tiny"
+        />
       </Card>
     );
   }
