@@ -12,8 +12,8 @@ const dummyStudents = [
 ]
 
 const dummyFaculty = [
-  { name: 'Amber', email: 'amber@up.edu.ph', status: 'faculty', id: '12317890' },
-  { name: 'Ben', email: 'ben@up.edu.ph', status: 'faculty', id: '12379834' },
+  { name: 'Amber', empno: '12317890', email_add: 'amber@up.edu.ph', status: 'RegComm'},
+  { name: 'Ben', empno: '987456123', email_add: 'ben@up.edu.ph', status: 'Faculty'},
 ]
 class User extends Component {
 	constructor(props){
@@ -106,7 +106,7 @@ class User extends Component {
       		</Grid.Row>
       		<Grid.Row>
       			{
-      				this.state.activeItem == 'Student'? <StudentTable data={dummyStudents}/>: <FacultyTable data={dummyFaculty}/>
+      				this.state.activeItem == 'Student'? <StudentTable data={dummyStudents}/>: <FacultyTable data={this.state.facultyData}/>
       			}
 				
       			
