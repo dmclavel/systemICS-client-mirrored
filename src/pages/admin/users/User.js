@@ -39,34 +39,22 @@ class User extends Component {
 
 	handleSearch = (query) => {
 		if(query.length != 0){
-			if (this.state.activeItem == 'Student'){
-        //filter the dummyStudent
-        this.setState(
-        {
-          dummyStudents: this.state.dummyStudents.filter( (user) =>{
-            if(user.email_add.toLowerCase().includes(query.toLowerCase()) ||  user.name.toLowerCase().includes(query.toLowerCase()) || user.student_number.toLowerCase().includes(query.toLowerCase())){
-              return true;
-            }else{
-              return false;
-            }
-          }
-          )
-        }
-      );
+  		  if (this.state.activeItem == 'Student'){
+          this.setState({dummyStudents: this.state.dummyStudents.filter((student)=>{
+              if (student.name.toLowerCase().includes(query.toLowerCase()) || student.email_add.toLowerCase().includes(query.toLowerCase()) ){
+                return true;
+              }else{
+                return false;
+              }
+          })});
       }else{
-        //filter the dummyFaculty
-        this.setState(
-        {
-          dummyFaculty: this.state.dummyFaculty.filter( (user) =>{
-            if(user.email_add.toLowerCase().includes(query.toLowerCase()) || user.name.toLowerCase().includes(query.toLowerCase()) || user.emp_no.toLowerCase().includes(query.toLowerCase())){
-              return true;
-            }else{
-              return false;
-            }
-          }
-          )
-        }
-      );
+        this.setState({dummyFaculty: this.state.dummyFaculty.filter((faculty)=>{
+              if (faculty.name.toLowerCase().includes(query.toLowerCase()) || faculty.email_add.toLowerCase().includes(query.toLowerCase()) ){
+                return true;
+              }else{
+                return false;
+              }
+          })});
       }
 		}else{
       if (this.state.activeItem == 'Student'){
@@ -97,7 +85,7 @@ class User extends Component {
 		return (
 			<Grid>
 			<Grid.Row>
-				<SearchCard fluid={true} handleSearch={this.handleSearch} placeholder="name, email, or id number"/>
+				<SearchCard fluid={true} handleSearch={this.handleSearch} placeholder="name or email"/>
 			</Grid.Row>
 			<Grid.Row>
 				<Menu fluid widths={2}>
