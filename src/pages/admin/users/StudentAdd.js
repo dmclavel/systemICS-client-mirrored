@@ -19,7 +19,9 @@ class StudentAdd extends Component {
       name: '',
       email_add: '',
       curriculum: '',
-      status: ''
+      status: '',
+      modalOpen: false,
+      address: 'https://sleepy-falls-95372.herokuapp.com/'
     };
     autobind(this);
   }
@@ -41,13 +43,27 @@ class StudentAdd extends Component {
   }
 
   handleSubmit = (e) => {
+    const socket = socketIOClient(this.state.address); //establish connection to the server
+    socket.emit('add_student', {name: this.state.name, student_number: this.state.student_number, status: this.state.state, curriculum: this.state.curriculum}); //send data to 'login' endpoint in server
+    socket.on('add_student', returnValueFromServer => {
+      console.log(returnValueFromServer);
+    });
+    this.handleClose();
+  }
 
+  handleClose = (e) => {
+    this.setState({modalOpen: false});
+  }
+
+  handleOpen = (e) => {
+    this.setState({modalOpen: true});
   }
 
 
   render() {
     return(
-       <Modal size='large' style={inlineStyle.modal} trigger={<Button positive> Add Student </Button>} basic>
+       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button positive onClick={this.handleOpen} open={this.state.modalOpen}
+        onClose={this.handleClose}> Add Student </Button>} basic>
             <Modal.Content>
               <Container>
                 <Segment padded="very">
@@ -66,8 +82,8 @@ class StudentAdd extends Component {
                     </h2>
                       <Grid.Row>
                         <Form>
-                          <Button content="Confirm Changes" floated="right" positive onClick={this.handleSubmit}/ >
-                          <Button content="Cancel" floated="right" negative onClick={this.handleSubmit}/ >
+                          <Button content="Add Student" floated="right" positive onClick={this.handleSubmit}/ >
+                          <Button content="Cancel" floated="right" negative onClick={this.handleClose}/ >
                         </Form>
                     </Grid.Row>
                       
