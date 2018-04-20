@@ -24,7 +24,8 @@ class User extends Component {
         { name: 'Ben', email: 'ben@up.edu.ph', status: 'faculty', id: '12379834' },
       ],
       origStudent: [],
-      origFaculty: []
+      origFaculty: [],
+      queryString: ''
 		}
 		autobind(this);
 	}
@@ -53,7 +54,7 @@ class User extends Component {
         this.setState(
         {
           dummyStudents: this.state.dummyStudents.filter( (user) =>{
-            if( user.name.toLowerCase().includes(query.toLowerCase()) || user.student_number.toLowerCase().includes(query.toLowerCase())){
+            if(user.email_add.toLowerCase().includes(query.toLowerCase()) ||  user.name.toLowerCase().includes(query.toLowerCase()) || user.student_number.toLowerCase().includes(query.toLowerCase())){
               return true;
             }else{
               return false;
@@ -67,7 +68,7 @@ class User extends Component {
         this.setState(
         {
           dummyFaculty: this.state.dummyFaculty.filter( (user) =>{
-            if( user.name.toLowerCase().includes(query.toLowerCase()) || user.id.toLowerCase().includes(query.toLowerCase())){
+            if(user.email.toLowerCase().includes(query.toLowerCase()) || user.name.toLowerCase().includes(query.toLowerCase()) || user.id.toLowerCase().includes(query.toLowerCase())){
               return true;
             }else{
               return false;
