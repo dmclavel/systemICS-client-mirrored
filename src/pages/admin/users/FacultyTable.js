@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Grid, Button, Popup, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import './Table.css'
+import EditFaculty from './EditFaculty';
 
 class FacultyTable extends Component {
   constructor(props) {
@@ -44,16 +45,14 @@ class FacultyTable extends Component {
                     <Grid.Row centered columns={2}>
                       <Grid.Column>
                         <Popup
-                          trigger={<Button icon="edit" positive/>}
-                          content="Edit Faculty"
-                        />
-                      </Grid.Column>
-                      <Grid.Column>
-                        <Popup
                           trigger={<Button icon="delete" negative />}
                           content="Delete Faculty"
                         />
                       </Grid.Column>
+                      <Grid.Column>
+                        <EditFaculty name={user.name}/>
+                      </Grid.Column>
+                      
                     </Grid.Row>
                   </Grid>
                 </Table.Cell>
