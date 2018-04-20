@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Button,
-  Modal,
-  Form,
-  Grid,
-  Header,
-  Dropdown,
-  Message
-} from 'semantic-ui-react';
+import { Button, Modal, Form, Grid, Message } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import {
@@ -16,7 +8,7 @@ import {
 } from '../../utils/TimeUtilities';
 const inlineStyle = {
   modal: {
-    marginTop: '0px !important',
+    marginTop: '23vh',
     marginLeft: 'auto',
     marginRight: 'auto',
     color: 'black'
@@ -71,7 +63,6 @@ class AddLectureSection extends Component {
       section: '',
       unit: '',
       max_capacity: '',
-      error: '',
       details: ''
     };
     autobind(this);
@@ -138,8 +129,7 @@ class AddLectureSection extends Component {
       section,
       unit,
       max_capacity,
-      semester,
-      existingCourses
+      semester
     } = this.state;
     const socket = socketIOClient(this.state.address);
     const data = {
@@ -159,10 +149,10 @@ class AddLectureSection extends Component {
       unit
     };
     let conflict = false;
-    let conflictingRooms = [];
     let details = '';
     for (let i = 0; i < this.state.existingCourses.length; i++) {
       if (
+        // Replace the tabs and spaces and uppercase the room provided to compare them
         this.state.existingCourses[i].room.replace(/\s/g, '').toUpperCase() ===
         this.state.room.replace(/\s/g, '').toUpperCase()
       ) {
@@ -182,7 +172,7 @@ class AddLectureSection extends Component {
             time_end: t_end,
             room: _room
           } = this.state.existingCourses[i];
-          details += `Data is conflicting with ${_name} ${_section} - ${convertToGeneralTime(
+          details += `Data is conflicting with ${_name} ${_section} - ${_day} ${convertToGeneralTime(
             t_start
           )}-${convertToGeneralTime(t_end)}, ${_room}`;
           break;
@@ -198,11 +188,11 @@ class AddLectureSection extends Component {
       max_capacity === '' ||
       days === ''
     ) {
-      this.setState({ hidden: false });
       this.setState({
         message: 'Please complete all the required fields!',
         positive: false,
-        negative: true
+        negative: true,
+        hidden: false
       });
     } else if (conflict) {
       this.setState({
@@ -213,11 +203,11 @@ class AddLectureSection extends Component {
         hidden: false
       });
     } else {
-      this.setState({ hidden: false });
       this.setState({
         message: 'Successfully added a new lecture section!',
         positive: true,
-        negative: false
+        negative: false,
+        hidden: false
       });
       socket.emit('create_section_2', data);
       this.props.fetchCourse();
@@ -278,7 +268,6 @@ class AddLectureSection extends Component {
       positive,
       message,
       hidden,
-      error,
       M,
       T,
       W,
