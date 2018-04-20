@@ -20,6 +20,7 @@ import Section from './homepage/Section';
 import NotFound from './components/NotFound';
 import Users from './admin/users/Users';
 import GeneratePDF from './generate-pdf/GeneratePDF';
+import autobind from 'react-autobind';
 
 const authenticator = {
 	user: 3,
@@ -57,8 +58,13 @@ class Routes extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			profile: {}
+			profile: {},
+			labSection: 0
 		};
+		autobind(this);
+	}
+	handleViewLabs = (section) => {
+		this.setState({labSection: section});
 	}
 
 	render() {
@@ -66,15 +72,15 @@ class Routes extends Component {
 		if (this.props.accessLvl === 0)
 			return (
 				<Switch>
-					<Route exact path="/" component={Homepage} />
+					<Route exact path="/" component={ () => <Homepage viewLabHandler={this.handleViewLabs} /> } />
 					<Route exact path="/faculty" component={FacultyTab} />
 					<Route
 						exact
 						path="/login"
 						component={() => <Login logInHandler={this.props.logInHandler} />}
 					/>
-					<Route exact path="/classes" component={Classes} />
-					<Route exact path="/section/:_id" component={Section} />
+				<Route exact path="/classes" component={ () => <Classes viewLabHandler={this.handleViewLabs} />} />
+					<Route exact path="/section/:_id" component={  Section } />
 					<Route path="*" component={NotFound} />
 				</Switch>
 			);
