@@ -62,7 +62,7 @@ class StudentEdit extends Component {
   }
   render() {
     return(
-       <Modal size='large' style={inlineStyle.modal} trigger={<Button icon="pencil" positive/>} basic>
+       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button icon="pencil" positive/>} basic onClose={this.handleClose} onOpen={this.handleOpen} open={this.state.modalOpen}>
             <Modal.Content>
               <Container>
                 <Segment padded="very">
@@ -82,7 +82,9 @@ class StudentEdit extends Component {
                       <Grid.Row>
                         <Form>
                           <Button content="Confirm Changes" floated="right" positive onClick={this.handleSubmit}/ >
-                          <Button content="Cancel" floated="right" negative onClick={this.handleClose}/ >
+                          <Modal.Actions>
+                            <Button content="Cancel" floated="right" negative onClick={this.handleClose}/ >
+                          </Modal.Actions>
                         </Form>
                     </Grid.Row>
                       

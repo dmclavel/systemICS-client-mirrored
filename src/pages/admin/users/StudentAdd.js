@@ -68,8 +68,7 @@ class StudentAdd extends Component {
 
   render() {
     return(
-       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button positive onClick={this.handleOpen} open={this.state.modalOpen}
-        onClose={this.handleClose}> Add Student </Button>} basic>
+       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button positive>Add Student</Button>} basic onClose={this.handleClose} onOpen={this.handleOpen} open={this.state.modalOpen}>
             <Modal.Content>
               <Container>
                 <Segment padded="very">
