@@ -37,17 +37,17 @@ class StudentDelete extends Component {
     });
     this.props.fetchData();
     //function call to close the modal
-    this.handleCancel();
+    this.handleClose();
   }
 
-  handleCancel = (e) => {
+  handleClose = (e) => {
     //closes the modal
     this.setState({modalOpen: false});
   }
   render() {
     return(
-       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button icon="x" negative onClick={this.handleOpen} open={this.state.modalOpen}
-        onClose={this.handleCancel}/>} basic>
+       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button icon="x" negative 
+        />} onClose={this.handleClose} onOpen={this.handleOpen} open={this.state.modalOpen} basic>
             <Modal.Content>
               <Container>
                 <Segment padded="very">
@@ -57,7 +57,7 @@ class StudentDelete extends Component {
                       <Grid.Row>
                         <Form>
                           <Button negative content="Delete" floated="right" positive onClick={this.handleDelete}/ >
-                          <Button positive content="Cancel" floated="right" positive onClick={this.handleCancel}/ >
+                          <Button positive content="Cancel" floated="right" positive onClick={this.handleClose} onOpen={this.handleOpen}/ >
                         </Form>
                     </Grid.Row>
 
