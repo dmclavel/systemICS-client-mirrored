@@ -1,0 +1,13 @@
+.admin-card-main {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.admin-card-input {
+	width: 50% !important;
+	float: left;
+}
+
+.admin-card-header {
+	margin-bottom: 15px !important;
+}
