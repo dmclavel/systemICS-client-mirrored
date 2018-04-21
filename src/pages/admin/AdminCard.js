@@ -68,17 +68,17 @@ class AdminCard extends Component {
           </Header>
         </Grid.Row>
 
-				<Grid.Row width={16}>
-					<Grid.Column width={9}>
-						<Input fluid icon="search" width={12} />
-					</Grid.Column>
-					<Grid.Column width={7}>
-						<AddCourseModal fetchCourse={this.fetchCourse} />
-						<AddLectureSection fetchCourse={this.fetchCourse} />
-					</Grid.Column>
-				</Grid.Row>
+        <Grid.Row width={16}>
+          <Grid.Column width={9}>
+            <Input fluid icon="search" width={12} />
+          </Grid.Column>
+          <Grid.Column width={7}>
+            <AddCourseModal fetchCourse={this.fetchCourse} />
+            <AddLectureSection fetchCourse={this.fetchCourse} />
+          </Grid.Column>
+        </Grid.Row>
 
-        <Table textAlign="center">
+        <Table textAlign="center" className="remove-padding">
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Course Code</Table.HeaderCell>
