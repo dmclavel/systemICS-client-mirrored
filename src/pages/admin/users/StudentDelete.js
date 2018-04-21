@@ -5,30 +5,62 @@ import autobind from 'react-autobind';
 
 const inlineStyle={
   modal :{
-    marginTop: '200px !important',
+    marginTop: '500px !important',
     marginLeft: 'auto',
     marginRight: 'auto',
     color: 'black'
 
   }
 };
+
 class StudentDelete extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      modalOpen: false
+    };
+    autobind(this);
+  }
+
+  handleOpen = (e) => {
+    this.setState({modalOpen: true});
+  }
+
+
+  handleDelete = (e) => {
+    const socket = socketIOClient(this.state.address); //establish connection to the server
+    // listens on an endpoint and executes fallback function
+    socket.emit('remove_student', {student_number: this.props.student_number}); //send data to 'login' endpoint in server
+    socket.on('remove_student', returnValueFromServer => {
+      console.log(returnValueFromServer);
+    });
+    this.props.fetchData();
+    //function call to close the modal
+    this.handleCancel();
+  }
+
+  handleCancel = (e) => {
+    //closes the modal
+    this.setState({modalOpen: false});
+  }
   render() {
     return(
-       <Modal size='large' style={inlineStyle.modal} trigger={<Button icon="x" negative/>} basic>
+       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button icon="x" negative onClick={this.handleOpen} open={this.state.modalOpen}
+        onClose={this.handleCancel}/>} basic>
             <Modal.Content>
               <Container>
                 <Segment padded="very">
                     <h2>
-                     Are you sure you want to delete?
+                     Are you sure you want to delete {this.props.name}?
                     </h2>
                       <Grid.Row>
                         <Form>
-                          <Button negative content="Delete" floated="right" positive onClick={this.handleSubmit}/ >
-                          <Button positive content="Cancel" floated="right" positive onClick={this.handleSubmit}/ >
+                          <Button negative content="Delete" floated="right" positive onClick={this.handleDelete}/ >
+                          <Button positive content="Cancel" floated="right" positive onClick={this.handleCancel}/ >
                         </Form>
                     </Grid.Row>
-                      
+
                 </Segment>
               </Container>
             </Modal.Content>
