@@ -4,6 +4,7 @@ import SearchCard from '../../../components/SearchCard';
 import StudentTable from './StudentTable';
 import FacultyTable from './FacultyTable';
 import StudentAdd from './StudentAdd';
+import AddFaculty from './AddFaculty';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
@@ -107,13 +108,6 @@ class User extends Component {
 		return (
 			<Grid>
 			<Grid.Row>
-				<SearchCard fluid handleSearch={this.handleSearch} placeholder="name or email"/>
-
-			</Grid.Row>
-			<Grid.Row fluid>
-				<StudentAdd fetchData={this.fetchStudents}/>
-			</Grid.Row>
-			<Grid.Row>
 				<Menu fluid widths={2}>
 			        <Menu.Item
 			          name='Student'
@@ -133,6 +127,16 @@ class User extends Component {
 
 	      		</Menu>
       		</Grid.Row>
+			<Grid.Row fluid>
+				<Grid.Column width={13}>
+					<SearchCard fluid handleSearch={this.handleSearch} placeholder="name or email"/>
+				</Grid.Column>
+				<Grid.Column width={3}>
+      			{ 
+      				this.state.activeItem == 'Student'? <StudentAdd floated="right" fetchData={this.fetchStudents}/>: <AddFaculty fetchData={this.fetchFaculty}/>
+      			}
+      			</Grid.Column>
+			</Grid.Row>
       		<Grid.Row>
       			{
       				this.state.activeItem == 'Student'? <StudentTable data={this.state.dummyStudents} fetchData={this.fetchStudents} />: <FacultyTable data={this.state.dummyFaculty} fetchData={this.fetchFaculty}/>
