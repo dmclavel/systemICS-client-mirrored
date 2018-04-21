@@ -20,6 +20,7 @@ class StudentAdd extends Component {
       email_add: '',
       curriculum: '',
       status: '',
+      student_number: '',
       modalOpen: false,
       address: 'https://sleepy-falls-95372.herokuapp.com/'
     };
@@ -28,6 +29,10 @@ class StudentAdd extends Component {
 
   handleName = (e) => {
     this.setState({name: e.target.value});
+  }
+
+  handleNumber = (e) => {
+    this.setState({student_number: e.target.value});
   }
 
   handleEmail = (e) => {
@@ -43,12 +48,12 @@ class StudentAdd extends Component {
   }
 
   handleSubmit = (e) => {
-    alert("name: " + this.state.name + "\nemail add: " + this.state.email_add + "\ncuriculum: " + this.state.curriculum + "\nstatus: " + this.state.status);
     const socket = socketIOClient(this.state.address); //establish connection to the server
-    socket.emit('add_student', {name: this.state.name, email_add: this.state.email_add, status: this.state.state, curriculum: this.state.curriculum}); //send data to 'login' endpoint in server
-    socket.on('add_student', returnValueFromServer => {
+    socket.emit('create_student', {student_number: this.state.student_number, name: this.state.name, email_add: this.state.email_add, status: this.state.status, curriculum: this.state.curriculum}); //send data to 'login' endpoint in server
+    socket.on('create_student', returnValueFromServer => {
       console.log(returnValueFromServer);
     });
+    this.props.fetchData();
     this.handleClose();
   }
 
@@ -69,6 +74,9 @@ class StudentAdd extends Component {
               <Container>
                 <Segment padded="very">
                     <Form>
+                      <Form.Group>
+                        <Form.Input fluid label='Student Number' placeholder='Name' onChange={this.handleNumber}/>
+                      </Form.Group>
                       <Form.Group widths='equal'>
                         <Form.Input fluid label='Name' placeholder='Name' onChange={this.handleName}/>
                         <Form.Input fluid label='Email address' placeholder='Email address' onChange={this.handleEmail}/>
