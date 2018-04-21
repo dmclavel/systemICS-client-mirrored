@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Grid, Button, Popup, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import StudentDelete from './StudentDelete';
+import StudentEdit from './StudentEdit';
 
 class StudentTable extends Component {
   constructor(props) {
@@ -23,8 +24,8 @@ class StudentTable extends Component {
             <Table.HeaderCell width={5}>Student Number</Table.HeaderCell>
             <Table.HeaderCell width={5}>Name</Table.HeaderCell>
             <Table.HeaderCell width={5}>Email</Table.HeaderCell>
-            <Table.HeaderCell width={5}> Curriculum </Table.HeaderCell>
-            <Table.HeaderCell width={2}>Status</Table.HeaderCell>
+            <Table.HeaderCell width={3}> Curriculum </Table.HeaderCell>
+            <Table.HeaderCell width={3}>Status</Table.HeaderCell>
             <Table.HeaderCell width={4}>Actions</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -37,17 +38,14 @@ class StudentTable extends Component {
                 <Table.Cell textAlign="center">{user.email_add}</Table.Cell>
                  <Table.Cell textAlign="center">{user.curriculum}</Table.Cell>
                 <Table.Cell> {user.status} </Table.Cell>
-                <Table.Cell> 
+                <Table.Cell>
                      <Grid>
                     <Grid.Row centered columns={3}>
                       <Grid.Column>
-                        <StudentDelete/>
+                        <StudentDelete name={user.name} student_number={user.student_number} email_add={user.email_add} curriculum={user.curriculum} status={user.status} fetchData={this.props.fetchData}/>
                       </Grid.Column>
                       <Grid.Column>
-                        <Popup
-                          trigger={<Button icon="pencil" positive />}
-                          content="Edit"
-                        />
+                        <StudentEdit name={user.name} student_number={user.student_number} email_add={user.email_add} curriculum={user.curriculum} status={user.status} fetchData={this.props.fetchData}/>
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
