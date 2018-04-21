@@ -107,16 +107,6 @@ class User extends Component {
 	render() {
 		return (
 			<Grid>
-			<Grid.Row fluid>
-				<Grid.Column width={13}>
-					<SearchCard fluid handleSearch={this.handleSearch} placeholder="name or email"/>
-				</Grid.Column>
-				<Grid.Column width={3}>
-      			{ 
-      				this.state.activeItem == 'Student'? <StudentAdd floated="right" fetchData={this.fetchStudents}/>: <AddFaculty fetchData={this.fetchFaculty}/>
-      			}
-      			</Grid.Column>
-			</Grid.Row>
 			<Grid.Row>
 				<Menu fluid widths={2}>
 			        <Menu.Item
@@ -137,6 +127,16 @@ class User extends Component {
 
 	      		</Menu>
       		</Grid.Row>
+			<Grid.Row fluid>
+				<Grid.Column width={13}>
+					<SearchCard fluid handleSearch={this.handleSearch} placeholder="name or email"/>
+				</Grid.Column>
+				<Grid.Column width={3}>
+      			{ 
+      				this.state.activeItem == 'Student'? <StudentAdd floated="right" fetchData={this.fetchStudents}/>: <AddFaculty fetchData={this.fetchFaculty}/>
+      			}
+      			</Grid.Column>
+			</Grid.Row>
       		<Grid.Row>
       			{
       				this.state.activeItem == 'Student'? <StudentTable data={this.state.dummyStudents} fetchData={this.fetchStudents} />: <FacultyTable data={this.state.dummyFaculty} fetchData={this.fetchFaculty}/>
