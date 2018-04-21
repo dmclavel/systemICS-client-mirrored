@@ -108,7 +108,7 @@ class User extends Component {
 			<Grid>
 			<Grid.Row>
 				<SearchCard fluid handleSearch={this.handleSearch} placeholder="name or email"/>
-				
+
 			</Grid.Row>
 			<Grid.Row fluid>
 				<StudentAdd/>
@@ -124,8 +124,8 @@ class User extends Component {
 			        </Menu.Item>
 
 			        <Menu.Item
-			          name='reviews'
-			          active={this.state.activeItem === 'faculty'}
+			          name='Faculty'
+			          active={this.state.activeItem === 'Faculty'}
 			          onClick={this.handleItemClick}
 			        >
 			          Faculty
