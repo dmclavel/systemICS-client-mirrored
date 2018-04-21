@@ -20,6 +20,7 @@ class StudentEdit extends Component {
       email_add: this.props.email_add,
       curriculum: this.props.curriculum,
       status: this.props.status,
+      student_number: this.props.student_number,
       modalOpen: false,
       address: 'https://sleepy-falls-95372.herokuapp.com/'
     };
@@ -43,6 +44,7 @@ class StudentEdit extends Component {
   }
 
   handleSubmit = (e) => {
+    alert("student_number: " + this.state.student_number + "\nname: " + this.state.name + "\nemail add: " + this.state.email_add + "\ncuriculum: " + this.state.curriculum + "\nstatus: " + this.state.status);
     const socket = socketIOClient(this.state.address); //establish connection to the server
     socket.emit('modify_student', {student_number: this.state.student_number, name: this.state.name, email_add: this.state.email_add, status: this.state.status, curriculum: this.state.curriculum}); //send data to 'login' endpoint in server
     socket.on('modify_student', returnValueFromServer => {
