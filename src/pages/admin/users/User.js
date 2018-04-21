@@ -111,7 +111,7 @@ class User extends Component {
 
 			</Grid.Row>
 			<Grid.Row fluid>
-				<StudentAdd/>
+				<StudentAdd fetchData={this.fetchStudents}/>
 			</Grid.Row>
 			<Grid.Row>
 				<Menu fluid widths={2}>
