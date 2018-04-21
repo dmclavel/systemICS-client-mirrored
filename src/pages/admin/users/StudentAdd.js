@@ -43,6 +43,7 @@ class StudentAdd extends Component {
   }
 
   handleSubmit = (e) => {
+    alert("name: " + this.state.name + "\nemail add: " + this.state.email_add + "\ncuriculum: " + this.state.curriculum + "\nstatus: " + this.state.status);
     const socket = socketIOClient(this.state.address); //establish connection to the server
     socket.emit('add_student', {name: this.state.name, email_add: this.state.email_add, status: this.state.state, curriculum: this.state.curriculum}); //send data to 'login' endpoint in server
     socket.on('add_student', returnValueFromServer => {

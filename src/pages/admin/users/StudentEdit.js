@@ -20,6 +20,7 @@ class StudentEdit extends Component {
       email_add: this.props.email_add,
       curriculum: this.props.curriculum,
       status: this.props.status,
+      student_number: this.props.student_number,
       modalOpen: false,
       address: 'https://sleepy-falls-95372.herokuapp.com/'
     };
