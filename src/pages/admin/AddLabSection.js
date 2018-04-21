@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {
-  Button,
-  Modal,
-  Form,
-  Grid,
-  Segment,
-  Divider,
-  Header,
-  Container,
-  Message
+	Button,
+	Modal,
+	Form,
+	Grid,
+	Segment,
+	Divider,
+	Header,
+	Container,
+	Message
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
