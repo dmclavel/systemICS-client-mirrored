@@ -4,6 +4,7 @@ import SearchCard from '../../../components/SearchCard';
 import StudentTable from './StudentTable';
 import FacultyTable from './FacultyTable';
 import StudentAdd from './StudentAdd';
+import AddFaculty from './AddFaculty';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
@@ -111,7 +112,11 @@ class User extends Component {
 
 			</Grid.Row>
 			<Grid.Row fluid>
-				<StudentAdd fetchData={this.fetchStudents}/>
+				<Button.Group fluid>
+				    <StudentAdd fetchData={this.fetchStudents}/>
+				    <Button.Or />
+				    <AddFaculty fetchData={this.fetchFaculty}/>
+				  </Button.Group>
 			</Grid.Row>
 			<Grid.Row>
 				<Menu fluid widths={2}>
