@@ -109,41 +109,6 @@ class AddCourseLecture extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({ existingCourses: nextProps.data });
   }
-  dayFormat() {
-    const { M, T, W, Th, F } = this.state;
-    let days = '';
-    if (M) {
-      if (days === '') {
-        days = 'M';
-        this.setState({ day: 'M' });
-      }
-    }
-    if (T) {
-      if (days === '') {
-        days = 'T';
-        this.setState({ day: 'T' });
-      } else days = days + '-T';
-    }
-    if (W) {
-      if (days === '') {
-        days = 'W';
-        this.setState({ day: 'W' });
-      } else days = days + '-W';
-    }
-    if (Th) {
-      if (days === '') {
-        days = 'Th';
-        this.setState({ day: 'Th' });
-      } else days = days + '-Th';
-    }
-    if (F) {
-      if (days === '') {
-        days = 'F';
-        this.setState({ day: 'F' });
-      } else days = days + '-F';
-    }
-    return days;
-  }
 
 	clear = () => {
 			this.setState({
@@ -172,7 +137,46 @@ class AddCourseLecture extends Component {
 	close = () =>
 		this.setState({
 			open: false,
+			existingSections: [],
+			hidden: true,
+			negative: false,
+			positive: false,
+			existing: false,
+			M: false,
+			T: false,
+			W: false,
+			Th: false,
+			F: false,
+			course_id: '',
+			course_name: '',
+			time_start: '7:00',
+			time_end: '19:00',
+			room: '',
+			day: '',
+			section: '',
+			unit: '',
+			max_capacity: ''
 		});
+
+	open = () => {
+		this.setState({ open: true });
+
+		const socket = socketIOClient(this.state.address);
+		const data = { email: 'pvgrubat@up.edu.ph' };
+
+		socket.emit('view_existing_courses', data);
+		socket.on('view_existing_courses', course => {
+			const tempArray = [];
+			course.forEach(c => {
+				tempArray.push({
+					key: c.course_id,
+					value: c.course_id,
+					text: c.course_name
+				});
+			});
+			this.setState({ courses: tempArray });
+		});
+	};
 
   handleDayChange = (e, { content, active }) => {
     if (active === true) this.setState({ [content]: false });
@@ -275,6 +279,7 @@ class AddCourseLecture extends Component {
       });
       socket.emit('create_section_2', data);
       this.props.fetchCourse();
+			this.clear();
     }
   };
 
@@ -292,6 +297,8 @@ class AddCourseLecture extends Component {
 
 				if (!this.state.existing) {
 					this.setState({ [name]: value });
+				}else{
+					this.setState({ existing: false});
 				}
 			}
 			else {
@@ -304,11 +311,6 @@ class AddCourseLecture extends Component {
 					this.setState({ [name]: value });
 				}
 			}
-		};
-
-		handleDayChange = (e, { content, active }) => {
-			if (active === true) this.setState({ [content]: false });
-			else if (active === false) this.setState({ [content]: true });
 		};
 
 		fillExistingSections() {

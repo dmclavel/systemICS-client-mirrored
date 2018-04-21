@@ -144,7 +144,6 @@ class AddCourseLab extends Component {
     let id = this.props.courseLecID;
     let labSection = this.labSectionFormat();
     let lecSection = this.props.courseoffering;
-    console.log(lecSection);
     const {
       course_offering_id,
       lecture_id,
