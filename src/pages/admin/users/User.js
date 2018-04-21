@@ -107,16 +107,15 @@ class User extends Component {
 	render() {
 		return (
 			<Grid>
-			<Grid.Row>
-				<SearchCard fluid handleSearch={this.handleSearch} placeholder="name or email"/>
-
-			</Grid.Row>
 			<Grid.Row fluid>
-				<Button.Group fluid>
-				    <StudentAdd fetchData={this.fetchStudents}/>
-				    <Button.Or />
-				    <AddFaculty fetchData={this.fetchFaculty}/>
-				  </Button.Group>
+				<Grid.Column width={13}>
+					<SearchCard fluid handleSearch={this.handleSearch} placeholder="name or email"/>
+				</Grid.Column>
+				<Grid.Column width={3}>
+      			{ 
+      				this.state.activeItem == 'Student'? <StudentAdd floated="right" fetchData={this.fetchStudents}/>: <AddFaculty fetchData={this.fetchFaculty}/>
+      			}
+      			</Grid.Column>
 			</Grid.Row>
 			<Grid.Row>
 				<Menu fluid widths={2}>
