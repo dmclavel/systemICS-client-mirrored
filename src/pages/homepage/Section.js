@@ -46,8 +46,14 @@ class Section extends Component {
 	componentDidMount = () => {
 		const socket = socketIOClient(this.state.endpoint); //establish connection to the server
 		// listens on an endpoint and executes fallback function
-		socket.emit('view_all_lab_sections', 'dfesperanza@up.edu.ph'); //send data to 'login' endpoint in server
-		socket.on('view_all_lab_sections', returnValueFromServer => {
+
+		socket.emit('view_sections', {
+			active: true,
+			petitioned: false,
+			additional: false,
+			unassignedOnly: false
+		}); //send data to 'login' endpoint in server
+		socket.on('view_sections', returnValueFromServer => {
 			console.log(returnValueFromServer);
 			this.setState({ lab: returnValueFromServer });
 		});

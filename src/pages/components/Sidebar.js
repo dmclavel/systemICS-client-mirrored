@@ -12,20 +12,96 @@ import socketIOClient from 'socket.io-client';
 import DropFile from '../admin/DropFile';
 
 const items = [
-	{ key: 1, content: 'Hello hello hello' },
-	{ key: 2, content: 'Hello hello hello' },
-	{ key: 3, content: 'Hello hello hello' },
-	{ key: 4, content: 'Hello hello hello' },
-	{ key: 5, content: 'Hello hello hello' },
-	{ key: 6, content: 'Hello hello hello' },
-	{ key: 7, content: 'Hello hello hello' },
-	{ key: 8, content: 'Hello hello hello' },
-	{ key: 9, content: 'Hello hello hello' },
-	{ key: 10, content: 'Hello hello hello' },
-	{ key: 11, content: 'Hello hello hello' },
-	{ key: 12, content: 'Hello hello hello' },
-	{ key: 13, content: 'Hello hello hello' },
-	{ key: 14, content: 'Hello hello hello' }
+	{
+		key: 1,
+		content: (
+			<div>
+				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
+				<strong>{`Reginald Recario`}.</strong>
+			</div>
+		)
+	},
+	{
+		key: 2,
+		content: (
+			<div>
+				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
+				<strong>{`Reginald Recario`}.</strong>
+			</div>
+		)
+	},
+	{
+		key: 3,
+		content: (
+			<div>
+				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
+				<strong>{`Reginald Recario`}.</strong>
+			</div>
+		)
+	},
+	{
+		key: 4,
+		content: (
+			<div>
+				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
+				<strong>{`Reginald Recario`}.</strong>
+			</div>
+		)
+	},
+	{
+		key: 5,
+		content: (
+			<div>
+				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
+				<strong>{`Reginald Recario`}.</strong>
+			</div>
+		)
+	},
+	{
+		key: 6,
+		content: (
+			<div>
+				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
+				<strong>{`Reginald Recario`}.</strong>
+			</div>
+		)
+	},
+	{
+		key: 7,
+		content: (
+			<div>
+				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
+				<strong>{`Reginald Recario`}.</strong>
+			</div>
+		)
+	},
+	{
+		key: 8,
+		content: (
+			<div>
+				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
+				<strong>{`Reginald Recario`}.</strong>
+			</div>
+		)
+	},
+	{
+		key: 9,
+		content: (
+			<div>
+				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
+				<strong>{`Reginald Recario`}.</strong>
+			</div>
+		)
+	},
+	{
+		key: 10,
+		content: (
+			<div>
+				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
+				<strong>{`Reginald Recario`}.</strong>
+			</div>
+		)
+	}
 ];
 
 const options = [
