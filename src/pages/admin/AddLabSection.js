@@ -192,7 +192,7 @@ class AddCourseLab extends Component {
 		) {
 			this.setState({message: "Please complete all the required fields!", hidden:false, positive: false, negative: true});
 		} else if (this.state.error === '' && (parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity))) {
-			socket.emit('create_section', data);
+			socket.emit('create_section_2', data);
 
 			this.props.fetchCourse();
 			this.setState({message: 'Successfully added new laboratory section!', hidden:false, positive: true, negative: false});

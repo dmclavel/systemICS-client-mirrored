@@ -39,6 +39,7 @@ class AddCourseLecture extends Component {
 			open: false,
 			negative: false,
 			positive: false,
+			existing: false,
 			M: false,
 			T: false,
 			W: false,
@@ -46,6 +47,7 @@ class AddCourseLecture extends Component {
 			F: false,
 			address: 'https://sleepy-falls-95372.herokuapp.com/',
 			courses: [],
+			existingSections: [],
 			section_type: 0,
 			emp_no: null,
 			acad_year: '',
@@ -101,17 +103,6 @@ class AddCourseLecture extends Component {
 		return days;
 	}
 
-	handleChange = (e, { name, value }) => {
-		this.setState({ [name]: value });
-	};
-
-	handleDayChange = (e, { content, active }) => {
-		if (active === true) this.setState({ [content]: false });
-		else if (active === false) this.setState({ [content]: true });
-	};
-
-
-
 	handleSubmit = () => {
 		let days = this.dayFormat();
 		const {
@@ -166,31 +157,39 @@ class AddCourseLecture extends Component {
 			this.setState({ hidden: false});
 			this.setState({message: "Successfully added a new lecture section!", positive: true, negative: false});
 			socket.emit('create_section_2', data);
-			this.props.fetchCourse()
+			this.props.fetchCourse();
+			this.clear();
 		}
 	};
 
 
+	clear = () => {
+			this.setState({
+				existingSections: [],
+				hidden: true,
+				negative: false,
+				positive: false,
+				existing: false,
+				M: false,
+				T: false,
+				W: false,
+				Th: false,
+				F: false,
+				course_id: '',
+				course_name: '',
+				time_start: '7:00',
+				time_end: '19:00',
+				room: '',
+				day: '',
+				section: '',
+				unit: '',
+				max_capacity: ''
+			});
+	}
 
 	close = () =>
 		this.setState({
 			open: false,
-			hidden: true,
-			negative: false,
-			positive: false,
-			M: false,
-			T: false,
-			W: false,
-			Th: false,
-			F: false,
-			course_id: '',
-			time_start: '7:00',
-			time_end: '19:00',
-			room: '',
-			day: '',
-			section: '',
-			unit: '',
-			max_capacity: ''
 		});
 
 	open = () => {
@@ -213,18 +212,61 @@ class AddCourseLecture extends Component {
 		});
 	};
 
+
+	handleChange = (e, { name, value }) => {
+			if (name === "section" && this.state.course_name != "") {
+				this.fillExistingSections();
+				this.setState({ hidden: true});
+				this.state.existingSections.forEach (element => {
+					if (value === element.section && parseInt(this.state.course_id) == parseInt(element.course_id)){
+						this.setState({hidden: false, existing: true});
+						let appendString = "Section " + element.section + " of "+  element.course_name + " already exists!";
+						this.setState({message: appendString, positive: false, negative: true});
+					}
+				});
+
+				if (!this.state.existing) {
+					this.setState({ [name]: value });
+				}
+			}
+			else {
+				if (this.state.course_name === "") {
+					this.setState({ hidden: false});
+					this.setState({message: "Please choose a Course Name first!", positive: false, negative: true});
+				}
+				else {
+					this.setState({ hidden: true});
+					this.setState({ [name]: value });
+				}
+			}
+		};
+
+		handleDayChange = (e, { content, active }) => {
+			if (active === true) this.setState({ [content]: false });
+			else if (active === false) this.setState({ [content]: true });
+		};
+
+		fillExistingSections() {
+			const socket = socketIOClient(this.state.address);
+			const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
+			socket.emit('view_sections', data);
+			socket.on('view_sections', course => {
+				this.setState({ existingSections: course });
+			});
+		}
+
 	handleDropdownChange(e, data) {
+		this.clear();
 		const state = this.state;
 		state.course_id = data.value;
-		this.setState(state);
-		console.log(this.state.course_id);
+		state.course_name = data.text;
+		this.setState({course_id:state.course_id, course_name:state.course_name});
 	}
 
 	handleSemester(e, data) {
 		const state = this.state;
 		state.semester = data.value;
 		this.setState(state);
-		console.log(this.state.semester);
 	}
 
 	render() {
@@ -271,6 +313,7 @@ class AddCourseLecture extends Component {
 										selection
 										width={10}
 										label="Course name"
+										name="course_name"
 										placeholder="Pick course name"
 										options={courses}
 										onChange={this.handleDropdownChange}
