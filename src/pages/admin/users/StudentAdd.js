@@ -104,4 +104,3 @@ class StudentAdd extends Component {
 }
 
 export default StudentAdd;
-tudentAdd;
