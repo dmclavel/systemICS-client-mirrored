@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import {
-  Button,
-  Modal,
-  Form,
-  Grid,
-  Segment,
-  Header,
-  Container,
-  Message
+	Button,
+	Modal,
+	Form,
+	Grid,
+	Segment,
+	Header,
+	Container,
+	Message
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ViewCourses from './ViewCourses';
 
 const inlineStyle = {
-  modal: {
-    marginTop: '0px !important',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    color: 'black'
-  }
+	modal: {
+		marginTop: '0px !important',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		color: 'black'
+	}
 };
 
 class AddCourseModal extends Component {
@@ -143,7 +143,7 @@ class AddCourseModal extends Component {
 				onOpen={this.open}
 				open={open}
 				trigger={
-					<Button floated="right" positive content="View Existing Courses" fluid/>
+					<Button floated="right" positive content="View Existing Courses" />
 				}
 				basic
 			>
