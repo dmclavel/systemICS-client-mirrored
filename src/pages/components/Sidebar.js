@@ -7,6 +7,7 @@ import {
 	Button,
 	Dropdown
 } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import socketIOClient from 'socket.io-client';
 
 import DropFile from '../admin/DropFile';
@@ -239,7 +240,9 @@ class Sidebar extends Component {
 					<Button.Group fluid>
 						<DropFile />
 						<Button.Or />
-						<Button color="teal" content="Generate Course Report" />
+						<Link to="/admin/generate_report">
+							<Button color="teal" content="Generate Course Report" />
+						</Link>
 					</Button.Group>
 				</Grid.Row>
 			</Grid>

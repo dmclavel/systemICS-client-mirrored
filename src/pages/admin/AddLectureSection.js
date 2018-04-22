@@ -69,6 +69,7 @@ class AddLectureSection extends Component {
   }
   componentWillReceiveProps(nextProps) {
     this.setState({ existingCourses: nextProps.data });
+    console.log(this.state.existingCourses);
   }
   dayFormat() {
     const { M, T, W, Th, F } = this.state;

@@ -11,7 +11,9 @@ class GeneratePDF extends Component {
 
 		this.state = {
 			endpoint: 'https://sleepy-falls-95372.herokuapp.com',
-			date: new Date().toDateString(),
+			date: `${new Date().toLocaleString('en-us', {
+				month: 'long'
+			})} ${new Date().getDate()}, ${new Date().getFullYear()}`,
 			informations: [],
 			table2: [],
 			table3: [],
@@ -52,6 +54,8 @@ class GeneratePDF extends Component {
 		//     table1:informations
 		//   });
 		// });
+
+		if (this.state.informations) window.print();
 	}
 
 	render() {
@@ -108,16 +112,16 @@ class GeneratePDF extends Component {
 					<br />
 					<table className="t1">
 						<tr>
-							<th>Course Code/Title</th>
-							<th>Section(s)</th>
-							<th>Reason for Dissolution</th>
+							<th className="th1 td">Course Code/Title</th>
+							<th className="th1 td">Section(s)</th>
+							<th className="th1 td">Reason for Dissolution</th>
 						</tr>
 						{dissolved &&
 							dissolved.map((section, index) => (
 								<tr key={index}>
-									<td>{section.course_name}</td>
-									<td>{section.section}</td>
-									<td> </td>
+									<td className="td">{section.course_name}</td>
+									<td className="td">{section.section}</td>
+									<td className="td"> </td>
 								</tr>
 							))}
 					</table>
