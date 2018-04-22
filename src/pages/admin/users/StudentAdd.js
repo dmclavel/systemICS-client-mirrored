@@ -73,9 +73,6 @@ class StudentAdd extends Component {
               <Container>
                 <Segment padded="very">
                     <Form>
-                      <Form.Group>
-                        <Form.Input fluid label='Student Number' placeholder='Name' onChange={this.handleNumber}/>
-                      </Form.Group>
                       <Form.Group widths='equal'>
                         <Form.Input fluid label='Name' placeholder='Name' onChange={this.handleName}/>
                         <Form.Input fluid label='Email address' placeholder='Email address' onChange={this.handleEmail}/>
@@ -83,6 +80,7 @@ class StudentAdd extends Component {
                       <Form.Group widths='equal'>
                         <Form.Input fluid label='Curriculum' placeholder='Curriculum' onChange={this.handleCurriculum}/>
                         <Form.Input fluid label='Status' placeholder='Status' onChange={this.handleStatus}/>
+                        <Form.Input fluid label='Student Number' placeholder='Name' onChange={this.handleNumber}/>
                       </Form.Group>
                     </Form>
                     <h2>
