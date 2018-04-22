@@ -146,7 +146,11 @@ class Sidebar extends Component {
 	}
 
 	handleOnChange = (e, data) => {
+<<<<<<< HEAD
 		this.props.handleChangeSemester(data.value.acad_year, data.value.semester);
+=======
+		console.log(data.value);
+>>>>>>> master
 	};
 
 	render() {
@@ -191,8 +195,11 @@ class Sidebar extends Component {
 												</div>
 											}
 											onChange={this.handleOnChange}
+<<<<<<< HEAD
 											value={semesters[semesters.length - 1]}
 											text={`Change Semester`}
+=======
+>>>>>>> master
 										/>
 									)}
 								</span>
