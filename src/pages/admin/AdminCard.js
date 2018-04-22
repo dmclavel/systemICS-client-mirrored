@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Header, Table, Input } from 'semantic-ui-react';
+import SearchCard from '../../components/SearchCard';
 import CourseRow from './CourseRow';
 import AddCourseModal from './AddCourseModal';
 import AddLectureSection from './AddLectureSection';
@@ -39,7 +40,7 @@ class AdminCard extends Component {
     const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
-      this.setState({ coursesX: course });
+      this.setState({ coursesX: course , courses: course});
     });
   }
 
@@ -51,9 +52,25 @@ class AdminCard extends Component {
       this.setState({ coursesX: course });
     });
   };
-  handleSearch(e) {
-    this.setState({ searchQuery: e.target.value });
-  }
+
+  handleSearch = query => {
+		if (query.length == 0) {
+			this.setState({ courses: this.state.coursesX });
+		} else {
+			this.setState({
+				courses: this.state.coursesX.filter( section => {
+					if (
+						section.course_name.toLowerCase().includes(query.toLowerCase().trim())
+					) {
+						return true;
+					} else {
+						return false;
+					}
+				})
+			});
+		}
+		console.log(this.state.visibleData);
+	};
 
   render() {
     const { coursesX } = this.state;
@@ -67,13 +84,15 @@ class AdminCard extends Component {
         </Grid.Row>
 
 				<Grid.Row width={16}>
-					<Grid.Column width={9}>
-						<Input fluid icon="search" width={12} />
+					<Grid.Column width={10}>
+						<SearchCard placeholder="search course name" handleSearch={this.handleSearch} fluid={true}/>
 					</Grid.Column>
-					<Grid.Column width={7}>
+					<Grid.Column width={3}>
 						<AddCourseModal fetchCourse={this.fetchCourse} />
-						<AddLectureSection fetchCourse={this.fetchCourse} />
 					</Grid.Column>
+          <Grid.Column width={3}>
+            <AddLectureSection fetchCourse={this.fetchCourse} />
+          </Grid.Column>
 				</Grid.Row>
 
         <Table textAlign="center">
@@ -92,17 +111,7 @@ class AdminCard extends Component {
           </Table.Header>
 
           <Table.Body>
-            {coursesX
-              .filter(course => {
-                if (
-                  course.course_name
-                    .toLowerCase()
-                    .includes(this.state.searchQuery.toLowerCase())
-                ) {
-                  return true;
-                }
-                return false;
-              })
+            {this.state.courses
               .map((course, index) => {
                 return (
                   <CourseRow

@@ -366,7 +366,7 @@ class AddCourseLecture extends Component {
 				open={open}
 				onClose={this.close}
 				trigger={
-					<Button floated="right" positive content="Add Lecture Section" />
+					<Button floated="right" positive content="Add Lecture Section" fluid/>
 				}
 			>
 				<Modal.Header>Add New Lecture</Modal.Header>
