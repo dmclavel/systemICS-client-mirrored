@@ -107,16 +107,12 @@ class AddCourseLecture extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ existingCourses: nextProps.data });
-    console.log(this.state.existingCourses);
+    this.setState({ existingSections: nextProps.data });
   }
 
   clear = () => {
     this.setState({
       existingSections: [],
-      hidden: true,
-      negative: false,
-      positive: false,
       existing: false,
       M: false,
       T: false,
@@ -125,7 +121,7 @@ class AddCourseLecture extends Component {
       F: false,
       course_id: '',
       course_name: '',
-      time_start: '7:00',
+      time_start: '07:00',
       time_end: '19:00',
       room: '',
       day: '',
@@ -150,7 +146,7 @@ class AddCourseLecture extends Component {
       F: false,
       course_id: '',
       course_name: '',
-      time_start: '7:00',
+      time_start: '07:00',
       time_end: '19:00',
       room: '',
       day: '',
@@ -215,14 +211,15 @@ class AddCourseLecture extends Component {
       max_capacity,
       emp_no,
       course_id,
-      unit
+      unit,
+      status: 'Active'
     };
     let conflict = false;
     let details = '';
-    for (let i = 0; i < this.state.existingCourses.length; i++) {
+    for (let i = 0; i < this.state.existingSections.length; i++) {
       if (
         // Replace the tabs and spaces and uppercase the room provided to compare them
-        this.state.existingCourses[i].room.replace(/\s/g, '').toUpperCase() ===
+        this.state.existingSections[i].room.replace(/\s/g, '').toUpperCase() ===
         this.state.room.replace(/\s/g, '').toUpperCase()
       ) {
         // If room is conflict, we will check if their time is also conflict.
@@ -231,7 +228,7 @@ class AddCourseLecture extends Component {
           time_end,
           day: this.dayFormat()
         };
-        if (isScheduleConflict(this.state.existingCourses[i], argc)) {
+        if (isScheduleConflict(this.state.existingSections[i], argc)) {
           conflict = true;
           const {
             course_name: _name,
@@ -240,7 +237,7 @@ class AddCourseLecture extends Component {
             time_start: t_start,
             time_end: t_end,
             room: _room
-          } = this.state.existingCourses[i];
+          } = this.state.existingSections[i];
           details += `Data is conflicting with ${_name} ${_section} - ${_day} ${convertToGeneralTime(
             t_start
           )}-${convertToGeneralTime(t_end)}, ${_room}`;
@@ -272,13 +269,19 @@ class AddCourseLecture extends Component {
         hidden: false
       });
     } else {
-      this.setState({
-        message: 'Successfully added a new lecture section!',
-        positive: true,
-        negative: false,
-        hidden: false
-      });
-      socket.emit('create_section_2', data);
+      this.setState(
+        {
+          message: 'Successfully added a new lecture section!',
+          details,
+          positive: true,
+          negative: false,
+          hidden: false
+        },
+        () => {
+          console.log(data);
+          socket.emit('create_section_2', data);
+        }
+      );
       this.props.fetchCourse();
       this.clear();
     }
@@ -314,17 +317,14 @@ class AddCourseLecture extends Component {
         this.setState({ existing: false });
       }
     } else {
-      if (this.state.course_name === '') {
-        this.setState({ hidden: false });
-        this.setState({
-          message: 'Please choose a Course Name first!',
-          positive: false,
-          negative: true
-        });
-      } else {
-        this.setState({ hidden: true });
-        this.setState({ [name]: value });
-      }
+      // if (this.state.course_name === "") {
+      // 	this.setState({ hidden: false});
+      // 	this.setState({message: "Please choose a Course Name first!", positive: false, negative: true});
+      // }
+      // else {
+      this.setState({ hidden: true });
+      this.setState({ [name]: value });
+      // }
     }
   };
 
@@ -360,6 +360,7 @@ class AddCourseLecture extends Component {
       negative,
       positive,
       message,
+      details,
       hidden,
       M,
       T,
@@ -546,6 +547,7 @@ class AddCourseLecture extends Component {
                   hidden={hidden}
                 >
                   <Message.Header>{message}</Message.Header>
+                  {details && <p>{details}</p>}
                 </Message>
               </Grid.Row>
             </Form>{' '}

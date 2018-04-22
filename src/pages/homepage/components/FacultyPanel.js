@@ -25,13 +25,7 @@ class FacultyPanel extends Component {
     super(props);
     this.state = {
       endpoint: 'https://sleepy-falls-95372.herokuapp.com/', // the address of the server
-      faculty: [
-        {
-          name: '',
-          email_add: '',
-          isRegCom: ''
-        }
-      ],
+      faculty: [],
       facultyQuery: '',
       facultyResult: [],
       originalFaculty: []
