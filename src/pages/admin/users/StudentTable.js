@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Grid, Button, Popup, Icon } from 'semantic-ui-react';
+import { Table, Grid, Button, Popup, Icon, Loader } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import StudentDelete from './StudentDelete';
 import StudentEdit from './StudentEdit';
@@ -11,7 +11,8 @@ class StudentTable extends Component {
       column: null,
       data: [],
       direction: null,
-      visibleData: this.props.data
+      visibleData: this.props.data,
+      loading: true
     };
     autobind(this);
   }

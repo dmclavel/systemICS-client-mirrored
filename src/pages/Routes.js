@@ -63,6 +63,7 @@ class Routes extends Component {
 		};
 		autobind(this);
 	}
+
 	handleViewLabs = section => {
 		this.setState({ labSection: section });
 	};

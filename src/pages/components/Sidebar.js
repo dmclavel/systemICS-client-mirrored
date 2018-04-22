@@ -105,44 +105,6 @@ const items = [
 	}
 ];
 
-const options = [
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	}
-];
-
 const inline = {
 	width: '100rem',
 	height: '25rem',
@@ -166,7 +128,10 @@ class Sidebar extends Component {
 			semesters.forEach((semester, index) => {
 				tempSem.push({
 					key: index,
-					value: semester.timeframe_id,
+					value: {
+						acad_year: semester.acad_year,
+						semester: semester.semester
+					},
 					text: `${
 						semester.semester === 1
 							? '1st Semester'
@@ -176,20 +141,29 @@ class Sidebar extends Component {
 					} AY ${semester.acad_year}-${semester.acad_year + 1}`
 				});
 			});
-			console.log(tempSem);
 			this.setState({ semesters: tempSem });
 		});
 	}
 
+	handleOnChange = (e, data) => {
+		this.props.handleChangeSemester(data.value.acad_year, data.value.semester);
+	};
+
 	render() {
-		const { semesters } = this.state;
-		console.log(semesters.length);
+		const { semesters, acad_year, semester } = this.state;
 		return (
 			<Grid>
 				<Grid.Row className="sidebar">
 					<Segment className="sidebar-container" fluid textAlign="right">
 						<Header as="h2">
-							<Header.Content>{`1st Semester AY 2017-2018`}</Header.Content>
+							<Header.Content>{`${
+								this.props.current_sem === 1
+									? '1st Semester'
+									: this.props.current_sem === 2
+										? '2nd Semester'
+										: 'Midyear'
+							} AY ${this.props.current_year}-${this.props.current_year +
+								1}`}</Header.Content>
 							<Header.Subheader>
 								<span>
 									Current Semester{' '}
@@ -216,6 +190,9 @@ class Sidebar extends Component {
 													</Button.Group>
 												</div>
 											}
+											onChange={this.handleOnChange}
+											value={semesters[semesters.length - 1]}
+											text={`Change Semester`}
 										/>
 									)}
 								</span>
