@@ -1,0 +1,5 @@
+COURSE_NAME,COURSE_TITLE,DESCRIPTION
+CMSC 131,Introduction to Computer Organization and Machine-Level Programming,"An introduction to computer organization and interfaces between hardware and software; Microcomputer systems: basic computer organization, memory addressing, CPU-memory-I/O relationships, interfacing, interrupt mechanisms; Assembly language: data structure repreentations, program control implementations, subroutines, parameter passing, recursion, direct-video graphics, serial port communications."
+CMSC 137,Data Communications and Networking,Basic principles of data communications; design issues and protocols in the layers of data network; networks for various applications.
+CMSC 141,Automata and Language Theory,"Abstract machines and languages; finite automata, regular expressions, pushdown automata, context free languages, Turing machines and recursively enumerable languages."
+CMSC 142,Design and Analysis of Algorithms,"Algorithm analysis techniques, algorithm design techniques, applications of these techniques."

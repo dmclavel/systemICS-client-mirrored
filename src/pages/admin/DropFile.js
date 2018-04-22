@@ -28,8 +28,15 @@ class DropFile extends Component {
       string: '',
       file_type_selected: 1,
       filename: '',
+      response: '',
       error: false,
-      message: false
+      message: false,
+      method: '',
+      data: {
+        string: '',
+        file_type: 0
+      },
+      endpoint: 'https://sleepy-falls-95372.herokuapp.com/'
     };
 
     this.handleOnDrop = this.handleOnDrop.bind(this);
@@ -58,13 +65,12 @@ class DropFile extends Component {
       'ACAD_YEAR,SEMESTER,TIME_START,TIME_END,ROOM,NO_OF_STUDENTS,UNIT,DAY,SECTION,SECTION_TYPE,MAX_CAPACITY,COURSE_ID,EMP_NO,STATUS,POSTED';
     const address = this.state.address;
     const file_type_selected = this.state.file_type_selected;
-    if (file[0].name.match(textType)) {
-      readerFile.onload = function(e) {
-        // shows the content string of file
 
+    if (file[0].name.match(textType)) {
+      readerFile.onload = e => {
         const socket = socketIOClient(address);
         const data = {
-          string: readerFile.result,
+          string: e.target.result,
           file_type: file_type_selected
         };
         var stringTempStudent = data.string.substring(0, 47);
@@ -74,9 +80,10 @@ class DropFile extends Component {
         var stringTempCourse = data.string.substring(0, 36);
         var stringTempSeniorJunior = data.string.substring(0, 29);
         var stringTempCourseOffering = data.string.substring(0, 132);
+
         if (stringTempStudent === studentCSV && data.file_type === 1) {
-          console.log('STUDENT \n' + data.string);
-          //  socket.emit('file_content_student', data);
+          console.log(data.string);
+          this.setState({ data, method: 'file_content_student' });
         } else if (stringTempFaculty === facultyCSV && data.file_type === 2) {
           console.log('FACULTY \n' + data.string);
           //  socket.emit('file_content_faculty', data);
@@ -109,11 +116,23 @@ class DropFile extends Component {
           //  socket.emit('file_content_error', data);
         }
       };
+
       readerFile.readAsText(file[0]);
     } else {
       console.log('File not supported! \n Only accepts csv file');
       this.setState({ error: true });
     }
+  };
+
+  handleSubmit = () => {
+    console.log(this.state);
+    const { data, endpoint, method } = this.state;
+    const socket = socketIOClient(endpoint);
+    socket.emit(method, data);
+    socket.on(method, response => {
+      this.setState({ response });
+      console.log(response);
+    });
   };
 
   close = () => {
@@ -200,6 +219,14 @@ class DropFile extends Component {
             )}
           </div>
         </Modal.Content>
+        <Modal.Actions className="modal-actions">
+          <Button
+            content="Submit"
+            floated="right"
+            positive
+            onClick={this.handleSubmit}
+          />
+        </Modal.Actions>
       </Modal>
     );
   }

@@ -242,6 +242,14 @@ class AddCourseModal extends Component {
 						</Segment>
 					</Container>
 				</Modal.Content>
+				<Modal.Actions className="modal-actions">
+					<Button
+						content="All Done"
+						floated="right"
+						icon="check"
+						onClick={this.close}
+					/>
+				</Modal.Actions>
 			</Modal>
 		);
 	}

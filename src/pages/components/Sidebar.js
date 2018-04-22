@@ -116,7 +116,9 @@ class Sidebar extends Component {
 		super(props);
 		this.state = {
 			address: 'https://sleepy-falls-95372.herokuapp.com',
-			semesters: []
+			semesters: [],
+			acad_year: 0,
+			semester: 0
 		};
 	}
 
@@ -124,6 +126,10 @@ class Sidebar extends Component {
 		const socket = socketIOClient(this.state.address);
 		socket.emit('view_timeframe', null);
 		socket.on('view_timeframe', semesters => {
+			const copy = semesters;
+			const temp = semesters.pop();
+			this.setState({ acad_year: temp.acad_year, semester: temp.semester });
+
 			const tempSem = [];
 			semesters.forEach((semester, index) => {
 				tempSem.push({
@@ -157,14 +163,24 @@ class Sidebar extends Component {
 				<Grid.Row className="sidebar">
 					<Segment className="sidebar-container" fluid textAlign="right">
 						<Header as="h2">
-							<Header.Content>{`${
-								this.props.current_sem === 1
-									? '1st Semester'
-									: this.props.current_sem === 2
-										? '2nd Semester'
-										: 'Midyear'
-							} AY ${this.props.current_year}-${this.props.current_year +
-								1}`}</Header.Content>
+							<Header.Content>
+								{this.props.showSemester
+									? `${
+											this.props.current_sem === 1
+												? '1st Semester'
+												: this.props.current_sem === 2
+													? '2nd Semester'
+													: 'Midyear'
+									  } AY ${this.props.current_year}-${this.props.current_year +
+											1}`
+									: `${
+											semester === 1
+												? '1st Semester'
+												: semester === 2
+													? '2nd Semester'
+													: 'Midyear'
+									  } AY ${acad_year}-${acad_year + 1}`}
+							</Header.Content>
 							<Header.Subheader>
 								<span>
 									Current Semester{' '}
