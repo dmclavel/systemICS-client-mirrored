@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Grid, Header, Table, Input } from 'semantic-ui-react';
+import { Grid, Header, Table, Input, Loader } from 'semantic-ui-react';
 import SearchCard from '../../components/SearchCard';
 import CourseRow from './CourseRow';
 import AddCourseModal from './AddCourseModal';
 import AddLectureSection from './AddLectureSection';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
+import './AdminCard.css';
 
 class AdminCard extends Component {
   constructor() {
@@ -30,18 +31,24 @@ class AdminCard extends Component {
       unit: '',
       max_capacity: '',
       description: '',
-      searchQuery: ''
+      searchQuery: '',
+      loading: true
     };
     autobind(this);
   }
 
+  // next time, specify acad year and semester based on view
   componentDidMount() {
+    this.setState({ loading: true });
     const socket = socketIOClient(this.state.address);
     const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
       this.setState({ coursesX: course , courses: course});
+      this.setState({ loading: false });
     });
+
+
   }
 
   fetchCourse = () => {
@@ -73,15 +80,19 @@ class AdminCard extends Component {
 	};
 
   render() {
-    const { coursesX } = this.state;
+    const { loading, coursesX } = this.state;
+
+    console.log(loading);
 
     return (
-      <Grid className="admin-container">
-        <Grid.Row>
-          <Header as="h1" textAlign="left">
-            Course Offering
-          </Header>
-        </Grid.Row>
+        <Grid className="admin-container">
+          <Grid.Row>
+            <Header as="h1" textAlign="left">
+              Course Offering
+            </Header>
+          </Grid.Row>
+
+          <Loader active={loading} content="Loading..." />
 
 				<Grid.Row width={16}>
 					<Grid.Column width={10}>
@@ -95,20 +106,20 @@ class AdminCard extends Component {
           </Grid.Column>
 				</Grid.Row>
 
-        <Table textAlign="center">
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Course Code</Table.HeaderCell>
-              <Table.HeaderCell>Section</Table.HeaderCell>
-              <Table.HeaderCell>Day</Table.HeaderCell>
-              <Table.HeaderCell>Time</Table.HeaderCell>
-              <Table.HeaderCell>Room</Table.HeaderCell>
-              <Table.HeaderCell>Max Capacity</Table.HeaderCell>
-              <Table.HeaderCell>Students</Table.HeaderCell>
-              <Table.HeaderCell>Status</Table.HeaderCell>
-              <Table.HeaderCell>Actions</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+              <Table textAlign="center" className="remove-padding">
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Course Code</Table.HeaderCell>
+                    <Table.HeaderCell>Section</Table.HeaderCell>
+                    <Table.HeaderCell>Day</Table.HeaderCell>
+                    <Table.HeaderCell>Time</Table.HeaderCell>
+                    <Table.HeaderCell>Room</Table.HeaderCell>
+                    <Table.HeaderCell>Max Capacity</Table.HeaderCell>
+                    <Table.HeaderCell>Students</Table.HeaderCell>
+                    <Table.HeaderCell>Status</Table.HeaderCell>
+                    <Table.HeaderCell>Actions</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
 
           <Table.Body>
             {this.state.courses

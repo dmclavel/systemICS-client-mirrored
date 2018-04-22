@@ -17,7 +17,7 @@ class Homepage extends Component {
 					<HomepageHeader />
 				</Grid.Row>
 				<Grid.Row centered id="content">
-					<CoursePanel/>
+					<CoursePanel viewLabHandler={this.props.viewLabHandler}/>
 				</Grid.Row>
 				<Grid.Row>
 					<FacultyPanel />

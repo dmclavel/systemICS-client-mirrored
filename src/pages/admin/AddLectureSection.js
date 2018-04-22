@@ -108,6 +108,7 @@ class AddCourseLecture extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({ existingCourses: nextProps.data });
+    console.log(this.state.existingCourses);
   }
 
 	clear = () => {

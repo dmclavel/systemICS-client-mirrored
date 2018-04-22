@@ -123,14 +123,12 @@ class NavbarIn extends Component {
       localStorage.setItem('login', null);
       this.setState({ isLoggedIn: false });
     }
+
+    window.location = '/';
   };
 
   render() {
     const { activeItem } = this.state;
-
-    if (!this.state.isLoggedIn) {
-      return <Redirect to="/" push />;
-    }
 
     return (
       <div className="nav-home">

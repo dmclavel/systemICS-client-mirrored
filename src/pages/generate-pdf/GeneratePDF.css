@@ -1,40 +1,55 @@
-* {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-}
-.page {
+.page-main {
 	/* Divide single pages with some space and center all pages horizontally */
 	margin-left: auto;
 	margin-right: auto;
 	background: #fff;
 	outline: 0;
-	font-family: 'Arial' !important;
+	font-family: 'Arial';
 }
+
 div.page-break {
 	page-break-after: always;
 }
-h1 {
+.ics {
 	page-break-before: always;
 }
-h1,
-h2 {
-	page-break-after: avoid;
+.ics,
+.ics2 {
+	page-break-before: auto;
+	page-break-after: auto;
+	page-break-inside: avoid;
 	vertical-align: middle;
 	text-align: center;
 	font-family: 'Arial' !important;
 }
-p {
+.salutation,
+.introLetter,
+.date,
+.greeting,
+.tableA,
+.tableB,
+.tableC,
+.tableD,
+.closing,
+.icsDirector,
+.recommApproval,
+.recommNames {
 	margin: 0;
 	font-size: 10pt;
 }
-p + p {
+/*p + p {
 	margin-top: 0.5cm;
-}
+}*/
 
-table {
+.t1,
+.t2,
+.t3,
+.t4 {
 	/* Avoid page breaks inside */
 	page-break-inside: avoid;
+	width: 100%;
 }
+
 /* Use CSS Paged Media to switch from continuous documents to sheet-like documents with separate pages */
 @page {
 	/* Require that at least this many lines of a paragraph must be left at the bottom of a page */
@@ -67,25 +82,29 @@ table {
 	}
 }
 
-hr {
+/*hr {
 	height: 5px;
 	border: none;
 	background-color: #333;
-}
-table {
-	width: 100%;
-}
-th,
-td {
+}*/
+/ .th1 {
 	font-size: 10pt;
 }
-table,
-th,
-td {
+.t1,
+.t2,
+.t3,
+.t4 {
 	border: 1px solid black;
 	border-collapse: collapse;
 }
-img {
+
+.td {
+	border: 1px solid black;
+	padding-left: 2px;
+}
+
+.up,
+.icsl {
 	width: 102px;
 	height: 100px;
 }
@@ -110,7 +129,7 @@ img {
 	margin-top: 5px;
 }
 
-.page {
+.page-main {
 	/* Styles for better appearance on screens only -- are reset to defaults in print styles later */
 
 	/* Reflect the paper width in the screen rendering (must match size from @page rule) */
