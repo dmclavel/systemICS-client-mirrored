@@ -143,7 +143,7 @@ class AddCourseModal extends Component {
 				onOpen={this.open}
 				open={open}
 				trigger={
-					<Button floated="right" positive content="View Existing Courses" />
+					<Button floated="right" positive content="View Existing Courses" fluid/>
 				}
 				basic
 			>
