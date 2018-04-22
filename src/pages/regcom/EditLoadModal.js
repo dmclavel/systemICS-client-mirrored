@@ -8,7 +8,9 @@ import {
   Header,
   Message,
   Label,
-  Table
+  Table,
+  Loader,
+  Dimmer
 } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
@@ -47,7 +49,8 @@ class EditLoadModal extends Component {
       coursesDropdownError: false,
       sectionsDropdownError: false,
       conflict: false,
-      warning: false
+      warning: false,
+      loading: true
     };
     autobind(this);
   }
@@ -99,6 +102,7 @@ class EditLoadModal extends Component {
   handleOpen = () => {
     const socket = socketIOClient(this.state.endpoint);
     const { emp_no } = this.props;
+    this.setState({ loading: true });
     // For a specific faculty show their assigned courses
     socket.emit('view_sections', {
       emp_no,
@@ -108,7 +112,8 @@ class EditLoadModal extends Component {
     });
     socket.on('view_sections', courses => {
       this.setState({
-        courses
+        courses,
+        loading: false
       });
     });
     this.setState({ open: true });
@@ -312,7 +317,8 @@ class EditLoadModal extends Component {
       details,
       coursesDropdownError,
       sectionsDropdownError,
-      warning
+      warning,
+      loading
     } = this.state;
     return (
       <Modal
@@ -404,6 +410,9 @@ class EditLoadModal extends Component {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
+              <Dimmer active={loading} inverted>
+                <Loader content="Loading assigned courses ..." />
+              </Dimmer>
               {!!courses.length && (
                 <Grid.Column width={16}>
                   <Table className="remove-margin" textAlign="center">

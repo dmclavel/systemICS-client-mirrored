@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Input, Segment, Header } from 'semantic-ui-react';
+import { Grid, Input, Segment, Header, Loader } from 'semantic-ui-react';
 import Information from './Information';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
@@ -14,7 +14,8 @@ class RegCom extends Component {
     this.state = {
       informations: [],
       searchInput: '',
-      endpoint: 'https://sleepy-falls-95372.herokuapp.com'
+      endpoint: 'https://sleepy-falls-95372.herokuapp.com',
+      loading: true
     };
     autobind(this);
   }
@@ -26,12 +27,13 @@ class RegCom extends Component {
     socket.emit('view_faculty', { active: true });
     socket.on('view_faculty', informations => {
       this.setState({
-        informations
+        informations,
+        loading: false
       });
     });
   }
   render() {
-    const { informations, searchInput } = this.state;
+    const { informations, searchInput, loading } = this.state;
     return (
       <div>
         <Grid>
@@ -66,6 +68,7 @@ class RegCom extends Component {
                 </Segment>
               </Grid.Row>
               <Grid.Row>
+                <Loader active={loading} content="Loading faculty ..." />
                 {informations
                   .filter(information => {
                     if (
