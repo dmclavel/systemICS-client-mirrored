@@ -45,7 +45,7 @@ class AdviseeTable extends Component {
 							.toLowerCase()
 							.includes(this.props.search.toLowerCase())
 					)
-					.map(advisee_single => <AdviseeSingle advisee={advisee_single} />)}
+					.map(advisee_single => <AdviseeSingle advisee={advisee_single} hasPending={advisee_single.advisers === null ? false : advisee_single.advisers.length === 1 && advisee_single.advisers[0].status==='Pending'? true:  advisee_single.advisers.length > 1 && advisee_single.advisers[1].status==='Pending'?true:false}/>)}
 			</div>
 		);
 	}
