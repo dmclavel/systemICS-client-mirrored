@@ -4,7 +4,7 @@ File: Basic routing system.
 */
 
 import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router';
+import { Switch, Route, Redirect, withRouter } from 'react-router';
 import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 import socketIOClient from 'socket.io-client';
 
@@ -202,4 +202,4 @@ class Routes extends Component {
 	}
 }
 
-export default Routes;
+export default withRouter(Routes);
