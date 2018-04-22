@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Grid, Menu, Button} from 'semantic-ui-react';
+import {Grid, Menu, Button, Loader} from 'semantic-ui-react';
 import SearchCard from '../../../components/SearchCard';
 import StudentTable from './StudentTable';
 import FacultyTable from './FacultyTable';
@@ -14,15 +14,17 @@ class User extends Component {
 		this.state = {
 			address: 'https://sleepy-falls-95372.herokuapp.com/',
 			activeItem: 'Student',
-      dummyStudents: [],
-      dummyFaculty: [],
-      origStudent: [],
-      origFaculty: [],
+		      dummyStudents: [],
+		      dummyFaculty: [],
+		      origStudent: [],
+		      origFaculty: [],
+		      loading: true
 		}
 		autobind(this);
 	}
 	// what to do once the page (re)loads
   componentDidMount = () => {
+  	this.setState({ loading: true });
     const socket = socketIOClient(this.state.address); //establish connection to the server
     // listens on an endpoint and executes fallback function
     socket.emit('view_students', 'crgotis@up.edu.ph'); //send data to 'login' endpoint in server
@@ -30,12 +32,14 @@ class User extends Component {
       console.log(returnValueFromServer);
       this.setState({ dummyStudents: returnValueFromServer });
       this.setState({origStudent: this.state.dummyStudents});
+      this.setState({ loading: false });
     });
     socket.emit('view_faculty', 'crgotis@up.edu.ph'); //send data to 'login' endpoint in server
     socket.on('view_faculty', returnValueFromServer => {
       console.log(returnValueFromServer);
       this.setState({ dummyFaculty: returnValueFromServer });
       this.setState({origFaculty: this.state.dummyFaculty});
+      this.setState({ loading: false });
     });
   };
 
@@ -141,6 +145,9 @@ class User extends Component {
       			{
       				this.state.activeItem == 'Student'? <StudentTable data={this.state.dummyStudents} fetchData={this.fetchStudents} />: <FacultyTable data={this.state.dummyFaculty} fetchData={this.fetchFaculty}/>
       			}
+			</Grid.Row>
+			<Grid.Row>
+				<Loader active={this.state.loading} content="Loading..." />
 			</Grid.Row>
 			</Grid>
 		);
