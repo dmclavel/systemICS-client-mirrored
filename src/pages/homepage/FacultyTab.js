@@ -8,7 +8,7 @@ Change name FacultyTab to the name of file.
 This will be updated for mapping, grid layouting, etc.
 Write the Author of the code at the top of the document.
 */
-import { Card, Input, Grid, Container } from 'semantic-ui-react';
+import { Card, Input, Grid, Container, Loader } from 'semantic-ui-react';
 import React, { Component } from 'react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
@@ -28,25 +28,23 @@ class FacultyTab extends Component {
     this.state = {
       endpoint: 'https://sleepy-falls-95372.herokuapp.com/', // the address of the server
       faculty: [
-        {
-          name: '',
-          email_add: '',
-          isRegCom: ''
-        }
       ],
-      search: ''
+      search: '',
+      loading: true
     };
     autobind(this);
   }
 
   // what to do once the page (re)loads
   componentDidMount = () => {
+    this.setState({loading: true});
     const socket = socketIOClient(this.state.endpoint); //establish connection to the server
     // listens on an endpoint and executes fallback function
     socket.emit('view_all_active_faculty_members', 'dfesperanza@up.edu.ph'); //send data to 'login' endpoint in server
     socket.on('view_all_active_faculty_members', returnValueFromServer => {
       console.log(returnValueFromServer);
       this.setState({ faculty: returnValueFromServer });
+      this.setState({loading: false});
     });
   };
   //a function for sending data to server.you can have many of these
@@ -106,7 +104,9 @@ class FacultyTab extends Component {
               </Grid>
             </Grid.Column>
           </Grid.Row>
+
         </Grid>
+        <Loader active={this.state.loading} content="Loading..." />
       </div>
     );
   }
