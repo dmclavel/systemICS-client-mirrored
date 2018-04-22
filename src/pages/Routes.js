@@ -4,7 +4,7 @@ File: Basic routing system.
 */
 
 import React, { Component } from 'react';
-import { Switch, Route, Redirect } from 'react-router';
+import { Switch, Route, Redirect, withRouter } from 'react-router';
 import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 import socketIOClient from 'socket.io-client';
 
@@ -63,24 +63,32 @@ class Routes extends Component {
 		};
 		autobind(this);
 	}
-	handleViewLabs = (section) => {
-		this.setState({labSection: section});
-	}
+	handleViewLabs = section => {
+		this.setState({ labSection: section });
+	};
 
 	render() {
 		// non-user
 		if (this.props.accessLvl === 0)
 			return (
 				<Switch>
-					<Route exact path="/" component={ () => <Homepage viewLabHandler={this.handleViewLabs} /> } />
+					<Route
+						exact
+						path="/"
+						component={() => <Homepage viewLabHandler={this.handleViewLabs} />}
+					/>
 					<Route exact path="/faculty" component={FacultyTab} />
 					<Route
 						exact
 						path="/login"
 						component={() => <Login logInHandler={this.props.logInHandler} />}
 					/>
-				<Route exact path="/classes" component={ () => <Classes viewLabHandler={this.handleViewLabs} />} />
-					<Route exact path="/section/:_id" component={  Section } />
+					<Route
+						exact
+						path="/classes"
+						component={() => <Classes viewLabHandler={this.handleViewLabs} />}
+					/>
+					<Route exact path="/section/:_id" component={Section} />
 					<Route path="*" component={NotFound} />
 				</Switch>
 			);
@@ -184,7 +192,7 @@ class Routes extends Component {
 						)}
 					/>
 
-					<Route exact path="/gen" component={GeneratePDF} />
+					<Route exact path="/admin/generate_report" component={GeneratePDF} />
 					<Route path="*" component={NotFound} />
 				</Switch>
 			);
@@ -194,4 +202,4 @@ class Routes extends Component {
 	}
 }
 
-export default Routes;
+export default withRouter(Routes);

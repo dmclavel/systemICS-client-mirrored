@@ -3,6 +3,7 @@ import { Table, Grid, Button, Popup, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import './Table.css'
 import EditFaculty from './EditFaculty';
+import FacultyDelete from './FacultyDelete';
 
 class FacultyTable extends Component {
   constructor(props) {
@@ -21,9 +22,9 @@ class FacultyTable extends Component {
       <Table sortable celled fixed>
         <Table.Header>
           <Table.Row textAlign="center">
-            <Table.HeaderCell width={2}>Employee No.</Table.HeaderCell>
-            <Table.HeaderCell width={5}>Name</Table.HeaderCell>
-            <Table.HeaderCell width={5}>Email</Table.HeaderCell>
+            <Table.HeaderCell width={2}>Emp. No.</Table.HeaderCell>
+            <Table.HeaderCell width={3}>Name</Table.HeaderCell>
+            <Table.HeaderCell width={4}>Email</Table.HeaderCell>
             <Table.HeaderCell width={2}>Status</Table.HeaderCell>
             <Table.HeaderCell width={2}>Access Level</Table.HeaderCell>
             <Table.HeaderCell width={2}>Actions</Table.HeaderCell>
@@ -44,13 +45,10 @@ class FacultyTable extends Component {
                   <Grid>
                     <Grid.Row centered columns={2}>
                       <Grid.Column>
-                        <Popup
-                          trigger={<Button icon="delete" negative />}
-                          content="Delete Faculty"
-                        />
+                        <FacultyDelete name={user.name} emp_no={user.emp_no} email_add={user.email_add} isRegCom={user.isRegCom} status={user.status} fetchData={this.props.fetchData}/>
                       </Grid.Column>
                       <Grid.Column>
-                        <EditFaculty name={user.name}/>
+                        <EditFaculty name={user.name} emp_no={user.emp_no} email_add={user.email_add} isRegCom={user.isRegCom} status={user.status} fetchData={this.props.fetchData}/>
                       </Grid.Column>
                       
                     </Grid.Row>

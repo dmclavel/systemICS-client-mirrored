@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Grid, Header, Table, Input } from 'semantic-ui-react';
+import { Grid, Header, Table, Input, Loader } from 'semantic-ui-react';
+import SearchCard from '../../components/SearchCard';
 import CourseRow from './CourseRow';
 import AddCourseModal from './AddCourseModal';
 import AddLectureSection from './AddLectureSection';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
+import './AdminCard.css';
 
 class AdminCard extends Component {
   constructor() {
@@ -29,18 +31,25 @@ class AdminCard extends Component {
       unit: '',
       max_capacity: '',
       description: '',
-      searchQuery: ''
+      searchQuery: '',
+      loading: true
     };
     autobind(this);
   }
 
+  // next time, specify acad year and semester based on view
   componentDidMount() {
+    this.setState({ loading: true });
     const socket = socketIOClient(this.state.address);
     const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
-      this.setState({ coursesX: course });
+      console.log(course);
+      this.setState({ coursesX: course , courses: course});
+      this.setState({ loading: false });
     });
+
+
   }
 
   fetchCourse = () => {
@@ -51,58 +60,70 @@ class AdminCard extends Component {
       this.setState({ coursesX: course });
     });
   };
-  handleSearch(e) {
-    this.setState({ searchQuery: e.target.value });
-  }
+
+  handleSearch = query => {
+		if (query.length == 0) {
+			this.setState({ courses: this.state.coursesX });
+		} else {
+			this.setState({
+				courses: this.state.coursesX.filter( section => {
+					if (
+						section.course_name.toLowerCase().includes(query.toLowerCase().trim())
+					) {
+						return true;
+					} else {
+						return false;
+					}
+				})
+			});
+		}
+		console.log(this.state.visibleData);
+	};
 
   render() {
-    const { coursesX } = this.state;
+    const { loading, coursesX } = this.state;
+
+    console.log(loading);
 
     return (
-      <Grid className="admin-container">
-        <Grid.Row>
-          <Header as="h1" textAlign="left">
-            Course Offering
-          </Header>
-        </Grid.Row>
+        <Grid className="admin-container">
+          <Grid.Row>
+            <Header as="h1" textAlign="left">
+              Course Offering
+            </Header>
+          </Grid.Row>
 
-        <Grid.Row width={16}>
-          <Grid.Column width={9}>
-            <Input fluid icon="search" width={12} />
-          </Grid.Column>
-          <Grid.Column width={7}>
-            <AddCourseModal fetchCourse={this.fetchCourse} />
+          <Loader active={loading} content="Loading..." />
+
+				<Grid.Row width={16}>
+					<Grid.Column width={10}>
+						<SearchCard placeholder="search course name" handleSearch={this.handleSearch} fluid={true}/>
+					</Grid.Column>
+					<Grid.Column width={3}>
+						<AddCourseModal fetchCourse={this.fetchCourse} />
+					</Grid.Column>
+          <Grid.Column width={3}>
             <AddLectureSection fetchCourse={this.fetchCourse} />
           </Grid.Column>
-        </Grid.Row>
+				</Grid.Row>
 
-        <Table textAlign="center" className="remove-padding">
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Course Code</Table.HeaderCell>
-              <Table.HeaderCell>Section</Table.HeaderCell>
-              <Table.HeaderCell>Day</Table.HeaderCell>
-              <Table.HeaderCell>Time</Table.HeaderCell>
-              <Table.HeaderCell>Room</Table.HeaderCell>
-              <Table.HeaderCell>Max Capacity</Table.HeaderCell>
-              <Table.HeaderCell>Students</Table.HeaderCell>
-              <Table.HeaderCell>Status</Table.HeaderCell>
-              <Table.HeaderCell>Actions</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+              <Table textAlign="center" className="remove-padding">
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>Course Code</Table.HeaderCell>
+                    <Table.HeaderCell>Section</Table.HeaderCell>
+                    <Table.HeaderCell>Day</Table.HeaderCell>
+                    <Table.HeaderCell>Time</Table.HeaderCell>
+                    <Table.HeaderCell>Room</Table.HeaderCell>
+                    <Table.HeaderCell>Max Capacity</Table.HeaderCell>
+                    <Table.HeaderCell>Students</Table.HeaderCell>
+                    <Table.HeaderCell>Status</Table.HeaderCell>
+                    <Table.HeaderCell>Actions</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
 
           <Table.Body>
-            {coursesX
-              .filter(course => {
-                if (
-                  course.course_name
-                    .toLowerCase()
-                    .includes(this.state.searchQuery.toLowerCase())
-                ) {
-                  return true;
-                }
-                return false;
-              })
+            {this.state.courses
               .map((course, index) => {
                 return (
                   <CourseRow

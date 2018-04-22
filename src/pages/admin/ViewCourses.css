@@ -16,6 +16,10 @@
 	padding-top: 0px;
 }
 
+.form-checkbox {
+	margin-top: auto !important;
+}
+
 .modal-actions {
 	height: 60px !important;
 }
