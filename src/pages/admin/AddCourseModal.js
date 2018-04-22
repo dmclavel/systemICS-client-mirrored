@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import {
-  Button,
-  Modal,
-  Form,
-  Grid,
-  Segment,
-  Header,
-  Container,
-  Message
+	Button,
+	Modal,
+	Form,
+	Grid,
+	Segment,
+	Header,
+	Container,
+	Message
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ViewCourses from './ViewCourses';
 
 const inlineStyle = {
-  modal: {
-    marginTop: '0px !important',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    color: 'black'
-  }
+	modal: {
+		marginTop: '0px !important',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		color: 'black'
+	}
 };
 
 class AddCourseModal extends Component {
@@ -47,7 +47,13 @@ class AddCourseModal extends Component {
 	};
 
 	handleSubmit = evt => {
-		const { course_name, course_title, description, course_id } = this.state;
+		const {
+			course_name,
+			course_title,
+			description,
+			course_id,
+			isEditing
+		} = this.state;
 
 		if (
 			this.state.course_name === '' ||
@@ -66,28 +72,31 @@ class AddCourseModal extends Component {
 				description: description
 			};
 
-			socket.emit('view_existing_courses', {});
-			socket.on('view_existing_courses', course => {
-				//Check if inputted course is not yet in the database
-				const result = course.find(res => res.course_name === course_name);
-				if (!result) {
-					socket.emit(
-						this.state.isEditing ? 'modify_course' : 'create_course_2',
-						data
-					); //if course not in database, proceed to creating a new course
-					this.setState({
-						message: `${course_name} has been successfully ${
-							this.state.isEditing ? 'edited' : 'added'
-						}!`,
-						warning: false
-					});
-				} else {
-					this.setState({
-						message: `${course_name} already exists.`,
-						warning: true
-					}); //else, prompt error
-				}
-			});
+			if (isEditing) {
+				socket.emit('modify_course', data);
+				this.setState({
+					message: `${course_name} has been successfully edited!`,
+					warning: false
+				});
+			} else {
+				socket.emit('view_existing_courses', {});
+				socket.on('view_existing_courses', course => {
+					//Check if inputted course is not yet in the database
+					const result = course.find(res => res.course_name === course_name);
+					if (!result) {
+						socket.emit('create_course_2', data); //if course not in database, proceed to creating a new course
+						this.setState({
+							message: `${course_name} has been successfully added!`,
+							warning: false
+						});
+					} else {
+						this.setState({
+							message: `${course_name} already exists.`,
+							warning: true
+						}); //else, prompt error
+					}
+				});
+			}
 		}
 	};
 

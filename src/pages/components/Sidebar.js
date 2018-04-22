@@ -105,44 +105,6 @@ const items = [
 	}
 ];
 
-const options = [
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	},
-	{
-		key: 1,
-		value: 'hello',
-		text: '1st Semester Ay 2017-2018'
-	}
-];
-
 const inline = {
 	width: '100rem',
 	height: '25rem',
@@ -166,7 +128,10 @@ class Sidebar extends Component {
 			semesters.forEach((semester, index) => {
 				tempSem.push({
 					key: index,
-					value: semester.timeframe_id,
+					value: {
+						acad_year: semester.acad_year,
+						semester: semester.semester
+					},
 					text: `${
 						semester.semester === 1
 							? '1st Semester'
@@ -180,6 +145,10 @@ class Sidebar extends Component {
 			this.setState({ semesters: tempSem });
 		});
 	}
+
+	handleOnChange = (e, data) => {
+		console.log(data.value);
+	};
 
 	render() {
 		const { semesters } = this.state;
@@ -216,6 +185,7 @@ class Sidebar extends Component {
 													</Button.Group>
 												</div>
 											}
+											onChange={this.handleOnChange}
 										/>
 									)}
 								</span>
