@@ -147,6 +147,7 @@ class Sidebar extends Component {
 
 	handleOnChange = (e, data) => {
 		this.props.handleChangeSemester(data.value.acad_year, data.value.semester);
+		console.log(data.value);
 	};
 
 	render() {
