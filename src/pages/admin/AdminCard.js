@@ -38,20 +38,27 @@ class AdminCard extends Component {
   }
 
   // next time, specify acad year and semester based on view
-  componentDidMount() {
+  componentWillReceiveProps() {
     this.setState({ loading: true });
+    console.log(this.props);
     const socket = socketIOClient(this.state.address);
-    const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
+    const data = {
+      acad_year: this.props.current_year,
+      semester: this.props.current_sem
+    };
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
-      this.setState({ coursesX: course , courses: course});
+      this.setState({ coursesX: course, courses: course });
       this.setState({ loading: false });
     });
   }
 
   fetchCourse = () => {
     const socket = socketIOClient(this.state.address);
-    const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
+    const data = {
+      acad_year: this.props.current_year,
+      semester: this.props.current_sem
+    };
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
       this.setState({ coursesX: course });
@@ -81,8 +88,6 @@ class AdminCard extends Component {
 
   render() {
     const { loading, coursesX } = this.state;
-
-    console.log(loading);
 
     return (
       <Grid className="admin-container">
