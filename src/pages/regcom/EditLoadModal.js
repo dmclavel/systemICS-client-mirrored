@@ -97,6 +97,20 @@ class EditLoadModal extends Component {
         coursesDropdownLoading: false
       });
     });
+    this.setState({ loading: true });
+    // For a specific faculty show their assigned courses
+    socket.emit('view_sections', {
+      emp_no,
+      active: true,
+      petitioned: true,
+      additional: true
+    });
+    socket.on('view_sections', courses => {
+      this.setState({
+        courses,
+        loading: false
+      });
+    });
   }
   // Modal methods
   handleOpen = () => {
@@ -180,8 +194,12 @@ class EditLoadModal extends Component {
     });
     const socket = socketIOClient(this.state.endpoint);
     const value = JSON.parse(data.value);
-    socket.emit('search_all_unassigned_sections_via_course_id', {
-      course_id: value.course_id
+    socket.emit('view_sections', {
+      course_id: value.course_id,
+      active: true,
+      petitioned: true,
+      additional: true,
+      unassignedOnly: true
     });
 
     // socket.emit('view_sections', {
@@ -191,31 +209,28 @@ class EditLoadModal extends Component {
     //   semester:
     // });
 
-    socket.on(
-      'search_all_unassigned_sections_via_course_id',
-      course_offerings => {
-        let timeAndSections = [];
-        course_offerings.forEach((course_offering, index) => {
-          const { time_start, time_end, day, section } = course_offering;
-          const value = JSON.stringify(course_offering);
-          timeAndSections.push({
-            key: index,
-            text: `${section} - ${day} ${convertToGeneralTime(
-              time_start
-            )}-${convertToGeneralTime(time_end)}`,
-            value
-          });
+    socket.on('view_sections', course_offerings => {
+      let timeAndSections = [];
+      course_offerings.forEach((course_offering, index) => {
+        const { time_start, time_end, day, section } = course_offering;
+        const value = JSON.stringify(course_offering);
+        timeAndSections.push({
+          key: index,
+          text: `${section} - ${day} ${convertToGeneralTime(
+            time_start
+          )}-${convertToGeneralTime(time_end)}`,
+          value
         });
-        this.setState({
-          course_offerings,
-          timeAndSections,
-          selectedCourse: data.value,
-          sectionsDropdownLoading: false,
-          coursesDropdownError: false,
-          selectedCourseOfferings: []
-        });
-      }
-    );
+      });
+      this.setState({
+        course_offerings,
+        timeAndSections,
+        selectedCourse: data.value,
+        sectionsDropdownLoading: false,
+        coursesDropdownError: false,
+        selectedCourseOfferings: []
+      });
+    });
   }
   timeAndSectionsHandleOnChange(e, data) {
     let conflict = false;
