@@ -22,9 +22,9 @@ class FacultyTable extends Component {
       <Table sortable celled fixed>
         <Table.Header>
           <Table.Row textAlign="center">
-            <Table.HeaderCell width={2}>Employee No.</Table.HeaderCell>
-            <Table.HeaderCell width={4}>Name</Table.HeaderCell>
-            <Table.HeaderCell width={5}>Email</Table.HeaderCell>
+            <Table.HeaderCell width={2}>Emp. No.</Table.HeaderCell>
+            <Table.HeaderCell width={3}>Name</Table.HeaderCell>
+            <Table.HeaderCell width={4}>Email</Table.HeaderCell>
             <Table.HeaderCell width={2}>Status</Table.HeaderCell>
             <Table.HeaderCell width={2}>Access Level</Table.HeaderCell>
             <Table.HeaderCell width={2}>Actions</Table.HeaderCell>
@@ -48,7 +48,7 @@ class FacultyTable extends Component {
                         <FacultyDelete name={user.name} emp_no={user.emp_no} email_add={user.email_add} isRegCom={user.isRegCom} status={user.status} fetchData={this.props.fetchData}/>
                       </Grid.Column>
                       <Grid.Column>
-                        <EditFaculty name={user.name}/>
+                        <EditFaculty name={user.name} emp_no={user.emp_no} email_add={user.email_add} isRegCom={user.isRegCom} status={user.status} fetchData={this.props.fetchData}/>
                       </Grid.Column>
                       
                     </Grid.Row>
