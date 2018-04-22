@@ -28,9 +28,8 @@ class AdviseeTable extends Component {
 			advisees.forEach(advisee => {
 				advisees_list.push({
 					key: advisee.student_number,
-					adviser_advisee_id: advisee.adviser_advisee_id,
 					name: advisee.name,
-					advisers: advisee.advisers
+					advisers: advisee.advisers.length === 0 ? null : advisee.advisers
 				});
 			});
 			this.setState({ advisees: advisees_list });
@@ -41,16 +40,11 @@ class AdviseeTable extends Component {
 		return (
 			<div>
 				{this.state.advisees
-					.filter(information => {
-						if (
-							information.name
-								.toLowerCase()
-								.includes(this.props.search.toLowerCase())
-						) {
-							return true;
-						}
-						return false;
-					})
+					.filter(information =>
+						information.name
+							.toLowerCase()
+							.includes(this.props.search.toLowerCase())
+					)
 					.map(advisee_single => <AdviseeSingle advisee={advisee_single} />)}
 			</div>
 		);
