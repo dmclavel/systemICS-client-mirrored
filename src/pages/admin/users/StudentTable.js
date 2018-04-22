@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Table, Grid, Button, Popup, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
+import StudentDelete from './StudentDelete';
+import StudentEdit from './StudentEdit';
 
-class UsersTable extends Component {
+class StudentTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,9 +21,11 @@ class UsersTable extends Component {
       <Table sortable celled fixed>
         <Table.Header>
           <Table.Row textAlign="center">
+            <Table.HeaderCell width={5}>Student Number</Table.HeaderCell>
             <Table.HeaderCell width={5}>Name</Table.HeaderCell>
             <Table.HeaderCell width={5}>Email</Table.HeaderCell>
-            <Table.HeaderCell width={2}>Status</Table.HeaderCell>
+            <Table.HeaderCell width={3}> Curriculum </Table.HeaderCell>
+            <Table.HeaderCell width={3}>Status</Table.HeaderCell>
             <Table.HeaderCell width={4}>Actions</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -29,34 +33,19 @@ class UsersTable extends Component {
           {this.props.data.map(user => {
             return (
               <Table.Row>
+                <Table.Cell>{user.student_number}</Table.Cell>
                 <Table.Cell>{user.name}</Table.Cell>
-                <Table.Cell>{user.email}</Table.Cell>
-                <Table.Cell textAlign="center">{user.status}</Table.Cell>
-                <Table.Cell textAlign="center">
-                  <Grid>
+                <Table.Cell textAlign="center">{user.email_add}</Table.Cell>
+                 <Table.Cell textAlign="center">{user.curriculum}</Table.Cell>
+                <Table.Cell> {user.status} </Table.Cell>
+                <Table.Cell>
+                     <Grid>
                     <Grid.Row centered columns={3}>
                       <Grid.Column>
-                        <Popup
-                          trigger={
-                            <Button positive>
-                              <Icon.Group>
-                                <Icon name="user" />
-                                <Icon
-                                  corner
-                                  inverted
-                                  name="arrow circle outline up"
-                                />
-                              </Icon.Group>
-                            </Button>
-                          }
-                          content="Promote user"
-                        />
+                        <StudentDelete name={user.name} student_number={user.student_number} email_add={user.email_add} curriculum={user.curriculum} status={user.status} fetchData={this.props.fetchData}/>
                       </Grid.Column>
                       <Grid.Column>
-                        <Popup
-                          trigger={<Button icon="add" negative />}
-                          content="Archive user"
-                        />
+                        <StudentEdit name={user.name} student_number={user.student_number} email_add={user.email_add} curriculum={user.curriculum} status={user.status} fetchData={this.props.fetchData}/>
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
@@ -70,4 +59,4 @@ class UsersTable extends Component {
   }
 }
 
-export default UsersTable;
+export default StudentTable;

@@ -26,18 +26,7 @@ class Section extends Component {
 		super(props);
 		this.state = {
 			endpoint: 'https://sleepy-falls-95372.herokuapp.com/', // the address of the server
-			lab: [
-				{
-					time_start: '',
-					time_end: '',
-					room: '',
-					day: '',
-					section: '',
-					course_name: '',
-					course_title: '',
-					name: ''
-				}
-			]
+			lab: []
 		};
 		autobind(this);
 	}
@@ -46,16 +35,12 @@ class Section extends Component {
 	componentDidMount = () => {
 		const socket = socketIOClient(this.state.endpoint); //establish connection to the server
 		// listens on an endpoint and executes fallback function
-
 		socket.emit('view_sections', {
-			active: true,
-			petitioned: false,
-			additional: false,
-			unassignedOnly: false
+			course_offering_id: this.props.match.params._id
 		}); //send data to 'login' endpoint in server
 		socket.on('view_sections', returnValueFromServer => {
 			console.log(returnValueFromServer);
-			this.setState({ lab: returnValueFromServer });
+			this.setState({ lab: returnValueFromServer.lab_sections });
 		});
 	};
 	//a function for sending data to server.you can have many of these
@@ -64,14 +49,12 @@ class Section extends Component {
 		socket.emit('login', 'this is my data'); //send data to 'login' endpoint in server
 	};
 	render() {
-		const { lab } = this.state;
 
-		const currentLab = lab.filter(result => {
-			return result.course_name
-				.replace(' ', '')
-				.includes(this.props.match.params._id);
-		});
-
+		// const currentLab = lab.filter(result => {
+		// 	return result.course_name
+		// 		.replace(' ', '')
+		// 		.includes(this.props.match.params._id);
+		// });
 		return (
 			<div className="LabSectionTab">
 				<Grid centered={true}>
@@ -84,7 +67,7 @@ class Section extends Component {
 							<Grid columns={4} divided centered>
 								<Container centered>
 									<Card.Group itemsPerRow={4}>
-										{currentLab.map((item, index) => (
+										{this.state.lab.map((item, index) => (
 											<div>
 												<SectionCard
 													name={item['name']}
