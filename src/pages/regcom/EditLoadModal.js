@@ -94,6 +94,11 @@ class EditLoadModal extends Component {
         coursesDropdownLoading: false
       });
     });
+  }
+  // Modal methods
+  handleOpen = () => {
+    const socket = socketIOClient(this.state.endpoint);
+    const { emp_no } = this.props;
     // For a specific faculty show their assigned courses
     socket.emit('view_sections', {
       emp_no,
@@ -106,9 +111,8 @@ class EditLoadModal extends Component {
         courses
       });
     });
-  }
-  // Modal methods
-  handleOpen = () => this.setState({ open: true });
+    this.setState({ open: true });
+  };
   handleClose = () => this.setState({ open: false });
 
   // Assign course_offering_ids to a professor
