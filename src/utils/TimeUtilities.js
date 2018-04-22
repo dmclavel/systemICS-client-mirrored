@@ -104,3 +104,21 @@ export const convertToGeneralTime = time => {
     }
   }
 };
+
+// time: HH:mm:ss
+export const isTimeValid = time => {
+  // If time is within the range 7:00 AM - 7:00 PM
+  const separator = ':';
+  const splittedTime = time.split(separator, 2);
+  if (Number(splittedTime[0]) < 7 || Number(splittedTime[0] > 19)) {
+    return false;
+  } else if (Number(splittedTime[0]) === 19) {
+    if (Number(splittedTime[1]) === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return true;
+  }
+};
