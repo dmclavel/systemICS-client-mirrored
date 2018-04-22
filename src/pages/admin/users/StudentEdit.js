@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Grid, Segment, Header, Dropdown, Container, Checkbox , Popup} from 'semantic-ui-react';
+import { Button, Modal, Form, Grid, Segment, Header, Dropdown, Container, Checkbox , Popup, Card } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
+import ErrorMessage from './ErrorMessage';
 
 const inlineStyle={
   modal :{
@@ -27,6 +28,7 @@ class StudentEdit extends Component {
       isErrorMail: false,
       isErrorCurriculum: false,
       isErrorStatus: false,
+      isErrorMessage: false
     };
     autobind(this);
   }
@@ -78,7 +80,7 @@ class StudentEdit extends Component {
       this.props.fetchData();
       this.handleClose();
     }else{
-      alert("Please fill up all fields");
+      this.setState({isErrorMessage: true});
     }
   }
 
@@ -95,6 +97,9 @@ class StudentEdit extends Component {
             <Modal.Content>
               <Container>
                 <Segment padded="very">
+                    { 
+                      this.state.isErrorMessage == true? <ErrorMessage/>: <div/>
+                    }
                     <Form>
                       <Form.Group widths='equal'>
                         <Form.Input error={this.state.isErrorName} fluid label='Name' placeholder={this.state.name} onChange={this.handleName}/>
