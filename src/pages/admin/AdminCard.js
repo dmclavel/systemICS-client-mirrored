@@ -44,7 +44,6 @@ class AdminCard extends Component {
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
       this.setState({ coursesX: course, loading: false });
-      console.log(this.state.coursesX);
     });
   }
 
@@ -55,7 +54,6 @@ class AdminCard extends Component {
     socket.on('view_sections', course => {
       this.setState({ coursesX: course });
     });
-    console.log('Data changed');
   };
 
   handleSearch(e) {
