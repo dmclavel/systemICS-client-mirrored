@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import {Grid, Menu} from 'semantic-ui-react';
+import {Grid, Menu, Button} from 'semantic-ui-react';
 import SearchCard from '../../../components/SearchCard';
 import StudentTable from './StudentTable';
 import FacultyTable from './FacultyTable';
+import StudentAdd from './StudentAdd';
+import AddFaculty from './AddFaculty';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 
@@ -80,13 +82,31 @@ class User extends Component {
 		}
 	}
 
+	fetchStudents = () => {
+		const socket = socketIOClient(this.state.address); //establish connection to the server
+		// listens on an endpoint and executes fallback function
+		socket.emit('view_students', 'crgotis@up.edu.ph'); //send data to 'login' endpoint in server
+		socket.on('view_students', returnValueFromServer => {
+			console.log(returnValueFromServer);
+			this.setState({ dummyStudents: returnValueFromServer });
+			this.setState({origStudent: this.state.dummyStudents});
+		});
+	}
 
-	render() {	
+	fetchFaculty = () => {
+		const socket = socketIOClient(this.state.address); //establish connection to the server
+		// listens on an endpoint and executes fallback function
+		socket.emit('view_faculty', 'crgotis@up.edu.ph'); //send data to 'login' endpoint in server
+    socket.on('view_faculty', returnValueFromServer => {
+      console.log(returnValueFromServer);
+      this.setState({ dummyFaculty: returnValueFromServer });
+      this.setState({origFaculty: this.state.dummyFaculty});
+    });
+	}
+
+	render() {
 		return (
 			<Grid>
-			<Grid.Row>
-				<SearchCard fluid={true} handleSearch={this.handleSearch} placeholder="name or email"/>
-			</Grid.Row>
 			<Grid.Row>
 				<Menu fluid widths={2}>
 			        <Menu.Item
@@ -98,8 +118,8 @@ class User extends Component {
 			        </Menu.Item>
 
 			        <Menu.Item
-			          name='reviews'
-			          active={this.state.activeItem === 'faculty'}
+			          name='Faculty'
+			          active={this.state.activeItem === 'Faculty'}
 			          onClick={this.handleItemClick}
 			        >
 			          Faculty
@@ -107,10 +127,20 @@ class User extends Component {
 
 	      		</Menu>
       		</Grid.Row>
+			<Grid.Row fluid>
+				<Grid.Column width={13}>
+					<SearchCard fluid handleSearch={this.handleSearch} placeholder="name or email"/>
+				</Grid.Column>
+				<Grid.Column width={3}>
+      			{ 
+      				this.state.activeItem == 'Student'? <StudentAdd floated="right" fetchData={this.fetchStudents}/>: <AddFaculty fetchData={this.fetchFaculty}/>
+      			}
+      			</Grid.Column>
+			</Grid.Row>
       		<Grid.Row>
       			{
-      				this.state.activeItem == 'Student'? <StudentTable data={this.state.dummyStudents}/>: <FacultyTable data={this.state.dummyFaculty}/>
-      			}   			
+      				this.state.activeItem == 'Student'? <StudentTable data={this.state.dummyStudents} fetchData={this.fetchStudents} />: <FacultyTable data={this.state.dummyFaculty} fetchData={this.fetchFaculty}/>
+      			}
 			</Grid.Row>
 			</Grid>
 		);

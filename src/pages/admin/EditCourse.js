@@ -101,7 +101,6 @@ class EditCourse extends Component {
       } else days = days + '-F';
     }
 
-    console.log('Days ' + days);
     return days;
   }
 
@@ -125,7 +124,6 @@ class EditCourse extends Component {
     const state = this.state;
     state.status = data.value;
     this.setState(state);
-    console.log(this.state.status);
   }
 
   handleSubmit() {
@@ -166,7 +164,6 @@ class EditCourse extends Component {
     if (
       parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity)
     ) {
-      console.log(data);
       socket.emit('modify_section_2', data);
       this.props.fetchCourse();
       this.setState({

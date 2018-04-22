@@ -13,7 +13,7 @@ const inlineStyle={
   }
 };
 
-class StudentDelete extends Component {
+class FacultyDelete extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,8 +31,8 @@ class StudentDelete extends Component {
   handleDelete = (e) => {
     const socket = socketIOClient(this.state.address); //establish connection to the server
     // listens on an endpoint and executes fallback function
-    socket.emit('remove_student', {student_number: this.props.student_number}); //send data to 'login' endpoint in server
-    socket.on('remove_student', returnValueFromServer => {
+    socket.emit('remove_faculty', {emp_no: this.props.emp_no}); //send data to 'login' endpoint in server
+    socket.on('remove_faculty', returnValueFromServer => {
       console.log(returnValueFromServer);
     });
     this.props.fetchData();
@@ -69,4 +69,4 @@ class StudentDelete extends Component {
   }
 }
 
-export default StudentDelete;
+export default FacultyDelete;

@@ -72,7 +72,7 @@ class AddCourseModal extends Component {
 				const result = course.find(res => res.course_name === course_name);
 				if (!result) {
 					socket.emit(
-						this.state.isEditing ? 'modify_course' : 'create_course_do',
+						this.state.isEditing ? 'modify_course' : 'create_course_2',
 						data
 					); //if course not in database, proceed to creating a new course
 					this.setState({
