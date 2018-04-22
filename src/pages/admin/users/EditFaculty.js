@@ -49,6 +49,7 @@ class EditFaculty extends Component {
   }
 
   handleSubmit = (e) => {
+    alert("emp_no: " + this.state.emp_no + "\nname: " + this.state.name + "\nemail_add: " + this.state.email_add + "\nstatus: " + this.state.status + "\nisRegCom: " + this.state.isRegCom);
     const socket = socketIOClient(this.state.address); //establish connection to the server
     socket.emit('modify_faculty', {emp_no: this.state.emp_no, name: this.state.name, email_add: this.state.email_add, status: this.state.status, isRegCom: this.state.isRegCom}); //send data to 'login' endpoint in server
     socket.on('modify_faculty', returnValueFromServer => {
