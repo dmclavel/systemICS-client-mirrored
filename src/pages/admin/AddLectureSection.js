@@ -4,7 +4,8 @@ import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import {
   isScheduleConflict,
-  convertToGeneralTime
+  convertToGeneralTime,
+  isTimeValid
 } from '../../utils/TimeUtilities';
 const inlineStyle = {
   modal: {
@@ -65,7 +66,8 @@ class AddCourseLecture extends Component {
       unit: '',
       max_capacity: '',
       message: '',
-      status: ''
+      status: '',
+      existing: false
     };
     autobind(this);
   }
@@ -270,6 +272,22 @@ class AddCourseLecture extends Component {
         negative: true,
         hidden: false
       });
+    } else if (!isTimeValid(time_start)) {
+      this.setState({
+        message: 'Error! Invalid time start.',
+        details,
+        positive: false,
+        negative: true,
+        hidden: false
+      });
+    } else if (!isTimeValid(time_end)) {
+      this.setState({
+        message: 'Error! Invalid time end.',
+        details,
+        positive: false,
+        negative: true,
+        hidden: false
+      });
     } else {
       this.setState(
         {
@@ -290,6 +308,8 @@ class AddCourseLecture extends Component {
   };
   handleChange = (e, { name, value }) => {
     let existing = false;
+    let details = '';
+    let message = '';
     if (name === 'section' && this.state.course_name != '') {
       // this.fillExistingSections();
       this.state.existingSections.forEach(element => {
@@ -297,27 +317,29 @@ class AddCourseLecture extends Component {
           value === element.section &&
           parseInt(this.state.course_id) === parseInt(element.course_id)
         ) {
-          let appendString =
+          message = 'Duplicate entry for section!';
+          details +=
             'Section ' +
             element.section +
             ' of ' +
             element.course_name +
             ' already exists!';
+          existing = true;
           this.setState({
-            message: appendString,
+            message,
+            details,
             positive: false,
             negative: true,
             hidden: false
           });
-          existing = true;
         }
       });
       //TODO
     }
     if (existing) {
-      this.setState({ [name]: value });
+      this.setState({ message, details, [name]: value, existing });
     } else {
-      this.setState({ [name]: value, hidden: true });
+      this.setState({ [name]: value, hidden: true, existing });
     }
     // }
   };
