@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, Form, Grid, Segment, Header, Dropdown, Container, Checkbox , Popup} from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
+import ErrorMessage from './ErrorMessage';
 
 const inlineStyle={
 	modal :{
@@ -23,40 +24,64 @@ class EditFaculty extends Component {
       emp_no: this.props.emp_no,
       modalOpen: false,
       options: [ { key: 'Faculty', value: 0, text: 'Faculty' }, { key: 'Admin', value: 2, text: 'Admin' }, { key: 'Registration Committee', value: 1, text: 'Registration Committee' }, ],
-      address: 'https://sleepy-falls-95372.herokuapp.com/'
+      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      isErrorName: false,
+      isErrorMail: false,
+      isErrorAccessLevel: false,
+      isErrorStatus: false,
+      isErrorMessage: false
     };
     autobind(this);
   }
 
   handleName = (e) => {
+    if (e.target.value != ""){
+      this.setState({isErrorName: false});
+    }else{
+      this.setState({isErrorName: true});
+    }
     this.setState({name: e.target.value});
   }
 
-  handleNumber = (e) => {
-    this.setState({emp_no: e.target.value});
-  }
-
   handleEmail = (e) => {
+    if (e.target.value != ""){
+      this.setState({isErrorMail: false});
+    }else{  
+      this.setState({isErrorMail: true});
+    }
     this.setState({email_add: e.target.value});
   }
 
   handleAccessLevel = (event: SyntheticEvent, data: object) => {
+    if (event.target.value != ""){
+      this.setState({isErrorAccessLevel: false});
+    }else{
+      this.setState({isErrorAccessLevel: true});
+    }
     this.setState({isRegCom: data.value});
   }
 
   handleStatus = (e) => {
+    if (e.target.value != ""){
+      this.setState({isErrorStatus: false});
+    }else{
+      this.setState({isErrorStatus: true});
+    }
     this.setState({status: e.target.value});
   }
 
   handleSubmit = (e) => {
-    alert("emp_no: " + this.state.emp_no + "\nname: " + this.state.name + "\nemail_add: " + this.state.email_add + "\nstatus: " + this.state.status + "\nisRegCom: " + this.state.isRegCom);
-    const socket = socketIOClient(this.state.address); //establish connection to the server
-    socket.emit('modify_faculty', {emp_no: this.state.emp_no, name: this.state.name, email_add: this.state.email_add, status: this.state.status, isRegCom: this.state.isRegCom}); //send data to 'login' endpoint in server
-    socket.on('modify_faculty', returnValueFromServer => {
-      console.log(returnValueFromServer);
-    });
-    this.props.fetchData();
-    this.handleClose();
+    if (this.state.isErrorStatus == false && this.state.isErrorAccessLevel == false && this.state.isErrorMail == false && this.state.isErrorName == false){
+      const socket = socketIOClient(this.state.address); //establish connection to the server
+      socket.emit('modify_faculty', {emp_no: this.state.emp_no, name: this.state.name, email_add: this.state.email_add, status: this.state.status, isRegCom: this.state.isRegCom}); //send data to 'login' endpoint in server
+      socket.on('modify_faculty', returnValueFromServer => {
+        console.log(returnValueFromServer);
+      });
+      this.props.fetchData();
+      this.handleClose();
+    }else{
+      this.setState({isErrorMessage: true});
+    }
   }
 
   handleClose = (e) => {
@@ -73,14 +98,17 @@ class EditFaculty extends Component {
          	<Modal.Content>
           	<Container>
           	<Segment padded="very">
+                { 
+                  this.state.isErrorMessage == true? <ErrorMessage/>: <div/>
+                }
   							<Form>
                   <Form.Group widths='equal'>
-                    <Form.Input fluid label='Name' placeholder={this.state.name} onChange={this.handleName}/>
-                    <Form.Input fluid label='Email address' placeholder={this.state.email_add} onChange={this.handleEmail}/>
+                    <Form.Input error={this.state.isErrorName} fluid label='Name' placeholder={this.state.name} onChange={this.handleName}/>
+                    <Form.Input error={this.state.isErrorMail} fluid label='Email address' placeholder={this.state.email_add} onChange={this.handleEmail}/>
                   </Form.Group>
                   <Form.Group widths='equal'>
-                    <Form.Dropdown fluid label = "Access Level" placeholder='Access Level' search selection options={this.state.options} onChange={this.handleAccessLevel}/>
-                    <Form.Input fluid label='Status' placeholder={this.state.status} onChange={this.handleStatus}/>
+                    <Form.Dropdown error={this.state.isErrorAccessLevel} fluid label = "Access Level" placeholder='Access Level' search selection options={this.state.options} onChange={this.handleAccessLevel}/>
+                    <Form.Input error={this.state.isErrorStatus} fluid label='Status' placeholder={this.state.status} onChange={this.handleStatus}/>
                   </Form.Group>
                 </Form>
                 <h2>
