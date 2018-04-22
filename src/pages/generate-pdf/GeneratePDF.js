@@ -1,26 +1,73 @@
 import React, { Component } from 'react';
 import ics from './ics.gif';
 import uplb from './uplb.jpg';
+import './GeneratePDF.css';
+import socketIOClient from 'socket.io-client';
+import autobind from 'react-autobind';
 
 class GeneratePDF extends Component {
 	constructor() {
 		super();
 
 		this.state = {
-			date: new Date().toDateString()
+			endpoint: 'https://sleepy-falls-95372.herokuapp.com',
+			date: `${new Date().toLocaleString('en-us', {
+				month: 'long'
+			})} ${new Date().getDate()}, ${new Date().getFullYear()}`,
+			informations: [],
+			table2: [],
+			table3: [],
+			table4: []
 		};
+		autobind(this);
+	}
+
+	componentDidMount() {
+		const socket = socketIOClient(this.state.endpoint);
+		socket.emit('view_sections', { dissolved: true });
+		socket.on('view_sections', informations => {
+			const state = this.state;
+			state['dissolved'] = informations;
+			this.setState(state);
+		});
+		console.log(this.state);
+
+		// socket.emit('view_sections', { petitioned: true });
+		// socket.on('view_sections', informations => {
+		// 	this.setState({
+		// 		table2: informations
+		// 	});
+		// });
+
+		// socket.emit('view_sections', { additional: true });
+		// socket.on('view_sections', informations => {
+		// 	this.setState({
+		// 		table3: informations
+		// 	});
+		// });
+
+		// console.log(this.state);
+
+		// socket.emit('view_sections', { dissolved: true });
+		// socket.on('view_sections', informations => {
+		//   this.setState({
+		//     table1:informations
+		//   });
+		// });
+
+		if (this.state.informations) window.print();
 	}
 
 	render() {
-		const { date } = this.state;
+		const { date, dissolved } = this.state;
 
 		return (
-			<div className="page">
+			<div className="page-main">
 				<div className="headerICS">
 					<img className="up" src={uplb} />
 					<img className="icsl" src={ics} />
-					<h1 class="ics">INSTITUTE OF COMPUTER SCIENCE</h1>
-					<h2 class="ics2">
+					<h1 className="ics">INSTITUTE OF COMPUTER SCIENCE</h1>
+					<h2 className="ics2">
 						College of Arts and Sciences<br />
 						University of the Philippines Los Baños<br />
 						4031 College, Laguna, PHILIPPINES<br />
@@ -29,13 +76,13 @@ class GeneratePDF extends Component {
 				</div>
 
 				<br />
-				<div className="date">
+				<div>
 					<p className="date">{date}</p>
 				</div>
 				<br />
 
-				<div className="salutation">
-					<p>
+				<div>
+					<p className="salutation">
 						Dr. Fernando C. Sanchez, Jr.<br />
 						Chancellor<br />
 						UPLB, College, Laguna<br />
@@ -43,77 +90,101 @@ class GeneratePDF extends Component {
 					</p>
 				</div>
 
-				<div className="greeting">
+				<div>
 					<br />
-					<p>Dear Chancellor Sanchez:</p>
+					<p className="greeting">Dear Chancellor Sanchez:</p>
 					<br />
 				</div>
 
-				<div className="introLetter">
-					<p>
+				<div>
+					<p className="introLetter">
 						This is to submit to your office the final course offering of the
 						Institute of Computer Science for [Current Semester] with the
 						following changes and information:
 					</p>
 				</div>
 
-				<div className="tableA">
+				<div>
 					<br />
-					<p>
+					<p className="tableA">
 						<strong>A. Dissolved Sections</strong>
 					</p>
 					<br />
-					<table>{/* Map here */}</table>
+					<table className="t1">
+						<tr>
+							<th className="th1 td">Course Code/Title</th>
+							<th className="th1 td">Section(s)</th>
+							<th className="th1 td">Reason for Dissolution</th>
+						</tr>
+						{dissolved &&
+							dissolved.map((section, index) => (
+								<tr key={index}>
+									<td className="td">{section.course_name}</td>
+									<td className="td">{section.section}</td>
+									<td className="td"> </td>
+								</tr>
+							))}
+					</table>
 				</div>
 
-				<div className="tableB">
+				<div>
 					<br />
-					<p>
+					<p className="tableB">
 						<strong>B. Petitioned Sections</strong>
 					</p>
 					<br />
-					<table>{/* Map here */}</table>
+					<table className="t2">{/* Map here */}</table>
 				</div>
 
-				<div className="tableC">
+				<div>
 					<br />
-					<p>
+					<p className="tableC">
 						<strong>C. Additional Sections</strong>
 					</p>
 					<br />
-					<table>{/* Map here */}</table>
+					<table className="t3">{/* Map here */}</table>
 				</div>
 
-				<div className="tableD">
+				<div>
 					<br />
-					<p>
+					<p className="tableD">
 						<strong>D. Low Class Size Sections</strong>
 					</p>
 					<br />
-					<table>{/* Map here */}</table>
+					<table className="t4">{/* Map here */}</table>
 				</div>
 
-				<div className="closing">
+				<div>
 					<br />
 					<br />
-					<p>Very truly yours, </p>
+					<p className="closing">Very truly yours, </p>
 				</div>
 
-				<div className="icsDirector">
+				<div>
 					<br />
-					<p>
+					<p className="icsDirector">
 						<strong>JAIME M. SAMANIEGO</strong>
 						<br />
 						Director, ICS
 					</p>
 				</div>
 
-				<div className="recommApproval">
+				<div>
 					<br />
 					<br />
-					<p> RECOMMENDING APPROVAL </p>
+					<p className="recommApproval"> RECOMMENDING APPROVAL </p>
 					<br />
 					<br />
+					<p className="recommNames">
+						<b>
+							IVAN MARCELO A. DUKA
+							&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+							FELINO P. LANSIGAN
+						</b>{' '}
+						<br />&nbsp;&nbsp; College Secretary, CAS
+						&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+						Dean, CAS{' '}
+					</p>
 				</div>
 			</div>
 		);

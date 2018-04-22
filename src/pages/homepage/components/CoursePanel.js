@@ -100,8 +100,9 @@ class CoursePanel extends Component {
 										content="Learn More"
 										basic
 										onClick={() => {
+											this.props.viewLabHandler(item.course_offering_id);
 											window.location =
-												'/section/' + item.course_name.replace(/\s+/, '');
+												'/section/' + item.course_offering_id;
 										}}
 									/>
 								</Grid.Column>

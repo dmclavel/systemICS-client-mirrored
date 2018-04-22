@@ -34,6 +34,7 @@ class Login extends Component {
     });
 
     this.props.logInHandler(this.state.profile, 3);
+    window.location = '/';
   };
 
   componentDidMount() {
@@ -49,8 +50,6 @@ class Login extends Component {
   };
 
   render() {
-    if (this.state.success) return <Redirect to="/" push />;
-
     return (
       <div className="login-form">
         <Grid textAlign="center" columns={3} verticalAlign="middle">

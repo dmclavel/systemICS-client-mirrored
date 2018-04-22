@@ -37,7 +37,6 @@ class CoursePanelWhole extends Component {
 		// listens on an endpoint and executes fallback function
 		socket.emit('view_all_lecture_sections', 'dfesperanza@up.edu.ph'); //send data to 'login' endpoint in server
 		socket.on('view_all_lecture_sections', returnValueFromServer => {
-			console.log(returnValueFromServer);
 			this.setState({ lecture: returnValueFromServer });
 			this.setState({ originalLecture: returnValueFromServer });
 		});
@@ -116,8 +115,9 @@ class CoursePanelWhole extends Component {
 											content="Learn More"
 											basic
 											onClick={() => {
+												this.props.viewLabHandler(item.course_offering_id);
 												window.location =
-													'/section/' + item.course_name.replace(/\s+/, '');
+												'/section/' + item.course_offering_id;
 											}}
 										/>
 									</Grid.Column>
