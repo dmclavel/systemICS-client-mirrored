@@ -10,7 +10,6 @@ import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 import socketIOClient from 'socket.io-client';
 import './Login.css';
 import Logo from './logo-transparent-no-stroke.png';
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -24,18 +23,22 @@ class Login extends Component {
   }
 
   handleProfile = googleUser => {
-    this.setState({ profile: googleUser.getBasicProfile() });
-    console.log(this.state.profile);
+      this.setState({ profile: googleUser.getBasicProfile() });
+      console.log(this.state.profile);
 
-    const socket = socketIOClient(this.state.endpoint);
-    socket.emit('email_privilege', { email_add: this.state.profile.U3 });
-    socket.on('email_privilege', privilege => {
-      this.setState({ accessLvl: privilege, success: true });
-    });
+      const socket = socketIOClient(this.state.endpoint);
+      socket.emit('view_faculty', { email_add: this.state.profile.U3 });
+      socket.on('view_faculty', privilege => {
+          this.setState({accessLvl:privilege[0].isRegCom});
+          console.log(this.state.accessLvl);
+          this.props.logInHandler(this.state.profile,this.state.accessLvl);
+          window.location = '/';
+      }); 
 
-    this.props.logInHandler(this.state.profile, 3);
-    window.location = '/';
-  };
+      console.log(this.state.accessLvl);
+        
+
+    };
 
   componentDidMount() {
     const socket = socketIOClient(this.state.endpoint);
