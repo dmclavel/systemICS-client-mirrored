@@ -144,7 +144,6 @@ class AddCourseLab extends Component {
     let id = this.props.courseLecID;
     let labSection = this.labSectionFormat();
     let lecSection = this.props.courseoffering;
-    console.log(lecSection);
     const {
       course_offering_id,
       lecture_id,
@@ -200,7 +199,7 @@ class AddCourseLab extends Component {
       this.state.error === '' &&
       parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity)
     ) {
-      socket.emit('create_section', data);
+      socket.emit('create_section_2', data);
 
       this.props.fetchCourse();
       this.setState({

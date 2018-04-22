@@ -33,82 +33,150 @@ const semesterOptions = [
   }
 ];
 
-class AddLectureSection extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hidden: true,
-      open: false,
-      negative: false,
-      positive: false,
-      M: false,
-      T: false,
-      W: false,
-      Th: false,
-      F: false,
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
-      courses: [],
-      existingCourses: [],
-      section_type: 1,
-      emp_no: null,
-      acad_year: '',
-      semester: '',
-      no_of_students: 0,
-      course_id: '',
-      course_name: '',
-      time_start: '07:00',
-      time_end: '19:00',
-      room: '',
-      day: '',
-      section: '',
-      unit: '',
-      max_capacity: '',
-      details: ''
-    };
-    autobind(this);
-  }
+class AddCourseLecture extends Component {
+	constructor() {
+		super();
+
+		this.state = {
+			hidden:true,
+			open: false,
+			negative: false,
+			positive: false,
+			existing: false,
+			M: false,
+			T: false,
+			W: false,
+			Th: false,
+			F: false,
+			address: 'https://sleepy-falls-95372.herokuapp.com/',
+			courses: [],
+			existingSections: [],
+			section_type: 0,
+			emp_no: null,
+			acad_year: '',
+			semester: '',
+			no_of_students: 0,
+			course_id: '',
+			course_name: '',
+			time_start: '07:00',
+			time_end: '19:00',
+			room: '',
+			day: '',
+			section: '',
+			unit: '',
+			max_capacity: '',
+			message: ''
+		};
+		autobind(this);
+	}
+
+	dayFormat() {
+		const { M, T, W, Th, F } = this.state;
+		let days = '';
+		if (M) {
+			if (days === '') {
+				days = 'M';
+				this.setState({ day: 'M' });
+			}
+		}
+		if (T) {
+			if (days === '') {
+				days = 'T';
+				this.setState({ day: 'T' });
+			} else days = days + '-T';
+		}
+		if (W) {
+			if (days === '') {
+				days = 'W';
+				this.setState({ day: 'W' });
+			} else days = days + '-W';
+		}
+		if (Th) {
+			if (days === '') {
+				days = 'Th';
+				this.setState({ day: 'Th' });
+			} else days = days + '-Th';
+		}
+		if (F) {
+			if (days === '') {
+				days = 'F';
+				this.setState({ day: 'F' });
+			} else days = days + '-F';
+		}
+		return days;
+	}
+
   componentWillReceiveProps(nextProps) {
     this.setState({ existingCourses: nextProps.data });
   }
-  dayFormat() {
-    const { M, T, W, Th, F } = this.state;
-    let days = '';
-    if (M) {
-      if (days === '') {
-        days = 'M';
-        this.setState({ day: 'M' });
-      }
-    }
-    if (T) {
-      if (days === '') {
-        days = 'T';
-        this.setState({ day: 'T' });
-      } else days = days + '-T';
-    }
-    if (W) {
-      if (days === '') {
-        days = 'W';
-        this.setState({ day: 'W' });
-      } else days = days + '-W';
-    }
-    if (Th) {
-      if (days === '') {
-        days = 'Th';
-        this.setState({ day: 'Th' });
-      } else days = days + '-Th';
-    }
-    if (F) {
-      if (days === '') {
-        days = 'F';
-        this.setState({ day: 'F' });
-      } else days = days + '-F';
-    }
-    return days;
-  }
 
-  handleChange = (e, { name, value }) => {
-    this.setState({ [name]: value });
-  };
+	clear = () => {
+			this.setState({
+				existingSections: [],
+				hidden: true,
+				negative: false,
+				positive: false,
+				existing: false,
+				M: false,
+				T: false,
+				W: false,
+				Th: false,
+				F: false,
+				course_id: '',
+				course_name: '',
+				time_start: '7:00',
+				time_end: '19:00',
+				room: '',
+				day: '',
+				section: '',
+				unit: '',
+				max_capacity: ''
+			});
+	}
+
+	close = () =>
+		this.setState({
+			open: false,
+			existingSections: [],
+			hidden: true,
+			negative: false,
+			positive: false,
+			existing: false,
+			M: false,
+			T: false,
+			W: false,
+			Th: false,
+			F: false,
+			course_id: '',
+			course_name: '',
+			time_start: '7:00',
+			time_end: '19:00',
+			room: '',
+			day: '',
+			section: '',
+			unit: '',
+			max_capacity: ''
+		});
+
+	open = () => {
+		this.setState({ open: true });
+
+		const socket = socketIOClient(this.state.address);
+		const data = { email: 'pvgrubat@up.edu.ph' };
+
+		socket.emit('view_existing_courses', data);
+		socket.on('view_existing_courses', course => {
+			const tempArray = [];
+			course.forEach(c => {
+				tempArray.push({
+					key: c.course_id,
+					value: c.course_id,
+					text: c.course_name
+				});
+			});
+			this.setState({ courses: tempArray });
+		});
+	};
 
   handleDayChange = (e, { content, active }) => {
     if (active === true) this.setState({ [content]: false });
@@ -211,55 +279,62 @@ class AddLectureSection extends Component {
       });
       socket.emit('create_section_2', data);
       this.props.fetchCourse();
+			this.clear();
     }
   };
 
-  close = () =>
-    this.setState({
-      open: false,
-      hidden: true,
-      negative: false,
-      positive: false,
-      M: false,
-      T: false,
-      W: false,
-      Th: false,
-      F: false,
-      course_id: '',
-      time_start: '',
-      time_end: '',
-      room: '',
-      day: '',
-      section: '',
-      unit: '',
-      max_capacity: ''
-    });
+	handleChange = (e, { name, value }) => {
+			if (name === "section" && this.state.course_name != "") {
+				this.fillExistingSections();
+				this.setState({ hidden: true});
+				this.state.existingSections.forEach (element => {
+					if (value === element.section && parseInt(this.state.course_id) == parseInt(element.course_id)){
+						this.setState({hidden: false, existing: true});
+						let appendString = "Section " + element.section + " of "+  element.course_name + " already exists!";
+						this.setState({message: appendString, positive: false, negative: true});
+					}
+				});
 
-  open = () => {
-    this.setState({ open: true });
+				if (!this.state.existing) {
+					this.setState({ [name]: value });
+				}else{
+					this.setState({ existing: false});
+				}
+			}
+			else {
+				if (this.state.course_name === "") {
+					this.setState({ hidden: false});
+					this.setState({message: "Please choose a Course Name first!", positive: false, negative: true});
+				}
+				else {
+					this.setState({ hidden: true});
+					this.setState({ [name]: value });
+				}
+			}
+		};
 
-    const socket = socketIOClient(this.state.address);
-    const data = { email: 'pvgrubat@up.edu.ph' };
+		fillExistingSections() {
+			const socket = socketIOClient(this.state.address);
+			const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
+			socket.emit('view_sections', data);
+			socket.on('view_sections', course => {
+				this.setState({ existingSections: course });
+			});
+		}
 
-    socket.emit('view_existing_courses', data);
-    socket.on('view_existing_courses', course => {
-      const tempArray = [];
-      course.forEach(c => {
-        tempArray.push({
-          key: c.course_id,
-          value: c.course_id,
-          text: c.course_name
-        });
-      });
-      this.setState({ courses: tempArray });
-    });
-  };
+	handleDropdownChange(e, data) {
+		this.clear();
+		const state = this.state;
+		state.course_id = data.value;
+		state.course_name = data.text;
+		this.setState({course_id:state.course_id, course_name:state.course_name});
+	}
 
-  handleDropdownChange(e, data) {
-    const state = this.state;
-    state.course_id = data.value;
-    this.setState(state);
-  }
+	handleSemester(e, data) {
+		const state = this.state;
+		state.semester = data.value;
+		this.setState(state);
+	}
 
   render() {
     const {
@@ -283,50 +358,51 @@ class AddLectureSection extends Component {
       max_capacity
     } = this.state;
 
-    return (
-      <Modal
-        size="large"
-        style={inlineStyle.modal}
-        onOpen={this.open}
-        open={open}
-        onClose={this.close}
-        trigger={
-          <Button floated="right" positive content="Add Lecture Section" />
-        }
-      >
-        <Modal.Header>Add New Lecture</Modal.Header>
-        <Modal.Content>
-          <Grid>
-            <Form className="form-lecture">
-              <Grid.Row>
-                <Form.Group>
-                  <Form.Dropdown
-                    search
-                    selection
-                    width={10}
-                    label="Course name"
-                    placeholder="Pick course name"
-                    options={courses}
-                    onChange={this.handleDropdownChange}
-                  />
-                  <Form.Input
-                    label="Section"
-                    placeholder="Section"
-                    name="section"
-                    value={section}
-                    width={3}
-                    onChange={this.handleChange}
-                  />
-                  <Form.Input
-                    label="Room"
-                    placeholder="Room"
-                    name="room"
-                    width={3}
-                    value={room}
-                    onChange={this.handleChange}
-                  />
-                </Form.Group>
-              </Grid.Row>
+		return (
+			<Modal
+				size="large"
+				style={inlineStyle.modal}
+				onOpen={this.open}
+				open={open}
+				onClose={this.close}
+				trigger={
+					<Button floated="right" positive content="Add Lecture Section" />
+				}
+			>
+				<Modal.Header>Add New Lecture</Modal.Header>
+				<Modal.Content>
+					<Grid>
+						<Form className="form-lecture">
+							<Grid.Row>
+								<Form.Group>
+									<Form.Dropdown
+										search
+										selection
+										width={10}
+										label="Course name"
+										name="course_name"
+										placeholder="Pick course name"
+										options={courses}
+										onChange={this.handleDropdownChange}
+									/>
+									<Form.Input
+										label="Section"
+										placeholder="Section"
+										name="section"
+										value={section}
+										width={3}
+										onChange={this.handleChange}
+									/>
+									<Form.Input
+										label="Room"
+										placeholder="Room"
+										name="room"
+										width={3}
+										value={room}
+										onChange={this.handleChange}
+									/>
+								</Form.Group>
+							</Grid.Row>
 
               <Grid.Row>
                 <Form.Group>
@@ -470,4 +546,4 @@ class AddLectureSection extends Component {
   }
 }
 
-export default AddLectureSection;
+export default AddCourseLecture;

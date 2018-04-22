@@ -38,7 +38,6 @@ class DeleteCourse extends Component {
       email: 'jcgaza@up.edu.ph',
       course_offering_id: this.props.coursecodeid
     };
-    console.log(data);
     socket.emit('remove_section', data);
     this.props.fetchCourse();
 
