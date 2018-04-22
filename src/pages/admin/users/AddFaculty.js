@@ -49,7 +49,6 @@ class AddFaculty extends Component {
   }
 
   handleSubmit = (e) => {
-    alert("name: " + this.state.name + "\nemp_no: " + this.state.emp_no + "\nemail_add: " + this.state.email_add + "\nstatus: " + this.state.status + "\nisRegCom: " + this.state.isRegCom);
     const socket = socketIOClient(this.state.address); //establish connection to the server
     socket.emit('create_faculty', {emp_no: this.state.emp_no, name: this.state.name, email_add: this.state.email_add, status: this.state.status, isRegCom: this.state.isRegCom}); //send data to 'login' endpoint in server
     socket.on('create_faculty', returnValueFromServer => {
@@ -71,7 +70,7 @@ class AddFaculty extends Component {
   render() {
     return(
        <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button color="teal" onClick={this.handleOpen} open={this.state.modalOpen}
-        onClose={this.handleClose}> Add Faculty </Button>} basic>
+        onOpen={this.handleOpen} onClose={this.handleClose}> Add Faculty </Button>} basic>
             <Modal.Content>
               <Container>
                 <Segment padded="very">
