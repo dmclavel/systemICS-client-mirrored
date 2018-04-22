@@ -43,7 +43,9 @@ class AdminCard extends Component {
     const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
-      this.setState({ coursesX: course, loading: false });
+      console.log(course);
+      this.setState({ coursesX: course , courses: course});
+      this.setState({ loading: false });
     });
   }
 
