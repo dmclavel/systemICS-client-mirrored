@@ -231,13 +231,15 @@ class Sidebar extends Component {
 					</Segment>
 				</Grid.Row>
 				<Grid.Row>
-					<Button.Group fluid>
-						<DropFile />
-						<Button.Or />
-						<Link to="/admin/generate_report">
-							<Button color="teal" content="Generate Course Report" />
-						</Link>
-					</Button.Group>
+					{this.props.accessLvl === 3 && (
+						<Button.Group fluid>
+							<DropFile />
+							<Button.Or />
+							<Link to="/admin/generate_report">
+								<Button color="teal" content="Generate Course Report" />
+							</Link>
+						</Button.Group>
+					)}
 				</Grid.Row>
 			</Grid>
 		);

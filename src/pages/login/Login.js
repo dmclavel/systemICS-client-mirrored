@@ -38,6 +38,7 @@ class Login extends Component {
     const socket = socketIOClient(this.state.endpoint);
     socket.emit('view_faculty', googleUser.getBasicProfile().U3);
     socket.on('view_faculty', res => {
+      console.log(res);
       const ans = res.find(
         faculty => faculty.email_add === googleUser.getBasicProfile().U3
       );
