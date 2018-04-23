@@ -4,13 +4,14 @@ import uplb from './uplb.jpg';
 import './GeneratePDF.css';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
+import config from '../../config.json';
 
 class GeneratePDF extends Component {
 	constructor() {
 		super();
 
 		this.state = {
-			endpoint: 'https://sleepy-falls-95372.herokuapp.com',
+			endpoint: config.backendAddress, // the address of the server
 			date: `${new Date().toLocaleString('en-us', {
 				month: 'long'
 			})} ${new Date().getDate()}, ${new Date().getFullYear()}`,
