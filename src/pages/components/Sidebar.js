@@ -9,7 +9,7 @@ import {
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import socketIOClient from 'socket.io-client';
-
+import config from './../../config.json';
 import DropFile from '../admin/DropFile';
 
 const items = [
@@ -115,7 +115,7 @@ class Sidebar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			address: 'https://sleepy-falls-95372.herokuapp.com',
+			address: config.backendAddress,
 			semesters: [],
 			acad_year: 0,
 			semester: 0
