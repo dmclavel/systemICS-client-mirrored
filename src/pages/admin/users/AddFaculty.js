@@ -29,7 +29,7 @@ class AddFaculty extends Component {
       isErrorStatus: false,
       isErrorNumber: false,
       modalOpen: false,
-      options: [ { key: 'Faculty', value: 0, text: 'Faculty' }, { key: 'Admin', value: 2, text: 'Admin' }, { key: 'Registration Committee', value: 1, text: 'Registration Committee' }, ],
+      options: [ { key: 'Faculty', value: 1, text: 'Faculty' }, { key: 'Admin', value: 3, text: 'Admin' }, { key: 'Registration Committee', value: 2, text: 'Registration Committee' }, ],
       address: 'https://sleepy-falls-95372.herokuapp.com/'
     };
     autobind(this);
