@@ -73,7 +73,7 @@ class AddFaculty extends Component {
   handleStatus = (event: SyntheticEvent, data: object) => {
       this.setState({status: data.value}); 
       this.setState({isErrorStatus: false});
-      alert(this.state.status + "\t" + data.value);
+      
   }
 
   handleSubmit = (e) => {
@@ -96,7 +96,7 @@ class AddFaculty extends Component {
       this.setState({isErrorMessage: true});
     }else{
         if (this.state.isErrorStatus == false && this.state.isErrorMail == false && this.state.isErrorNumber == false && this.state.isErrorName == false && this.state.isErrorReg == false){
-          alert(this.state.name + "\t" + this.state.email_add + "\t" + this.state.emp_no + "\t" + this.state.status + "\t" + this.state.isRegCom);
+          
           const socket = socketIOClient(this.state.address); //establish connection to the server
           socket.emit('create_faculty', {emp_no: this.state.emp_no, name: this.state.name, email_add: this.state.email_add, status: this.state.status, isRegCom: this.state.isRegCom}); //send data to 'login' endpoint in server
           socket.on('create_faculty', returnValueFromServer => {
