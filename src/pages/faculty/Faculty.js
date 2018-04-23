@@ -74,8 +74,10 @@ class Faculty extends Component {
       this.setState({
         visibleAdvisees: this.state.advisees.filter(user => {
           if (
-            user.student_name.toLowerCase().includes(query.toLowerCase()) ||
-            user.email_add.toLowerCase().includes(query.toLowerCase())
+            user.advisee_name.toLowerCase().includes(query.toLowerCase()) ||
+            user.advisee_email_add.toLowerCase().includes(query.toLowerCase()) ||
+            (user.advisee_student_number+"").includes(query.toLowerCase())
+
           ) {
             return true;
           } else {
