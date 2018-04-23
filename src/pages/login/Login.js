@@ -18,6 +18,7 @@ import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 import socketIOClient from 'socket.io-client';
 import './Login.css';
 import Logo from './logo-transparent-no-stroke.png';
+import config from '../../config.json';
 
 class Login extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Login extends Component {
     this.state = {
       profile: null,
       timestamp: 'no timestamp yet',
-      endpoint: 'https://sleepy-falls-95372.herokuapp.com/',
+      endpoint: config.backendAddress, // the address of the server
       accessLvl: 0,
       success: true,
       loading: false,
