@@ -1,0 +1,6 @@
+STUDENT_NUMBER,NAME,CURRICULUM,EMAIL_ADD,STATUS
+123456789,Veronica Roth,1-S,vroth@rocketmail.com,Enrolled
+234567890,Tahereh Mafi,1-S,tmafi@yahoo.com,Enrolled
+345678901,Rick Riordan,1-A,rriordan@gmail.com,Enrolled
+456789012,Mac Corni,1-C,mcorni@gmail.com,Enrolled
+567890123,Baker Mak,1-C,bmak@hotmail.com,Not Enrolled

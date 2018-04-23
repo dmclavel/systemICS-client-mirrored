@@ -9,3 +9,12 @@
 .sidebar-container {
 	width: 100% !important;
 }
+
+.vertical-center {
+	margin-left: auto !important;
+	margin-right: auto !important;
+	padding-top: 50vh !important;
+
+	width: 100vh;
+	height: 100vh;
+}
