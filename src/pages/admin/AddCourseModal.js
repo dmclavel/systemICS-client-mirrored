@@ -12,6 +12,7 @@ import {
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ViewCourses from './ViewCourses';
+import config from './../../config.json';
 
 const inlineStyle = {
 	modal: {
@@ -28,7 +29,7 @@ class AddCourseModal extends Component {
 
 		this.state = {
 			open: false,
-			address: 'https://sleepy-falls-95372.herokuapp.com/',
+			address: config.backendAddress,
 			course_id: '',
 			course_name: '',
 			course_title: '',

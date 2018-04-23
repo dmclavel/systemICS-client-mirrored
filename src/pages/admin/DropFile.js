@@ -10,6 +10,7 @@ import {
 import Dropzone from 'react-dropzone';
 import socketIOClient from 'socket.io-client';
 import './DropFile.css';
+import config from './../../config.json';
 
 const inlineStyle = {
   modal: {
@@ -36,7 +37,7 @@ class DropFile extends Component {
         string: '',
         file_type: 0
       },
-      endpoint: 'https://sleepy-falls-95372.herokuapp.com/'
+      endpoint: config.backendAddress
     };
 
     this.handleOnDrop = this.handleOnDrop.bind(this);

@@ -13,6 +13,7 @@ import {
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import { convertToGeneralTime } from '../../utils/TimeUtilities';
+import config from './../../config.json';
 
 const inlineStyle = {
   modal: {
@@ -46,7 +47,7 @@ class AddCourseLab extends Component {
     super();
 
     this.state = {
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       appendedSection: '',
       message: '',
       labSectionAppend: '',

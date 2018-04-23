@@ -7,6 +7,8 @@ import {
   convertToGeneralTime,
   isTimeValid
 } from '../../utils/TimeUtilities';
+import config from './../../config.json';
+
 const inlineStyle = {
   modal: {
     marginTop: '23vh',
@@ -48,7 +50,7 @@ class AddCourseLecture extends Component {
       W: false,
       Th: false,
       F: false,
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       courses: [],
       existingSections: [],
       section_type: 0,

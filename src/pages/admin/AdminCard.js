@@ -7,13 +7,14 @@ import AddLectureSection from './AddLectureSection';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
 import './AdminCard.css';
+import config from './../../config.json';
 
 class AdminCard extends Component {
   constructor() {
     super();
 
     this.state = {
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       coursesX: [],
       courses: [],
       course_offering_id: '',

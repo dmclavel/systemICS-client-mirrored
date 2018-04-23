@@ -4,13 +4,14 @@ import AddLabSection from './AddLabSection';
 import EditCourse from './EditCourse';
 import DeleteCourse from './DeleteCourse';
 import { convertToGeneralTime } from '../../utils/TimeUtilities';
+import config from './../../config.json';
 
 class CourseRow extends Component {
   constructor() {
     super();
 
     this.state = {
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       coursesX: []
     };
   }
