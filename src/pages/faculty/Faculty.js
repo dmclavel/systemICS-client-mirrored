@@ -7,12 +7,13 @@ import socketIOClient from 'socket.io-client';
 import NavbarIn from '../components/navbar/NavbarIn';
 import DashboardHeader from '../components/headers/DashboardHeader';
 import SearchCard from '../../components/SearchCard';
+import config from '../../config.json';
 
 class Faculty extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      endpoint: 'https://sleepy-falls-95372.herokuapp.com/', // the address of the server
+      endpoint: config.backendAddress, // the address of the server
       courses: [],
       advisees: [],
       visibleCourses: [],
