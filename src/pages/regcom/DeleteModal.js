@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button, Modal } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
+import config from './../../config.json';
+
 const inlineStyle = {
   modal: {
     marginTop: '35vh',
@@ -15,7 +17,7 @@ class DeleteModal extends Component {
     super(props);
     this.state = {
       open: false,
-      endpoint: 'https://sleepy-falls-95372.herokuapp.com'
+      endpoint: config.backendAddress
     };
     autobind(this);
   }
