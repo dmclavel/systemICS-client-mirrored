@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Modal, Button, Message, Header, Divider } from 'semantic-ui-react';
+import {
+  Modal,
+  Button,
+  Message,
+  Header,
+  Divider,
+  Label
+} from 'semantic-ui-react';
 import Dropzone from 'react-dropzone';
 import socketIOClient from 'socket.io-client';
 import './DropFile.css';
@@ -127,7 +134,14 @@ class DropFile extends Component {
         <Modal.Header>Drop Files Here</Modal.Header>
         <Modal.Content>
           <div>
-            <Button.Group widths="4">
+            <Button.Group widths="5">
+              <Label
+                attached
+                basic
+                size="huge"
+                pointing="right"
+                content="Classification"
+              />
               <Button
                 content="Student"
                 color={file_type_selected === 1 ? 'green' : null}

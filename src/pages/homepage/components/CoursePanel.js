@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Grid, Button, Header } from 'semantic-ui-react';
+import { Segment, Grid, Button, Header, Loader } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import { convertToGeneralTime } from './../../../utils/TimeUtilities';
@@ -12,30 +12,25 @@ class CoursePanel extends Component {
 		this.state = {
 			endpoint: 'https://sleepy-falls-95372.herokuapp.com/',
 			lecture: [
-				{
-					course_offering: '',
-					time_start: '',
-					time_end: '',
-					room: '',
-					day: '',
-					section: '',
-					section_type: 0,
-					course_name: '',
-					course_title: '',
-					description: '',
-					name: ''
-				}
-			]
+				
+			],
+			loading: true
 		};
 		autobind(this);
 	}
 	componentDidMount = () => {
+		this.setState({loading: true});
 		const socket = socketIOClient(this.state.endpoint); //establish connection to the server
 		// listens on an endpoint and executes fallback function
-		socket.emit('view_all_lecture_sections', 'dfesperanza@up.edu.ph'); //send data to 'login' endpoint in server
-		socket.on('view_all_lecture_sections', returnValueFromServer => {
+		socket.emit('view_sections', {
+									active:true,
+									petitioned:true,
+									additional:true
+									}); //send data to 'login' endpoint in server
+		socket.on('view_sections', returnValueFromServer => {
 			console.log(returnValueFromServer);
 			this.setState({ lecture: returnValueFromServer });
+			this.setState({loading: false});
 		});
 	};
 	//a function for sending data to server.you can have many of these
@@ -117,6 +112,7 @@ class CoursePanel extends Component {
 						window.location = '/classes';
 					}}
 				/>
+				<Loader active={this.state.loading} content="Loading..." />
 			</div>
 		);
 	}

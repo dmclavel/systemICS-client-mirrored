@@ -23,13 +23,15 @@ class EditFaculty extends Component {
       status: this.props.status,
       emp_no: this.props.emp_no,
       modalOpen: false,
-      options: [ { key: 'Faculty', value: 0, text: 'Faculty' }, { key: 'Admin', value: 2, text: 'Admin' }, { key: 'Registration Committee', value: 1, text: 'Registration Committee' }, ],
+      options: [ { key: 'Faculty', value: 1, text: 'Faculty' }, { key: 'Admin', value: 3, text: 'Admin' }, { key: 'Registration Committee', value: 2, text: 'Registration Committee' }, ],
+      statusOptions: [ { key: 'Active', value: 'Active', text: 'Active' }, { key: 'Resigned', value: 'Resigned', text: 'Resigned' }, { key: 'On Leave', value: 'On Leave', text: 'On Leave' }, ],
       address: 'https://sleepy-falls-95372.herokuapp.com/',
       isErrorName: false,
       isErrorMail: false,
       isErrorAccessLevel: false,
       isErrorStatus: false,
-      isErrorMessage: false
+      isErrorMessage: false,
+      getAccessLevel: this.props.isRegCom == 1? 'Faculty': this.props.isRegCom == 2? 'Registration Committee': 'Admin'
     };
     autobind(this);
   }
@@ -61,13 +63,13 @@ class EditFaculty extends Component {
     this.setState({isRegCom: data.value});
   }
 
-  handleStatus = (e) => {
-    if (e.target.value != ""){
+  handleStatus = (event: SyntheticEvent, data: object) => {
+    if (event.target.value != ""){
       this.setState({isErrorStatus: false});
     }else{
       this.setState({isErrorStatus: true});
     }
-    this.setState({status: e.target.value});
+    this.setState({status: data.value});
   }
 
   handleSubmit = (e) => {
@@ -92,6 +94,7 @@ class EditFaculty extends Component {
     this.setState({modalOpen: true});
   }
 
+
   render() {
   	return(
        <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button icon="pencil" color="teal" positive/>} basic onClose={this.handleClose} onOpen={this.handleOpen} open={this.state.modalOpen}>
@@ -107,8 +110,8 @@ class EditFaculty extends Component {
                     <Form.Input error={this.state.isErrorMail} fluid label='Email address' placeholder={this.state.email_add} onChange={this.handleEmail}/>
                   </Form.Group>
                   <Form.Group widths='equal'>
-                    <Form.Dropdown error={this.state.isErrorAccessLevel} fluid label = "Access Level" placeholder='Access Level' search selection options={this.state.options} onChange={this.handleAccessLevel}/>
-                    <Form.Input error={this.state.isErrorStatus} fluid label='Status' placeholder={this.state.status} onChange={this.handleStatus}/>
+                    <Form.Dropdown error={this.state.isErrorAccessLevel} fluid label = "Access Level" placeholder={this.state.getAccessLevel} search selection options={this.state.options} onChange={this.handleAccessLevel}/>
+                    <Form.Dropdown error={this.state.isErrorStatus} fluid label = "Status" placeholder={this.state.status} search selection options={this.state.stateOptions} onChange={this.handleStatus}/>
                   </Form.Group>
                 </Form>
                 <h2>

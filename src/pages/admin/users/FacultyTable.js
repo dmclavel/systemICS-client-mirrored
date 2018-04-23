@@ -39,7 +39,7 @@ class FacultyTable extends Component {
                 <Table.Cell textAlign="center">{user.email_add}</Table.Cell>
                 <Table.Cell textAlign="center">{user.status}</Table.Cell>
                 <Table.Cell textAlign="center">
-                  {user.isRegCom == 0 ? 'Faculty' : 'Registration Committee'}
+                  {user.isRegCom == 1 ? 'Faculty' : user.isRegCom == 2? 'Registration Committee' : 'Admin'}
                 </Table.Cell>
                 <Table.Cell textAlign="center">
                   <Grid>

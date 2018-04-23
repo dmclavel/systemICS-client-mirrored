@@ -12,7 +12,8 @@ class AdviseeSingle extends Component {
 			list_advisers: [],
 			selected_adviser: undefined,
 			current_adviser: null,
-			hasPending: false
+			hasPending: this.props.hasPending,
+			placeholder: "Select adviser"
 		};
 	}
 
@@ -107,7 +108,7 @@ class AdviseeSingle extends Component {
 								<Grid>
 									<Grid.Column width={13}>
 										<Dropdown
-											placeholder="Select adviser"
+											placeholder={this.state.placeholder}
 											value={this.state.selected_adviser}
 											onChange={this.handleSelected}
 											fluid
@@ -140,8 +141,8 @@ class AdviseeSingle extends Component {
 							>
 								{this.props.advisee.name}
 							</Table.Cell>
-							{this.props.advisee.advisers[0].status === 'Pending' ? (
-								<Table.Cell width={12} warning>
+							{this.props.advisee.advisers[0].status === 'Pending' ? 
+							(<Table.Cell width={12} warning>
 									<Grid>
 										<Grid.Column width={13}>
 											{this.props.advisee.advisers[0].adviser_name}
@@ -231,7 +232,7 @@ class AdviseeSingle extends Component {
 								<Grid>
 									<Grid.Column width={13}>
 										<Dropdown
-											placeholder="Select adviser"
+											placeholder={this.state.placeholder}
 											value={this.state.selected_adviser}
 											onChange={this.handleSelected}
 											fluid

@@ -8,7 +8,9 @@ import {
   Header,
   Message,
   Label,
-  Table
+  Table,
+  Loader,
+  Dimmer
 } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
@@ -47,7 +49,8 @@ class EditLoadModal extends Component {
       coursesDropdownError: false,
       sectionsDropdownError: false,
       conflict: false,
-      warning: false
+      warning: false,
+      loading: true
     };
     autobind(this);
   }
@@ -94,6 +97,7 @@ class EditLoadModal extends Component {
         coursesDropdownLoading: false
       });
     });
+    this.setState({ loading: true });
     // For a specific faculty show their assigned courses
     socket.emit('view_sections', {
       emp_no,
@@ -103,12 +107,31 @@ class EditLoadModal extends Component {
     });
     socket.on('view_sections', courses => {
       this.setState({
-        courses
+        courses,
+        loading: false
       });
     });
   }
   // Modal methods
-  handleOpen = () => this.setState({ open: true });
+  handleOpen = () => {
+    const socket = socketIOClient(this.state.endpoint);
+    const { emp_no } = this.props;
+    this.setState({ loading: true });
+    // For a specific faculty show their assigned courses
+    socket.emit('view_sections', {
+      emp_no,
+      active: true,
+      petitioned: true,
+      additional: true
+    });
+    socket.on('view_sections', courses => {
+      this.setState({
+        courses,
+        loading: false
+      });
+    });
+    this.setState({ open: true });
+  };
   handleClose = () => this.setState({ open: false });
 
   // Assign course_offering_ids to a professor
@@ -171,8 +194,12 @@ class EditLoadModal extends Component {
     });
     const socket = socketIOClient(this.state.endpoint);
     const value = JSON.parse(data.value);
-    socket.emit('search_all_unassigned_sections_via_course_id', {
-      course_id: value.course_id
+    socket.emit('view_sections', {
+      course_id: value.course_id,
+      active: true,
+      petitioned: true,
+      additional: true,
+      unassignedOnly: true
     });
 
     // socket.emit('view_sections', {
@@ -182,31 +209,28 @@ class EditLoadModal extends Component {
     //   semester:
     // });
 
-    socket.on(
-      'search_all_unassigned_sections_via_course_id',
-      course_offerings => {
-        let timeAndSections = [];
-        course_offerings.forEach((course_offering, index) => {
-          const { time_start, time_end, day, section } = course_offering;
-          const value = JSON.stringify(course_offering);
-          timeAndSections.push({
-            key: index,
-            text: `${section} - ${day} ${convertToGeneralTime(
-              time_start
-            )}-${convertToGeneralTime(time_end)}`,
-            value
-          });
+    socket.on('view_sections', course_offerings => {
+      let timeAndSections = [];
+      course_offerings.forEach((course_offering, index) => {
+        const { time_start, time_end, day, section } = course_offering;
+        const value = JSON.stringify(course_offering);
+        timeAndSections.push({
+          key: index,
+          text: `${section} - ${day} ${convertToGeneralTime(
+            time_start
+          )}-${convertToGeneralTime(time_end)}`,
+          value
         });
-        this.setState({
-          course_offerings,
-          timeAndSections,
-          selectedCourse: data.value,
-          sectionsDropdownLoading: false,
-          coursesDropdownError: false,
-          selectedCourseOfferings: []
-        });
-      }
-    );
+      });
+      this.setState({
+        course_offerings,
+        timeAndSections,
+        selectedCourse: data.value,
+        sectionsDropdownLoading: false,
+        coursesDropdownError: false,
+        selectedCourseOfferings: []
+      });
+    });
   }
   timeAndSectionsHandleOnChange(e, data) {
     let conflict = false;
@@ -308,7 +332,8 @@ class EditLoadModal extends Component {
       details,
       coursesDropdownError,
       sectionsDropdownError,
-      warning
+      warning,
+      loading
     } = this.state;
     return (
       <Modal
@@ -400,6 +425,9 @@ class EditLoadModal extends Component {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
+              <Dimmer active={loading} inverted>
+                <Loader content="Loading assigned courses ..." />
+              </Dimmer>
               {!!courses.length && (
                 <Grid.Column width={16}>
                   <Table className="remove-margin" textAlign="center">

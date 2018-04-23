@@ -29,8 +29,11 @@ class AddFaculty extends Component {
       isErrorStatus: false,
       isErrorNumber: false,
       modalOpen: false,
-      options: [ { key: 'Faculty', value: 0, text: 'Faculty' }, { key: 'Admin', value: 2, text: 'Admin' }, { key: 'Registration Committee', value: 1, text: 'Registration Committee' }, ],
-      address: 'https://sleepy-falls-95372.herokuapp.com/'
+      options: [ { key: 'Faculty', value: 1, text: 'Faculty' }, { key: 'Admin', value: 3, text: 'Admin' }, { key: 'Registration Committee', value: 2, text: 'Registration Committee' }, ],
+      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      statusOptions: [ { key: 'Active', value: 'Active', text: 'Active' }, { key: 'Resigned', value: 'Resigned', text: 'Resigned' }, { key: 'On Leave', value: 'On Leave', text: 'On Leave' }, ],
+      selectedStatus: [0],
+      selectedisRegCom: [0]
     };
     autobind(this);
   }
@@ -64,29 +67,48 @@ class AddFaculty extends Component {
 
   handleAccessLevel = (event: SyntheticEvent, data: object) => {
     this.setState({isRegCom: data.value});
+    this.setState({isErrorReg: false});
   }
 
-  handleStatus = (e) => {
-    if (e.target.value != ""){
+  handleStatus = (event: SyntheticEvent, data: object) => {
+      this.setState({status: data.value}); 
       this.setState({isErrorStatus: false});
-    }else{
-      this.setState({isErrorStatus: true});
-    }
-    this.setState({status: e.target.value});
+      alert(this.state.status + "\t" + data.value);
   }
 
   handleSubmit = (e) => {
-    if (this.state.isErrorStatus == false && this.state.isErrorMail == false && this.state.isErrorNumber == false && this.state.isErrorName == false && this.state.isErrorReg == false){
-      const socket = socketIOClient(this.state.address); //establish connection to the server
-      socket.emit('create_faculty', {emp_no: this.state.emp_no, name: this.state.name, email_add: this.state.email_add, status: this.state.status, isRegCom: this.state.isRegCom}); //send data to 'login' endpoint in server
-      socket.on('create_faculty', returnValueFromServer => {
-        console.log(returnValueFromServer);
-      });
-      this.props.fetchData();
-      this.handleClose();
-    }else{
+    if (this.state.isRegCom == '' || this.state.status == '' || this.state.name == '' || this.state.email_add == '' || this.state.emp_no == ''){
+      if (this.state.isRegCom == ''){
+        this.setState({isErrorReg: true});
+      }
+      if (this.state.status == ''){
+        this.setState({isErrorStatus: true});
+      }
+      if (this.state.name == ''){
+        this.setState({isErrorName: true});
+      }
+      if (this.state.email_add == ''){
+        this.setState({isErrorMail: true});
+      }
+      if (this.state.emp_no == ''){
+        this.setState({isErrorNumber: true});
+      }
       this.setState({isErrorMessage: true});
+    }else{
+        if (this.state.isErrorStatus == false && this.state.isErrorMail == false && this.state.isErrorNumber == false && this.state.isErrorName == false && this.state.isErrorReg == false){
+          alert(this.state.name + "\t" + this.state.email_add + "\t" + this.state.emp_no + "\t" + this.state.status + "\t" + this.state.isRegCom);
+          const socket = socketIOClient(this.state.address); //establish connection to the server
+          socket.emit('create_faculty', {emp_no: this.state.emp_no, name: this.state.name, email_add: this.state.email_add, status: this.state.status, isRegCom: this.state.isRegCom}); //send data to 'login' endpoint in server
+          socket.on('create_faculty', returnValueFromServer => {
+          console.log(returnValueFromServer);
+        });
+        this.props.fetchData();
+        this.handleClose();
+      }else{
+        this.setState({isErrorMessage: true});
+      }
     }
+    
     
   }
 
@@ -115,9 +137,9 @@ class AddFaculty extends Component {
                         <Form.Input error={this.state.isErrorMail} fluid label='Email address' placeholder='Email address' onChange={this.handleEmail}/>
                       </Form.Group>
                       <Form.Group widths='equal'>
-                        <Form.Dropdown error={this.state.isErrorReg} fluid label = "Access Level" placeholder='Faculty' search selection options={this.state.options} onChange={this.handleAccessLevel}/>
-                        <Form.Input error={this.state.isErrorStatus} fluid label='Status' placeholder='Status' onChange={this.handleStatus}/>
-                        <Form.Input error={this.state.isErrorNumber} fluid label='Employee Number' placeholder='Name' onChange={this.handleNumber}/>
+                        <Form.Dropdown error={this.state.isErrorReg} fluid label = "Access Level" placeholder='Select Access Level' search selection options={this.state.options} onChange={this.handleAccessLevel}/>
+                        <Form.Dropdown error={this.state.isErrorStatus} fluid label = "Status" placeholder='Select Status' search selection options={this.state.statusOptions} onChange={this.handleStatus}/>
+                        <Form.Input error={this.state.isErrorNumber} fluid label='Employee Number' placeholder='Employee number' onChange={this.handleNumber}/>
                       </Form.Group>
                     </Form>
                     <h2>
