@@ -7,7 +7,7 @@ import socketIOClient from 'socket.io-client';
 import NavbarIn from '../components/navbar/NavbarIn';
 import Sidebar from '../components/Sidebar';
 import ManageHeader from '../components/headers/ManageHeader';
-import config in './../../config.json';
+import config from './../../config.json';
 
 class RegCom extends Component {
   constructor(props) {

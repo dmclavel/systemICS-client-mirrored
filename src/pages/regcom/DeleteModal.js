@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
-import config in './../../config.json';
+import config from './../../config.json';
 
 const inlineStyle = {
   modal: {

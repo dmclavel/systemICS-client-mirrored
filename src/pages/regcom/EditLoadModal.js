@@ -20,7 +20,7 @@ import {
   convertToGeneralTime
 } from '../../utils/TimeUtilities';
 import img from './kobe.jpg';
-import config in './../../config.json';
+import config from './../../config.json';
 
 // Modal inlineStyle to fix centering
 const inlineStyle = {
