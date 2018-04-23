@@ -57,14 +57,7 @@ class AdviseeSingle extends Component {
 
 	componentDidMount() {
 		const socket = socketIOClient(this.state.endpoint);
-		// if (this.props.advisee.advisers) {
-		// 	if (
-		// 		this.props.advisee.advisers[1] !== null &&
-		// 		this.props.advisee.advisers[1].status === 'Pending'
-		// 	) {
-		// 		this.setState({ hasPending: true });
-		// 	}
-		// }
+
 		socket.on('update_alert', update => {
 			socket.emit('view_faculty', { active: true });
 		});

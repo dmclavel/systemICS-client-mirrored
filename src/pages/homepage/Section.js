@@ -45,12 +45,6 @@ class Section extends Component {
 		});
 	};
 
-	//a function for sending data to server.you can have many of these
-	// sendData = () => {
-	// 	const socket = socketIOClient(this.state.endpoint); //establish connection to the server
-	// 	socket.emit('login', 'this is my data'); //send data to 'login' endpoint in server
-	// };
-
 	render() {
 		return (
 			<div className="LabSectionTab">

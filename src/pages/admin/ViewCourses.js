@@ -29,7 +29,6 @@ class ViewCourses extends Component {
   handleDelete = e => {
     const socket = socketIOClient(this.state.address);
     const data = {
-      email: 'jcgaza@up.edu.ph',
       course_id: e.target.value
     };
     socket.emit('remove_course', data);

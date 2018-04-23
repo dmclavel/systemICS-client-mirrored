@@ -37,18 +37,11 @@ class FacultyPanel extends Component {
   // what to do once the page (re)loads
   componentDidMount = () => {
     const socket = socketIOClient(this.state.endpoint); //establish connection to the server
-    // listens on an endpoint and executes fallback function
-    socket.emit('view_all_active_faculty_members', 'dfesperanza@up.edu.ph'); //send data to 'login' endpoint in server
-    socket.on('view_all_active_faculty_members', returnValueFromServer => {
-      console.log(returnValueFromServer);
+    socket.emit('view_faculty', 'dfesperanza@up.edu.ph'); //send data to 'login' endpoint in server
+    socket.on('view_faculty', returnValueFromServer => {
       this.setState({ faculty: returnValueFromServer });
       this.setState({ originalFaculty: returnValueFromServer });
     });
-  };
-  //a function for sending data to server.you can have many of these
-  sendData = () => {
-    const socket = socketIOClient(this.state.endpoint); //establish connection to the server
-    socket.emit('login', 'this is my data'); //send data to 'login' endpoint in server
   };
 
   handleSearch = e => {
