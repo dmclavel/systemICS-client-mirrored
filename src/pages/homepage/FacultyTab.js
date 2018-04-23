@@ -17,6 +17,7 @@ import FacultyCard from './FacultyCard';
 import RegComCard from './RegComCard';
 import NavbarHome from '../components/navbar/NavbarHome';
 import ClassesHeader from '../components/headers/ClassesHeader';
+import config from '../../config.json'
 
 /*
 If you wish to import other JS files, do it here.
@@ -26,7 +27,7 @@ class FacultyTab extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      endpoint: 'https://sleepy-falls-95372.herokuapp.com/', // the address of the server
+      endpoint: config.backendAddress, // the address of the server
       faculty: [
       ],
       search: '',
