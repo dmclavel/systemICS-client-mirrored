@@ -13,7 +13,7 @@ class AdminCard extends Component {
     super();
 
     this.state = {
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       coursesX: [],
       courses: [],
       course_offering_id: '',

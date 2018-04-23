@@ -25,7 +25,7 @@ class EditFaculty extends Component {
       modalOpen: false,
       options: [ { key: 'Faculty', value: 1, text: 'Faculty' }, { key: 'Admin', value: 3, text: 'Admin' }, { key: 'Registration Committee', value: 2, text: 'Registration Committee' }, ],
       statusOptions: [ { key: 'Active', value: 'Active', text: 'Active' }, { key: 'Resigned', value: 'Resigned', text: 'Resigned' }, { key: 'On Leave', value: 'On Leave', text: 'On Leave' }, ],
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       isErrorName: false,
       isErrorMail: false,
       isErrorAccessLevel: false,
@@ -48,7 +48,7 @@ class EditFaculty extends Component {
   handleEmail = (e) => {
     if (e.target.value != ""){
       this.setState({isErrorMail: false});
-    }else{  
+    }else{
       this.setState({isErrorMail: true});
     }
     this.setState({email_add: e.target.value});
@@ -101,7 +101,7 @@ class EditFaculty extends Component {
          	<Modal.Content>
           	<Container>
           	<Segment padded="very">
-                { 
+                {
                   this.state.isErrorMessage == true? <ErrorMessage/>: <div/>
                 }
   							<Form>

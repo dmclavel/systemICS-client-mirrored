@@ -23,7 +23,7 @@ class StudentAdd extends Component {
       status: '',
       student_number: '',
       modalOpen: false,
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       isErrorName: false,
       isErrorMail: false,
       isErrorCurriculum: false,
@@ -42,13 +42,13 @@ class StudentAdd extends Component {
       this.setState({isErrorName: true});
     }
     this.setState({name: e.target.value});
-    
+
   }
 
   handleEmail = (e) => {
     if (e.target.value != ""){
       this.setState({isErrorMail: false});
-    }else{  
+    }else{
       this.setState({isErrorMail: true});
     }
     this.setState({email_add: e.target.value});
@@ -64,9 +64,9 @@ class StudentAdd extends Component {
   }
 
   handleStatus = (event: SyntheticEvent, data: object) => {
-      this.setState({status: data.value}); 
+      this.setState({status: data.value});
       this.setState({isErrorStatus: false});
-      
+
   }
 
   handleNumber = (e) =>{
@@ -88,7 +88,7 @@ class StudentAdd extends Component {
       }
       if (this.state.curriculum == ''){
         this.setState({isErrorCurriculum: true});
-      } 
+      }
       if (this.state.status == ''){
         this.setState({isErrorStatus: true});
       }
@@ -109,7 +109,7 @@ class StudentAdd extends Component {
         this.setState({isErrorMessage: true});
       }
     }
-    
+
   }
 
   handleClose = (e) => {
@@ -127,7 +127,7 @@ class StudentAdd extends Component {
             <Modal.Content>
               <Container>
                 <Segment padded="very">
-                    { 
+                    {
                       this.state.isErrorMessage == true? <ErrorMessage/>: <div/>
                     }
                     <Form>
@@ -150,7 +150,7 @@ class StudentAdd extends Component {
                           <Button content="Cancel" floated="right" negative onClick={this.handleClose}/ >
                         </Form>
                     </Grid.Row>
-                      
+
                 </Segment>
               </Container>
             </Modal.Content>

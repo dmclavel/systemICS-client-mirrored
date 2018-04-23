@@ -50,7 +50,7 @@ class FacultyTable extends Component {
                       <Grid.Column>
                         <EditFaculty name={user.name} emp_no={user.emp_no} email_add={user.email_add} isRegCom={user.isRegCom} status={user.status} fetchData={this.props.fetchData}/>
                       </Grid.Column>
-                      
+
                     </Grid.Row>
                   </Grid>
                 </Table.Cell>

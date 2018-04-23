@@ -50,7 +50,7 @@ class AddCourseLecture extends Component {
       W: false,
       Th: false,
       F: false,
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       courses: [],
       existingSections: [],
       section_type: 0,

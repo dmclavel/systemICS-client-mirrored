@@ -28,7 +28,7 @@ class AddCourseModal extends Component {
 
 		this.state = {
 			open: false,
-			address: 'https://sleepy-falls-95372.herokuapp.com/',
+			address: config.backendAddress,
 			course_id: '',
 			course_name: '',
 			course_title: '',

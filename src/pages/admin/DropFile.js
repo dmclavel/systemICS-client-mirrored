@@ -36,7 +36,7 @@ class DropFile extends Component {
         string: '',
         file_type: 0
       },
-      endpoint: 'https://sleepy-falls-95372.herokuapp.com/'
+      endpoint: config.backendAddress
     };
 
     this.handleOnDrop = this.handleOnDrop.bind(this);

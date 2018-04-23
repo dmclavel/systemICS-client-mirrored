@@ -12,7 +12,7 @@ class User extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			address: 'https://sleepy-falls-95372.herokuapp.com/',
+			address: config.backendAddress,
 			activeItem: 'Student',
 		      dummyStudents: [],
 		      dummyFaculty: [],
@@ -136,7 +136,7 @@ class User extends Component {
 					<SearchCard fluid handleSearch={this.handleSearch} placeholder="name or email"/>
 				</Grid.Column>
 				<Grid.Column width={3}>
-      			{ 
+      			{
       				this.state.activeItem == 'Student'? <StudentAdd floated="right" fetchData={this.fetchStudents}/>: <AddFaculty fetchData={this.fetchFaculty}/>
       			}
       			</Grid.Column>

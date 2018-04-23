@@ -10,7 +10,7 @@ class Admin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      endpoint: 'https://sleepy-falls-95372.herokuapp.com',
+      endpoint: config.backendAddress,
       acad_year: 0,
       semester: 0
     };

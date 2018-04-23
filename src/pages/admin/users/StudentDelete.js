@@ -17,7 +17,7 @@ class StudentDelete extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       modalOpen: false
     };
     autobind(this);
@@ -46,7 +46,7 @@ class StudentDelete extends Component {
   }
   render() {
     return(
-       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button icon="x" negative 
+       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button icon="x" negative
         />} onClose={this.handleClose} onOpen={this.handleOpen} open={this.state.modalOpen} basic>
             <Modal.Content>
               <Container>

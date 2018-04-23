@@ -4,7 +4,7 @@ import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import config from '../../config.json'
 
-class ErrorMessage extends Component {  
+class ErrorMessage extends Component {
   render() {
     return(
        <Message warning>

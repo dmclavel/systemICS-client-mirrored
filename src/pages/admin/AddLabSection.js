@@ -46,7 +46,7 @@ class AddCourseLab extends Component {
     super();
 
     this.state = {
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       appendedSection: '',
       message: '',
       labSectionAppend: '',

@@ -7,7 +7,7 @@ class ViewCourses extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       courses: []
     };
   }

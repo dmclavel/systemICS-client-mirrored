@@ -30,7 +30,7 @@ class AddFaculty extends Component {
       isErrorNumber: false,
       modalOpen: false,
       options: [ { key: 'Faculty', value: 1, text: 'Faculty' }, { key: 'Admin', value: 3, text: 'Admin' }, { key: 'Registration Committee', value: 2, text: 'Registration Committee' }, ],
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       statusOptions: [ { key: 'Active', value: 'Active', text: 'Active' }, { key: 'Resigned', value: 'Resigned', text: 'Resigned' }, { key: 'On Leave', value: 'On Leave', text: 'On Leave' }, ],
       selectedStatus: [0],
       selectedisRegCom: [0]
@@ -59,7 +59,7 @@ class AddFaculty extends Component {
   handleEmail = (e) => {
     if (e.target.value != ""){
       this.setState({isErrorMail: false});
-    }else{  
+    }else{
       this.setState({isErrorMail: true});
     }
     this.setState({email_add: e.target.value});
@@ -71,9 +71,9 @@ class AddFaculty extends Component {
   }
 
   handleStatus = (event: SyntheticEvent, data: object) => {
-      this.setState({status: data.value}); 
+      this.setState({status: data.value});
       this.setState({isErrorStatus: false});
-      
+
   }
 
   handleSubmit = (e) => {
@@ -96,7 +96,7 @@ class AddFaculty extends Component {
       this.setState({isErrorMessage: true});
     }else{
         if (this.state.isErrorStatus == false && this.state.isErrorMail == false && this.state.isErrorNumber == false && this.state.isErrorName == false && this.state.isErrorReg == false){
-          
+
           const socket = socketIOClient(this.state.address); //establish connection to the server
           socket.emit('create_faculty', {emp_no: this.state.emp_no, name: this.state.name, email_add: this.state.email_add, status: this.state.status, isRegCom: this.state.isRegCom}); //send data to 'login' endpoint in server
           socket.on('create_faculty', returnValueFromServer => {
@@ -108,8 +108,8 @@ class AddFaculty extends Component {
         this.setState({isErrorMessage: true});
       }
     }
-    
-    
+
+
   }
 
   handleClose = (e) => {
@@ -128,7 +128,7 @@ class AddFaculty extends Component {
             <Modal.Content>
               <Container>
                 <Segment padded="very">
-                    { 
+                    {
                       this.state.isErrorMessage == true? <ErrorMessage/>: <div/>
                     }
                     <Form>
@@ -151,7 +151,7 @@ class AddFaculty extends Component {
                           <Button content="Cancel" floated="right" negative onClick={this.handleClose}/ >
                         </Form>
                     </Grid.Row>
-                      
+
                 </Segment>
               </Container>
             </Modal.Content>

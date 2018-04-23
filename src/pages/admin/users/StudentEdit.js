@@ -23,7 +23,7 @@ class StudentEdit extends Component {
       status: this.props.status,
       student_number: this.props.student_number,
       modalOpen: false,
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       isErrorName: false,
       isErrorMail: false,
       isErrorCurriculum: false,
@@ -41,13 +41,13 @@ class StudentEdit extends Component {
       this.setState({isErrorName: true});
     }
     this.setState({name: e.target.value});
-    
+
   }
 
   handleEmail = (e) => {
     if (e.target.value != ""){
       this.setState({isErrorMail: false});
-    }else{  
+    }else{
       this.setState({isErrorMail: true});
     }
     this.setState({email_add: e.target.value});
@@ -98,7 +98,7 @@ class StudentEdit extends Component {
             <Modal.Content>
               <Container>
                 <Segment padded="very">
-                    { 
+                    {
                       this.state.isErrorMessage == true? <ErrorMessage/>: <div/>
                     }
                     <Form>
@@ -122,7 +122,7 @@ class StudentEdit extends Component {
                           </Modal.Actions>
                         </Form>
                     </Grid.Row>
-                      
+
                 </Segment>
               </Container>
             </Modal.Content>
