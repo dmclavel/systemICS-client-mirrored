@@ -109,7 +109,11 @@ class NavbarIn extends Component {
           : this.props.accessLvl === 2
             ? 'regcom'
             : 'admin'
-      }/manage/courses`,
+      }/manage/${
+        this.props.accessLvl === 2
+        ? 'advisees'
+        :'courses'
+      }`,
       isLoggedIn: true
     };
 
