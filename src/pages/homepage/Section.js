@@ -11,6 +11,7 @@ Write the Author of the code at the top of the document.
 */
 import { Grid, Container, Card, Button } from 'semantic-ui-react';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import autobind from 'react-autobind';
 import SectionCard from './SectionCard';
 import NavbarHome from '../components/navbar/NavbarHome';
@@ -39,22 +40,17 @@ class Section extends Component {
 			course_offering_id: this.props.match.params._id
 		}); //send data to 'login' endpoint in server
 		socket.on('view_sections', returnValueFromServer => {
-			console.log(returnValueFromServer);
 			this.setState({ lab: returnValueFromServer.lab_sections });
 		});
 	};
-	//a function for sending data to server.you can have many of these
-	sendData = () => {
-		const socket = socketIOClient(this.state.endpoint); //establish connection to the server
-		socket.emit('login', 'this is my data'); //send data to 'login' endpoint in server
-	};
-	render() {
 
-		// const currentLab = lab.filter(result => {
-		// 	return result.course_name
-		// 		.replace(' ', '')
-		// 		.includes(this.props.match.params._id);
-		// });
+	//a function for sending data to server.you can have many of these
+	// sendData = () => {
+	// 	const socket = socketIOClient(this.state.endpoint); //establish connection to the server
+	// 	socket.emit('login', 'this is my data'); //send data to 'login' endpoint in server
+	// };
+
+	render() {
 		return (
 			<div className="LabSectionTab">
 				<Grid centered={true}>
@@ -67,34 +63,32 @@ class Section extends Component {
 							<Grid columns={4} divided centered>
 								<Container centered>
 									<Card.Group itemsPerRow={4}>
-										{this.state.lab.map((item, index) => (
-											<div>
-												<SectionCard
-													name={item['name']}
-													course_name={item['course_name']}
-													section={item['section']}
-													day={item['day']}
-													timestart={item['time_start']}
-													timeend={item['time_end']}
-													room={item['room']}
-												/>
-											</div>
-										))}
+										{this.state ? (
+											this.state.lab.map((item, index) => (
+												<div>
+													<SectionCard
+														name={item['name']}
+														course_name={item['course_name']}
+														section={item['section']}
+														day={item['day']}
+														timestart={item['time_start']}
+														timeend={item['time_end']}
+														room={item['room']}
+													/>
+												</div>
+											))
+										) : (
+											<div>No laboratory sections yet!</div>
+										)}
 									</Card.Group>
 								</Container>
 							</Grid>
 						</Grid.Column>
 					</Grid.Row>
 					<Grid.Row>
-						<Button
-							basic
-							textAlign="center"
-							onClick={() => {
-								window.location = '/';
-							}}
-						>
-							Back
-						</Button>
+						<Link to="/">
+							<Button basic textAlign="center" content="Back" />
+						</Link>
 					</Grid.Row>
 				</Grid>
 			</div>

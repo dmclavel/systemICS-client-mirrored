@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Segment, Grid, Button, Header, Loader } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import { convertToGeneralTime } from './../../../utils/TimeUtilities';
@@ -11,22 +12,20 @@ class CoursePanel extends Component {
 		super(props);
 		this.state = {
 			endpoint: 'https://sleepy-falls-95372.herokuapp.com/',
-			lecture: [
-				
-			],
+			lecture: [],
 			loading: true
 		};
 		autobind(this);
 	}
 	componentDidMount = () => {
-		this.setState({loading: true});
+		this.setState({ loading: true });
 		const socket = socketIOClient(this.state.endpoint); //establish connection to the server
 		// listens on an endpoint and executes fallback function
 		socket.emit('view_all_lecture_sections', 'dfesperanza@up.edu.ph'); //send data to 'login' endpoint in server
 		socket.on('view_all_lecture_sections', returnValueFromServer => {
 			console.log(returnValueFromServer);
 			this.setState({ lecture: returnValueFromServer });
-			this.setState({loading: false});
+			this.setState({ loading: false });
 		});
 	};
 	//a function for sending data to server.you can have many of these
@@ -87,27 +86,23 @@ class CoursePanel extends Component {
 									</Grid>
 								</Grid.Column>
 								<Grid.Column width={3} verticalAlign="middle">
-									<Button
-										content="Learn More"
-										basic
-										onClick={() => {
-											this.props.viewLabHandler(item.course_offering_id);
-											window.location =
-												'/section/' + item.course_offering_id;
-										}}
-									/>
+									<Link to={`/section/${item.course_offering_id}`}>
+										<Button
+											content="Learn More"
+											basic
+											onClick={() =>
+												this.props.viewLabHandler(item.course_offering_id)
+											}
+										/>
+									</Link>
 								</Grid.Column>
 							</Grid.Row>
 						</Grid>
 					</Segment>
 				))}
-				<Button
-					basic
-					content="View More"
-					onClick={() => {
-						window.location = '/classes';
-					}}
-				/>
+				<Link to="/classes">
+					<Button basic content="View More" />
+				</Link>
 				<Loader active={this.state.loading} content="Loading..." />
 			</div>
 		);

@@ -4,7 +4,15 @@ FILE: Login, for the basic log-in page. Includes google sign-in.
 */
 
 import React, { Component } from 'react';
-import { Grid, Button, Form, Segment, Image, Divider } from 'semantic-ui-react';
+import {
+  Grid,
+  Button,
+  Form,
+  Segment,
+  Image,
+  Divider,
+  Message
+} from 'semantic-ui-react';
 import { Link, Redirect } from 'react-router-dom';
 import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 import socketIOClient from 'socket.io-client';
@@ -19,37 +27,42 @@ class Login extends Component {
       timestamp: 'no timestamp yet',
       endpoint: 'https://sleepy-falls-95372.herokuapp.com/',
       accessLvl: 0,
-      success: false
+      success: true,
+      loading: false,
+      message: ''
     };
   }
 
   handleProfile = googleUser => {
-    this.setState({ profile: googleUser.getBasicProfile() });
-    console.log(this.state.profile);
-
+    this.setState({ loading: true });
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('email_privilege', { email_add: this.state.profile.U3 });
-    socket.on('email_privilege', privilege => {
-      this.setState({ accessLvl: privilege, success: true });
+    socket.emit('view_faculty', googleUser.getBasicProfile().U3);
+    socket.on('view_faculty', res => {
+      const ans = res.find(
+        faculty => faculty.email_add === googleUser.getBasicProfile().U3
+      );
+      if (ans) {
+        this.setState({
+          accessLvl: ans.isRegCom,
+          success: true,
+          loading: false
+        });
+        this.props.logInHandler(googleUser.getBasicProfile(), ans.isRegCom);
+        window.location = '/';
+      } else {
+        this.setState({
+          success: false,
+          loading: false,
+          message: `${
+            googleUser.getBasicProfile().U3
+          } is not found in database.`
+        });
+      }
     });
-
-    this.props.logInHandler(this.state.profile, 3);
-    window.location = '/';
-  };
-
-  componentDidMount() {
-    const socket = socketIOClient(this.state.endpoint);
-    socket.on('login', name => {
-      console.log(name);
-    });
-  }
-
-  send = e => {
-    const socket = socketIOClient(this.state.endpoint);
-    socket.emit('login', e.target.value);
   };
 
   render() {
+    const { success, message, loading } = this.state;
     return (
       <div className="login-form">
         <Grid textAlign="center" columns={3} verticalAlign="middle">
@@ -60,6 +73,14 @@ class Login extends Component {
                 <Image className="login-name" src={Logo} size="small" />{' '}
                 <p className="login-logo-name">SYSTEMICS</p>
               </div>
+              {!success && (
+                <Message
+                  error
+                  header="Error!"
+                  icon="delete"
+                  content={message}
+                />
+              )}
               <Segment stacked>
                 <div>
                   <Form>
@@ -68,7 +89,6 @@ class Login extends Component {
                       required
                       icon="user"
                       iconPosition="left"
-                      onChange={this.send}
                     />
                     <Form.Input
                       placeholder="Password"
@@ -81,6 +101,7 @@ class Login extends Component {
                       icon="sign in alternate"
                       content="LOG IN"
                       fluid
+                      loading={loading}
                       color={'teal'}
                     />
                   </Form>
