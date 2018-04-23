@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Search, Card, Input, Header, Button } from 'semantic-ui-react';
+import { Grid, Search, Card, Input, Header, Button, Loader } from 'semantic-ui-react';
 import './Faculty.css';
 import SubjectCard from './SubjectCard';
 import Advisee from './Advisee';
@@ -17,11 +17,18 @@ class Faculty extends Component {
       advisees: [],
       visibleCourses: [],
       visibleAdvisees: [],
-      email_add: 'nuzumaki@konoha.edu.lof'
+      email_add: 'nuzumaki@konoha.edu.lof',
+      advisees_loading: true,
+      sections_loading: true
     };
   }
 
   componentDidMount = () => {
+    this.setState({
+      advisees_loading: true,
+      sections_loading: true
+    });
+
     console.log('componentDidMount');
     const socket = socketIOClient(this.state.endpoint); //establish connection to the server
     // listens on an endpoint and executes fallback function
@@ -34,7 +41,8 @@ class Faculty extends Component {
     socket.on('view_sections', returnValueFromServer => {
       this.setState({
         courses: returnValueFromServer,
-        visibleCourses: returnValueFromServer
+        visibleCourses: returnValueFromServer,
+        sections_loading: false
       });
     });
     socket.emit('view_adviser_advisees', {
@@ -45,7 +53,8 @@ class Faculty extends Component {
       console.log(returnValueFromServer);
       this.setState({
         advisees: returnValueFromServer,
-        visibleAdvisees: returnValueFromServer
+        visibleAdvisees: returnValueFromServer,
+        advisees_loading: false
       });
     });
   };
@@ -74,8 +83,10 @@ class Faculty extends Component {
       this.setState({
         visibleAdvisees: this.state.advisees.filter(user => {
           if (
-            user.student_name.toLowerCase().includes(query.toLowerCase()) ||
-            user.email_add.toLowerCase().includes(query.toLowerCase())
+            user.advisee_name.toLowerCase().includes(query.toLowerCase()) ||
+            user.advisee_email_add.toLowerCase().includes(query.toLowerCase()) ||
+            (user.advisee_student_number+"").includes(query.toLowerCase())
+
           ) {
             return true;
           } else {
@@ -108,6 +119,10 @@ class Faculty extends Component {
                     handleSearch={this.handleCourseSearch}
                     placeholder="course name, course title, or section"
                   />
+                </Grid.Row>
+                <Grid.Row>
+                <Loader active={this.state.sections_loading} content="Loading you teaching load..." />
+
                   {this.state.visibleCourses.map(course => {
                     return (
                       <SubjectCard
@@ -127,6 +142,7 @@ class Faculty extends Component {
               </Grid.Column>
               <Grid.Column width={1} />
               <Grid.Column width={5}>
+              <Grid.Row>
                 <Card fluid raised={true}>
                   <h2>Advisees</h2>
                 </Card>
@@ -135,16 +151,20 @@ class Faculty extends Component {
                   handleSearch={this.handleAdviseeSearch}
                   placeholder="name, email or student id"
                 />
-                {this.state.visibleAdvisees.map(advisees => {
-                  return (
-                    <Advisee
-                      name={advisees.advisee_name}
-                      student_number={advisees.advisee_student_number}
-                      curriculum={advisees.curriculum}
-                      email={advisees.advisee_email_add}
-                    />
-                  );
-                })}
+            </Grid.Row>
+            <Grid.Row>
+              <Loader active={this.state.sections_loading} content="Loading your advisees..." />
+              {this.state.visibleAdvisees.map(advisees => {
+                return (
+                  <Advisee
+                    name={advisees.advisee_name}
+                    student_number={advisees.advisee_student_number}
+                    curriculum={advisees.curriculum}
+                    email={advisees.advisee_email_add}
+                  />
+                );
+              })}
+            </Grid.Row>
               </Grid.Column>
               <Grid.Column width={1} />
             </Grid.Row>

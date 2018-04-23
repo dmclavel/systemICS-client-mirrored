@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Grid, Message } from 'semantic-ui-react';
+import { Button, Modal, Form, Grid, Message, Radio } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import {
   isScheduleConflict,
-  convertToGeneralTime
+  convertToGeneralTime,
+  isTimeValid
 } from '../../utils/TimeUtilities';
 const inlineStyle = {
   modal: {
@@ -42,7 +43,6 @@ class AddCourseLecture extends Component {
       open: false,
       negative: false,
       positive: false,
-      existing: false,
       M: false,
       T: false,
       W: false,
@@ -65,7 +65,9 @@ class AddCourseLecture extends Component {
       section: '',
       unit: '',
       max_capacity: '',
-      message: ''
+      message: '',
+      status: '',
+      existing: false
     };
     autobind(this);
   }
@@ -110,7 +112,7 @@ class AddCourseLecture extends Component {
     this.setState({ existingSections: nextProps.data });
   }
 
-  clear = () => {
+  clear() {
     this.setState({
       existingSections: [],
       existing: false,
@@ -121,15 +123,15 @@ class AddCourseLecture extends Component {
       F: false,
       course_id: '',
       course_name: '',
-      time_start: '07:00',
-      time_end: '19:00',
+      time_start: '',
+      time_end: '',
       room: '',
       day: '',
       section: '',
       unit: '',
       max_capacity: ''
     });
-  };
+  }
 
   close = () =>
     this.setState({
@@ -194,7 +196,8 @@ class AddCourseLecture extends Component {
       section,
       unit,
       max_capacity,
-      semester
+      semester,
+      status
     } = this.state;
     const socket = socketIOClient(this.state.address);
     const data = {
@@ -212,7 +215,7 @@ class AddCourseLecture extends Component {
       emp_no,
       course_id,
       unit,
-      status: 'Active'
+      status
     };
     let conflict = false;
     let details = '';
@@ -252,7 +255,8 @@ class AddCourseLecture extends Component {
       time_start === '' ||
       time_end === '' ||
       max_capacity === '' ||
-      days === ''
+      days === '' ||
+      status === ''
     ) {
       this.setState({
         message: 'Please complete all the required fields!',
@@ -263,6 +267,22 @@ class AddCourseLecture extends Component {
     } else if (conflict) {
       this.setState({
         message: 'Error! Conflict with room and time!',
+        details,
+        positive: false,
+        negative: true,
+        hidden: false
+      });
+    } else if (!isTimeValid(time_start)) {
+      this.setState({
+        message: 'Error! Invalid time start.',
+        details,
+        positive: false,
+        negative: true,
+        hidden: false
+      });
+    } else if (!isTimeValid(time_end)) {
+      this.setState({
+        message: 'Error! Invalid time end.',
         details,
         positive: false,
         negative: true,
@@ -286,65 +306,83 @@ class AddCourseLecture extends Component {
       this.clear();
     }
   };
-
   handleChange = (e, { name, value }) => {
+    let existing = false;
+    let details = '';
+    let message = '';
     if (name === 'section' && this.state.course_name != '') {
-      this.fillExistingSections();
-      this.setState({ hidden: true });
+      // this.fillExistingSections();
       this.state.existingSections.forEach(element => {
         if (
           value === element.section &&
-          parseInt(this.state.course_id) == parseInt(element.course_id)
+          parseInt(this.state.course_id) === parseInt(element.course_id)
         ) {
-          this.setState({ hidden: false, existing: true });
-          let appendString =
+          message = 'Duplicate entry for section!';
+          details +=
             'Section ' +
             element.section +
             ' of ' +
             element.course_name +
             ' already exists!';
+          existing = true;
           this.setState({
-            message: appendString,
+            message,
+            details,
             positive: false,
-            negative: true
+            negative: true,
+            hidden: false
           });
         }
       });
-
-      if (!this.state.existing) {
-        this.setState({ [name]: value });
-      } else {
-        this.setState({ existing: false });
-      }
-    } else {
-      // if (this.state.course_name === "") {
-      // 	this.setState({ hidden: false});
-      // 	this.setState({message: "Please choose a Course Name first!", positive: false, negative: true});
-      // }
-      // else {
-      this.setState({ hidden: true });
-      this.setState({ [name]: value });
-      // }
+      //TODO
     }
+    if (existing) {
+      this.setState({ message, details, [name]: value, existing });
+    } else {
+      this.setState({ [name]: value, hidden: true, existing });
+    }
+    // }
   };
 
-  fillExistingSections() {
-    const socket = socketIOClient(this.state.address);
-    const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
-    socket.emit('view_sections', data);
-    socket.on('view_sections', course => {
-      this.setState({ existingSections: course });
-    });
-  }
+  // fillExistingSections() {
+  //   const socket = socketIOClient(this.state.address);
+  //   const data = { email: 'pvgrubat@up.edu.ph', acad_year: 2015, semester: 1 };
+  //   socket.emit('view_sections', data);
+  //   socket.on('view_sections', course => {
+  //     this.setState({ existingSections: course });
+  //   });
+  // }
 
   handleDropdownChange(e, data) {
-    this.clear();
+    let message = '';
+    let details = '';
+    let hidden = true;
     const state = this.state;
     state.course_id = data.value;
     state.course_name = data.text;
+    this.state.existingSections.forEach(element => {
+      if (
+        this.state.section === element.section &&
+        this.state.course_id === element.course_id
+      ) {
+        message = 'Duplicate entry for section!';
+        details +=
+          'Section ' +
+          element.section +
+          ' of ' +
+          element.course_name +
+          ' already exists!';
+        hidden = false;
+      }
+    });
     this.setState({
+      message,
+      details,
+      positive: false,
+      negative: true,
       course_id: state.course_id,
-      course_name: state.course_name
+      course_name: state.course_name,
+      hidden
     });
   }
 
@@ -374,7 +412,8 @@ class AddCourseLecture extends Component {
       room,
       section,
       unit,
-      max_capacity
+      max_capacity,
+      status
     } = this.state;
 
     return (
@@ -397,13 +436,34 @@ class AddCourseLecture extends Component {
                   <Form.Dropdown
                     search
                     selection
-                    width={10}
+                    width={5}
                     label="Course name"
                     name="course_name"
                     placeholder="Pick course name"
                     options={courses}
                     onChange={this.handleDropdownChange}
                   />
+                  <Form.Group grouped width={3}>
+                    <label>Status</label>
+                    <Form.Field>
+                      <Radio
+                        label="Active"
+                        name="status"
+                        value="Active"
+                        checked={this.state.status === 'Active'}
+                        onChange={this.handleChange}
+                      />
+                    </Form.Field>
+                    <Form.Field>
+                      <Radio
+                        label="Petitioned"
+                        name="status"
+                        value="Petitioned"
+                        checked={this.state.status === 'Petitioned'}
+                        onChange={this.handleChange}
+                      />
+                    </Form.Field>
+                  </Form.Group>
                   <Form.Input
                     label="Section"
                     placeholder="Section"
@@ -547,7 +607,11 @@ class AddCourseLecture extends Component {
                   hidden={hidden}
                 >
                   <Message.Header>{message}</Message.Header>
-                  {details && <p>{details}</p>}
+                  {details && (
+                    <ul>
+                      <li>{details}</li>
+                    </ul>
+                  )}
                 </Message>
               </Grid.Row>
             </Form>{' '}

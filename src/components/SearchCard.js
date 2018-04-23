@@ -24,7 +24,7 @@ class SearchCard extends Component {
   //
   handleInputChange = e => {
     // this.setState({query: e.target.value});
-    this.props.handleSearch(e.target.value);
+    this.props.handleSearch(e.target.value.trim());
   };
 
   // handleSearch = () =>{

@@ -102,7 +102,7 @@ class AdminCard extends Component {
         <Grid.Row width={16}>
           <Grid.Column width={10}>
             <SearchCard
-              placeholder="search course name"
+              placeholder="Search course name"
               handleSearch={this.handleSearch}
               fluid={true}
             />
@@ -111,7 +111,7 @@ class AdminCard extends Component {
             <AddCourseModal fetchCourse={this.fetchCourse} />
           </Grid.Column>
           <Grid.Column width={3}>
-            <AddLectureSection fetchCourse={this.fetchCourse} />
+            <AddLectureSection data={coursesX} fetchCourse={this.fetchCourse} />
           </Grid.Column>
         </Grid.Row>
 
