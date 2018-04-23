@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import { convertToGeneralTime } from './../../../utils/TimeUtilities';
+import config from './../../../config.json';
 
 const square = { width: 100, height: 100 };
 
@@ -11,7 +12,7 @@ class CoursePanel extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			endpoint: 'https://sleepy-falls-95372.herokuapp.com/',
+			endpoint: config.backendAddress,
 			lecture: [],
 			loading: true
 		};
