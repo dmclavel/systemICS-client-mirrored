@@ -14,6 +14,7 @@ import {
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
+import config from './../../config.json';
 
 const inlineStyle = {
   modal: {
@@ -44,7 +45,7 @@ class EditCourse extends Component {
         { key: 3, text: 'Additional', value: 'Additional' },
         { key: 4, text: 'Petitioned', value: 'Petitioned' }
       ],
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       course_offering_id: this.props.courseoffering,
       emp_no: this.props.emp_no,
       acad_year: this.props.acadyear,

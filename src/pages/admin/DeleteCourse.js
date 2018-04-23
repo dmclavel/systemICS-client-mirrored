@@ -10,6 +10,7 @@ import {
   Container
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
+import config from './../../config.json';
 
 const inlineStyle = {
   modal: {
@@ -24,7 +25,7 @@ class DeleteCourse extends Component {
   constructor() {
     super();
     this.state = {
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       open: false
     };
   }
