@@ -5,7 +5,7 @@ import NavbarIn from '../components/navbar/NavbarIn';
 import ManageHeader from '../components/headers/ManageHeader';
 import Sidebar from '../components/Sidebar';
 import AdminCard from './AdminCard.js';
-
+import config from '../../config.json'
 class Admin extends Component {
   constructor(props) {
     super(props);

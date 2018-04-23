@@ -4,7 +4,7 @@ import autobind from 'react-autobind';
 import './Table.css'
 import EditFaculty from './EditFaculty';
 import FacultyDelete from './FacultyDelete';
-
+import config from '../../config.json'
 class FacultyTable extends Component {
   constructor(props) {
     super(props);

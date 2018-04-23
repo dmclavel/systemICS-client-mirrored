@@ -10,7 +10,7 @@ import {
 import Dropzone from 'react-dropzone';
 import socketIOClient from 'socket.io-client';
 import './DropFile.css';
-
+import config from '../../config.json'
 const inlineStyle = {
   modal: {
     marginTop: '10vh !important',

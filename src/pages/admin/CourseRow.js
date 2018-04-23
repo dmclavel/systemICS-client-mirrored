@@ -4,7 +4,7 @@ import AddLabSection from './AddLabSection';
 import EditCourse from './EditCourse';
 import DeleteCourse from './DeleteCourse';
 import { convertToGeneralTime } from '../../utils/TimeUtilities';
-
+import config from '../../config.json'
 class CourseRow extends Component {
   constructor() {
     super();

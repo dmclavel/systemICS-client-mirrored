@@ -13,7 +13,7 @@ import {
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import { convertToGeneralTime } from '../../utils/TimeUtilities';
-
+import config from '../../config.json';
 const inlineStyle = {
   modal: {
     marginTop: '0px !important',

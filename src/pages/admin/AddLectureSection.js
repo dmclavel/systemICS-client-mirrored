@@ -7,6 +7,8 @@ import {
   convertToGeneralTime,
   isTimeValid
 } from '../../utils/TimeUtilities';
+import config from '../../config.json';
+
 const inlineStyle = {
   modal: {
     marginTop: '23vh',

@@ -10,7 +10,7 @@ import {
   Container
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
-
+import config from '../../config.json'
 const inlineStyle = {
   modal: {
     marginTop: '0px !important',

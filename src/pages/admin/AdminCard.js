@@ -7,7 +7,7 @@ import AddLectureSection from './AddLectureSection';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
 import './AdminCard.css';
-
+import config from '../../config.json'
 class AdminCard extends Component {
   constructor() {
     super();

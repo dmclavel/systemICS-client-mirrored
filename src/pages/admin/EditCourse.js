@@ -14,7 +14,7 @@ import {
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
-
+import config from '../../config.json'
 const inlineStyle = {
   modal: {
     marginTop: '0px !important',

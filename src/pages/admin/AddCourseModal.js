@@ -12,7 +12,7 @@ import {
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ViewCourses from './ViewCourses';
-
+import config from '../../config.json';
 const inlineStyle = {
 	modal: {
 		marginTop: '0px !important',

@@ -3,7 +3,7 @@ import { Button, Modal, Form, Grid, Segment, Header, Dropdown, Container, Checkb
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ErrorMessage from './ErrorMessage';
-
+import config from '../../config.json'
 const inlineStyle={
   modal :{
     marginTop: '500px !important',

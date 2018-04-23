@@ -3,7 +3,7 @@ import { Table, Grid, Button, Popup, Icon, Loader } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import StudentDelete from './StudentDelete';
 import StudentEdit from './StudentEdit';
-
+import config from '../../config.json'
 class StudentTable extends Component {
   constructor(props) {
     super(props);

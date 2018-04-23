@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import './ViewCourses.css';
-
+import config from '../../config.json'
 class ViewCourses extends Component {
   constructor(props) {
     super(props);
