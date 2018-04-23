@@ -3,6 +3,7 @@ import { Button, Modal, Form, Grid, Segment, Header, Dropdown, Container, Checkb
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ErrorMessage from './ErrorMessage';
+import config from './../../../config.json';
 
 const inlineStyle={
   modal :{
@@ -30,7 +31,7 @@ class AddFaculty extends Component {
       isErrorNumber: false,
       modalOpen: false,
       options: [ { key: 'Faculty', value: 1, text: 'Faculty' }, { key: 'Admin', value: 3, text: 'Admin' }, { key: 'Registration Committee', value: 2, text: 'Registration Committee' }, ],
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       statusOptions: [ { key: 'Active', value: 'Active', text: 'Active' }, { key: 'Resigned', value: 'Resigned', text: 'Resigned' }, { key: 'On Leave', value: 'On Leave', text: 'On Leave' }, ],
       selectedStatus: [0],
       selectedisRegCom: [0]

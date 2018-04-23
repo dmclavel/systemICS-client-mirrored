@@ -3,6 +3,7 @@ import { Button, Modal, Form, Grid, Segment, Header, Dropdown, Container, Checkb
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ErrorMessage from './ErrorMessage';
+import config from './../../../config.json';
 
 const inlineStyle={
   modal :{
@@ -23,7 +24,7 @@ class StudentAdd extends Component {
       status: '',
       student_number: '',
       modalOpen: false,
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       isErrorName: false,
       isErrorMail: false,
       isErrorCurriculum: false,
