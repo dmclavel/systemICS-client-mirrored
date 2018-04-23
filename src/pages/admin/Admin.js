@@ -52,6 +52,7 @@ class Admin extends Component {
                 showSemester={true}
                 current_year={acad_year}
                 current_sem={semester}
+                accessLvl={this.props.accessLvl}
                 handleChangeSemester={this.handleChangeSemester}
               />
             </Grid.Column>
