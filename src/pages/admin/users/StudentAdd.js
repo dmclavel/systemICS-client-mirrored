@@ -29,7 +29,8 @@ class StudentAdd extends Component {
       isErrorCurriculum: false,
       isErrorStatus: false,
       isErrorNumber: false,
-      isErrorMessage: false
+      isErrorMessage: false,
+      statusOptions: [ { key: 'Enrolled', value: 'Enrolled', text: 'Enrolled' }, { key: 'Unenrolled', value: 'Unenrolled', text: 'Unenrolled' }, ],
     };
     autobind(this);
   }
@@ -62,13 +63,10 @@ class StudentAdd extends Component {
     this.setState({curriculum: e.target.value});
   }
 
-  handleStatus = (e) => {
-    if (e.target.value != ""){
+  handleStatus = (event: SyntheticEvent, data: object) => {
+      this.setState({status: data.value}); 
       this.setState({isErrorStatus: false});
-    }else{
-      this.setState({isErrorStatus: true});
-    }
-    this.setState({status: e.target.value});
+      
   }
 
   handleNumber = (e) =>{
@@ -139,7 +137,7 @@ class StudentAdd extends Component {
                       </Form.Group>
                       <Form.Group widths='equal'>
                         <Form.Input error={this.state.isErrorCurriculum} fluid label='Curriculum' placeholder='Curriculum' onChange={this.handleCurriculum}/>
-                        <Form.Input error={this.state.isErrorStatus} fluid label='Status' placeholder='Status' onChange={this.handleStatus}/>
+                        <Form.Dropdown error={this.state.isErrorStatus} fluid label = "Status" placeholder='Select Status' search selection options={this.state.statusOptions} onChange={this.handleStatus}/>
                         <Form.Input error={this.state.isErrorNumber} fluid label='Student Number' placeholder='Name' onChange={this.handleNumber}/>
                       </Form.Group>
                     </Form>

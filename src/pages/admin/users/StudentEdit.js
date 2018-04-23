@@ -28,7 +28,8 @@ class StudentEdit extends Component {
       isErrorMail: false,
       isErrorCurriculum: false,
       isErrorStatus: false,
-      isErrorMessage: false
+      isErrorMessage: false,
+      statusOptions: [ { key: 'Enrolled', value: 'Enrolled', text: 'Enrolled' }, { key: 'Unenrolled', value: 'Unenrolled', text: 'Unenrolled' }, ]
     };
     autobind(this);
   }
@@ -61,13 +62,13 @@ class StudentEdit extends Component {
     this.setState({curriculum: e.target.value});
   }
 
-  handleStatus = (e) => {
-    if (e.target.value != ""){
+  handleStatus = (event: SyntheticEvent, data: object) => {
+    if (event.target.value != ""){
       this.setState({isErrorStatus: false});
     }else{
       this.setState({isErrorStatus: true});
     }
-    this.setState({status: e.target.value});
+    this.setState({status: data.value});
   }
 
   handleSubmit = (e) => {
@@ -107,7 +108,7 @@ class StudentEdit extends Component {
                       </Form.Group>
                       <Form.Group widths='equal'>
                         <Form.Input error={this.state.isErrorCurriculum} fluid label='Curriculum' placeholder={this.state.curriculum} onChange={this.handleCurriculum}/>
-                        <Form.Input error={this.state.isErrorStatus} fluid label='Status' placeholder={this.state.status} onChange={this.handleStatus}/>
+                        <Form.Dropdown error={this.state.isErrorStatus} fluid label = "Status" placeholder={this.state.status} search selection options={this.state.statusOptions} onChange={this.handleStatus}/>
                       </Form.Group>
                     </Form>
                     <h2>
