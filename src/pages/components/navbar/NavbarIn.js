@@ -103,13 +103,9 @@ class NavbarIn extends Component {
             ? 'regcom'
             : 'admin'
       }/dashboard`,
-      manageLink: `/${
-        this.props.accessLvl === 1
-          ? 'faculty'
-          : this.props.accessLvl === 2
-            ? 'regcom'
-            : 'admin'
-      }/manage/courses`,
+      manageLink: `/${this.props.accessLvl === 2 ? 'regcom' : 'admin'}/manage/${
+        this.props.accessLvl === 2 ? 'teaching' : 'courses'
+      }`,
       isLoggedIn: true
     };
 
