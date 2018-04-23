@@ -3,12 +3,13 @@ import { Table, Dropdown, Button, Grid, Icon } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import AdviseeSingle from './AdviseeSingle';
 import autobind from 'react-autobind';
+import config from './../..config.json';
 
 class AdviseeTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			endpoint: 'https://sleepy-falls-95372.herokuapp.com',
+			endpoint: config.backendAddress,
 			advisees: []
 		};
 		autobind(this);
