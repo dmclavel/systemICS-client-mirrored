@@ -18,6 +18,7 @@ import NavbarHome from '../components/navbar/NavbarHome';
 import SectionHeader from '../components/headers/SectionHeader';
 import socketIOClient from 'socket.io-client';
 import './Section.css';
+import config from './../../config.json';
 /*
 If you wish to import other JS files, do it here.
 */
@@ -26,7 +27,7 @@ class Section extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			endpoint: 'https://sleepy-falls-95372.herokuapp.com/', // the address of the server
+			endpoint: config.backendAddress, // the address of the server
 			lab: []
 		};
 		autobind(this);
