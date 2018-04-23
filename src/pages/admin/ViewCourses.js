@@ -20,8 +20,8 @@ class ViewCourses extends Component {
   fetchData = () => {
     const socket = socketIOClient(this.state.address);
     const data = { email: 'jcgaza@up.edu.ph' };
-    socket.emit('view_existing_courses', data);
-    socket.on('view_existing_courses', result => {
+    socket.emit('view_courses', data);
+    socket.on('view_courses', result => {
       this.setState({ courses: result });
     });
   };

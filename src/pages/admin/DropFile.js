@@ -60,7 +60,12 @@ class DropFile extends Component {
     var courseCSV = 'COURSE_NAME,COURSE_TITLE,DESCRIPTION';
     var senior_juniorCSV = 'ADVISER_EMP_NO,ADVISEE_EMP_NO';
 
-    this.setState({ filename: file[0].name, message: true, error: false });
+    this.setState({
+      filename: file[0].name,
+      message: true,
+      error: false,
+      filename: ''
+    });
 
     var course_offeringCSV =
       'ACAD_YEAR,SEMESTER,TIME_START,TIME_END,ROOM,NO_OF_STUDENTS,UNIT,DAY,SECTION,SECTION_TYPE,MAX_CAPACITY,COURSE_ID,EMP_NO,STATUS,POSTED';
@@ -76,64 +81,54 @@ class DropFile extends Component {
         };
         var stringTempStudent = data.string.substring(0, 47);
         var stringTempFaculty = data.string.substring(0, 37);
-        var stringTempAdmin = data.string.substring(0, 17);
         var stringTempAdviserAdvisee = data.string.substring(0, 47);
         var stringTempCourse = data.string.substring(0, 36);
-        var stringTempSeniorJunior = data.string.substring(0, 29);
         var stringTempCourseOffering = data.string.substring(0, 132);
 
         if (stringTempStudent === studentCSV && data.file_type === 1) {
-          console.log(data.string);
           this.setState({ data, method: 'file_content_student' });
         } else if (stringTempFaculty === facultyCSV && data.file_type === 2) {
-          console.log('FACULTY \n' + data.string);
-          //  socket.emit('file_content_faculty', data);
-        } else if (stringTempAdmin === adminCSV && data.file_type === 3) {
-          console.log('ADMIN \n' + data.string);
-          //  socket.emit('file_content_admin', data);
+          this.setState({ data, method: 'file_content_faculty' });
         } else if (
           stringTempAdviserAdvisee === adviser_adviseeCSV &&
           data.file_type === 4
         ) {
-          console.log('ADVISER_ADVISEE \n' + data.string);
-          //  socket.emit('file_content_adviser_advisee', data);
+          this.setState({ data, method: 'file_content_adviser_advisee' });
         } else if (stringTempCourse === courseCSV && data.file_type === 5) {
-          console.log('COURSE \n' + data.string);
-          //  socket.emit('file_content_course', data);
+          this.setState({ data, method: 'file_content_course' });
         } else if (
           stringTempCourseOffering === course_offeringCSV &&
           data.file_type === 6
         ) {
-          console.log('COURSE_OFFERING \n' + data.string);
-          //  socket.emit('file_content_course_offering', data);
-        } else if (
-          stringTempSeniorJunior === senior_juniorCSV &&
-          data.file_type === 7
-        ) {
-          console.log('SENIOR_JUNIOR \n' + data.string);
-          //  socket.emit('file_content_senior_junior', data);
+          this.setState({ data, method: 'file_content_course_offering' });
         } else {
-          console.log('ERROR \n' + data.string);
-          //  socket.emit('file_content_error', data);
+          this.setState({
+            error: true,
+            filename: 'The file did not match with our records.'
+          });
         }
       };
 
       readerFile.readAsText(file[0]);
     } else {
-      console.log('File not supported! \n Only accepts csv file');
       this.setState({ error: true });
     }
   };
 
   handleSubmit = () => {
-    console.log(this.state);
-    const { data, endpoint, method } = this.state;
-    const socket = socketIOClient(endpoint);
-    socket.emit(method, data);
-    socket.on(method, response => {
-      this.setState({ response });
-      console.log(response);
-    });
+    const { data, endpoint, method, error, filename } = this.state;
+    if (!error) {
+      const socket = socketIOClient(endpoint);
+      socket.emit(method, data);
+      socket.on(method, response => {
+        this.setState({ response });
+        console.log(response);
+      });
+    } else {
+      this.setState({
+        filename: 'You cannot proceed until requirements are met.'
+      });
+    }
   };
 
   close = () => {
@@ -154,7 +149,7 @@ class DropFile extends Component {
         <Modal.Header>Drop Files Here</Modal.Header>
         <Modal.Content>
           <div>
-            <Button.Group widths="5">
+            <Button.Group widths="6">
               <Label
                 attached
                 basic
@@ -166,6 +161,11 @@ class DropFile extends Component {
                 content="Student"
                 color={file_type_selected === 1 ? 'green' : null}
                 onClick={() => this.handleChangeFileTypeSelected(1)}
+              />
+              <Button
+                content="Faculty"
+                color={file_type_selected === 2 ? 'green' : null}
+                onClick={() => this.handleChangeFileTypeSelected(4)}
               />
               <Button
                 content="Adviser Advisee"
@@ -211,9 +211,7 @@ class DropFile extends Component {
             {message && (
               <Message
                 icon="file text outline"
-                header={
-                  error ? 'Error: File type not supported' : 'File to upload:'
-                }
+                header={error ? 'Error:' : 'File to upload:'}
                 error={error}
                 content={filename}
               />

@@ -5,7 +5,6 @@ import {
 	Form,
 	Grid,
 	Segment,
-	Header,
 	Container,
 	Message
 } from 'semantic-ui-react';
@@ -155,15 +154,12 @@ class AddCourseModal extends Component {
 				trigger={
 					<Button floated="right" positive content="View Existing Courses" />
 				}
-				basic
 			>
+				<Modal.Header>View Existing Courses</Modal.Header>
 				<Modal.Content>
 					<Container>
 						<Segment padded="very">
 							<Grid>
-								<Grid.Row>
-									<Header as="h2">Add Course </Header>
-								</Grid.Row>
 								<Grid.Row>
 									<Grid.Column width={16}>
 										<Form>

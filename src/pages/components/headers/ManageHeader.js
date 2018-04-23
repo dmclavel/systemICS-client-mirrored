@@ -3,13 +3,8 @@ import { Grid, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import './ManageHeader.css';
 
-const user = {
-	name: 'Reginald'
-};
-
 class ManageHeader extends Component {
 	render() {
-		// alert(this.props.accessLvl);
 		return (
 			<div className="db-heading">
 				{console.log(this.props.accessLvl)}

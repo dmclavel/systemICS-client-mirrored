@@ -17,7 +17,7 @@ import FacultyCard from './FacultyCard';
 import RegComCard from './RegComCard';
 import NavbarHome from '../components/navbar/NavbarHome';
 import ClassesHeader from '../components/headers/ClassesHeader';
-import config from '../../config.json'
+import config from '../../config.json';
 
 /*
 If you wish to import other JS files, do it here.
@@ -28,8 +28,7 @@ class FacultyTab extends Component {
     super(props);
     this.state = {
       endpoint: config.backendAddress, // the address of the server
-      faculty: [
-      ],
+      faculty: [],
       search: '',
       loading: true
     };
@@ -38,14 +37,13 @@ class FacultyTab extends Component {
 
   // what to do once the page (re)loads
   componentDidMount = () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     const socket = socketIOClient(this.state.endpoint); //establish connection to the server
     // listens on an endpoint and executes fallback function
-    socket.emit('view_all_active_faculty_members', 'dfesperanza@up.edu.ph'); //send data to 'login' endpoint in server
-    socket.on('view_all_active_faculty_members', returnValueFromServer => {
-      console.log(returnValueFromServer);
+    socket.emit('view_faculty', 'dfesperanza@up.edu.ph'); //send data to 'login' endpoint in server
+    socket.on('view_faculty', returnValueFromServer => {
       this.setState({ faculty: returnValueFromServer });
-      this.setState({loading: false});
+      this.setState({ loading: false });
     });
   };
   //a function for sending data to server.you can have many of these
@@ -105,7 +103,6 @@ class FacultyTab extends Component {
               </Grid>
             </Grid.Column>
           </Grid.Row>
-
         </Grid>
         <Loader active={this.state.loading} content="Loading..." />
       </div>
