@@ -25,7 +25,7 @@ class FacultyPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      endpoint: config.backendAddress // the address of the server
+      endpoint: config.backendAddress, // the address of the server
       faculty: [],
       facultyQuery: '',
       facultyResult: [],
