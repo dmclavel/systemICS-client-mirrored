@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import {
-	Button,
-	Modal,
-	Form,
-	Grid,
-	Segment,
-	Divider,
-	Header,
-	Container,
-	Message
+  Button,
+  Modal,
+  Form,
+  Segment,
+  Divider,
+  Header,
+  Container,
+  Message
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
@@ -146,15 +145,12 @@ class AddCourseLab extends Component {
     let labSection = this.labSectionFormat();
     let lecSection = this.props.courseoffering;
     const {
-      course_offering_id,
-      lecture_id,
       acad_year,
       semester,
       no_of_students,
       time_start,
       time_end,
       room,
-      section,
       unit,
       max_capacity
     } = this.state;

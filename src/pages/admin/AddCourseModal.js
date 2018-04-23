@@ -5,7 +5,6 @@ import {
 	Form,
 	Grid,
 	Segment,
-	Header,
 	Container,
 	Message
 } from 'semantic-ui-react';
@@ -80,8 +79,8 @@ class AddCourseModal extends Component {
 					warning: false
 				});
 			} else {
-				socket.emit('view_existing_courses', {});
-				socket.on('view_existing_courses', course => {
+				socket.emit('view_courses', { email: 'jcgaza@up.edu.ph' });
+				socket.on('view_courses', course => {
 					//Check if inputted course is not yet in the database
 					const result = course.find(res => res.course_name === course_name);
 					if (!result) {
@@ -155,93 +154,86 @@ class AddCourseModal extends Component {
 				trigger={
 					<Button floated="right" positive content="View Existing Courses" />
 				}
-				basic
 			>
+				<Modal.Header>View Existing Courses</Modal.Header>
 				<Modal.Content>
-					<Container>
-						<Segment padded="very">
-							<Grid>
-								<Grid.Row>
-									<Header as="h2">Add Course </Header>
-								</Grid.Row>
-								<Grid.Row>
-									<Grid.Column width={16}>
-										<Form>
-											<Form.Group>
-												<Form.Input
-													width={3}
-													label="Course Name"
-													placeholder="Course Name"
-													name="course_name"
-													value={course_name}
-													onChange={this.handleChange}
-													required
-												/>
-												<Form.Input
-													width={3}
-													label="Course Title"
-													placeholder="Course Title"
-													name="course_title"
-													value={course_title}
-													onChange={this.handleChange}
-													required
-												/>
-												<Form.Input
-													width={8}
-													label="Course Description"
-													placeholder="Course Description"
-													name="description"
-													value={description}
-													onChange={this.handleChange}
-													required
-												/>
-												<Form.Button
-													fluid
-													className="form-button"
-													width={2}
-													color={isEditing ? 'blue' : 'green'}
-													onClick={this.handleSubmit}
-													content={isEditing ? 'Edit' : 'Submit'}
-												/>
-											</Form.Group>
-											{isEditing && (
-												<a className="form-editing" onClick={this.handleRevert}>
-													Revert back to add
-												</a>
-											)}
-										</Form>
-									</Grid.Column>
-								</Grid.Row>
-
-								<Grid.Row>
-									{message && (
-										<Grid.Column width={16}>
-											<Message
-												warning={warning}
-												success={!warning}
-												header={message}
-												icon={warning ? 'remove' : 'checkmark'}
-											/>
-										</Grid.Column>
-									)}
-								</Grid.Row>
-
-								<Grid.Row>
-									<Grid.Column width={16}>
-										<ViewCourses
-											message={message}
-											handleMessage={this.handleMessageChange}
-											handleCourseName={this.handleCourseName}
-											handleCourseTitle={this.handleCourseTitle}
-											handleCourseDesc={this.handleCourseDesc}
-											handleIsEditing={this.handleIsEditing}
-											handleCourseID={this.handleCourseID}
+					<Grid>
+						<Grid.Row>
+							<Grid.Column width={16}>
+								<Form>
+									<Form.Group>
+										<Form.Input
+											width={3}
+											label="Course Name"
+											placeholder="Course Name"
+											name="course_name"
+											value={course_name}
+											onChange={this.handleChange}
+											required
 										/>
-									</Grid.Column>
-								</Grid.Row>
-							</Grid>
-						</Segment>
-					</Container>
+										<Form.Input
+											width={3}
+											label="Course Title"
+											placeholder="Course Title"
+											name="course_title"
+											value={course_title}
+											onChange={this.handleChange}
+											required
+										/>
+										<Form.Input
+											width={8}
+											label="Course Description"
+											placeholder="Course Description"
+											name="description"
+											value={description}
+											onChange={this.handleChange}
+											required
+										/>
+										<Form.Button
+											fluid
+											className="form-button"
+											width={2}
+											color={isEditing ? 'blue' : 'green'}
+											onClick={this.handleSubmit}
+											content={isEditing ? 'Edit' : 'Submit'}
+										/>
+									</Form.Group>
+									{isEditing && (
+										<a className="form-editing" onClick={this.handleRevert}>
+											Revert back to add
+										</a>
+									)}
+								</Form>
+							</Grid.Column>
+						</Grid.Row>
+
+						<Grid.Row>
+							{message && (
+								<Grid.Column width={16}>
+									<Message
+										warning={warning}
+										success={!warning}
+										header={message}
+										icon={warning ? 'remove' : 'checkmark'}
+									/>
+								</Grid.Column>
+							)}
+						</Grid.Row>
+
+						<Grid.Row>
+							<Grid.Column width={16}>
+								<ViewCourses
+									message={message}
+									handleMessage={this.handleMessageChange}
+									handleCourseName={this.handleCourseName}
+									handleCourseTitle={this.handleCourseTitle}
+									handleCourseDesc={this.handleCourseDesc}
+									handleIsEditing={this.handleIsEditing}
+									handleCourseID={this.handleCourseID}
+								/>
+							</Grid.Column>
+						</Grid.Row>
+					</Grid>
 				</Modal.Content>
 				<Modal.Actions className="modal-actions">
 					<Button

@@ -3,12 +3,8 @@ import {
   Button,
   Modal,
   Form,
-  Grid,
   Segment,
   Header,
-  Dropdown,
-  Container,
-  Checkbox,
   Message,
   Divider
 } from 'semantic-ui-react';
@@ -69,10 +65,10 @@ class EditCourse extends Component {
   }
 
   dayFormat() {
-    const { M, T, W, Th, F, day } = this.state;
+    const { M, T, W, Th, F } = this.state;
     let days = '';
     if (M) {
-      if (days == '') {
+      if (days === '') {
         days = 'M';
         this.setState({ day: 'M' });
       }
@@ -105,16 +101,9 @@ class EditCourse extends Component {
     return days;
   }
 
-  getDays() {
-    const { section_type } = this.state;
-
-    if (this.state.section_type === 0) {
-    }
-  }
-
   handleDayChange = (e, { content, active }) => {
-    if (active == true) this.setState({ [content]: false });
-    else if (active == false) this.setState({ [content]: true });
+    if (active) this.setState({ [content]: false });
+    else this.setState({ [content]: true });
   };
 
   handleChange = (e, { name, value }) => {
@@ -136,7 +125,6 @@ class EditCourse extends Component {
       time_start,
       time_end,
       room,
-      day,
       section,
       max_capacity,
       emp_no,
@@ -213,17 +201,12 @@ class EditCourse extends Component {
       Th,
       F,
       statusOptions,
-      emp_no,
-      acad_year,
-      semester,
       no_of_students,
       time_start,
       time_end,
       room,
-      day,
       section,
       max_capacity,
-      course_title,
       status
     } = this.state;
     return (

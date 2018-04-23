@@ -31,7 +31,6 @@ class GeneratePDF extends Component {
 			state['dissolved'] = informations;
 			this.setState(state);
 		});
-		console.log(this.state);
 
 		// socket.emit('view_sections', { petitioned: true });
 		// socket.on('view_sections', informations => {
@@ -65,8 +64,8 @@ class GeneratePDF extends Component {
 		return (
 			<div className="page-main">
 				<div className="headerICS">
-					<img className="up" src={uplb} />
-					<img className="icsl" src={ics} />
+					<img className="up" src={uplb} alt="UPLB Logo" />
+					<img className="icsl" src={ics} alt="ICS Logo" />
 					<h1 className="ics">INSTITUTE OF COMPUTER SCIENCE</h1>
 					<h2 className="ics2">
 						College of Arts and Sciences<br />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Search, Card, Input, Header, Button, Loader } from 'semantic-ui-react';
+import { Grid, Card, Loader } from 'semantic-ui-react';
 import './Faculty.css';
 import SubjectCard from './SubjectCard';
 import Advisee from './Advisee';
@@ -60,7 +60,7 @@ class Faculty extends Component {
     });
   };
   handleCourseSearch = query => {
-    if (query.length == 0) {
+    if (!query.length) {
       this.setState({ visibleCourses: this.state.courses });
       console.log(this.state.visibleCourses);
     } else {
@@ -77,7 +77,7 @@ class Faculty extends Component {
     }
   };
   handleAdviseeSearch = query => {
-    if (query.length == 0) {
+    if (!query.length) {
       this.setState({ visibleAdvisees: this.state.advisees });
       console.log(this.state.visibleAdvisees);
     } else {
@@ -85,9 +85,10 @@ class Faculty extends Component {
         visibleAdvisees: this.state.advisees.filter(user => {
           if (
             user.advisee_name.toLowerCase().includes(query.toLowerCase()) ||
-            user.advisee_email_add.toLowerCase().includes(query.toLowerCase()) ||
-            (user.advisee_student_number+"").includes(query.toLowerCase())
-
+            user.advisee_email_add
+              .toLowerCase()
+              .includes(query.toLowerCase()) ||
+            (user.advisee_student_number + '').includes(query.toLowerCase())
           ) {
             return true;
           } else {
@@ -122,7 +123,10 @@ class Faculty extends Component {
                   />
                 </Grid.Row>
                 <Grid.Row>
-                <Loader active={this.state.sections_loading} content="Loading you teaching load..." />
+                  <Loader
+                    active={this.state.sections_loading}
+                    content="Loading your teaching load..."
+                  />
 
                   {this.state.visibleCourses.map(course => {
                     return (
@@ -143,29 +147,32 @@ class Faculty extends Component {
               </Grid.Column>
               <Grid.Column width={1} />
               <Grid.Column width={5}>
-              <Grid.Row>
-                <Card fluid raised={true}>
-                  <h2>Advisees</h2>
-                </Card>
-                <SearchCard
-                  fluid={true}
-                  handleSearch={this.handleAdviseeSearch}
-                  placeholder="name, email or student id"
-                />
-            </Grid.Row>
-            <Grid.Row>
-              <Loader active={this.state.sections_loading} content="Loading your advisees..." />
-              {this.state.visibleAdvisees.map(advisees => {
-                return (
-                  <Advisee
-                    name={advisees.advisee_name}
-                    student_number={advisees.advisee_student_number}
-                    curriculum={advisees.curriculum}
-                    email={advisees.advisee_email_add}
+                <Grid.Row>
+                  <Card fluid raised={true}>
+                    <h2>Advisees</h2>
+                  </Card>
+                  <SearchCard
+                    fluid={true}
+                    handleSearch={this.handleAdviseeSearch}
+                    placeholder="name, email or student id"
                   />
-                );
-              })}
-            </Grid.Row>
+                </Grid.Row>
+                <Grid.Row>
+                  <Loader
+                    active={this.state.sections_loading}
+                    content="Loading your advisees..."
+                  />
+                  {this.state.visibleAdvisees.map(advisees => {
+                    return (
+                      <Advisee
+                        name={advisees.advisee_name}
+                        student_number={advisees.advisee_student_number}
+                        curriculum={advisees.curriculum}
+                        email={advisees.advisee_email_add}
+                      />
+                    );
+                  })}
+                </Grid.Row>
               </Grid.Column>
               <Grid.Column width={1} />
             </Grid.Row>
