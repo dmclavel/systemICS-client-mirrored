@@ -20,6 +20,7 @@ import {
   convertToGeneralTime
 } from '../../utils/TimeUtilities';
 import img from './kobe.jpg';
+import config in './../../config.json';
 
 // Modal inlineStyle to fix centering
 const inlineStyle = {
@@ -41,7 +42,7 @@ class EditLoadModal extends Component {
       timeAndSections: [], // list of options for time and sections available for course
       courses: [], // courses assigned to a faculty
       open: false, // state of the modal
-      endpoint: 'https://sleepy-falls-95372.herokuapp.com', // endpoint
+      endpoint: config.backendAddress, // endpoint
       coursesDropdownLoading: true,
       sectionsDropdownLoading: false,
       message: '',

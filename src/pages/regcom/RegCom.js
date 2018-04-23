@@ -7,6 +7,7 @@ import socketIOClient from 'socket.io-client';
 import NavbarIn from '../components/navbar/NavbarIn';
 import Sidebar from '../components/Sidebar';
 import ManageHeader from '../components/headers/ManageHeader';
+import config in './../../config.json';
 
 class RegCom extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class RegCom extends Component {
     this.state = {
       informations: [],
       searchInput: '',
-      endpoint: 'https://sleepy-falls-95372.herokuapp.com',
+      endpoint: config.backendAddress,
       loading: true
     };
     autobind(this);
