@@ -84,14 +84,14 @@ class FacultyTab extends Component {
                       )
                       .map((item, index) => (
                         <Card>
-                          {item.isRegCom === 0 ? (
-                            <FacultyCard
+                          {item.isRegCom === 2 ? (
+                            <RegComCard
                               name={item.name}
                               email={item.email_add}
                               isRegCom={item.isRegCom}
                             />
                           ) : (
-                            <RegComCard
+                            <FacultyCard
                               name={item.name}
                               email={item.email_add}
                               isRegCom={item.isRegCom}
