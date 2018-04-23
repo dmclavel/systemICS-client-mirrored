@@ -3,7 +3,7 @@ import { Table, Dropdown, Button, Grid, Icon } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import AdviseeSingle from './AdviseeSingle';
 import autobind from 'react-autobind';
-import config from './../..config.json';
+import config from './../../config.json';
 
 class AdviseeTable extends Component {
 	constructor(props) {
