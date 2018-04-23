@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { Table, Button, Dropdown, Grid, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
+import config from './../..config.json';
 
 class AdviseeSingle extends Component {
 	constructor(props) {
 		super(props);
 		autobind(this);
 		this.state = {
-			endpoint: 'https://sleepy-falls-95372.herokuapp.com',
+			endpoint: config.backendAddress,
 			list_advisers: [],
 			selected_adviser: undefined,
 			current_adviser: null,
