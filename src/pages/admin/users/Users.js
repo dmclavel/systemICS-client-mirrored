@@ -5,7 +5,7 @@ import NavbarIn from '../../components/navbar/NavbarIn';
 import Sidebar from '../../components/Sidebar';
 import ManageHeader from '../../components/headers/ManageHeader';
 import User from './User';
-import config from '../../config.json'
+import config from '../../../config.json'
 class RegCom extends Component {
   render() {
     return (

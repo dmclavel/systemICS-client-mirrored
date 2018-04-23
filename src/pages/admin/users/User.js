@@ -7,7 +7,7 @@ import StudentAdd from './StudentAdd';
 import AddFaculty from './AddFaculty';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
-import config from '../../config.json'
+import config from '../../../config.json'
 class User extends Component {
 	constructor(props) {
 		super(props);

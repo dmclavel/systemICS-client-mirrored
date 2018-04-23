@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, Form, Grid, Segment, Header, Dropdown, Container, Checkbox , Popup} from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
-import config from '../../config.json'
+import config from '../../../config.json'
 const inlineStyle={
   modal :{
     marginTop: '500px !important',
