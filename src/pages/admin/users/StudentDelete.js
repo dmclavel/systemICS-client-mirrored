@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Modal, Form, Grid, Segment, Header, Dropdown, Container, Checkbox , Popup} from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
+import config from './../../../config.json';
 
 const inlineStyle={
   modal :{
@@ -17,7 +18,7 @@ class StudentDelete extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: 'https://sleepy-falls-95372.herokuapp.com/',
+      address: config.backendAddress,
       modalOpen: false
     };
     autobind(this);
