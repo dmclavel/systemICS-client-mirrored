@@ -179,7 +179,7 @@ class AddFaculty extends Component {
           {this.state.isErrorMessage && <ErrorMessage />}
           <Form>
             <Form.Group widths="equal">
-              <Form.Input
+              <Form.Input type="number"
                 error={this.state.isErrorNumber}
                 fluid
                 label="Employee Number"
