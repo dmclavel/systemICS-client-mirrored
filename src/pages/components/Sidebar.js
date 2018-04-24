@@ -155,7 +155,10 @@ class Sidebar extends Component {
 
 	handleOnChange = (e, data) => {
 		this.props.handleChangeSemester(data.value.acad_year, data.value.semester);
-		console.log(data.value);
+		this.setState({
+			acad_year: data.value.acad_year,
+			semester: data.value.semester
+		});
 	};
 
 	render() {
@@ -168,13 +171,12 @@ class Sidebar extends Component {
 							<Header.Content>
 								{this.props.showSemester
 									? `${
-											this.props.current_sem === 1
+											semester === 1
 												? '1st Semester'
-												: this.props.current_sem === 2
+												: semester === 2
 													? '2nd Semester'
 													: 'Midyear'
-									  } AY ${this.props.current_year}-${this.props.current_year +
-											1}`
+									  } AY ${acad_year}-${acad_year + 1}`
 									: `${
 											semester === 1
 												? '1st Semester'

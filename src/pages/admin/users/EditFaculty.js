@@ -136,13 +136,15 @@ class EditFaculty extends Component {
         <Modal.Content>
           {this.state.isErrorMessage == true ? <ErrorMessage /> : <div />}
           <Form>
-            <Form.Group widths="equal">
+            <Form.Group>
               <Form.Input
+                width={5}
                 disabled
                 label="Employee Number"
                 value={this.props.emp_no}
               />
               <Form.Input
+                width={11}
                 error={this.state.isErrorName}
                 fluid
                 label="Name"
