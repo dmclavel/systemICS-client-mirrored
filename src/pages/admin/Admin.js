@@ -21,17 +21,15 @@ class Admin extends Component {
     const socket = socketIOClient(this.state.endpoint);
     socket.emit('view_timeframe', null);
     socket.on('view_timeframe', timeframe => {
-      const currentTime = timeframe.pop();
       this.setState({
-        acad_year: currentTime.acad_year,
-        semester: currentTime.semester
+        acad_year: timeframe[timeframe.length - 1].acad_year,
+        semester: timeframe[timeframe.length - 1].semester
       });
     });
   }
 
   handleChangeSemester = (acad_year, semester) => {
     this.setState({ acad_year: acad_year, semester: semester });
-    console.log(this.state);
   };
 
   render() {
