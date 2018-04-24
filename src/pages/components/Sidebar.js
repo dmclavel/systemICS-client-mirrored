@@ -126,9 +126,10 @@ class Sidebar extends Component {
 		const socket = socketIOClient(this.state.address);
 		socket.emit('view_timeframe', null);
 		socket.on('view_timeframe', semesters => {
-			const copy = semesters;
-			const temp = semesters.pop();
-			this.setState({ acad_year: temp.acad_year, semester: temp.semester });
+			this.setState({
+				acad_year: semesters[semesters.length - 1].acad_year,
+				semester: semesters[semesters.length - 1].semester
+			});
 
 			const tempSem = [];
 			semesters.forEach((semester, index) => {

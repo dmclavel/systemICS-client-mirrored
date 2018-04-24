@@ -15,9 +15,9 @@ class GeneratePDF extends Component {
 			date: `${new Date().toLocaleString('en-us', {
 				month: 'long'
 			})} ${new Date().getDate()}, ${new Date().getFullYear()}`,
-			informations: [],
-			table2: [],
-			table3: [],
+			dissolved: [],
+			petitioned: [],
+			additional: [],
 			table4: []
 		};
 		autobind(this);
@@ -25,26 +25,36 @@ class GeneratePDF extends Component {
 
 	componentDidMount() {
 		const socket = socketIOClient(this.state.endpoint);
-		socket.emit('view_sections', { dissolved: true });
-		socket.on('view_sections', informations => {
-			const state = this.state;
-			state['dissolved'] = informations;
-			this.setState(state);
+		socket.emit('view_sections', {
+			dissolved: true,
+			active: false,
+			petitioned: false,
+			additional: false
+		});
+		socket.on('view_sections', dissolved => {
+			this.setState({ dissolved });
+			console.log(dissolved);
 		});
 
-		// socket.emit('view_sections', { petitioned: true });
-		// socket.on('view_sections', informations => {
-		// 	this.setState({
-		// 		table2: informations
-		// 	});
-		// });
+		socket.emit('view_sections', {
+			petitioned: true,
+			active: false,
+			dissolved: false,
+			additional: false
+		});
+		socket.on('view_sections', petitioned => {
+			this.setState({ petitioned });
+		});
 
-		// socket.emit('view_sections', { additional: true });
-		// socket.on('view_sections', informations => {
-		// 	this.setState({
-		// 		table3: informations
-		// 	});
-		// });
+		socket.emit('view_sections', {
+			additional: true,
+			active: false,
+			dissolved: false,
+			petitioned: false
+		});
+		socket.on('view_sections', additional => {
+			this.setState({ additional });
+		});
 
 		// console.log(this.state);
 
@@ -55,11 +65,16 @@ class GeneratePDF extends Component {
 		//   });
 		// });
 
-		if (this.state.informations) window.print();
+		// if (
+		// 	this.state.additional.length > 0 &&
+		// 	this.state.dissolved.length > 0 &&
+		// 	this.this.state.petitioned.length > 0
+		// )
+		// 	window.print();
 	}
 
 	render() {
-		const { date, dissolved } = this.state;
+		const { date, dissolved, petitioned, additional } = this.state;
 
 		return (
 			<div className="page-main">
@@ -133,7 +148,21 @@ class GeneratePDF extends Component {
 						<strong>B. Petitioned Sections</strong>
 					</p>
 					<br />
-					<table className="t2">{/* Map here */}</table>
+					<table className="t2">
+						<tr>
+							<th className="th1 td">Course Code/Title</th>
+							<th className="th1 td">Section(s)</th>
+							<th className="th1 td">Reason for Dissolution</th>
+						</tr>
+						{petitioned &&
+							petitioned.map((section, index) => (
+								<tr key={index}>
+									<td className="td">{section.course_name}</td>
+									<td className="td">{section.section}</td>
+									<td className="td"> </td>
+								</tr>
+							))}
+					</table>
 				</div>
 
 				<div>
@@ -142,7 +171,21 @@ class GeneratePDF extends Component {
 						<strong>C. Additional Sections</strong>
 					</p>
 					<br />
-					<table className="t3">{/* Map here */}</table>
+					<table className="t3">
+						<tr>
+							<th className="th1 td">Course Code/Title</th>
+							<th className="th1 td">Section(s)</th>
+							<th className="th1 td">Reason for Dissolution</th>
+						</tr>
+						{additional &&
+							additional.map((section, index) => (
+								<tr key={index}>
+									<td className="td">{section.course_name}</td>
+									<td className="td">{section.section}</td>
+									<td className="td"> </td>
+								</tr>
+							))}
+					</table>
 				</div>
 
 				<div>

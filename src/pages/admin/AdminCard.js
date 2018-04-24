@@ -39,13 +39,14 @@ class AdminCard extends Component {
   }
 
   // next time, specify acad year and semester based on view
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+
     this.setState({ loading: true });
-    console.log(this.props);
     const socket = socketIOClient(this.state.address);
     const data = {
-      acad_year: this.props.current_year,
-      semester: this.props.current_sem
+      acad_year: nextProps.current_year,
+      semester: nextProps.current_sem
     };
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
