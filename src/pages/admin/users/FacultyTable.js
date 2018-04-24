@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Grid, Button, Popup, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
-import './Table.css'
+import './Table.css';
 import EditFaculty from './EditFaculty';
 import FacultyDelete from './FacultyDelete';
 
@@ -39,18 +39,35 @@ class FacultyTable extends Component {
                 <Table.Cell textAlign="center">{user.email_add}</Table.Cell>
                 <Table.Cell textAlign="center">{user.status}</Table.Cell>
                 <Table.Cell textAlign="center">
-                  {user.isRegCom == 1 ? 'Faculty' : user.isRegCom == 2? 'Registration Committee' : 'Admin'}
+                  {user.isRegCom == 1
+                    ? 'Faculty'
+                    : user.isRegCom == 2
+                      ? 'Registration Committee'
+                      : 'Admin'}
                 </Table.Cell>
                 <Table.Cell textAlign="center">
                   <Grid>
-                    <Grid.Row centered columns={2}>
+                    <Grid.Row centered columns={3}>
                       <Grid.Column>
-                        <FacultyDelete name={user.name} emp_no={user.emp_no} email_add={user.email_add} isRegCom={user.isRegCom} status={user.status} fetchData={this.props.fetchData}/>
+                        <EditFaculty
+                          name={user.name}
+                          emp_no={user.emp_no}
+                          email_add={user.email_add}
+                          isRegCom={user.isRegCom}
+                          status={user.status}
+                          fetchData={this.props.fetchData}
+                        />
                       </Grid.Column>
                       <Grid.Column>
-                        <EditFaculty name={user.name} emp_no={user.emp_no} email_add={user.email_add} isRegCom={user.isRegCom} status={user.status} fetchData={this.props.fetchData}/>
+                        <FacultyDelete
+                          name={user.name}
+                          emp_no={user.emp_no}
+                          email_add={user.email_add}
+                          isRegCom={user.isRegCom}
+                          status={user.status}
+                          fetchData={this.props.fetchData}
+                        />
                       </Grid.Column>
-                      
                     </Grid.Row>
                   </Grid>
                 </Table.Cell>

@@ -37,16 +37,30 @@ class StudentTable extends Component {
                 <Table.Cell>{user.student_number}</Table.Cell>
                 <Table.Cell>{user.name}</Table.Cell>
                 <Table.Cell textAlign="center">{user.email_add}</Table.Cell>
-                 <Table.Cell textAlign="center">{user.curriculum}</Table.Cell>
+                <Table.Cell textAlign="center">{user.curriculum}</Table.Cell>
                 <Table.Cell> {user.status} </Table.Cell>
                 <Table.Cell>
-                     <Grid>
+                  <Grid>
                     <Grid.Row centered columns={3}>
                       <Grid.Column>
-                        <StudentDelete name={user.name} student_number={user.student_number} email_add={user.email_add} curriculum={user.curriculum} status={user.status} fetchData={this.props.fetchData}/>
+                        <StudentEdit
+                          name={user.name}
+                          student_number={user.student_number}
+                          email_add={user.email_add}
+                          curriculum={user.curriculum}
+                          status={user.status}
+                          fetchData={this.props.fetchData}
+                        />
                       </Grid.Column>
                       <Grid.Column>
-                        <StudentEdit name={user.name} student_number={user.student_number} email_add={user.email_add} curriculum={user.curriculum} status={user.status} fetchData={this.props.fetchData}/>
+                        <StudentDelete
+                          name={user.name}
+                          student_number={user.student_number}
+                          email_add={user.email_add}
+                          curriculum={user.curriculum}
+                          status={user.status}
+                          fetchData={this.props.fetchData}
+                        />
                       </Grid.Column>
                     </Grid.Row>
                   </Grid>
