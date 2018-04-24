@@ -38,20 +38,6 @@ class ManageHeader extends Component {
 									</div>
 								) : null}
 							</Grid.Column>
-							<Grid.Column width={2} className="remove-padding">
-								{this.props.accessLvl === 3 ? (
-									<div>
-										<Link to="/admin/manage/users">
-											<Button
-												className="admin-button centered-h"
-												circular
-												icon="id badge outline huge"
-											/>
-										</Link>
-										<p className="admin-button-caption">Users</p>
-									</div>
-								) : null}
-							</Grid.Column>
 							<Grid.Column width={2}>
 								<Link
 									to={`/${
@@ -80,6 +66,20 @@ class ManageHeader extends Component {
 									/>
 								</Link>
 								<p className="admin-button-caption">Teaching Load</p>
+							</Grid.Column>
+							<Grid.Column width={2} className="remove-padding">
+								{this.props.accessLvl === 3 ? (
+									<div>
+										<Link to="/admin/manage/users">
+											<Button
+												className="admin-button centered-h"
+												circular
+												icon="id badge outline huge"
+											/>
+										</Link>
+										<p className="admin-button-caption">Users</p>
+									</div>
+								) : null}
 							</Grid.Column>
 						</Grid.Row>
 					</Grid>

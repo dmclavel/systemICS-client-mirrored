@@ -124,8 +124,9 @@ class Sidebar extends Component {
 
 	componentDidMount() {
 		const socket = socketIOClient(this.state.address);
-		socket.emit('view_timeframe', null);
+		socket.emit('view_timeframe', {});
 		socket.on('view_timeframe', semesters => {
+			console.log(semesters);
 			this.setState({
 				acad_year: semesters[semesters.length - 1].acad_year,
 				semester: semesters[semesters.length - 1].semester
