@@ -139,7 +139,7 @@ class StudentAdd extends Component {
                       <Form.Group widths='equal'>
                         <Form.Input error={this.state.isErrorCurriculum} fluid label='Curriculum' placeholder='Curriculum' onChange={this.handleCurriculum}/>
                         <Form.Dropdown error={this.state.isErrorStatus} fluid label = "Status" placeholder='Select Status' search selection options={this.state.statusOptions} onChange={this.handleStatus}/>
-                        <Form.Input error={this.state.isErrorNumber} fluid label='Student Number' placeholder='Name' onChange={this.handleNumber}/>
+                        <Form.Input type = "number" error={this.state.isErrorNumber} fluid label='Student Number' placeholder='Student Number' onChange={this.handleNumber}/>
                       </Form.Group>
                     </Form>
                     <h2>
