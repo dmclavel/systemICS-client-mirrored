@@ -178,8 +178,9 @@ class AddFaculty extends Component {
         <Modal.Content>
           {this.state.isErrorMessage && <ErrorMessage />}
           <Form>
-            <Form.Group widths="equal">
-              <Form.Input type="number"
+            <Form.Group>
+              <Form.Input
+                width={5}
                 error={this.state.isErrorNumber}
                 fluid
                 label="Employee Number"
@@ -187,6 +188,7 @@ class AddFaculty extends Component {
                 onChange={this.handleNumber}
               />
               <Form.Input
+                width={11}
                 error={this.state.isErrorName}
                 fluid
                 label="Name"
