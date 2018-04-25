@@ -53,32 +53,31 @@ class AdminCard extends Component {
 
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
+      console.log('cutie si syd');
       this.setState({ coursesX: course, courses: course });
       this.setState({ loading: false });
     });
 
-    socket.emit('view_timeframe', {});
-    socket.on('view_timeframe', timeframe => {
-      const time = timeframe.pop();
-      if (
-        time.acad_year === nextProps.current_year &&
-        time.semester === nextProps.semester
-      ) {
-        this.setState({ add: true });
-      } else this.setState({ add: false });
+    socket.on('update_alert', res => {
+      if (res.code === 'section') socket.emit('view_sections', data);
+    });
+
+    this.setState({
+      current_year: nextProps.current_year,
+      current_sem: nextProps.current_sem
     });
   }
 
   fetchCourse = () => {
+    const { current_year, current_sem } = this.state;
+
     const socket = socketIOClient(this.state.address);
     const data = {
-      acad_year: this.props.current_year,
-      semester: this.props.current_sem
+      acad_year: current_year,
+      semester: current_sem
     };
     socket.emit('view_sections', data);
-    socket.on('view_sections', course => {
-      this.setState({ coursesX: course });
-    });
+    console.log('deleted');
   };
 
   handleSearch = query => {
@@ -103,7 +102,7 @@ class AdminCard extends Component {
   };
 
   render() {
-    const { loading, coursesX, current_year, current_sem, add } = this.state;
+    const { loading, coursesX, current_year, current_sem } = this.state;
 
     return (
       <Grid className="admin-container">
@@ -151,6 +150,7 @@ class AdminCard extends Component {
             {this.state.courses.map((course, index) => {
               return (
                 <CourseRow
+                  data={coursesX}
                   key={index}
                   fetch_Course={this.fetchCourse}
                   description={course.description}
