@@ -28,7 +28,8 @@ class CoursePanelWhole extends Component {
 		socket.emit('view_sections', {
 									active:true,
 									petitioned:true,
-									additional:true
+									additional:true,
+									lectureOnly: true
 									}); //send data to 'login' endpoint in server
 		socket.on('view_sections', returnValueFromServer => {
 			this.setState({ lecture: returnValueFromServer });
