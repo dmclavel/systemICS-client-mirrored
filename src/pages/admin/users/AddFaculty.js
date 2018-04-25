@@ -180,6 +180,7 @@ class AddFaculty extends Component {
           <Form>
             <Form.Group>
               <Form.Input
+                type='number'
                 width={5}
                 error={this.state.isErrorNumber}
                 fluid

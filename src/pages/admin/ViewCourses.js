@@ -14,15 +14,28 @@ class ViewCourses extends Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    const socket = socketIOClient(this.state.address);
+    const data = { ignoreExistingSections: true };
+    socket.emit('view_courses', data);
+    socket.on('view_courses', result => {
+      this.setState({ courses: result });
+    });
+
+    socket.on('update_alert', res => {
+      if (res.code === 'course') socket.emit('view_courses', data);
+    });
   }
 
   fetchData = () => {
     const socket = socketIOClient(this.state.address);
-    const data = { email: 'jcgaza@up.edu.ph' };
+    const data = { ignoreExistingSections: true };
     socket.emit('view_courses', data);
     socket.on('view_courses', result => {
       this.setState({ courses: result });
+    });
+
+    socket.on('update_alert', res => {
+      if (res.code === 'course') socket.emit('view_courses', data);
     });
   };
 
@@ -37,8 +50,6 @@ class ViewCourses extends Component {
       `${e.target.name} has been successfully deleted!`,
       false
     );
-
-    this.fetchData();
   };
 
   handleEdit = e => {

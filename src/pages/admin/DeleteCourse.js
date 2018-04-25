@@ -36,12 +36,10 @@ class DeleteCourse extends Component {
   handleDelete = () => {
     const socket = socketIOClient(this.state.address);
     const data = {
-      email: 'jcgaza@up.edu.ph',
       course_offering_id: this.props.coursecodeid
     };
-    socket.emit('remove_section', data);
-    this.props.fetchCourse();
 
+    socket.emit('remove_section', data);
     this.close();
   };
 

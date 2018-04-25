@@ -161,6 +161,16 @@ class Sidebar extends Component {
 		});
 	};
 
+	handleAddSemester = () => {
+		const socket = socketIOClient(this.state.address);
+		socket.emit('create_timeframe', {});
+	};
+
+	handleDeleteSemester = () => {
+		const socket = socketIOClient(this.state.address);
+		socket.emit('remove_timeframe', {});
+	};
+
 	render() {
 		const { semesters, acad_year, semester } = this.state;
 		return (
@@ -196,18 +206,24 @@ class Sidebar extends Component {
 											header={
 												<div>
 													<Button.Group>
-														<Button
-															basic
-															positive
-															content="Add New Semester"
-															size="small"
-														/>
-														<Button
-															basic
-															negative
-															content="Delete Current Semester"
-															size="small"
-														/>
+														<Link to="/admin/manage/courses">
+															<Button
+																basic
+																positive
+																content="Add New Semester"
+																size="small"
+																onClick={this.handleAddSemester}
+															/>
+														</Link>
+														<Link to="/admin/manage/courses">
+															<Button
+																basic
+																negative
+																content="Delete Latest Semester"
+																size="small"
+																onClick={this.handleDeleteSemester}
+															/>
+														</Link>
 													</Button.Group>
 												</div>
 											}

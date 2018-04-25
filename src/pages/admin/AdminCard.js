@@ -33,38 +33,51 @@ class AdminCard extends Component {
       max_capacity: '',
       description: '',
       searchQuery: '',
-      loading: true
+      loading: true,
+      current_year: 0,
+      current_sem: 0,
+      add: true
     };
     autobind(this);
   }
 
   // next time, specify acad year and semester based on view
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-
+    this.setState({ add: true });
     this.setState({ loading: true });
     const socket = socketIOClient(this.state.address);
     const data = {
       acad_year: nextProps.current_year,
       semester: nextProps.current_sem
     };
+
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
+      console.log('cutie si syd');
       this.setState({ coursesX: course, courses: course });
       this.setState({ loading: false });
+    });
+
+    socket.on('update_alert', res => {
+      if (res.code === 'section') socket.emit('view_sections', data);
+    });
+
+    this.setState({
+      current_year: nextProps.current_year,
+      current_sem: nextProps.current_sem
     });
   }
 
   fetchCourse = () => {
+    const { current_year, current_sem } = this.state;
+
     const socket = socketIOClient(this.state.address);
     const data = {
-      acad_year: this.props.current_year,
-      semester: this.props.current_sem
+      acad_year: current_year,
+      semester: current_sem
     };
     socket.emit('view_sections', data);
-    socket.on('view_sections', course => {
-      this.setState({ coursesX: course });
-    });
+    console.log('deleted');
   };
 
   handleSearch = query => {
@@ -89,7 +102,7 @@ class AdminCard extends Component {
   };
 
   render() {
-    const { loading, coursesX } = this.state;
+    const { loading, coursesX, current_year, current_sem } = this.state;
 
     return (
       <Grid className="admin-container">
@@ -109,6 +122,7 @@ class AdminCard extends Component {
               fluid={true}
             />
           </Grid.Column>
+
           <Grid.Column width={3}>
             <AddCourseModal fetchCourse={this.fetchCourse} />
           </Grid.Column>
@@ -136,6 +150,7 @@ class AdminCard extends Component {
             {this.state.courses.map((course, index) => {
               return (
                 <CourseRow
+                  data={coursesX}
                   key={index}
                   fetch_Course={this.fetchCourse}
                   description={course.description}
@@ -156,6 +171,8 @@ class AdminCard extends Component {
                   title={course.course_title}
                   empno={course.emp_no}
                   courseoffering={course.course_offering_id}
+                  current_year={current_year}
+                  current_sem={current_sem}
                 />
               );
             })}
