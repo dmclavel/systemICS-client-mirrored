@@ -11,7 +11,10 @@ import {
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import config from './../../config.json';
-
+import {
+  isScheduleConflict,
+  convertToGeneralTime
+} from '../../utils/TimeUtilities';
 const inlineStyle = {
   modal: {
     marginTop: '0px !important',
@@ -59,11 +62,14 @@ class EditCourse extends Component {
       status: this.props.status,
       section_type: this.props.section_type,
       course_title: this.props.title,
-      description: this.props.desc
+      description: this.props.desc,
+      existingSections: []
     };
     autobind(this);
   }
-
+  componentWillReceiveProps(nextProps) {
+    this.setState({ existingSections: nextProps.data });
+  }
   dayFormat() {
     const { M, T, W, Th, F } = this.state;
     let days = '';
@@ -145,12 +151,54 @@ class EditCourse extends Component {
       day: days,
       section: section,
       section_type: section_type,
-      max_capacity: parseInt(max_capacity),
+      max_capacity: Number(max_capacity),
       emp_no: emp_no,
       status: status,
       course_offering_id: course_offering_id
     };
-    if (
+    let conflict = false;
+    let details = '';
+    for (let i = 0; i < this.state.existingSections.length; i++) {
+      if (
+        // Replace the tabs and spaces and uppercase the room provided to compare them
+        this.state.existingSections[i].room.replace(/\s/g, '').toUpperCase() ===
+        this.state.room.replace(/\s/g, '').toUpperCase()
+      ) {
+        // If room is conflict, we will check if their time is also conflict.
+        const argc = {
+          time_start,
+          time_end,
+          day: this.dayFormat()
+        };
+        if (
+          this.state.course_offering_id !==
+            this.state.existingSections[i].course_offering_id &&
+          isScheduleConflict(this.state.existingSections[i], argc)
+        ) {
+          conflict = true;
+          const {
+            course_name: _name,
+            section: _section,
+            day: _day,
+            time_start: t_start,
+            time_end: t_end,
+            room: _room
+          } = this.state.existingSections[i];
+          details += `Data is conflicting with ${_name} ${_section} - ${_day} ${convertToGeneralTime(
+            t_start
+          )}-${convertToGeneralTime(t_end)}, ${_room}`;
+          break;
+        }
+      }
+    }
+    if (conflict) {
+      this.setState({
+        message: details,
+        hidden: false,
+        positive: false,
+        negative: true
+      });
+    } else if (
       parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity)
     ) {
       socket.emit('modify_section_2', data);
@@ -231,6 +279,7 @@ class EditCourse extends Component {
                   label="Course section"
                   placeholder="Course section"
                   name="section"
+                  disabled
                   value={section}
                   onChange={this.handleChange}
                   width={4}

@@ -46,6 +46,7 @@ class CourseRow extends Component {
         <Table.Cell>
           {this.props.section_type === 0 ? (
             <AddLabSection
+              data={this.props.data}
               courseLecID={this.props.course}
               coursecode={this.props.coursecode}
               fetchCourse={this.props.fetch_Course}
@@ -57,6 +58,7 @@ class CourseRow extends Component {
           ) : null}
 
           <EditCourse
+            data={this.props.data}
             fetchCourse={this.props.fetch_Course}
             emp_no={this.props.empno}
             courseoffering={this.props.courseoffering}
