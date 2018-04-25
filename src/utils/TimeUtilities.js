@@ -133,6 +133,6 @@ export const validTimeStartToTimeEnd = (time_start, time_end) => {
     Number(splittedTimeEnd[0] * 60) + Number(splittedTimeEnd[1]);
 
   console.log(Boolean(timeStartTotalMins >= timeEndTotalMins));
-  if (timeStartTotalMins >= timeEndTotalMins) return false;
-  return true;
+  if (timeStartTotalMins >= timeEndTotalMins) return true;
+  return false;
 };

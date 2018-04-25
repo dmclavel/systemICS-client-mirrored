@@ -239,7 +239,7 @@ class AddCourseLab extends Component {
         negative: true,
         hidden: false
       });
-    } else if (!validTimeStartToTimeEnd(time_start, time_end)) {
+    } else if (validTimeStartToTimeEnd(time_start, time_end)) {
       this.setState({
         message: 'Error! Invalid time start and end!',
         details,
@@ -278,7 +278,6 @@ class AddCourseLab extends Component {
         }
       );
       this.props.fetchCourse();
-      this.clear();
     }
   };
 
