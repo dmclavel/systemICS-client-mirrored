@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
+import socketIOClient from 'socket.io-client';
 import AddLabSection from './AddLabSection';
 import EditCourse from './EditCourse';
 import DeleteCourse from './DeleteCourse';
@@ -12,8 +13,18 @@ class CourseRow extends Component {
 
     this.state = {
       address: config.backendAddress,
-      coursesX: []
+      acad_year: 0,
+      semester: 0
     };
+  }
+
+  componentDidMount() {
+    const socket = socketIOClient(this.state.address);
+    socket.emit('view_timeframe', {});
+    socket.on('view_timeframe', timeframe => {
+      const time = timeframe.pop();
+      this.setState({ acad_year: time.acad_year, semester: time.semester });
+    });
   }
 
   //if section_type == 0 then LECTURE

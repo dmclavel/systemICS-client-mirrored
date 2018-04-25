@@ -33,25 +33,39 @@ class AdminCard extends Component {
       max_capacity: '',
       description: '',
       searchQuery: '',
-      loading: true
+      loading: true,
+      current_year: 0,
+      current_sem: 0,
+      add: true
     };
     autobind(this);
   }
 
   // next time, specify acad year and semester based on view
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-
+    this.setState({ add: true });
     this.setState({ loading: true });
     const socket = socketIOClient(this.state.address);
     const data = {
       acad_year: nextProps.current_year,
       semester: nextProps.current_sem
     };
+
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
       this.setState({ coursesX: course, courses: course });
       this.setState({ loading: false });
+    });
+
+    socket.emit('view_timeframe', {});
+    socket.on('view_timeframe', timeframe => {
+      const time = timeframe.pop();
+      if (
+        time.acad_year === nextProps.current_year &&
+        time.semester === nextProps.semester
+      ) {
+        this.setState({ add: true });
+      } else this.setState({ add: false });
     });
   }
 
@@ -89,7 +103,7 @@ class AdminCard extends Component {
   };
 
   render() {
-    const { loading, coursesX } = this.state;
+    const { loading, coursesX, current_year, current_sem, add } = this.state;
 
     return (
       <Grid className="admin-container">
@@ -109,6 +123,7 @@ class AdminCard extends Component {
               fluid={true}
             />
           </Grid.Column>
+
           <Grid.Column width={3}>
             <AddCourseModal fetchCourse={this.fetchCourse} />
           </Grid.Column>
@@ -156,6 +171,8 @@ class AdminCard extends Component {
                   title={course.course_title}
                   empno={course.emp_no}
                   courseoffering={course.course_offering_id}
+                  current_year={current_year}
+                  current_sem={current_sem}
                 />
               );
             })}
