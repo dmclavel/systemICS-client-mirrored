@@ -36,23 +36,23 @@ class GeneratePDF extends Component {
 			console.log(dissolved);
 		});
 
-		socket.emit('view_sections', {
+		socket.emit('trash1', {
 			petitioned: true,
 			active: false,
 			dissolved: false,
 			additional: false
 		});
-		socket.on('view_sections', petitioned => {
+		socket.on('trash1', petitioned => {
 			this.setState({ petitioned });
 		});
 
-		socket.emit('view_sections', {
+		socket.emit('trash2', {
 			additional: true,
 			active: false,
 			dissolved: false,
 			petitioned: false
 		});
-		socket.on('view_sections', additional => {
+		socket.on('trash2', additional => {
 			this.setState({ additional });
 		});
 
@@ -70,7 +70,7 @@ class GeneratePDF extends Component {
 		// 	this.state.dissolved.length > 0 &&
 		// 	this.this.state.petitioned.length > 0
 		// )
-		// 	window.print();
+			window.print();
 	}
 
 	render() {
