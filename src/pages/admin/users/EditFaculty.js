@@ -127,7 +127,7 @@ class EditFaculty extends Component {
         closeIcon
         size="large"
         style={inlineStyle.modal}
-        trigger={<Button icon="pencil" color="teal" positive />}
+        trigger={<Button icon="pencil" color="teal" />}
         onClose={this.handleClose}
         onOpen={this.handleOpen}
         open={this.state.modalOpen}
@@ -138,13 +138,13 @@ class EditFaculty extends Component {
           <Form>
             <Form.Group>
               <Form.Input
-                width={5}
+                width={4}
                 disabled
                 label="Employee Number"
                 value={this.props.emp_no}
               />
               <Form.Input
-                width={11}
+                width={12}
                 error={this.state.isErrorName}
                 fluid
                 label="Name"
@@ -152,6 +152,8 @@ class EditFaculty extends Component {
                 value={this.state.name}
                 onChange={this.handleName}
               />
+            </Form.Group>
+            <Form.Group widths="equal">
               <Form.Input
                 error={this.state.isErrorMail}
                 fluid
@@ -160,8 +162,6 @@ class EditFaculty extends Component {
                 value={this.state.email_add}
                 onChange={this.handleEmail}
               />
-            </Form.Group>
-            <Form.Group widths="equal">
               <Form.Dropdown
                 error={this.state.isErrorAccessLevel}
                 fluid
