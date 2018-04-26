@@ -66,7 +66,7 @@ class Faculty extends Component {
     } else {
       this.setState({
         visibleCourses: this.state.courses.filter(user => {
-          if (user.course_name.toLowerCase().includes(query.toLowerCase())) {
+          if (user.course_name.toLowerCase().includes(query.toLowerCase()) || user.course_title.toLowerCase().includes(query.toLowerCase())) {
             console.log(this.state.visibleCourses);
             return true;
           } else {
@@ -119,7 +119,7 @@ class Faculty extends Component {
                   <SearchCard
                     fluid={true}
                     handleSearch={this.handleCourseSearch}
-                    placeholder="course name, course title, or section"
+                    placeholder="course name or course title"
                   />
                 </Grid.Row>
                 <Grid.Row>
