@@ -278,7 +278,6 @@ class AddCourseLab extends Component {
         }
       );
       this.props.fetchCourse();
-      this.close();
     }
   };
 

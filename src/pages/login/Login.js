@@ -36,6 +36,13 @@ class Login extends Component {
     };
   }
 
+  componentDidMount() {
+    const socket = socketIOClient(this.state.address);
+    socket.on('view_faculty', res => {
+      console.log(res);
+    });
+  }
+
   handleProfile = googleUser => {
     this.setState({ loading: true });
     const socket = socketIOClient(this.state.endpoint);
@@ -120,6 +127,7 @@ class Login extends Component {
                       required
                       icon="user"
                       iconPosition="left"
+                      name='username'
                       onChange={this.handleChange}
                     />
                     <Form.Input
@@ -129,6 +137,7 @@ class Login extends Component {
                       icon="lock"
                       iconPosition="left"
                       type="password"
+                      name='password'
                       onChange={this.handleChange}
                     />
                     <Button
@@ -145,6 +154,7 @@ class Login extends Component {
                 <div>
                   <GoogleAPI
                     clientId="175573341301-f0qqirbda07fqsqam42vjpoi1kldjro4.apps.googleusercontent.com"
+                    redirectUri={config.redirectURI}
                     onUpdateSigninStatus={Function}
                     onInitFailure={Function}
                   >
