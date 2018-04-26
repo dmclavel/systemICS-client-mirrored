@@ -1,3 +1,4 @@
 {
-  "backendAddress": "https://sleepy-falls-95372.herokuapp.com"
+  "backendAddress": "https://sleepy-falls-95372.herokuapp.com/",
+  "redirectURI": "https://systemics.herokuapp.com/"
 }

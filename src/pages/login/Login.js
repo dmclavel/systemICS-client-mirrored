@@ -34,6 +34,13 @@ class Login extends Component {
     };
   }
 
+  componentDidMount() {
+    const socket = socketIOClient(this.state.address);
+    socket.on('view_faculty', res => {
+      console.log(res);
+    });
+  }
+
   handleProfile = googleUser => {
     this.setState({ loading: true });
     const socket = socketIOClient(this.state.endpoint);
@@ -63,6 +70,21 @@ class Login extends Component {
     });
   };
 
+  handleChange = (e, data) => {
+    const state = this.state;
+    state[e.target.name] = data.value;
+    this.setState(state);
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(this.state);
+    const socket = socketIOClient(this.state.address);
+    const data = { email_add : this.state.username };
+
+    socket.emit('view_faculty', data);
+  }
+
   render() {
     const { success, message, loading } = this.state;
     return (
@@ -91,6 +113,8 @@ class Login extends Component {
                       required
                       icon="user"
                       iconPosition="left"
+                      name='username'
+                      onChange={this.handleChange}
                     />
                     <Form.Input
                       placeholder="Password"
@@ -98,6 +122,8 @@ class Login extends Component {
                       icon="lock"
                       iconPosition="left"
                       type="password"
+                      name='password'
+                      onChange={this.handleChange}
                     />
                     <Button
                       icon="sign in alternate"
@@ -105,6 +131,7 @@ class Login extends Component {
                       fluid
                       loading={loading}
                       color={'teal'}
+                      onClick={this.handleSubmit}
                     />
                   </Form>
                 </div>
@@ -112,6 +139,7 @@ class Login extends Component {
                 <div>
                   <GoogleAPI
                     clientId="175573341301-f0qqirbda07fqsqam42vjpoi1kldjro4.apps.googleusercontent.com"
+                    redirectURI={config.redirectURI}
                     onUpdateSigninStatus={Function}
                     onInitFailure={Function}
                   >
