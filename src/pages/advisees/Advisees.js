@@ -23,7 +23,7 @@ class Advisees extends Component {
                               <Grid.Row>
                                     <Grid.Column width={1} />
                                     <Grid.Column width={4}>
-                                          <Sidebar accessLvl={this.props.accessLvl}/>
+                                          <Sidebar accessLvl={this.props.accessLvl} />
                                     </Grid.Column>
                                     <Grid.Column width={10}>
                                           <Advisee />

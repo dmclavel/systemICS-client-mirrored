@@ -30,7 +30,9 @@ class Login extends Component {
       accessLvl: 0,
       success: true,
       loading: false,
-      message: ''
+      message: '',
+      username: '',
+      password: ''
     };
   }
 
@@ -44,19 +46,15 @@ class Login extends Component {
   handleProfile = googleUser => {
     this.setState({ loading: true });
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('view_faculty', googleUser.getBasicProfile().U3);
+    socket.emit('view_faculty', { email_add: googleUser.getBasicProfile().U3 });
     socket.on('view_faculty', res => {
-      console.log(res);
-      const ans = res.find(
-        faculty => faculty.email_add === googleUser.getBasicProfile().U3
-      );
-      if (ans) {
+      if (res !== {}) {
         this.setState({
-          accessLvl: ans.isRegCom,
+          accessLvl: res.isRegCom,
           success: true,
           loading: false
         });
-        this.props.logInHandler(googleUser.getBasicProfile(), ans.isRegCom);
+        this.props.logInHandler(googleUser.getBasicProfile(), res.isRegCom);
         window.location = '/';
       } else {
         this.setState({
@@ -73,17 +71,32 @@ class Login extends Component {
   handleChange = (e, data) => {
     const state = this.state;
     state[e.target.name] = data.value;
+    state['success'] = true;
     this.setState(state);
-  }
+  };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state);
-    const socket = socketIOClient(this.state.address);
-    const data = { email_add : this.state.username };
 
-    socket.emit('view_faculty', data);
-  }
+    if (
+      this.state.username.match(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+    ) {
+      const socket = socketIOClient(this.state.endpoint);
+      const data = { email_add: this.state.username };
+
+      socket.on('view_faculty', res => {
+        console.log(res);
+        if (res === []) console.log('Not found');
+        else console.log('Found');
+      });
+
+      socket.emit('view_faculty', data);
+    } else {
+      this.setState({ message: 'Wrong credentials!', success: false });
+    }
+  };
 
   render() {
     const { success, message, loading } = this.state;
@@ -109,20 +122,22 @@ class Login extends Component {
                 <div>
                   <Form>
                     <Form.Input
+                      name="username"
                       placeholder="Username"
                       required
                       icon="user"
                       iconPosition="left"
-                      name='username'
+                      name="username"
                       onChange={this.handleChange}
                     />
                     <Form.Input
+                      name="password"
                       placeholder="Password"
                       required
                       icon="lock"
                       iconPosition="left"
                       type="password"
-                      name='password'
+                      name="password"
                       onChange={this.handleChange}
                     />
                     <Button
@@ -139,7 +154,6 @@ class Login extends Component {
                 <div>
                   <GoogleAPI
                     clientId="175573341301-f0qqirbda07fqsqam42vjpoi1kldjro4.apps.googleusercontent.com"
-                    redirectURI={config.redirectURI}
                     onUpdateSigninStatus={Function}
                     onInitFailure={Function}
                   >
