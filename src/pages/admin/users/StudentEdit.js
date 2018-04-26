@@ -121,24 +121,26 @@ class StudentEdit extends Component {
         closeIcon
         size="large"
         style={inlineStyle.modal}
-        trigger={<Button icon="pencil" positive />}
-        basic
+        trigger={<Button icon="pencil" color="teal" />}
         onClose={this.handleClose}
         onOpen={this.handleOpen}
         open={this.state.modalOpen}
       >
+        <Modal.Header>Edit Student</Modal.Header>
         <Modal.Content>
           {this.state.isErrorMessage && <ErrorMessage />}
           <Form>
             <Form.Group>
               <Form.Input
                 disabled
+                width={4}
                 value={this.props.student_number}
                 label="Student Number"
               />
               <Form.Input
                 error={this.state.isErrorName}
                 fluid
+                width={12}
                 label="Name"
                 placeholder={this.state.name}
                 onChange={this.handleName}
@@ -172,7 +174,7 @@ class StudentEdit extends Component {
             </Form.Group>
           </Form>
         </Modal.Content>
-        <Modal.Actions>
+        <Modal.Actions className="modal-actions">
           <Button
             content="Confirm Changes"
             floated="right"
