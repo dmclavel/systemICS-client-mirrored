@@ -139,7 +139,7 @@ class Login extends Component {
                 <div>
                   <GoogleAPI
                     clientId="175573341301-f0qqirbda07fqsqam42vjpoi1kldjro4.apps.googleusercontent.com"
-                    redirectURI={config.redirectURI}
+                    redirectUri={config.redirectURI}
                     onUpdateSigninStatus={Function}
                     onInitFailure={Function}
                   >
