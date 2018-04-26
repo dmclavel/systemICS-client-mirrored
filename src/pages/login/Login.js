@@ -46,7 +46,7 @@ class Login extends Component {
   handleProfile = googleUser => {
     this.setState({ loading: true });
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('view_faculty', googleUser.getBasicProfile().U3);
+    socket.emit('view_faculty', {email_add:googleUser.getBasicProfile().U3});
     socket.on('view_faculty', res => {
       if (res !== {}) {
         this.setState({
