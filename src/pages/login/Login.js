@@ -48,13 +48,13 @@ class Login extends Component {
     const socket = socketIOClient(this.state.endpoint);
     socket.emit('view_faculty', googleUser.getBasicProfile().U3);
     socket.on('view_faculty', res => {
-      if (ans !== []) {
+      if (res !== {}) {
         this.setState({
-          accessLvl: ans.isRegCom,
+          accessLvl: res.isRegCom,
           success: true,
           loading: false
         });
-        this.props.logInHandler(googleUser.getBasicProfile(), ans.isRegCom);
+        this.props.logInHandler(googleUser.getBasicProfile(), res.isRegCom);
         window.location = '/';
       } else {
         this.setState({
@@ -127,7 +127,7 @@ class Login extends Component {
                       required
                       icon="user"
                       iconPosition="left"
-                      name='username'
+                      name="username"
                       onChange={this.handleChange}
                     />
                     <Form.Input
@@ -137,7 +137,7 @@ class Login extends Component {
                       icon="lock"
                       iconPosition="left"
                       type="password"
-                      name='password'
+                      name="password"
                       onChange={this.handleChange}
                     />
                     <Button
