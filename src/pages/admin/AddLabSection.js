@@ -11,7 +11,12 @@ import {
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
-import { convertToGeneralTime } from '../../utils/TimeUtilities';
+import {
+  isScheduleConflict,
+  convertToGeneralTime,
+  isTimeValid,
+  validTimeStartToTimeEnd
+} from '../../utils/TimeUtilities';
 import config from './../../config.json';
 
 const inlineStyle = {
@@ -78,9 +83,17 @@ class AddCourseLab extends Component {
       status: '',
       course_title: '',
       description: '',
-      posted: ''
+      posted: '',
+      existingSections: []
     };
     autobind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      existingSections: nextProps.data,
+      section: nextProps.section
+    });
   }
 
   handleChange = (e, { name, value }) => {
@@ -141,79 +154,130 @@ class AddCourseLab extends Component {
 
   handleSubmit = () => {
     let days = this.dayFormat();
-    let id = this.props.courseLecID;
-    let labSection = this.labSectionFormat();
-    let lecSection = this.props.courseoffering;
     const {
+      section_type,
+      course_id,
+      emp_no,
       acad_year,
-      semester,
       no_of_students,
       time_start,
       time_end,
       room,
+      section,
       unit,
-      max_capacity
+      max_capacity,
+      semester,
+      status
     } = this.state;
-
     const socket = socketIOClient(this.state.address);
-
     const data = {
-      acad_year: acad_year,
-      semester: semester,
-      time_start: convertToGeneralTime(time_start),
-      time_end: convertToGeneralTime(time_end),
-      room: room,
-      no_of_students: no_of_students,
-      unit: unit,
+      email: 'pvgrubat@up.edu.ph',
+      acad_year,
+      semester,
+      time_start,
+      time_end,
+      room,
+      no_of_students,
       day: days,
-      section: labSection,
-      section_type: 1,
-      max_capacity: max_capacity,
-      course_id: id,
-      emp_no: null,
-      status: 'Active',
-      lecture_id: lecSection
+      section,
+      section_type,
+      max_capacity,
+      emp_no,
+      course_id,
+      unit,
+      status
     };
-
-    this.setState({ error: '' });
+    let conflict = false;
+    let details = '';
+    for (let i = 0; i < this.state.existingSections.length; i++) {
+      if (
+        // Replace the tabs and spaces and uppercase the room provided to compare them
+        this.state.existingSections[i].room.replace(/\s/g, '').toUpperCase() ===
+        this.state.room.replace(/\s/g, '').toUpperCase()
+      ) {
+        // If room is conflict, we will check if their time is also conflict.
+        const argc = {
+          time_start,
+          time_end,
+          day: this.dayFormat()
+        };
+        if (isScheduleConflict(this.state.existingSections[i], argc)) {
+          conflict = true;
+          const {
+            course_name: _name,
+            section: _section,
+            day: _day,
+            time_start: t_start,
+            time_end: t_end,
+            room: _room
+          } = this.state.existingSections[i];
+          details += `Data is conflicting with ${_name} ${_section} - ${_day} ${convertToGeneralTime(
+            t_start
+          )}-${convertToGeneralTime(t_end)}, ${_room}`;
+          break;
+        }
+      }
+    }
     if (
-      labSection === '' ||
       room === '' ||
       time_start === '' ||
       time_end === '' ||
-      unit === '' ||
-      acad_year === '' ||
-      semester === '' ||
-      max_capacity === ''
+      max_capacity === '' ||
+      days === ''
     ) {
       this.setState({
         message: 'Please complete all the required fields!',
-        hidden: false,
         positive: false,
-        negative: true
+        negative: true,
+        hidden: false
       });
-    } else if (
-      this.state.error === '' &&
-      parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity)
-    ) {
-      socket.emit('create_section_2', data);
-
+    } else if (conflict) {
+      this.setState({
+        message: 'Error! Conflict with room and time!',
+        details,
+        positive: false,
+        negative: true,
+        hidden: false
+      });
+    } else if (validTimeStartToTimeEnd(time_start, time_end)) {
+      this.setState({
+        message: 'Error! Invalid time start and end!',
+        details,
+        positive: false,
+        negative: true,
+        hidden: false
+      });
+    } else if (!isTimeValid(time_start)) {
+      this.setState({
+        message: 'Error! Invalid time start.',
+        details,
+        positive: false,
+        negative: true,
+        hidden: false
+      });
+    } else if (!isTimeValid(time_end)) {
+      this.setState({
+        message: 'Error! Invalid time end.',
+        details,
+        positive: false,
+        negative: true,
+        hidden: false
+      });
+    } else {
+      this.setState(
+        {
+          message: 'Successfully added a new lecture section!',
+          details,
+          positive: true,
+          negative: false,
+          hidden: false
+        },
+        () => {
+          console.log(data);
+          socket.emit('create_section_2', data);
+        }
+      );
       this.props.fetchCourse();
-      this.setState({
-        message: 'Successfully added new laboratory section!',
-        hidden: false,
-        positive: true,
-        negative: false
-      });
-    } else if (
-      parseInt(this.state.no_of_students) > parseInt(this.state.max_capacity)
-    ) {
-      this.setState({
-        message: 'Number of students allowed is beyond the maximum capacity!',
-        hidden: false,
-        positive: false,
-        negative: true
-      });
     }
   };
 
@@ -291,7 +355,7 @@ class AddCourseLab extends Component {
                 <Form.Input
                   label="Section"
                   placeholder={this.props.section}
-                  readOnly
+                  disabled
                   width={2}
                 />
                 <br />

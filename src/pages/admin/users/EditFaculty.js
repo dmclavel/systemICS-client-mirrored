@@ -135,7 +135,7 @@ class EditFaculty extends Component {
         closeIcon
         size="large"
         style={inlineStyle.modal}
-        trigger={<Button icon="pencil" color="teal" positive onClick={()=>{this.setState({name: this.props.name, emp_no: this.props.emp_no, email_add: this.props.email_add, status: this.props.status, isRegCom: this.props.isRegCom});}}/>}
+        trigger={<Button icon="pencil" color="teal" onClick={()=>{this.setState({name: this.props.name, emp_no: this.props.emp_no, email_add: this.props.email_add, status: this.props.status, isRegCom: this.props.isRegCom});}} />}
         onClose={this.handleClose}
         onOpen={this.handleOpen}
         open={this.state.modalOpen}
@@ -144,13 +144,16 @@ class EditFaculty extends Component {
         <Modal.Content>
           {this.state.isErrorMessage == true ? <ErrorMessage /> : <div />}
           <Form>
-            <Form.Group widths="equal">
+            <Form.Group>
               <Form.Input
+                width={4}
                 disabled
                 label="Employee Number"
                 value={this.props.emp_no}
               />
               <Form.Input
+                width={12}
+                error={this.state.isErrorName}
                 fluid
                 label="Name"
                 placeholder="Name"
@@ -158,6 +161,8 @@ class EditFaculty extends Component {
                 onChange={this.handleName}
                 error={this.state.isErrorName}
               />
+            </Form.Group>
+            <Form.Group widths="equal">
               <Form.Input
                 error={this.state.isErrorMail}
                 fluid
@@ -166,8 +171,6 @@ class EditFaculty extends Component {
                 value={this.state.email_add}
                 onChange={this.handleEmail}
               />
-            </Form.Group>
-            <Form.Group widths="equal">
               <Form.Dropdown
                 error={this.state.isErrorAccessLevel}
                 fluid

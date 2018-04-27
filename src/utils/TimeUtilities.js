@@ -122,3 +122,17 @@ export const isTimeValid = time => {
     return true;
   }
 };
+
+export const validTimeStartToTimeEnd = (time_start, time_end) => {
+  const separator = ':';
+  const splittedTimeStart = time_start.split(separator, 2);
+  const splittedTimeEnd = time_end.split(separator, 2);
+  const timeStartTotalMins =
+    Number(splittedTimeStart[0] * 60) + Number(splittedTimeStart[1]);
+  const timeEndTotalMins =
+    Number(splittedTimeEnd[0] * 60) + Number(splittedTimeEnd[1]);
+
+  console.log(Boolean(timeStartTotalMins >= timeEndTotalMins));
+  if (timeStartTotalMins >= timeEndTotalMins) return true;
+  return false;
+};

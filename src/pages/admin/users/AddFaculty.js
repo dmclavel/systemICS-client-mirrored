@@ -182,7 +182,7 @@ class AddFaculty extends Component {
         style={inlineStyle.modal}
         trigger={
           <Button
-            color="teal"
+            color="green"
             onClick={this.handleOpen}
             open={this.state.modalOpen}
             content="Add Faculty"
@@ -196,8 +196,11 @@ class AddFaculty extends Component {
         <Modal.Content>
           {this.state.isErrorMessage && <ErrorMessage />}
           <Form>
-            <Form.Group widths="equal">
-              <Form.Input type="number" min="1" step="1"
+            <Form.Group>
+              <Form.Input
+                type="number"
+                width={5}
+                min="1" step="1"
                 error={this.state.isErrorNumber}
                 fluid
                 label="Employee Number"
@@ -205,6 +208,7 @@ class AddFaculty extends Component {
                 onChange={this.handleNumber}
               />
               <Form.Input
+                width={11}
                 error={this.state.isErrorName}
                 fluid
                 label="Name"

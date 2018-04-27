@@ -165,7 +165,7 @@ class DropFile extends Component {
               <Button
                 content="Faculty"
                 color={file_type_selected === 2 ? 'green' : null}
-                onClick={() => this.handleChangeFileTypeSelected(4)}
+                onClick={() => this.handleChangeFileTypeSelected(2)}
               />
               <Button
                 content="Adviser Advisee"

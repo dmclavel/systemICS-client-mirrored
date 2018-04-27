@@ -155,7 +155,20 @@ class Sidebar extends Component {
 
 	handleOnChange = (e, data) => {
 		this.props.handleChangeSemester(data.value.acad_year, data.value.semester);
-		console.log(data.value);
+		this.setState({
+			acad_year: data.value.acad_year,
+			semester: data.value.semester
+		});
+	};
+
+	handleAddSemester = () => {
+		const socket = socketIOClient(this.state.address);
+		socket.emit('create_timeframe', {});
+	};
+
+	handleDeleteSemester = () => {
+		const socket = socketIOClient(this.state.address);
+		socket.emit('remove_timeframe', {});
 	};
 
 	render() {
@@ -168,13 +181,12 @@ class Sidebar extends Component {
 							<Header.Content>
 								{this.props.showSemester
 									? `${
-											this.props.current_sem === 1
+											semester === 1
 												? '1st Semester'
-												: this.props.current_sem === 2
+												: semester === 2
 													? '2nd Semester'
 													: 'Midyear'
-									  } AY ${this.props.current_year}-${this.props.current_year +
-											1}`
+									  } AY ${acad_year}-${acad_year + 1}`
 									: `${
 											semester === 1
 												? '1st Semester'
@@ -194,18 +206,24 @@ class Sidebar extends Component {
 											header={
 												<div>
 													<Button.Group>
-														<Button
-															basic
-															positive
-															content="Add New Semester"
-															size="small"
-														/>
-														<Button
-															basic
-															negative
-															content="Delete Current Semester"
-															size="small"
-														/>
+														<Link to="/admin/manage/courses">
+															<Button
+																basic
+																positive
+																content="Add New Semester"
+																size="small"
+																onClick={this.handleAddSemester}
+															/>
+														</Link>
+														<Link to="/admin/manage/courses">
+															<Button
+																basic
+																negative
+																content="Delete Latest Semester"
+																size="small"
+																onClick={this.handleDeleteSemester}
+															/>
+														</Link>
 													</Button.Group>
 												</div>
 											}

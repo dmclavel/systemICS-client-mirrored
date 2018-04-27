@@ -5,7 +5,8 @@ import autobind from 'react-autobind';
 import {
   isScheduleConflict,
   convertToGeneralTime,
-  isTimeValid
+  isTimeValid,
+  validTimeStartToTimeEnd
 } from '../../utils/TimeUtilities';
 import config from './../../config.json';
 
@@ -163,10 +164,9 @@ class AddCourseLecture extends Component {
     this.setState({ open: true });
 
     const socket = socketIOClient(this.state.address);
-    const data = { email: 'pvgrubat@up.edu.ph' };
 
-    socket.emit('view_existing_courses', data);
-    socket.on('view_existing_courses', course => {
+    socket.emit('view_courses', { ignoreExistingSections: true });
+    socket.on('view_courses', course => {
       const tempArray = [];
       course.forEach(c => {
         tempArray.push({
@@ -269,6 +269,14 @@ class AddCourseLecture extends Component {
     } else if (conflict) {
       this.setState({
         message: 'Error! Conflict with room and time!',
+        details,
+        positive: false,
+        negative: true,
+        hidden: false
+      });
+    } else if (validTimeStartToTimeEnd(time_start, time_end)) {
+      this.setState({
+        message: 'Error! Invalid time start and end!',
         details,
         positive: false,
         negative: true,

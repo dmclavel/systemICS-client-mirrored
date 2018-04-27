@@ -76,10 +76,14 @@ class AddCourseModal extends Component {
 				socket.emit('modify_course', data);
 				this.setState({
 					message: `${course_name} has been successfully edited!`,
-					warning: false
+					warning: false,
+					course_name: '',
+					course_title: '',
+					description: '',
+					isEditing: false
 				});
 			} else {
-				socket.emit('view_courses', { email: 'jcgaza@up.edu.ph' });
+				socket.emit('view_courses', { ignoreExistingSections: true });
 				socket.on('view_courses', course => {
 					//Check if inputted course is not yet in the database
 					const result = course.find(res => res.course_name === course_name);
