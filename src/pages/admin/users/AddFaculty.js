@@ -60,8 +60,14 @@ class AddFaculty extends Component {
   }
 
   handleName = e => {
-    if (e.target.value != '') {
-      this.setState({ isErrorName: false });
+    if (e.target.value.length !== 0) {
+      var regex =  /^[a-zA-Z][a-zA-Z\s]+$/;
+      var isValid = regex.test(e.target.value);
+      if (isValid){
+        this.setState({ isErrorName: false});
+      }else{
+        this.setState({ isErrorName: true});
+      }
     } else {
       this.setState({ isErrorName: true });
     }
@@ -69,17 +75,29 @@ class AddFaculty extends Component {
   };
 
   handleNumber = e => {
-    if (e.target.value !== '') {
-      this.setState({ isErrorNumber: false });
+    if (e.target.value.length !== 0) {
+      var regex = /^\+?(0|[0-9]\d*){11}$/;
+      var isValid = regex.test(e.target.value);
+      if (isValid){
+        this.setState({ isErrorNumber: false});
+      }else{
+        this.setState({ isErrorNumber: true});
+      }
     } else {
-      this.setState({ isErrorNumber: true });
+      this.setState({ isErrorName: true });
     }
     this.setState({ emp_no: e.target.value });
   };
 
   handleEmail = e => {
-    if (e.target.value !== '') {
-      this.setState({ isErrorMail: false });
+    if (e.target.value.length !== 0) {
+      var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var isValid = regex.test(e.target.value);
+      if (isValid){
+        this.setState({ isErrorMail: false});
+      }else{
+        this.setState({ isErrorMail: true});
+      }
     } else {
       this.setState({ isErrorMail: true });
     }
@@ -182,6 +200,7 @@ class AddFaculty extends Component {
               <Form.Input
                 type="number"
                 width={5}
+                min="1" step="1"
                 error={this.state.isErrorNumber}
                 fluid
                 label="Employee Number"

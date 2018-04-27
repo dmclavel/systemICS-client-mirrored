@@ -49,29 +49,34 @@ class StudentAdd extends Component {
     autobind(this);
   }
 
-  handleName = e => {
-    if (e.target.value !== '') {
-      this.setState({ isErrorName: false });
-    } else {
-      this.setState({ isErrorName: true });
+  handleName = (e) => {
+    if (e.target.value.length !== 0){
+      this.setState({isErrorName: false});
+    }else{
+      this.setState({isErrorName: true});
     }
     this.setState({ name: e.target.value });
   };
 
-  handleEmail = e => {
-    if (e.target.value !== '') {
-      this.setState({ isErrorMail: false });
-    } else {
-      this.setState({ isErrorMail: true });
+  handleEmail = (e) => {
+    if (e.target.value.length !== 0){
+      this.setState({isErrorMail: false});
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var isValid =  re.test(e.target.value);
+      if (!isValid){
+        this.setState({isErrorMail: true});
+      }
+    }else{
+      this.setState({isErrorMail: true});
     }
     this.setState({ email_add: e.target.value });
   };
 
-  handleCurriculum = e => {
-    if (e.target.value !== '') {
-      this.setState({ isErrorCurriculum: false });
-    } else {
-      this.setState({ isErrorCurriculum: true });
+  handleCurriculum = (e) => {
+    if (e.target.value.length !== 0){
+      this.setState({isErrorCurriculum: false});
+    }else{
+      this.setState({isErrorCurriculum: true});
     }
     this.setState({ curriculum: e.target.value });
   };
@@ -81,14 +86,15 @@ class StudentAdd extends Component {
     this.setState({ isErrorStatus: false });
   };
 
-  handleNumber = e => {
-    if (e.target.value !== '') {
-      this.setState({ isErrorNumber: false });
-    } else {
-      this.setState({ isErrorNumber: true });
-    }
-    this.setState({ student_number: e.target.value });
-  };
+  handleNumber = (e) =>{
+    var reg = /^[0-9]+$/;
+    if (e.target.value.length != 9 || !reg.test(e.target.value)){
+       this.setState({isErrorNumber: true});
+    }else{
+      this.setState({isErrorNumber: false});
+    }  
+    this.setState({student_number: e.target.value});
+  }
 
   handleSubmit = e => {
     if (

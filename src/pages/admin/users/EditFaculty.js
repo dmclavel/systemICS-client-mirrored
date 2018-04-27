@@ -32,11 +32,7 @@ class EditFaculty extends Component {
       options: [
         { key: 'Faculty', value: 1, text: 'Faculty' },
         { key: 'Admin', value: 3, text: 'Admin' },
-        {
-          key: 'Registration Committee',
-          value: 2,
-          text: 'Registration Committee'
-        }
+        { key: 'Registration Committee', value: 2, text: 'Registration Committee' }
       ],
       address: config.backendAddress,
       isErrorName: false,
@@ -55,8 +51,14 @@ class EditFaculty extends Component {
   }
 
   handleName = e => {
-    if (e.target.value !== '') {
-      this.setState({ isErrorName: false });
+    if (e.target.value.length !== 0) {
+      var regex =  /^[a-zA-Z][a-zA-Z\s]+$/;
+      var isValid = regex.test(e.target.value);
+      if (isValid){
+        this.setState({ isErrorName: false});
+      }else{
+        this.setState({ isErrorName: true});
+      }
     } else {
       this.setState({ isErrorName: true });
     }
@@ -64,8 +66,14 @@ class EditFaculty extends Component {
   };
 
   handleEmail = e => {
-    if (e.target.value !== '') {
-      this.setState({ isErrorMail: false });
+    if (e.target.value.length !== 0) {
+      var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var isValid = regex.test(e.target.value);
+      if (isValid){
+        this.setState({ isErrorMail: false});
+      }else{
+        this.setState({ isErrorMail: true});
+      }
     } else {
       this.setState({ isErrorMail: true });
     }
@@ -127,7 +135,7 @@ class EditFaculty extends Component {
         closeIcon
         size="large"
         style={inlineStyle.modal}
-        trigger={<Button icon="pencil" color="teal" />}
+        trigger={<Button icon="pencil" color="teal" onClick={()=>{this.setState({name: this.props.name, emp_no: this.props.emp_no, email_add: this.props.email_add, status: this.props.status, isRegCom: this.props.isRegCom});}} />}
         onClose={this.handleClose}
         onOpen={this.handleOpen}
         open={this.state.modalOpen}
@@ -151,6 +159,7 @@ class EditFaculty extends Component {
                 placeholder="Name"
                 value={this.state.name}
                 onChange={this.handleName}
+                error={this.state.isErrorName}
               />
             </Form.Group>
             <Form.Group widths="equal">
@@ -166,20 +175,20 @@ class EditFaculty extends Component {
                 error={this.state.isErrorAccessLevel}
                 fluid
                 label="Access Level"
-                value={this.state.getAccessLevel}
+                key={this.state.getAccessLevel}
                 selection
                 placeholder="Access Level"
                 options={this.state.options}
                 onChange={this.handleAccessLevel}
               />
               <Form.Dropdown
-                options={statusOptions}
                 error={this.state.isErrorStatus}
                 fluid
                 label="Status"
+                key={this.state.status}
                 selection
-                value={this.state.status}
                 placeholder="Status"
+                options={statusOptions}
                 onChange={this.handleStatus}
               />
             </Form.Group>

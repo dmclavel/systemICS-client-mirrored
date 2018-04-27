@@ -49,29 +49,34 @@ class StudentEdit extends Component {
     autobind(this);
   }
 
-  handleName = e => {
-    if (e.target.value != '') {
-      this.setState({ isErrorName: false });
-    } else {
-      this.setState({ isErrorName: true });
+  handleName = (e) => {
+    if (e.target.value.length !== 0){
+      this.setState({isErrorName: false});
+    }else{
+      this.setState({isErrorName: true});
     }
     this.setState({ name: e.target.value });
   };
 
-  handleEmail = e => {
-    if (e.target.value != '') {
-      this.setState({ isErrorMail: false });
-    } else {
-      this.setState({ isErrorMail: true });
+  handleEmail = (e) => {
+    if (e.target.value.length !== 0){
+      this.setState({isErrorMail: false});
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var isValid =  re.test(e.target.value);
+      if (!isValid){
+        this.setState({isErrorMail: true});
+      }
+    }else{
+      this.setState({isErrorMail: true});
     }
     this.setState({ email_add: e.target.value });
   };
 
-  handleCurriculum = e => {
-    if (e.target.value != '') {
-      this.setState({ isErrorCurriculum: false });
-    } else {
-      this.setState({ isErrorCurriculum: true });
+  handleCurriculum = (e) => {
+    if (e.target.value.length !== 0){
+      this.setState({isErrorCurriculum: false});
+    }else{
+      this.setState({isErrorCurriculum: true});
     }
     this.setState({ curriculum: e.target.value });
   };
@@ -121,7 +126,11 @@ class StudentEdit extends Component {
         closeIcon
         size="large"
         style={inlineStyle.modal}
-        trigger={<Button icon="pencil" color="teal" />}
+        trigger={<Button icon="pencil" color="teal" onClick={()=>{this.setState({name: this.props.name,
+      email_add: this.props.email_add,
+      curriculum: this.props.curriculum,
+      status: this.props.status,
+      student_number: this.props.student_number})} />}
         onClose={this.handleClose}
         onOpen={this.handleOpen}
         open={this.state.modalOpen}
