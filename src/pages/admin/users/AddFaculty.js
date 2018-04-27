@@ -75,18 +75,13 @@ class AddFaculty extends Component {
   };
 
   handleNumber = e => {
-    if (e.target.value.length !== 0) {
-      var regex = /^\+?(0|[0-9]\d*){11}$/;
-      var isValid = regex.test(e.target.value);
-      if (isValid){
-        this.setState({ isErrorNumber: false});
-      }else{
-        this.setState({ isErrorNumber: true});
-      }
-    } else {
-      this.setState({ isErrorName: true });
-    }
-    this.setState({ emp_no: e.target.value });
+    var reg = /^[0-9]+$/;
+    if (e.target.value.length != 11 || !reg.test(e.target.value)){
+       this.setState({isErrorNumber: true});
+    }else{
+      this.setState({isErrorNumber: false});
+    }  
+    this.setState({emp_no: e.target.value});
   };
 
   handleEmail = e => {
@@ -204,7 +199,7 @@ class AddFaculty extends Component {
                 error={this.state.isErrorNumber}
                 fluid
                 label="Employee Number"
-                placeholder="Employee number"
+                placeholder="e.g. xxxxxxxxxxx"
                 onChange={this.handleNumber}
               />
               <Form.Input
@@ -212,7 +207,7 @@ class AddFaculty extends Component {
                 error={this.state.isErrorName}
                 fluid
                 label="Name"
-                placeholder="Name"
+                placeholder="e. g. Juan Dela Cruz"
                 onChange={this.handleName}
               />
             </Form.Group>
@@ -221,7 +216,7 @@ class AddFaculty extends Component {
                 error={this.state.isErrorMail}
                 fluid
                 label="Email address"
-                placeholder="Email address"
+                placeholder="e. g. cmg@gmail.com"
                 onChange={this.handleEmail}
               />
               <Form.Dropdown
