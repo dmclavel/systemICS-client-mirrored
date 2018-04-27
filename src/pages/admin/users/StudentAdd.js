@@ -76,7 +76,7 @@ class StudentAdd extends Component {
   }
 
   handleNumber = (e) =>{
-    if (e.target.value.length < 9){
+    if (e.target.value.length != 9){
        this.setState({isErrorNumber: true});
     }else{
       this.setState({isErrorNumber: false});
