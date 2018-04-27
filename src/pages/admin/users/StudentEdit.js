@@ -159,6 +159,7 @@ class StudentEdit extends Component {
                 width={12}
                 label="Name"
                 placeholder={this.state.name}
+                value={this.state.name}
                 onChange={this.handleName}
               />
             </Form.Group>
@@ -168,6 +169,7 @@ class StudentEdit extends Component {
                 fluid
                 label="Email address"
                 placeholder={this.state.email_add}
+                value={this.state.email_add}
                 onChange={this.handleEmail}
               />
               <Form.Input
@@ -175,6 +177,7 @@ class StudentEdit extends Component {
                 fluid
                 label="Curriculum"
                 placeholder={this.state.curriculum}
+                 value={this.state.curriculum}
                 onChange={this.handleCurriculum}
               />
               <Form.Dropdown
@@ -182,6 +185,7 @@ class StudentEdit extends Component {
                 fluid
                 label="Status"
                 placeholder={this.state.status}
+                value={this.state.status}
                 search
                 selection
                 options={this.state.statusOptions}
