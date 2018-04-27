@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Card, Loader } from 'semantic-ui-react';
+import { Grid, Card, Loader, Header } from 'semantic-ui-react';
 import './Faculty.css';
 import SubjectCard from './SubjectCard';
 import Advisee from './Advisee';
@@ -23,7 +23,6 @@ class Faculty extends Component {
       sections_loading: true
     };
   }
-
   componentDidMount = () => {
     this.setState({
       advisees_loading: true,
@@ -40,12 +39,24 @@ class Faculty extends Component {
       additional: true
     }); //send data to 'login' endpoint in server
     socket.on('view_sections', returnValueFromServer => {
+      console.log(returnValueFromServer);
       this.setState({
         courses: returnValueFromServer,
         visibleCourses: returnValueFromServer,
         sections_loading: false
       });
     });
+
+    socket.on('update_alert', res => {
+    	if (res === 'section') socket.emit('view_sections', {
+      email_add: this.props.user.U3,
+      active: true,
+      petitioned: true,
+      additional: true
+    });
+    });
+
+
     socket.emit('view_adviser_advisees', {
       current: true,
       adviser_email_add: this.props.user.U3
@@ -58,7 +69,8 @@ class Faculty extends Component {
         advisees_loading: false
       });
     });
-  };
+  }
+
   handleCourseSearch = query => {
     if (!query.length) {
       this.setState({ visibleCourses: this.state.courses });
@@ -100,7 +112,7 @@ class Faculty extends Component {
   };
 
   render() {
-    console.log(this.state.advisees);
+    console.log(this.state.courses);
     return (
       <div>
         <section className="MainSection">
@@ -140,6 +152,7 @@ class Faculty extends Component {
                         room={course.room}
                         time_start={course.time_start}
                         time_end={course.time_end}
+                        day={course.day}
                       />
                     );
                   })}
@@ -148,9 +161,7 @@ class Faculty extends Component {
               <Grid.Column width={1} />
               <Grid.Column width={5}>
                 <Grid.Row>
-                  <Card fluid raised={true}>
-                    <h2>Advisees</h2>
-                  </Card>
+                  <Header textAlign='center'>Advisees</Header>
                   <SearchCard
                     fluid={true}
                     handleSearch={this.handleAdviseeSearch}
