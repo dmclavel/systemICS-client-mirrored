@@ -175,9 +175,10 @@ class EditFaculty extends Component {
                 error={this.state.isErrorAccessLevel}
                 fluid
                 label="Access Level"
-                key={this.state.getAccessLevel}
+                key={this.state.isRegCom}
                 selection
                 placeholder="Access Level"
+                value = {this.state.isRegCom}
                 options={this.state.options}
                 onChange={this.handleAccessLevel}
               />
@@ -189,6 +190,7 @@ class EditFaculty extends Component {
                 selection
                 placeholder="Status"
                 options={statusOptions}
+                value = {this.state.status}
                 onChange={this.handleStatus}
               />
             </Form.Group>
