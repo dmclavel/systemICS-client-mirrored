@@ -50,10 +50,16 @@ class StudentAdd extends Component {
   }
 
   handleName = (e) => {
-    if (e.target.value.length !== 0){
-      this.setState({isErrorName: false});
-    }else{
-      this.setState({isErrorName: true});
+    if (e.target.value.length !== 0) {
+      var regex =  /^[a-zA-Z][a-zA-Z\s]+$/;
+      var isValid = regex.test(e.target.value);
+      if (isValid){
+        this.setState({ isErrorName: false});
+      }else{
+        this.setState({ isErrorName: true});
+      }
+    } else {
+      this.setState({ isErrorName: true });
     }
     this.setState({ name: e.target.value });
   };
