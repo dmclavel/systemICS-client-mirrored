@@ -77,14 +77,12 @@ class StudentAdd extends Component {
 
   handleNumber = (e) =>{
     var reg = /^[0-9]+$/;
-    if (e.target.value.length != 9 ){
+    if (e.target.value.length != 9 || !reg.test(e.target.value)){
        this.setState({isErrorNumber: true});
     }else{
       this.setState({isErrorNumber: false});
-    }
-    if (reg.test(e.target.value)){
-       this.setState({student_number: e.target.value});
-    }
+    }  
+    this.setState({student_number: e.target.value});
   }
 
   handleSubmit = (e) => {
