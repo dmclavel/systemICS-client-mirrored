@@ -126,11 +126,18 @@ class StudentEdit extends Component {
         closeIcon
         size="large"
         style={inlineStyle.modal}
-        trigger={<Button icon="pencil" color="teal" onClick={()=>{this.setState({name: this.props.name,
-      email_add: this.props.email_add,
-      curriculum: this.props.curriculum,
-      status: this.props.status,
-      student_number: this.props.student_number})} />}
+        trigger={<Button 
+          icon="pencil" 
+          color="teal" 
+          onClick={()=>{
+            this.setState({
+               name: this.props.name,
+               email_add: this.props.email_add,
+               curriculum: this.props.curriculum,
+               status: this.props.status,
+               student_number: this.props.student_number
+              })
+           }} /> }
         onClose={this.handleClose}
         onOpen={this.handleOpen}
         open={this.state.modalOpen}
