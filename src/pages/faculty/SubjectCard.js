@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Grid, Card, Icon, Header, List, Segment } from 'semantic-ui-react';
 import './Faculty.css';
+import { convertToGeneralTime } from '../../utils/TimeUtilities';
 
 /*
 If you wish to import other JS files, do it here.
 */
 
 class SubjectCard extends Component {
-   render() {
+   render() { 
       return (
          <Segment>
             <Grid>
@@ -27,8 +28,20 @@ class SubjectCard extends Component {
                      <Header as="h5">
                         <Icon name="time" />
                         <Header.Content>
-                           {this.props.time_start}-{this.props.time_end}
+                           
+                           {this.props.day} | {convertToGeneralTime(this.props.time_start)}-{convertToGeneralTime(this.props.time_end)}
                            <Header.Subheader>Time</Header.Subheader>
+                        </Header.Content>
+                     </Header>
+                  </Grid.Column>
+                  <Grid.Column width={4}>
+                      <Header as="h5">
+                        <Icon name="group" />
+                        <Header.Content>
+                           {this.props.no_of_students}
+                           <Header.Subheader>
+                              Current No. of Students
+                           </Header.Subheader>
                         </Header.Content>
                      </Header>
                   </Grid.Column>
@@ -38,17 +51,6 @@ class SubjectCard extends Component {
                         <Header.Content>
                            {this.props.capacity}
                            <Header.Subheader>Max Capacity</Header.Subheader>
-                        </Header.Content>
-                     </Header>
-                  </Grid.Column>
-                  <Grid.Column width={4}>
-                     <Header as="h5">
-                        <Icon name="group" />
-                        <Header.Content>
-                           {this.props.no_of_students}
-                           <Header.Subheader>
-                              Number of students
-                           </Header.Subheader>
                         </Header.Content>
                      </Header>
                   </Grid.Column>
