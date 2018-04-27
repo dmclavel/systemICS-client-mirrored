@@ -55,7 +55,7 @@ class EditFaculty extends Component {
   }
 
   handleName = e => {
-    if (e.target.value !== '') {
+    if (e.target.value !== '' && e.target.value === /^[A-z]+$/) {
       this.setState({ isErrorName: false });
     } else {
       this.setState({ isErrorName: true });
@@ -127,7 +127,7 @@ class EditFaculty extends Component {
         closeIcon
         size="large"
         style={inlineStyle.modal}
-        trigger={<Button icon="pencil" color="teal" positive />}
+        trigger={<Button icon="pencil" color="teal" positive onClick={()=>{this.setState({name: this.props.name, emp_no: this.props.emp_no, email_add: this.props.email_add, status: this.props.status, isRegCom: this.props.isRegCom});}}/>}
         onClose={this.handleClose}
         onOpen={this.handleOpen}
         open={this.state.modalOpen}
