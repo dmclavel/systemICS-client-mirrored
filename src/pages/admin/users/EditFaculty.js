@@ -32,11 +32,7 @@ class EditFaculty extends Component {
       options: [
         { key: 'Faculty', value: 1, text: 'Faculty' },
         { key: 'Admin', value: 3, text: 'Admin' },
-        {
-          key: 'Registration Committee',
-          value: 2,
-          text: 'Registration Committee'
-        }
+        { key: 'Registration Committee', value: 2, text: 'Registration Committee' }
       ],
       address: config.backendAddress,
       isErrorName: false,
@@ -176,20 +172,20 @@ class EditFaculty extends Component {
                 error={this.state.isErrorAccessLevel}
                 fluid
                 label="Access Level"
-                value={this.state.getAccessLevel}
+                key={this.state.getAccessLevel}
                 selection
                 placeholder="Access Level"
                 options={this.state.options}
                 onChange={this.handleAccessLevel}
               />
               <Form.Dropdown
-                options={statusOptions}
                 error={this.state.isErrorStatus}
                 fluid
                 label="Status"
+                key={this.state.status}
                 selection
-                value={this.state.status}
                 placeholder="Status"
+                options={statusOptions}
                 onChange={this.handleStatus}
               />
             </Form.Group>

@@ -76,7 +76,7 @@ class AddFaculty extends Component {
 
   handleNumber = e => {
     if (e.target.value.length !== 0) {
-      var regex =  /^[0-9]{11}$/;
+      var regex = /^\+?(0|[0-9]\d*){11}$/;
       var isValid = regex.test(e.target.value);
       if (isValid){
         this.setState({ isErrorNumber: false});
@@ -197,7 +197,7 @@ class AddFaculty extends Component {
           {this.state.isErrorMessage && <ErrorMessage />}
           <Form>
             <Form.Group widths="equal">
-              <Form.Input type="number"
+              <Form.Input type="number" min="1" step="1"
                 error={this.state.isErrorNumber}
                 fluid
                 label="Employee Number"
