@@ -48,7 +48,12 @@ class StudentEdit extends Component {
   handleEmail = (e) => {
     if (e.target.value != ""){
       this.setState({isErrorMail: false});
-    }else{  
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var isValid =  re.test(e.target.value);
+      if (!isValid){
+        this.setState({isErrorMail: true});
+      }
+    }else{
       this.setState({isErrorMail: true});
     }
     this.setState({email_add: e.target.value});
@@ -95,7 +100,11 @@ class StudentEdit extends Component {
   }
   render() {
     return(
-       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button icon="pencil" positive/>} basic onClose={this.handleClose} onOpen={this.handleOpen} open={this.state.modalOpen}>
+       <Modal closeIcon size='large' style={inlineStyle.modal} trigger={<Button icon="pencil" positive onClick={()=>{this.setState({name: this.props.name,
+      email_add: this.props.email_add,
+      curriculum: this.props.curriculum,
+      status: this.props.status,
+      student_number: this.props.student_number})}}/>} basic onClose={this.handleClose} onOpen={this.handleOpen} open={this.state.modalOpen}>
             <Modal.Content>
               <Container>
                 <Segment padded="very">
@@ -104,12 +113,13 @@ class StudentEdit extends Component {
                     }
                     <Form>
                       <Form.Group widths='equal'>
-                        <Form.Input error={this.state.isErrorName} fluid label='Name' placeholder={this.state.name} onChange={this.handleName}/>
-                        <Form.Input error={this.state.isErrorMail} fluid label='Email address' placeholder={this.state.email_add} onChange={this.handleEmail}/>
+                        <Form.Input error={this.state.isErrorName} fluid label='Student Number' placeholder={this.state.student_number} value={this.state.student_number} disabled/>
+                        <Form.Input error={this.state.isErrorName} fluid label='Name' placeholder={this.state.name} value={this.state.name} onChange={this.handleName}/> 
                       </Form.Group>
                       <Form.Group widths='equal'>
-                        <Form.Input error={this.state.isErrorCurriculum} fluid label='Curriculum' placeholder={this.state.curriculum} onChange={this.handleCurriculum}/>
-                        <Form.Dropdown error={this.state.isErrorStatus} fluid label = "Status" placeholder={this.state.status} search selection options={this.state.statusOptions} onChange={this.handleStatus}/>
+                        <Form.Input error={this.state.isErrorMail} fluid label='Email address' placeholder={this.state.email_add} value={this.state.email_add} onChange={this.handleEmail}/>
+                        <Form.Input error={this.state.isErrorCurriculum} fluid label='Curriculum' placeholder={this.state.curriculum} value={this.state.curriculum} onChange={this.handleCurriculum}/>
+                        <Form.Dropdown error={this.state.isErrorStatus} fluid label = "Status" placeholder={this.state.status} value={this.state.status} search selection options={this.state.statusOptions} onChange={this.handleStatus}/>
                       </Form.Group>
                     </Form>
                     <h2>

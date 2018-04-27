@@ -49,7 +49,12 @@ class StudentAdd extends Component {
   handleEmail = (e) => {
     if (e.target.value != ""){
       this.setState({isErrorMail: false});
-    }else{  
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var isValid =  re.test(e.target.value);
+      if (!isValid){
+        this.setState({isErrorMail: true});
+      }
+    }else{
       this.setState({isErrorMail: true});
     }
     this.setState({email_add: e.target.value});
