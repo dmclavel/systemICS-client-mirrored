@@ -3,18 +3,18 @@ import {
   Button,
   Modal,
   Form,
-  Grid,
   Segment,
   Header,
-  Dropdown,
-  Container,
-  Checkbox,
   Message,
   Divider
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
-import config from '../../config.json'
+import config from './../../config.json';
+import {
+  isScheduleConflict,
+  convertToGeneralTime
+} from '../../utils/TimeUtilities';
 const inlineStyle = {
   modal: {
     marginTop: '0px !important',
@@ -62,16 +62,19 @@ class EditCourse extends Component {
       status: this.props.status,
       section_type: this.props.section_type,
       course_title: this.props.title,
-      description: this.props.desc
+      description: this.props.desc,
+      existingSections: []
     };
     autobind(this);
   }
-
+  componentWillReceiveProps(nextProps) {
+    this.setState({ existingSections: nextProps.data });
+  }
   dayFormat() {
-    const { M, T, W, Th, F, day } = this.state;
+    const { M, T, W, Th, F } = this.state;
     let days = '';
     if (M) {
-      if (days == '') {
+      if (days === '') {
         days = 'M';
         this.setState({ day: 'M' });
       }
@@ -104,19 +107,13 @@ class EditCourse extends Component {
     return days;
   }
 
-  getDays() {
-    const { section_type } = this.state;
-
-    if (this.state.section_type === 0) {
-    }
-  }
-
   handleDayChange = (e, { content, active }) => {
-    if (active == true) this.setState({ [content]: false });
-    else if (active == false) this.setState({ [content]: true });
+    if (active) this.setState({ [content]: false });
+    else this.setState({ [content]: true });
   };
 
   handleChange = (e, { name, value }) => {
+    value = value.replace(/[^A-Za-z0-9]/, '');
     this.setState({ [name]: value });
   };
 
@@ -135,7 +132,6 @@ class EditCourse extends Component {
       time_start,
       time_end,
       room,
-      day,
       section,
       max_capacity,
       emp_no,
@@ -156,12 +152,75 @@ class EditCourse extends Component {
       day: days,
       section: section,
       section_type: section_type,
-      max_capacity: parseInt(max_capacity),
+      max_capacity: Number(max_capacity),
       emp_no: emp_no,
       status: status,
       course_offering_id: course_offering_id
     };
-    if (
+    let conflict = false;
+    let details = '';
+    for (let i = 0; i < this.state.existingSections.length; i++) {
+      if (
+        // Replace the tabs and spaces and uppercase the room provided to compare them
+        this.state.existingSections[i].room.replace(/\s/g, '').toUpperCase() ===
+        this.state.room.replace(/\s/g, '').toUpperCase()
+      ) {
+        // If room is conflict, we will check if their time is also conflict.
+        const argc = {
+          time_start,
+          time_end,
+          day: this.dayFormat()
+        };
+        if (
+          this.state.course_offering_id !==
+            this.state.existingSections[i].course_offering_id &&
+          isScheduleConflict(this.state.existingSections[i], argc)
+        ) {
+          conflict = true;
+          const {
+            course_name: _name,
+            section: _section,
+            day: _day,
+            time_start: t_start,
+            time_end: t_end,
+            room: _room
+          } = this.state.existingSections[i];
+          details += `Data is conflicting with ${_name} ${_section} - ${_day} ${convertToGeneralTime(
+            t_start
+          )}-${convertToGeneralTime(t_end)}, ${_room}`;
+          break;
+        }
+      }
+    }
+    if (conflict) {
+      this.setState({
+        message: details,
+        hidden: false,
+        positive: false,
+        negative: true
+      });
+    } else if(this.state.max_capacity == ''){
+       this.setState({
+        message: 'Max capacity field only accepts a positive number!',
+        hidden: false,
+        positive: false,
+        negative: true
+      });
+    }else if(this.state.no_of_students == ''){
+       this.setState({
+        message: 'Number of students field only accepts a positive number!',
+        hidden: false,
+        positive: false,
+        negative: true
+      });
+    }else if( days == '' || this.state.room == ''){
+      this.setState({
+        message: 'Fill the empty fields!',
+        hidden: false,
+        positive: false,
+        negative: true
+      });
+    } else if (
       parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity)
     ) {
       socket.emit('modify_section_2', data);
@@ -212,17 +271,12 @@ class EditCourse extends Component {
       Th,
       F,
       statusOptions,
-      emp_no,
-      acad_year,
-      semester,
       no_of_students,
       time_start,
       time_end,
       room,
-      day,
       section,
       max_capacity,
-      course_title,
       status
     } = this.state;
     return (
@@ -247,6 +301,7 @@ class EditCourse extends Component {
                   label="Course section"
                   placeholder="Course section"
                   name="section"
+                  disabled
                   value={section}
                   onChange={this.handleChange}
                   width={4}
@@ -256,6 +311,7 @@ class EditCourse extends Component {
                   placeholder="Room"
                   name="room"
                   value={room}
+                  pattern="^[A-Za-z0-9]{2,20}$"
                   onChange={this.handleChange}
                   width={4}
                 />
