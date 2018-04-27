@@ -55,8 +55,14 @@ class EditFaculty extends Component {
   }
 
   handleName = e => {
-    if (e.target.value !== '' && e.target.value === /^[A-z]+$/) {
-      this.setState({ isErrorName: false });
+    if (e.target.value.length !== 0) {
+      var regex =  /^[a-zA-Z][a-zA-Z\s]+$/;
+      var isValid = regex.test(e.target.value);
+      if (isValid){
+        this.setState({ isErrorName: false});
+      }else{
+        this.setState({ isErrorName: true});
+      }
     } else {
       this.setState({ isErrorName: true });
     }
@@ -64,8 +70,14 @@ class EditFaculty extends Component {
   };
 
   handleEmail = e => {
-    if (e.target.value !== '') {
-      this.setState({ isErrorMail: false });
+    if (e.target.value.length !== 0) {
+      var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var isValid = regex.test(e.target.value);
+      if (isValid){
+        this.setState({ isErrorMail: false});
+      }else{
+        this.setState({ isErrorMail: true});
+      }
     } else {
       this.setState({ isErrorMail: true });
     }
@@ -143,12 +155,12 @@ class EditFaculty extends Component {
                 value={this.props.emp_no}
               />
               <Form.Input
-                error={this.state.isErrorName}
                 fluid
                 label="Name"
                 placeholder="Name"
                 value={this.state.name}
                 onChange={this.handleName}
+                error={this.state.isErrorName}
               />
               <Form.Input
                 error={this.state.isErrorMail}
