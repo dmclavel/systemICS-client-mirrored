@@ -37,7 +37,7 @@ class StudentAdd extends Component {
   }
 
   handleName = (e) => {
-    if (e.target.value != ""){
+    if (e.target.value.length !== 0){
       this.setState({isErrorName: false});
     }else{
       this.setState({isErrorName: true});
@@ -47,7 +47,7 @@ class StudentAdd extends Component {
   }
 
   handleEmail = (e) => {
-    if (e.target.value != ""){
+    if (e.target.value.length !== 0){
       this.setState({isErrorMail: false});
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var isValid =  re.test(e.target.value);
@@ -61,7 +61,7 @@ class StudentAdd extends Component {
   }
 
   handleCurriculum = (e) => {
-    if (e.target.value != ""){
+    if (e.target.value.length !== 0){
       this.setState({isErrorCurriculum: false});
     }else{
       this.setState({isErrorCurriculum: true});
@@ -76,7 +76,7 @@ class StudentAdd extends Component {
   }
 
   handleNumber = (e) =>{
-    if (e.target.value != ""){
+    if (e.target.value.length !== 0){
       this.setState({isErrorNumber: false});
     }else{
       this.setState({isErrorNumber: true});
