@@ -177,7 +177,7 @@ class StudentAdd extends Component {
                 error={this.state.isErrorNumber}
                 fluid
                 label="Student Number"
-                placeholder="Name"
+                placeholder="e. g. xxxxxxxxx"
                 onChange={this.handleNumber}
               />
               <Form.Input
@@ -185,7 +185,7 @@ class StudentAdd extends Component {
                 error={this.state.isErrorName}
                 fluid
                 label="Name"
-                placeholder="Name"
+                placeholder="e. g. Juan Dela Cruz"
                 onChange={this.handleName}
               />
             </Form.Group>
@@ -194,14 +194,14 @@ class StudentAdd extends Component {
                 error={this.state.isErrorMail}
                 fluid
                 label="Email address"
-                placeholder="Email address"
+                placeholder="e. g. cmg@gmail.com"
                 onChange={this.handleEmail}
               />
               <Form.Input
                 error={this.state.isErrorCurriculum}
                 fluid
                 label="Curriculum"
-                placeholder="Curriculum"
+                placeholder="e. g. 1-C"
                 onChange={this.handleCurriculum}
               />
               <Form.Dropdown
