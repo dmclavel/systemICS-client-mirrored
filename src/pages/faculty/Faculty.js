@@ -128,6 +128,7 @@ class Faculty extends Component {
               <Grid.Column width={1} />
               <Grid.Column width={8}>
                 <Grid.Row>
+                  <Header as='h2' textAlign='center'>Teaching Load</Header>
                   <SearchCard
                     fluid={true}
                     handleSearch={this.handleCourseSearch}
@@ -161,7 +162,7 @@ class Faculty extends Component {
               <Grid.Column width={1} />
               <Grid.Column width={5}>
                 <Grid.Row>
-                  <Header textAlign='center'>Advisees</Header>
+                  <Header as='h2' textAlign='center'>Advisees</Header>
                   <SearchCard
                     fluid={true}
                     handleSearch={this.handleAdviseeSearch}
