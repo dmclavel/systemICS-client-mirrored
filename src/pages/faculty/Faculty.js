@@ -39,7 +39,7 @@ class Faculty extends Component {
       additional: true
     }); //send data to 'login' endpoint in server
     socket.on('view_sections', returnValueFromServer => {
-      console.log(returnValueFromServer);
+      console.log("Return success");
       this.setState({
         courses: returnValueFromServer,
         visibleCourses: returnValueFromServer,
@@ -62,7 +62,7 @@ class Faculty extends Component {
       adviser_email_add: this.props.user.U3
     }); //send data to 'login' endpoint in server
     socket.on('view_adviser_advisees', returnValueFromServer => {
-      console.log(returnValueFromServer);
+      console.log("Return success");
       this.setState({
         advisees: returnValueFromServer,
         visibleAdvisees: returnValueFromServer,
@@ -74,12 +74,10 @@ class Faculty extends Component {
   handleCourseSearch = query => {
     if (!query.length) {
       this.setState({ visibleCourses: this.state.courses });
-      console.log(this.state.visibleCourses);
     } else {
       this.setState({
         visibleCourses: this.state.courses.filter(user => {
           if (user.course_name.toLowerCase().includes(query.toLowerCase()) || user.course_title.toLowerCase().includes(query.toLowerCase())) {
-            console.log(this.state.visibleCourses);
             return true;
           } else {
             return false;
@@ -91,7 +89,6 @@ class Faculty extends Component {
   handleAdviseeSearch = query => {
     if (!query.length) {
       this.setState({ visibleAdvisees: this.state.advisees });
-      console.log(this.state.visibleAdvisees);
     } else {
       this.setState({
         visibleAdvisees: this.state.advisees.filter(user => {
@@ -112,7 +109,6 @@ class Faculty extends Component {
   };
 
   render() {
-    console.log(this.state.courses);
     return (
       <div>
         <section className="MainSection">
