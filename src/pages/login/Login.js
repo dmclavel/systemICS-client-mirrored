@@ -118,39 +118,7 @@ class Login extends Component {
                   content={message}
                 />
               )}
-              <Segment stacked>
-                <div>
-                  <Form>
-                    <Form.Input
-                      name="username"
-                      placeholder="Username"
-                      required
-                      icon="user"
-                      iconPosition="left"
-                      name="username"
-                      onChange={this.handleChange}
-                    />
-                    <Form.Input
-                      name="password"
-                      placeholder="Password"
-                      required
-                      icon="lock"
-                      iconPosition="left"
-                      type="password"
-                      name="password"
-                      onChange={this.handleChange}
-                    />
-                    <Button
-                      icon="sign in alternate"
-                      content="LOG IN"
-                      fluid
-                      loading={loading}
-                      color={'teal'}
-                      onClick={this.handleSubmit}
-                    />
-                  </Form>
-                </div>
-                <Divider horizontal>OR</Divider>
+
                 <div>
                   <GoogleAPI
                     clientId="175573341301-f0qqirbda07fqsqam42vjpoi1kldjro4.apps.googleusercontent.com"
@@ -162,7 +130,6 @@ class Login extends Component {
                     </div>
                   </GoogleAPI>
                 </div>
-              </Segment>
 
               <Link to="/">
                 <Button icon="arrow outline left" content="Back to Homepage" />
