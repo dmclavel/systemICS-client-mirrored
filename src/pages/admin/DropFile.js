@@ -104,14 +104,21 @@ class DropFile extends Component {
         } else {
           this.setState({
             error: true,
-            filename: 'The file did not match with our records.'
+            filename: 'The file did not match with the supposed format of records.'
           });
         }
       };
 
       readerFile.readAsText(file[0]);
+      this.setState({                         // updates the state; gives the value of selected csv file
+        error: false,
+        filename: file[0].name
+      });
     } else {
-      this.setState({ error: true });
+      this.setState({
+        error: true,
+        filename: 'only accepts csv files'
+      });
     }
   };
 
@@ -124,6 +131,8 @@ class DropFile extends Component {
         this.setState({ response });
         console.log(response);
       });
+
+      this.close();
     } else {
       this.setState({
         filename: 'You cannot proceed until requirements are met.'
@@ -207,13 +216,13 @@ class DropFile extends Component {
                 </div>
               </div>
             </Dropzone>
-
+            {/* prompt to client if successful or not*/}
             {message && (
               <Message
                 icon="file text outline"
-                header={error ? 'Error:' : 'File to upload:'}
+                header={error ? 'Error: ' + this.state.filename : 'File to upload: ' + this.state.filename}
                 error={error}
-                content={filename}
+                //content={filename}
               />
             )}
           </div>
