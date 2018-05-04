@@ -9,7 +9,7 @@ class ProfilePic extends Component {
     }
   }
   componentDidMount() {
-    fetch("http://picasaweb.google.com/data/entry/api/user/"+this.props.email+"?alt=json&size=500")
+    fetch("https://picasaweb.google.com/data/entry/api/user/"+this.props.email+"?alt=json&size=500")
       .then(response => response.json())
       .then(data => this.setState({imgURL: data.entry.gphoto$thumbnail
 .$t}));
