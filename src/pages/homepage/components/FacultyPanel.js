@@ -16,7 +16,6 @@ import './FacultyPanel.css';
 import FacultyCard from '../FacultyCard';
 import RegComCard from '../RegComCard';
 import config from './../../../config.json';
-
 /*
 If you wish to import other JS files, do it here.
 */
