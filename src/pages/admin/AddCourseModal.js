@@ -5,14 +5,14 @@ import {
 	Form,
 	Grid,
 	Segment,
-	Header,
 	Container,
 	Message
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ViewCourses from './ViewCourses';
-import config from '../../config.json';
+import config from './../../config.json';
+
 const inlineStyle = {
 	modal: {
 		marginTop: '0px !important',
@@ -21,6 +21,19 @@ const inlineStyle = {
 		color: 'black'
 	}
 };
+
+const courseTypeOptions = [
+  {
+    key: 1,
+    value: 1,
+    text: 'Grad'
+  },
+  {
+    key: 0,
+    value: 0,
+    text: 'Undergrad'
+  }
+];
 
 class AddCourseModal extends Component {
 	constructor() {
@@ -31,6 +44,7 @@ class AddCourseModal extends Component {
 			address: config.backendAddress,
 			course_id: '',
 			course_name: '',
+			course_type: '',
 			course_title: '',
 			description: '',
 			uniqueCourse: true,
@@ -50,6 +64,7 @@ class AddCourseModal extends Component {
 		const {
 			course_name,
 			course_title,
+			course_type,
 			description,
 			course_id,
 			isEditing
@@ -58,29 +73,38 @@ class AddCourseModal extends Component {
 		if (
 			this.state.course_name === '' ||
 			this.state.course_title === '' ||
-			this.state.description === ''
+			this.state.description === '' ||
+			this.state.course_type === ''
 		) {
 			this.setState({ warning: true, message: 'Please fill all the fields!' });
 		} else {
-			this.setState({ error: '' });
+			this.setState({ error: '' })
+			
 			const socket = socketIOClient(this.state.address);
 			const data = {
 				email: 'pvgrubat@up.edu.ph',
 				course_id: course_id,
 				course_name: course_name,
 				course_title: course_title,
+				course_type :course_type,
 				description: description
 			};
 
 			if (isEditing) {
+
 				socket.emit('modify_course', data);
 				this.setState({
 					message: `${course_name} has been successfully edited!`,
-					warning: false
+					warning: false,
+					course_name: '',
+					course_title: '',
+					course_type : '',
+					description: '',
+					isEditing: false
 				});
 			} else {
-				socket.emit('view_existing_courses', {});
-				socket.on('view_existing_courses', course => {
+				socket.emit('view_courses', { ignoreExistingSections: true });
+				socket.on('view_courses', course => {
 					//Check if inputted course is not yet in the database
 					const result = course.find(res => res.course_name === course_name);
 					if (!result) {
@@ -89,6 +113,7 @@ class AddCourseModal extends Component {
 							message: `${course_name} has been successfully added!`,
 							warning: false
 						});
+						console.log(data);
 					} else {
 						this.setState({
 							message: `${course_name} already exists.`,
@@ -111,6 +136,7 @@ class AddCourseModal extends Component {
 			open: false,
 			course_title: '',
 			course_name: '',
+			course_type: '',
 			description: '',
 			message: '',
 			isEditing: false
@@ -124,6 +150,12 @@ class AddCourseModal extends Component {
 	handleCourseDesc = description => this.setState({ description: description });
 	handleIsEditing = bool => this.setState({ isEditing: bool });
 	handleCourseID = id => this.setState({ course_id: id });
+
+  handleCourseType(e, data) {
+    const state = this.state;
+    state.course_type = data.value;
+    this.setState(state);
+  }
 	handleRevert = () => {
 		this.setState({
 			course_name: '',
@@ -154,93 +186,95 @@ class AddCourseModal extends Component {
 				trigger={
 					<Button floated="right" positive content="View Existing Courses" />
 				}
-				basic
 			>
+				<Modal.Header>View Existing Courses</Modal.Header>
 				<Modal.Content>
-					<Container>
-						<Segment padded="very">
-							<Grid>
-								<Grid.Row>
-									<Header as="h2">Add Course </Header>
-								</Grid.Row>
-								<Grid.Row>
-									<Grid.Column width={16}>
-										<Form>
-											<Form.Group>
-												<Form.Input
-													width={3}
-													label="Course Name"
-													placeholder="Course Name"
-													name="course_name"
-													value={course_name}
-													onChange={this.handleChange}
-													required
-												/>
-												<Form.Input
-													width={3}
-													label="Course Title"
-													placeholder="Course Title"
-													name="course_title"
-													value={course_title}
-													onChange={this.handleChange}
-													required
-												/>
-												<Form.Input
-													width={8}
-													label="Course Description"
-													placeholder="Course Description"
-													name="description"
-													value={description}
-													onChange={this.handleChange}
-													required
-												/>
-												<Form.Button
-													fluid
-													className="form-button"
-													width={2}
-													color={isEditing ? 'blue' : 'green'}
-													onClick={this.handleSubmit}
-													content={isEditing ? 'Edit' : 'Submit'}
-												/>
-											</Form.Group>
-											{isEditing && (
-												<a className="form-editing" onClick={this.handleRevert}>
-													Revert back to add
-												</a>
-											)}
-										</Form>
-									</Grid.Column>
-								</Grid.Row>
-
-								<Grid.Row>
-									{message && (
-										<Grid.Column width={16}>
-											<Message
-												warning={warning}
-												success={!warning}
-												header={message}
-												icon={warning ? 'remove' : 'checkmark'}
-											/>
-										</Grid.Column>
-									)}
-								</Grid.Row>
-
-								<Grid.Row>
-									<Grid.Column width={16}>
-										<ViewCourses
-											message={message}
-											handleMessage={this.handleMessageChange}
-											handleCourseName={this.handleCourseName}
-											handleCourseTitle={this.handleCourseTitle}
-											handleCourseDesc={this.handleCourseDesc}
-											handleIsEditing={this.handleIsEditing}
-											handleCourseID={this.handleCourseID}
+					<Grid>
+						<Grid.Row>
+							<Grid.Column width={16}>
+								<Form>
+									<Form.Group>
+										<Form.Input
+											width={3}
+											label="Course Name"
+											placeholder="Course Name"
+											name="course_name"
+											value={course_name}
+											onChange={this.handleChange}
+											required
 										/>
-									</Grid.Column>
-								</Grid.Row>
-							</Grid>
-						</Segment>
-					</Container>
+										<Form.Input
+											width={3}
+											label="Course Title"
+											placeholder="Course Title"
+											name="course_title"
+											value={course_title}
+											onChange={this.handleChange}
+											required
+										/>
+										<Form.Input
+											width={8}
+											label="Course Description"
+											placeholder="Course Description"
+											name="description"
+											value={description}
+											onChange={this.handleChange}
+											required
+										/>
+										<Form.Dropdown
+						                    selection
+						                    width={5}
+						                    label="Course type"
+						                    name="course_type"
+						                    placeholder="Pick course type"
+						                    options={courseTypeOptions}
+						                    onChange={this.handleCourseType}
+						                  />
+										<Form.Button
+											fluid
+											className="form-button"
+											width={2}
+											color={isEditing ? 'blue' : 'green'}
+											onClick={this.handleSubmit}
+											content={isEditing ? 'Edit' : 'Submit'}
+										/>
+									</Form.Group>
+									{isEditing && (
+										<a className="form-editing" onClick={this.handleRevert}>
+											Revert back to add
+										</a>
+									)}
+								</Form>
+							</Grid.Column>
+						</Grid.Row>
+
+						<Grid.Row>
+							{message && (
+								<Grid.Column width={16}>
+									<Message
+										warning={warning}
+										success={!warning}
+										header={message}
+										icon={warning ? 'remove' : 'checkmark'}
+									/>
+								</Grid.Column>
+							)}
+						</Grid.Row>
+
+						<Grid.Row>
+							<Grid.Column width={16}>
+								<ViewCourses
+									message={message}
+									handleMessage={this.handleMessageChange}
+									handleCourseName={this.handleCourseName}
+									handleCourseTitle={this.handleCourseTitle}
+									handleCourseDesc={this.handleCourseDesc}
+									handleIsEditing={this.handleIsEditing}
+									handleCourseID={this.handleCourseID}
+								/>
+							</Grid.Column>
+						</Grid.Row>
+					</Grid>
 				</Modal.Content>
 				<Modal.Actions className="modal-actions">
 					<Button
