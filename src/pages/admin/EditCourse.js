@@ -324,7 +324,6 @@ class EditCourse extends Component {
                   width={4}
                 />
                 <Form.Input
-                  width={2}
                   min={0}
                   type="number"
                   label="Capacity"
@@ -335,7 +334,6 @@ class EditCourse extends Component {
                   width={4}
                 />
                 <Form.Input
-                  width={2}
                   min={0}
                   max={max_capacity}
                   type="number"

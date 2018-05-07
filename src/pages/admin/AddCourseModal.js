@@ -4,8 +4,6 @@ import {
 	Modal,
 	Form,
 	Grid,
-	Segment,
-	Container,
 	Message
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';

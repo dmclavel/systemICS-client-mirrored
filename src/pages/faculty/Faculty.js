@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Card, Loader, Header } from 'semantic-ui-react';
+import { Grid, Loader, Header } from 'semantic-ui-react';
 import './Faculty.css';
 import SubjectCard from './SubjectCard';
 import Advisee from './Advisee';

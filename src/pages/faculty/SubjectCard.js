@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Card, Icon, Header, List, Segment } from 'semantic-ui-react';
+import { Grid, Icon, Header, Segment } from 'semantic-ui-react';
 import './Faculty.css';
 import { convertToGeneralTime } from '../../utils/TimeUtilities';
 

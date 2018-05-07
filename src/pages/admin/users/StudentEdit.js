@@ -2,15 +2,7 @@ import React, { Component } from 'react';
 import {
   Button,
   Modal,
-  Form,
-  Grid,
-  Segment,
-  Header,
-  Dropdown,
-  Container,
-  Checkbox,
-  Popup,
-  Card
+  Form
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
@@ -61,7 +53,7 @@ class StudentEdit extends Component {
   handleEmail = (e) => {
     if (e.target.value.length !== 0){
       this.setState({isErrorMail: false});
-      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var re = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var isValid =  re.test(e.target.value);
       if (!isValid){
         this.setState({isErrorMail: true});
@@ -82,7 +74,7 @@ class StudentEdit extends Component {
   };
 
   handleStatus = (event: SyntheticEvent, data: object) => {
-    if (event.target.value != '') {
+    if (event.target.value !== '') {
       this.setState({ isErrorStatus: false });
     } else {
       this.setState({ isErrorStatus: true });
@@ -92,10 +84,10 @@ class StudentEdit extends Component {
 
   handleSubmit = e => {
     if (
-      this.state.isErrorStatus == false &&
-      this.state.isErrorCurriculum == false &&
-      this.state.isErrorMail == false &&
-      this.state.isErrorName == false
+      this.state.isErrorStatus === false &&
+      this.state.isErrorCurriculum === false &&
+      this.state.isErrorMail === false &&
+      this.state.isErrorName === false
     ) {
       const socket = socketIOClient(this.state.address); //establish connection to the server
       socket.emit('modify_student', {

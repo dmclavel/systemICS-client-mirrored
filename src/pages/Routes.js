@@ -5,8 +5,6 @@ File: Basic routing system.
 
 import React, { Component } from 'react';
 import { Switch, Route, Redirect, withRouter } from 'react-router';
-import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
-import socketIOClient from 'socket.io-client';
 
 import Homepage from './homepage/Homepage';
 import Classes from './homepage/Classes';
@@ -41,18 +39,18 @@ const authenticator = {
 	}
 };
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-	<Route
-		{...rest}
-		render={props =>
-			authenticator.user >= rest.securityLevel ? (
-				<Component {...props} />
-			) : (
-				<Redirect to="/login" />
-			)
-		}
-	/>
-);
+// const PrivateRoute = ({ component: Component, ...rest }) => (
+// 	<Route
+// 		{...rest}
+// 		render={props =>
+// 			authenticator.user >= rest.securityLevel ? (
+// 				<Component {...props} />
+// 			) : (
+// 				<Redirect to="/login" />
+// 			)
+// 		}
+// 	/>
+// );
 
 class Routes extends Component {
 	constructor(props) {

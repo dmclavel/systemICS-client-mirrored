@@ -55,26 +55,26 @@ class DropFile extends Component {
     var textType = /^[A-Za-z_()0-9]*\.csv$/; // regex of file type to be accepted
     var studentCSV = 'STUDENT_NUMBER,NAME,CURRICULUM,EMAIL_ADD,STATUS';
     var facultyCSV = 'EMP_NO,NAME,EMAIL_ADD,STATUS,ISREGCOM';
-    var adminCSV = 'USERNAME,PASSWORD';
+    // var adminCSV = 'USERNAME,PASSWORD';
     var adviser_adviseeCSV = 'ACAD_YEAR,SEMESTER,EMP_NO,STUDENT_NUMBER,STATUS';
     var courseCSV = 'COURSE_NAME,COURSE_TITLE,DESCRIPTION';
-    var senior_juniorCSV = 'ADVISER_EMP_NO,ADVISEE_EMP_NO';
+    // var senior_juniorCSV = 'ADVISER_EMP_NO,ADVISEE_EMP_NO';
 
     this.setState({
       filename: file[0].name,
       message: true,
-      error: false,
-      filename: ''
+      error: false
+      // ,filename: ''
     });
 
     var course_offeringCSV =
       'ACAD_YEAR,SEMESTER,TIME_START,TIME_END,ROOM,NO_OF_STUDENTS,UNIT,DAY,SECTION,SECTION_TYPE,MAX_CAPACITY,COURSE_ID,EMP_NO,STATUS,POSTED';
-    const address = this.state.address;
+    // const address = this.state.address;
     const file_type_selected = this.state.file_type_selected;
 
     if (file[0].name.match(textType)) {
       readerFile.onload = e => {
-        const socket = socketIOClient(address);
+        // const socket = socketIOClient(address);
         const data = {
           string: e.target.result,
           file_type: file_type_selected
@@ -116,7 +116,7 @@ class DropFile extends Component {
   };
 
   handleSubmit = () => {
-    const { data, endpoint, method, error, filename } = this.state;
+    const { data, endpoint, method, error } = this.state;
     if (!error) {
       const socket = socketIOClient(endpoint);
       socket.emit(method, data);
@@ -136,7 +136,7 @@ class DropFile extends Component {
   };
 
   render() {
-    const { files, file_type_selected, filename, message, error } = this.state;
+    const { file_type_selected, filename, message, error } = this.state;
 
     return (
       <Modal

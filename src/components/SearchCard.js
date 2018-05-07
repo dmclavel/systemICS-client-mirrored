@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Input, Card } from 'semantic-ui-react';
-import socketIOClient from 'socket.io-client';
+import { Input, Card } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 
 class SearchCard extends Component {

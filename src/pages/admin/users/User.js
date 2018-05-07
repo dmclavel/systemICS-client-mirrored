@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Menu, Button, Loader } from 'semantic-ui-react';
+import { Grid, Menu, Loader } from 'semantic-ui-react';
 import SearchCard from '../../../components/SearchCard';
 import StudentTable from './StudentTable';
 import FacultyTable from './FacultyTable';
@@ -45,8 +45,8 @@ class User extends Component {
 	};
 
 	handleSearch = query => {
-		if (query.length != 0) {
-			if (this.state.activeItem == 'Student') {
+		if (query.length !== 0) {
+			if (this.state.activeItem === 'Student') {
 				this.setState({
 					dummyStudents: this.state.dummyStudents.filter(student => {
 						if (
@@ -74,7 +74,7 @@ class User extends Component {
 				});
 			}
 		} else {
-			if (this.state.activeItem == 'Student') {
+			if (this.state.activeItem === 'Student') {
 				this.setState({ dummyStudents: this.state.origStudent });
 			} else {
 				this.setState({ dummyFaculty: this.state.origFaculty });
@@ -87,7 +87,7 @@ class User extends Component {
 	};
 
 	handleData = e => {
-		if (this.state.activeItem == 'Student') {
+		if (this.state.activeItem === 'Student') {
 			return this.state.dummyStudents;
 		} else {
 			return this.state.dummyFaculty;
@@ -147,7 +147,7 @@ class User extends Component {
 						/>
 					</Grid.Column>
 					<Grid.Column width={3}>
-						{this.state.activeItem == 'Student' ? (
+						{this.state.activeItem === 'Student' ? (
 							<StudentAdd floated="right" fetchData={this.fetchStudents} />
 						) : (
 							<AddFaculty fetchData={this.fetchFaculty} />
@@ -155,7 +155,7 @@ class User extends Component {
 					</Grid.Column>
 				</Grid.Row>
 				<Grid.Row>
-					{this.state.activeItem == 'Student' ? (
+					{this.state.activeItem === 'Student' ? (
 						<StudentTable
 							data={this.state.dummyStudents}
 							fetchData={this.fetchStudents}

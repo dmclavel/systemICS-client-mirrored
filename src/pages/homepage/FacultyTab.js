@@ -8,7 +8,7 @@ Change name FacultyTab to the name of file.
 This will be updated for mapping, grid layouting, etc.
 Write the Author of the code at the top of the document.
 */
-import { Card, Input, Grid, Container, Loader } from 'semantic-ui-react';
+import { Card, Grid, Container, Loader } from 'semantic-ui-react';
 import React, { Component } from 'react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';

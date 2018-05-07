@@ -5,11 +5,7 @@ import {
   Form,
   Grid,
   Segment,
-  Header,
-  Dropdown,
-  Container,
-  Checkbox,
-  Popup
+  Container
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
@@ -83,7 +79,6 @@ class FacultyDelete extends Component {
                     positive
                     content="Cancel"
                     floated="right"
-                    positive
                     onClick={this.handleClose}
                     onOpen={this.handleOpen}
                   />

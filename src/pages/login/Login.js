@@ -13,7 +13,7 @@ import {
   Divider,
   Message
 } from 'semantic-ui-react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 import socketIOClient from 'socket.io-client';
 import './Login.css';
@@ -127,7 +127,6 @@ class Login extends Component {
                       required
                       icon="user"
                       iconPosition="left"
-                      name="username"
                       onChange={this.handleChange}
                     />
                     <Form.Input
@@ -137,7 +136,6 @@ class Login extends Component {
                       icon="lock"
                       iconPosition="left"
                       type="password"
-                      name="password"
                       onChange={this.handleChange}
                     />
                     <Button

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Grid, Dropdown } from 'semantic-ui-react';
+import { Button, Modal, Form } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ErrorMessage from './ErrorMessage';
@@ -67,7 +67,7 @@ class EditFaculty extends Component {
 
   handleEmail = e => {
     if (e.target.value.length !== 0) {
-      var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var isValid = regex.test(e.target.value);
       if (isValid){
         this.setState({ isErrorMail: false});
@@ -142,7 +142,7 @@ class EditFaculty extends Component {
       >
         <Modal.Header>Edit Faculty</Modal.Header>
         <Modal.Content>
-          {this.state.isErrorMessage == true ? <ErrorMessage /> : <div />}
+          {this.state.isErrorMessage === true ? <ErrorMessage /> : <div />}
           <Form>
             <Form.Group>
               <Form.Input
@@ -159,7 +159,6 @@ class EditFaculty extends Component {
                 placeholder="Name"
                 value={this.state.name}
                 onChange={this.handleName}
-                error={this.state.isErrorName}
               />
             </Form.Group>
             <Form.Group widths="equal">
