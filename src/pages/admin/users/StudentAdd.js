@@ -15,6 +15,8 @@ import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ErrorMessage from './ErrorMessage';
 import config from './../../../config.json';
+import Successful from './Successful';
+import Unsuccessful from './Unsuccessful';
 
 const inlineStyle = {
   modal: {
@@ -41,6 +43,8 @@ class StudentAdd extends Component {
       isErrorStatus: false,
       isErrorNumber: false,
       isErrorMessage: false,
+      isDisplayPrompt: false,
+      isAddSuccess: false,
       statusOptions: [
         { key: 'Enrolled', value: 'Enrolled', text: 'Enrolled' },
         { key: 'Unenrolled', value: 'Unenrolled', text: 'Unenrolled' }
@@ -144,9 +148,15 @@ class StudentAdd extends Component {
         }); //send data to 'login' endpoint in server
         socket.on('create_student', returnValueFromServer => {
           console.log(returnValueFromServer);
+          if (returnValueFromServer.success){
+            this.setState({isAddSuccess: true});
+          }else{
+            this.setState({isAddSuccess: false});
+          }
+          this.setState({isDisplayPrompt: true});
+          this.setState({isErrorMessage: false});
         });
         this.props.fetchData();
-        this.handleClose();
       } else {
         this.setState({ isErrorMessage: true });
       }
@@ -175,6 +185,8 @@ class StudentAdd extends Component {
         <Modal.Header>Add Student</Modal.Header>
         <Modal.Content>
           {this.state.isErrorMessage && <ErrorMessage />}
+          {this.state.isDisplayPrompt && (this.state.isAddSuccess == true) && <Successful/>}
+          {this.state.isDisplayPrompt && (this.state.isAddSuccess == false) && <Unsuccessful/>}
           <Form>
             <Form.Group>
               <Form.Input
