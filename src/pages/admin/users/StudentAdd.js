@@ -15,6 +15,8 @@ import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ErrorMessage from './ErrorMessage';
 import config from './../../../config.json';
+import Successful from './Successful';
+import Unsuccessful from './Unsuccessful';
 
 const inlineStyle = {
   modal: {
@@ -41,6 +43,8 @@ class StudentAdd extends Component {
       isErrorStatus: false,
       isErrorNumber: false,
       isErrorMessage: false,
+      isDisplayPrompt: false,
+      isAddSuccess: false,
       statusOptions: [
         { key: 'Enrolled', value: 'Enrolled', text: 'Enrolled' },
         { key: 'Unenrolled', value: 'Unenrolled', text: 'Unenrolled' }
@@ -175,6 +179,8 @@ class StudentAdd extends Component {
         <Modal.Header>Add Student</Modal.Header>
         <Modal.Content>
           {this.state.isErrorMessage && <ErrorMessage />}
+          {this.state.isDisplayPrompt && this.state.isAddSuccess && <Successful/>}
+          {this.state.isDisplayPrompt && !this.state.isAddSuccess && <Unsuccessful/>}
           <Form>
             <Form.Group>
               <Form.Input
