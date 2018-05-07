@@ -8,6 +8,7 @@ import NavbarIn from '../components/navbar/NavbarIn';
 import DashboardHeader from '../components/headers/DashboardHeader';
 import SearchCard from '../../components/SearchCard';
 import config from '../../config.json';
+import debounce from 'debounce'
 
 class Faculty extends Component {
   constructor(props) {
@@ -127,7 +128,7 @@ class Faculty extends Component {
                   <Header as='h2' textAlign='center'>Teaching Load</Header>
                   <SearchCard
                     fluid={true}
-                    handleSearch={this.handleCourseSearch}
+                    handleSearch={debounce(this.handleCourseSearch, config.searchDelay)}
                     placeholder="course name or course title"
                   />
                 </Grid.Row>
@@ -161,7 +162,7 @@ class Faculty extends Component {
                   <Header as='h2' textAlign='center'>Advisees</Header>
                   <SearchCard
                     fluid={true}
-                    handleSearch={this.handleAdviseeSearch}
+                    handleSearch={debounce(this.handleAdviseeSearch, config.searchDelay)}
                     placeholder="name, email or student id"
                   />
                 </Grid.Row>
