@@ -180,6 +180,8 @@ class AddFaculty extends Component {
 
     }else{
       this.handleClose();
+      this.setState({numberOfClicks: 0});
+      this.setState({isDisplayPrompt: false});
     }
     
   };

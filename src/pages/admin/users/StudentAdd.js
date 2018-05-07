@@ -111,7 +111,7 @@ class StudentAdd extends Component {
 
   handleSubmit = e => {
     if (this.state.numberOfClicks == 0){
-      this.state.setState({isSubmitLoading: true});
+      this.setState({isSubmitLoading: true});
         if (
       this.state.name === '' ||
       this.state.email_add === '' ||
@@ -153,7 +153,7 @@ class StudentAdd extends Component {
         }); //send data to 'login' endpoint in server
         socket.on('create_student', returnValueFromServer => {
           console.log(returnValueFromServer);
-          this.state.setState({isSubmitLoading: false});
+          this.setState({isSubmitLoading: false});
           if (returnValueFromServer.success){
             this.setState({isAddSuccess: true});
             this.setState({numberOfClicks: 1});
@@ -172,6 +172,8 @@ class StudentAdd extends Component {
     }
     }else{
       this.handleClose();
+      this.setState({numberOfClicks: 0});
+      this.setState({isDisplayPrompt: false});
     }
     
   };
