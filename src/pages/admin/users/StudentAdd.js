@@ -46,6 +46,7 @@ class StudentAdd extends Component {
       isDisplayPrompt: false,
       isAddSuccess: false,
       numberOfClicks: 0,
+      isSubmitLoading: false,
       statusOptions: [
         { key: 'Enrolled', value: 'Enrolled', text: 'Enrolled' },
         { key: 'Unenrolled', value: 'Unenrolled', text: 'Unenrolled' }
@@ -110,6 +111,7 @@ class StudentAdd extends Component {
 
   handleSubmit = e => {
     if (this.state.numberOfClicks == 0){
+      this.state.setState({isSubmitLoading: true});
         if (
       this.state.name === '' ||
       this.state.email_add === '' ||
@@ -151,6 +153,7 @@ class StudentAdd extends Component {
         }); //send data to 'login' endpoint in server
         socket.on('create_student', returnValueFromServer => {
           console.log(returnValueFromServer);
+          this.state.setState({isSubmitLoading: false});
           if (returnValueFromServer.success){
             this.setState({isAddSuccess: true});
             this.setState({numberOfClicks: 1});
@@ -247,6 +250,7 @@ class StudentAdd extends Component {
         </Modal.Content>
         <Modal.Actions className="modal-actions">
           <Button
+            loading={this.state.isSubmitLoading}
             content={this.state.addStudentLabel}
             floated="right"
             positive
