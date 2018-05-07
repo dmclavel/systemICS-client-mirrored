@@ -8,7 +8,7 @@ class ErrorMessage extends Component {
                 success
                 positive
                 header="Success!"
-                content="Student/Faculty successfully added."
+                content="Successfully added."
                 icon="check"
             />
         );

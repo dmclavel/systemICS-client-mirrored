@@ -155,9 +155,16 @@ class AddFaculty extends Component {
         }); //send data to 'login' endpoint in server
         socket.on('create_faculty', returnValueFromServer => {
           console.log(returnValueFromServer);
+          if (returnValueFromServer.success){
+            this.setState({isAddSuccess: true});
+          }else{
+            this.setState({isAddSuccess: false});
+          }
+          this.setState({isDisplayPrompt: true});
+          this.setState({isErrorMessage: false});
         });
         this.props.fetchData();
-        this.handleClose();
+       
       } else {
         this.setState({ isErrorMessage: true });
       }
