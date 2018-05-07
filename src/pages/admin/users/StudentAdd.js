@@ -45,10 +45,12 @@ class StudentAdd extends Component {
       isErrorMessage: false,
       isDisplayPrompt: false,
       isAddSuccess: false,
+      numberOfClicks: 0,
       statusOptions: [
         { key: 'Enrolled', value: 'Enrolled', text: 'Enrolled' },
         { key: 'Unenrolled', value: 'Unenrolled', text: 'Unenrolled' }
-      ]
+      ],
+      addStudentLabel: "Add Student"
     };
     autobind(this);
   }
@@ -107,7 +109,8 @@ class StudentAdd extends Component {
   }
 
   handleSubmit = e => {
-    if (
+    if (this.state.numberOfClicks == 0){
+        if (
       this.state.name === '' ||
       this.state.email_add === '' ||
       this.state.curriculum === '' ||
@@ -150,6 +153,8 @@ class StudentAdd extends Component {
           console.log(returnValueFromServer);
           if (returnValueFromServer.success){
             this.setState({isAddSuccess: true});
+            this.setState({numberOfClicks: 1});
+            this.setState({addStudentLabel: "All Done"});
           }else{
             this.setState({isAddSuccess: false});
           }
@@ -157,10 +162,15 @@ class StudentAdd extends Component {
           this.setState({isErrorMessage: false});
         });
         this.props.fetchData();
+
       } else {
         this.setState({ isErrorMessage: true });
       }
     }
+    }else{
+      this.handleClose();
+    }
+    
   };
 
   handleClose = e => {
@@ -237,7 +247,7 @@ class StudentAdd extends Component {
         </Modal.Content>
         <Modal.Actions className="modal-actions">
           <Button
-            content="Add Student"
+            content={this.state.addStudentLabel}
             floated="right"
             positive
             onClick={this.handleSubmit}
