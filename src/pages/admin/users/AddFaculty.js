@@ -42,6 +42,8 @@ class AddFaculty extends Component {
       modalOpen: false,
       isDisplayPrompt: false,
       isAddSuccess: false,
+      numberOfClicks: 0,
+      addFacultyLabel: "Add Faculty",
       options: [
         { key: 'Faculty', value: 1, text: 'Faculty' },
         { key: 'Admin', value: 3, text: 'Admin' },
@@ -114,7 +116,8 @@ class AddFaculty extends Component {
   };
 
   handleSubmit = e => {
-    if (
+    if (this.state.numberOfClicks == 0){
+      if (
       this.state.isRegCom === '' ||
       this.state.status === '' ||
       this.state.name === '' ||
@@ -157,6 +160,8 @@ class AddFaculty extends Component {
           console.log(returnValueFromServer);
           if (returnValueFromServer.success){
             this.setState({isAddSuccess: true});
+            this.setState({numberOfClicks: 1});
+            this.setState({addFacultyLabel: "All Done"});
           }else{
             this.setState({isAddSuccess: false});
           }
@@ -169,6 +174,11 @@ class AddFaculty extends Component {
         this.setState({ isErrorMessage: true });
       }
     }
+
+    }else{
+      this.handleClose();
+    }
+    
   };
 
   handleClose = e => {
@@ -257,7 +267,7 @@ class AddFaculty extends Component {
         </Modal.Content>
         <Modal.Actions className="modal-actions">
           <Button
-            content="Add Faculty"
+            content={this.state.addFacultyLabel}
             floated="right"
             positive
             onClick={this.handleSubmit}
