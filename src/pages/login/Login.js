@@ -119,17 +119,17 @@ class Login extends Component {
                 />
               )}
 
-                <div>
-                  <GoogleAPI
-                    clientId="175573341301-f0qqirbda07fqsqam42vjpoi1kldjro4.apps.googleusercontent.com"
-                    onUpdateSigninStatus={Function}
-                    onInitFailure={Function}
-                  >
-                    <div>
-                      <GoogleLogin onLoginSuccess={this.handleProfile} />
-                    </div>
-                  </GoogleAPI>
-                </div>
+              <div>
+                <GoogleAPI
+                  clientId="175573341301-f0qqirbda07fqsqam42vjpoi1kldjro4.apps.googleusercontent.com"
+                  onUpdateSigninStatus={Function}
+                  onInitFailure={Function}
+                >
+                  <div>
+                    <GoogleLogin onLoginSuccess={this.handleProfile} />
+                  </div>
+                </GoogleAPI>
+              </div>
 
               <Link to="/">
                 <Button icon="arrow outline left" content="Back to Homepage" />
