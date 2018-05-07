@@ -43,6 +43,7 @@ class AddFaculty extends Component {
       isDisplayPrompt: false,
       isAddSuccess: false,
       numberOfClicks: 0,
+      isSubmitLoading: false,
       addFacultyLabel: "Add Faculty",
       options: [
         { key: 'Faculty', value: 1, text: 'Faculty' },
@@ -117,6 +118,7 @@ class AddFaculty extends Component {
 
   handleSubmit = e => {
     if (this.state.numberOfClicks == 0){
+      this.setState({isSubmitLoading: true});
       if (
       this.state.isRegCom === '' ||
       this.state.status === '' ||
@@ -158,6 +160,7 @@ class AddFaculty extends Component {
         }); //send data to 'login' endpoint in server
         socket.on('create_faculty', returnValueFromServer => {
           console.log(returnValueFromServer);
+          this.setState({isSubmitLoading: false});
           if (returnValueFromServer.success){
             this.setState({isAddSuccess: true});
             this.setState({numberOfClicks: 1});
@@ -267,7 +270,7 @@ class AddFaculty extends Component {
         </Modal.Content>
         <Modal.Actions className="modal-actions">
           <Button
-            content={this.state.addFacultyLabel}
+            content={this.state.addFacultyLabel} loading={this.state.isSubmitLoading}
             floated="right"
             positive
             onClick={this.handleSubmit}
