@@ -1,4 +1,5 @@
 {
   "backendAddress": "https://sleepy-falls-95372.herokuapp.com/",
-  "redirectURI": "https://systemics.herokuapp.com/"
+  "redirectURI": "https://systemics.herokuapp.com/",
+  "searchDelay": 200
 }

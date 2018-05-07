@@ -1,3 +1,4 @@
+import defaultImg from './defaultimg.png';
 import React, { Component } from 'react';
 import { Container, Header, Image } from 'semantic-ui-react';
 
@@ -18,7 +19,7 @@ class ProfilePic extends Component {
 	render() {
     console.log(this.state.imgURL)
   	 return (
-    <Image src={this.state.imgURL} size={this.props.size} centered={this.props.centered}
+    <Image src={this.state.imgURL !== null? this.state.imgURL : defaultImg} size={this.props.size} centered={this.props.centered}
     circular={this.props.circular}
     rounded={this.props.rounded} />
 		);
