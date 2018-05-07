@@ -221,10 +221,11 @@ class AddCourseLecture extends Component {
     };
     let conflict = false;
     let details = '';
-    for (let i = 0; i < this.state.existingSections.length; i++) {
+    let courses = this.props.getCourses();
+    for (let i = 0; i < courses.length; i++) {
       if (
         // Replace the tabs and spaces and uppercase the room provided to compare them
-        this.state.existingSections[i].room.replace(/\s/g, '').toUpperCase() ===
+        courses[i].room.replace(/\s/g, '').toUpperCase() ===
         this.state.room.replace(/\s/g, '').toUpperCase()
       ) {
         // If room is conflict, we will check if their time is also conflict.
@@ -233,7 +234,7 @@ class AddCourseLecture extends Component {
           time_end,
           day: this.dayFormat()
         };
-        if (isScheduleConflict(this.state.existingSections[i], argc)) {
+        if (isScheduleConflict(courses[i], argc)) {
           conflict = true;
           const {
             course_name: _name,
@@ -242,7 +243,7 @@ class AddCourseLecture extends Component {
             time_start: t_start,
             time_end: t_end,
             room: _room
-          } = this.state.existingSections[i];
+          } = courses[i];
           details += `Data is conflicting with ${_name} ${_section} - ${_day} ${convertToGeneralTime(
             t_start
           )}-${convertToGeneralTime(t_end)}, ${_room}`;

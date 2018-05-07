@@ -40,7 +40,9 @@ class AdminCard extends Component {
     };
     autobind(this);
   }
-
+  getCourses() {
+    return this.state.coursesX;
+  }
   // next time, specify acad year and semester based on view
   componentWillReceiveProps(nextProps) {
     this.setState({ add: true });
@@ -53,7 +55,6 @@ class AdminCard extends Component {
 
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
-      console.log('cutie si syd');
       this.setState({ coursesX: course, courses: course });
       this.setState({ loading: false });
     });
@@ -127,7 +128,11 @@ class AdminCard extends Component {
             <AddCourseModal fetchCourse={this.fetchCourse} />
           </Grid.Column>
           <Grid.Column width={3}>
-            <AddLectureSection data={coursesX} fetchCourse={this.fetchCourse} />
+            <AddLectureSection
+              data={coursesX}
+              fetchCourse={this.fetchCourse}
+              getCourses={this.getCourses}
+            />
           </Grid.Column>
         </Grid.Row>
 
