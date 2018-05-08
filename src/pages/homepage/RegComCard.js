@@ -1,6 +1,7 @@
 import { Label, Image, Card, Segment } from 'semantic-ui-react';
 import React, { Component } from 'react';
 import './FacultyTab.css';
+import ProfilePic from '../../components/ProfilePic';
 
 class RegComCard extends Component {
   render() {
@@ -10,14 +11,13 @@ class RegComCard extends Component {
           <Card.Content>
             <Label corner="right" icon="star" color={'yellow'} />
           </Card.Content>
-          <Image
-            src={
-              'https://lh5.googleusercontent.com/-NQ_TqpxYz2M/AAAAAAAAAAI/AAAAAAAAAAs/gI0pniNvWm8/s96-c/photo.jpg'
-            }
+          <ProfilePic
+            // src={image}
             centered={true}
             circular={true}
             rounded={true}
-            size="medium"
+            size="small"
+            email={this.props.email}
           />
         </Segment>
         <Card.Content>

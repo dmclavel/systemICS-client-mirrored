@@ -202,7 +202,6 @@ class EditCourse extends Component {
       parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity)
     ) {
       socket.emit('modify_section_2', data);
-      this.props.fetchCourse();
       this.setState({
         message: 'Successfully edited section information!',
         hidden: false,

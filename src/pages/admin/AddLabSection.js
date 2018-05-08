@@ -273,7 +273,6 @@ class AddCourseLab extends Component {
           hidden: false
         },
         () => {
-          console.log(data);
           socket.emit('create_section_2', data);
         }
       );
@@ -301,7 +300,7 @@ class AddCourseLab extends Component {
       no_of_students: '',
       course_id: '',
       course_name: '',
-      time_start: '7:00',
+      time_start: '07:00',
       time_end: '19:00',
       room: '',
       day: '',
