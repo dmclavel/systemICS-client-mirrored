@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Input, Button, Segment } from 'semantic-ui-react';
+import { Grid, Input, Segment } from 'semantic-ui-react';
 import AdviseeTable from './AdviseeTable';
 import autobind from 'react-autobind';
 class Advisee extends Component {

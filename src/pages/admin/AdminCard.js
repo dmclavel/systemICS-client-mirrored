@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Grid, Header, Table, Input, Loader } from 'semantic-ui-react';
+import { Grid, Header, Table, Loader, Pagination, Icon } from 'semantic-ui-react';
+
 import SearchCard from '../../components/SearchCard';
 import CourseRow from './CourseRow';
 import AddCourseModal from './AddCourseModal';
@@ -37,7 +38,10 @@ class AdminCard extends Component {
       loading: true,
       current_year: 0,
       current_sem: 0,
-      add: true
+      add: true,
+      page: 0,
+      totalPages: 0,
+      sliced_courses: []
     };
     autobind(this);
   }
@@ -49,18 +53,26 @@ class AdminCard extends Component {
     const socket = socketIOClient(this.state.address);
     const data = {
       acad_year: nextProps.current_year,
-      semester: nextProps.current_sem
+      semester: nextProps.current_sem,
+      page: this.state.page
     };
 
     socket.emit('view_sections', data);
     socket.on('view_sections', course => {
-      console.log('cutie si syd');
-      this.setState({ coursesX: course, courses: course });
-      this.setState({ loading: false });
+      this.setState({
+        coursesX: course,
+        courses: course
+      });
+      this.setState({
+        loading: false
+      });
     });
 
     socket.on('update_alert', res => {
-      if (res.code === 'section') socket.emit('view_sections', data);
+      if (res.code === 'section') {
+        socket.emit('view_sections', data);
+        this.setState({ page: 1 });
+      }
     });
 
     this.setState({
@@ -69,20 +81,8 @@ class AdminCard extends Component {
     });
   }
 
-  fetchCourse = () => {
-    const { current_year, current_sem } = this.state;
-
-    const socket = socketIOClient(this.state.address);
-    const data = {
-      acad_year: current_year,
-      semester: current_sem
-    };
-    socket.emit('view_sections', data);
-    console.log('deleted');
-  };
-
   handleSearch = query => {
-    if (query.length == 0) {
+    if (query.length === 0) {
       this.setState({ courses: this.state.coursesX });
     } else {
       this.setState({
@@ -99,11 +99,23 @@ class AdminCard extends Component {
         })
       });
     }
-    console.log(this.state.visibleData);
+  };
+
+  handlePageChange = (e, { activePage }) => {
+    this.setState({
+      page: activePage
+    });
   };
 
   render() {
-    const { loading, coursesX, current_year, current_sem } = this.state;
+    const {
+      loading,
+      coursesX,
+      current_year,
+      current_sem,
+      page,
+      totalPages
+    } = this.state;
 
     return (
       <Grid className="admin-container">
@@ -153,7 +165,6 @@ class AdminCard extends Component {
                 <CourseRow
                   data={coursesX}
                   key={index}
-                  fetch_Course={this.fetchCourse}
                   description={course.description}
                   course={course.course_id}
                   coursecode={course.course_name}
@@ -179,6 +190,31 @@ class AdminCard extends Component {
             })}
           </Table.Body>
         </Table>
+
+        {!loading &&
+          this.state.courses.length > 10 && (
+            <Pagination
+              fluid
+              defaultActivePage={page + 1}
+              totalPages={totalPages}
+              ellipsisItem={{
+                content: <Icon name="ellipsis horizontal" />,
+                icon: true
+              }}
+              firstItem={{
+                content: <Icon name="angle double left" />,
+                icon: true
+              }}
+              lastItem={{
+                content: <Icon name="angle double right" />,
+                icon: true
+              }}
+              prevItem={{ content: <Icon name="angle left" />, icon: true }}
+              nextItem={{ content: <Icon name="angle right" />, icon: true }}
+              activePage={page}
+              onPageChange={this.handlePageChange}
+            />
+          )}
       </Grid>
     );
   }

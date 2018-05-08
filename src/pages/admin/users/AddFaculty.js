@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import {
   Button,
   Modal,
-  Form,
-  Grid,
-  Header,
-  Dropdown,
-  Checkbox,
-  Popup
+  Form
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
@@ -83,7 +78,7 @@ class AddFaculty extends Component {
 
   handleNumber = e => {
     var reg = /^[0-9]+$/;
-    if (e.target.value.length != 11 || !reg.test(e.target.value)){
+    if (e.target.value.length !== 11 || !reg.test(e.target.value)){
        this.setState({isErrorNumber: true});
     }else{
       this.setState({isErrorNumber: false});
@@ -93,7 +88,7 @@ class AddFaculty extends Component {
 
   handleEmail = e => {
     if (e.target.value.length !== 0) {
-      var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var regex = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var isValid = regex.test(e.target.value);
       if (isValid){
         this.setState({ isErrorMail: false});

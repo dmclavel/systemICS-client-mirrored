@@ -273,7 +273,6 @@ class AddCourseLab extends Component {
           hidden: false
         },
         () => {
-          console.log(data);
           socket.emit('create_section_2', data);
         }
       );
@@ -301,7 +300,7 @@ class AddCourseLab extends Component {
       no_of_students: '',
       course_id: '',
       course_name: '',
-      time_start: '7:00',
+      time_start: '07:00',
       time_end: '19:00',
       room: '',
       day: '',
@@ -326,13 +325,13 @@ class AddCourseLab extends Component {
       Th,
       F,
       no_of_students,
-      courses,
+      // courses,
       acad_year,
-      semester,
+      // semester,
       time_start,
       time_end,
       room,
-      section,
+      // section,
       unit,
       max_capacity
     } = this.state;
@@ -342,7 +341,7 @@ class AddCourseLab extends Component {
         size="large"
         style={inlineStyle.modal}
         onClose={this.close}
-        trigger={<Button icon="plus" positive />}
+        trigger={<Button icon="plus" size="mini" floated="right" positive />}
         basic
         closeIcon
       >
@@ -400,7 +399,6 @@ class AddCourseLab extends Component {
                   placeholder="Number of Students"
                   value={no_of_students}
                   onChange={this.handleChange}
-                  width={3}
                 />
 
                 <Form.Input

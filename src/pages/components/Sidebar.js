@@ -17,7 +17,11 @@ const inline = {
 	height: '25rem',
 	'overflow-y': 'auto'
 };
-var socket = null;
+
+const inline1 = {
+	width: '100rem'
+};
+
 class Sidebar extends Component {
 	constructor(props) {
 		super(props);
@@ -34,7 +38,6 @@ class Sidebar extends Component {
 	componentDidMount() {
 		socket.emit('view_timeframe', {});
 		socket.on('view_timeframe', semesters => {
-			console.log(semesters);
 			this.setState({
 				acad_year: semesters[semesters.length - 1].acad_year,
 				semester: semesters[semesters.length - 1].semester
@@ -89,8 +92,8 @@ class Sidebar extends Component {
 		return (
 			<Grid>
 				<Grid.Row className="sidebar">
-					<Segment className="sidebar-container" fluid textAlign="right">
-						<Header as="h2">
+					<Segment style={inline1} fluid textAlign="right">
+						<Header as="h3">
 							<Header.Content>
 								{this.props.showSemester
 									? `${

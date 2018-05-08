@@ -52,7 +52,7 @@ class DeleteCourse extends Component {
         open={open}
         onOpen={this.open}
         onClose={this.close}
-        trigger={<Button negative icon="close" />}
+        trigger={<Button negative icon="close" floated="right" size="mini" />}
         basic
       >
         <Modal.Content>

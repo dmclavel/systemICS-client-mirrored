@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Button, Grid, Dropdown } from 'semantic-ui-react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Logo from './logo-transparent-no-stroke.png';
 
 const options = [
@@ -132,7 +132,7 @@ class NavbarIn extends Component {
           <Grid.Row>
             <Grid.Column width={5}>
               <a href="/">
-                <img src={Logo} className="nav-logo" />
+                <img src={Logo} alt="SystemICS" className="nav-logo" />
               </a>
               <div className="nav-name-container">
                 <a href="/" className="nav-logo-name">

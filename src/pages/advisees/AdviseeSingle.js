@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { Table, Button, Dropdown, Grid, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
-import config from './../../config.json';
 
 class AdviseeSingle extends Component {
 	constructor(props) {
 		super(props);
 		autobind(this);
 		this.state = {
-			endpoint: config.backendAddress,
+			endpoint: 'https://sleepy-falls-95372.herokuapp.com',
 			list_advisers: [],
 			selected_adviser: undefined,
 			current_adviser: null,
@@ -57,7 +56,14 @@ class AdviseeSingle extends Component {
 
 	componentDidMount() {
 		const socket = socketIOClient(this.state.endpoint);
-
+		// if (this.props.advisee.advisers) {
+		// 	if (
+		// 		this.props.advisee.advisers[1] !== null &&
+		// 		this.props.advisee.advisers[1].status === 'Pending'
+		// 	) {
+		// 		this.setState({ hasPending: true });
+		// 	}
+		// }
 		socket.on('update_alert', update => {
 			socket.emit('view_faculty', { active: true });
 		});
@@ -80,13 +86,13 @@ class AdviseeSingle extends Component {
 						!this.props.advisee.advisers ||
 						adviser_all.key !== this.props.advisee.advisers[0].adviser_emp_no
 				)
-				.map(adviser => {
+				.map(adviser =>
 					list_adviser_filtered.push({
 						key: adviser.key,
 						value: adviser.value,
 						text: adviser.text
-					});
-				});
+					})
+				);
 			this.setState({ list_advisers: list_adviser_filtered });
 		});
 	}
@@ -248,7 +254,6 @@ class AdviseeSingle extends Component {
 					</Table.Body>
 				</Table>
 			);
-		return null;
 	}
 }
 

@@ -1,5 +1,4 @@
-import image from './sample.jpg';
-import { Image, Card, Segment } from 'semantic-ui-react';
+import { Card, Segment } from 'semantic-ui-react';
 import React, { Component } from 'react';
 import './FacultyTab.css';
 import ProfilePic from '../../components/ProfilePic';
@@ -10,7 +9,6 @@ class FacultyCard extends Component {
       <Card className="cardSize">
         <Segment basic={true}>
           <ProfilePic
-            // src={image}
             centered={true}
             circular={true}
             rounded={true}

@@ -44,22 +44,16 @@ class CourseRow extends Component {
         <Table.Cell>{this.props.students}</Table.Cell>
         <Table.Cell>{this.props.status}</Table.Cell>
         <Table.Cell>
-          {this.props.section_type === 0 ? (
-            <AddLabSection
-              data={this.props.data}
-              courseLecID={this.props.course}
-              coursecode={this.props.coursecode}
-              fetchCourse={this.props.fetch_Course}
-              section={this.props.section}
-              acadyear={this.props.acad_year}
-              sem={this.props.semester}
-              courseoffering={this.props.courseoffering}
-            />
-          ) : null}
+          <DeleteCourse
+            coursecodeid={this.props.courseoffering}
+            section={this.props.section}
+            fetchCourse={this.props.fetch_Course}
+            coursecode={this.props.coursecode}
+            section_type={this.props.section_type}
+          />
 
           <EditCourse
             data={this.props.data}
-            fetchCourse={this.props.fetch_Course}
             emp_no={this.props.empno}
             courseoffering={this.props.courseoffering}
             title={this.props.title}
@@ -79,13 +73,17 @@ class CourseRow extends Component {
             section_type={this.props.section_type}
           />
 
-          <DeleteCourse
-            coursecodeid={this.props.courseoffering}
-            section={this.props.section}
-            fetchCourse={this.props.fetch_Course}
-            coursecode={this.props.coursecode}
-            section_type={this.props.section_type}
-          />
+          {this.props.section_type === 0 && (
+            <AddLabSection
+              data={this.props.data}
+              courseLecID={this.props.course}
+              coursecode={this.props.coursecode}
+              section={this.props.section}
+              acadyear={this.props.acad_year}
+              sem={this.props.semester}
+              courseoffering={this.props.courseoffering}
+            />
+          )}
         </Table.Cell>
       </Table.Row>
     );

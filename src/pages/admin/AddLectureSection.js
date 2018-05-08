@@ -320,12 +320,12 @@ class AddCourseLecture extends Component {
     let existing = false;
     let details = '';
     let message = '';
-    if (name === 'section' && this.state.course_name != '') {
+    if (name === 'section' && this.state.course_name !== '') {
       // this.fillExistingSections();
       this.state.existingSections.forEach(element => {
         if (
           value === element.section &&
-          parseInt(this.state.course_id) === parseInt(element.course_id)
+          parseInt(this.state.course_id, 10) === parseInt(element.course_id, 10)
         ) {
           message = 'Duplicate entry for section!';
           details +=
@@ -422,8 +422,8 @@ class AddCourseLecture extends Component {
       room,
       section,
       unit,
-      max_capacity,
-      status
+      max_capacity
+      // ,status
     } = this.state;
 
     return (

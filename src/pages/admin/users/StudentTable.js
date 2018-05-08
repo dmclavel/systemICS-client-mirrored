@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Grid, Button, Popup, Icon, Loader } from 'semantic-ui-react';
+import { Table, Grid } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import StudentDelete from './StudentDelete';
 import StudentEdit from './StudentEdit';

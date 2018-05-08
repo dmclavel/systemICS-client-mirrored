@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Grid } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import NavbarIn from '../components/navbar/NavbarIn';
 import ManageHeader from '../components/headers/ManageHeader';
 import Sidebar from '../components/Sidebar';
@@ -23,7 +23,9 @@ class Advisees extends Component {
                               <Grid.Row>
                                     <Grid.Column width={1} />
                                     <Grid.Column width={4}>
-                                          <Sidebar accessLvl={this.props.accessLvl} />
+                                          <Sidebar
+                                                accessLvl={this.props.accessLvl}
+                                          />
                                     </Grid.Column>
                                     <Grid.Column width={10}>
                                           <Advisee />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Grid, Button, Popup, Icon } from 'semantic-ui-react';
+import { Table, Grid } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import './Table.css';
 import EditFaculty from './EditFaculty';
@@ -39,9 +39,9 @@ class FacultyTable extends Component {
                 <Table.Cell textAlign="center">{user.email_add}</Table.Cell>
                 <Table.Cell textAlign="center">{user.status}</Table.Cell>
                 <Table.Cell textAlign="center">
-                  {user.isRegCom == 1
+                  {user.isRegCom === 1
                     ? 'Faculty'
-                    : user.isRegCom == 2
+                    : user.isRegCom === 2
                       ? 'Registration Committee'
                       : 'Admin'}
                 </Table.Cell>

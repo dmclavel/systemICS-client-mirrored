@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Modal, Form, Grid, Segment, Header, Dropdown, Container, Checkbox , Popup} from 'semantic-ui-react';
+import { Button, Modal, Form, Grid, Segment, Container } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import config from './../../../config.json';
@@ -57,8 +57,8 @@ class StudentDelete extends Component {
                     </h2>
                       <Grid.Row>
                         <Form>
-                          <Button negative content="Delete" floated="right" positive onClick={this.handleDelete}/ >
-                          <Button positive content="Cancel" floated="right" positive onClick={this.handleClose} onOpen={this.handleOpen}/ >
+                          <Button negative content="Delete" floated="right" onClick={this.handleDelete}/ >
+                          <Button content="Cancel" floated="right" positive onClick={this.handleClose} onOpen={this.handleOpen}/ >
                         </Form>
                     </Grid.Row>
 

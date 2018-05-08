@@ -1,29 +1,27 @@
 import React, { Component } from 'react';
-import { Loader } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import AdviseeSingle from './AdviseeSingle';
 import autobind from 'react-autobind';
-import config from './../../config.json';
 
 class AdviseeTable extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			endpoint: config.backendAddress,
-			advisees: [],
-			loading: true
+			endpoint: 'https://sleepy-falls-95372.herokuapp.com',
+			advisees: []
 		};
 		autobind(this);
 	}
 	componentDidMount() {
-		this.setState({ loading: true });
 		const socket = socketIOClient(this.state.endpoint);
+
 		socket.on('update_alert', update => {
 			socket.emit('view_advisee_advisers', { enrolledOnly: true });
 		});
 
 		socket.emit('view_advisee_advisers', { enrolledOnly: true });
 		socket.on('view_advisee_advisers', advisees => {
+			this.setState({ advisees: [] });
 			let advisees_list = [];
 			advisees.forEach(advisee => {
 				advisees_list.push({
@@ -32,15 +30,13 @@ class AdviseeTable extends Component {
 					advisers: advisee.advisers.length === 0 ? null : advisee.advisers
 				});
 			});
-			this.setState({ advisees: advisees_list, loading: false });
+			this.setState({ advisees: advisees_list });
 		});
 	}
 
 	render() {
-		const { loading } = this.state;
 		return (
 			<div>
-				<Loader active={loading} content="Loading..." />
 				{this.state.advisees
 					.filter(information =>
 						information.name

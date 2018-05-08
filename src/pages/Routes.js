@@ -5,8 +5,6 @@ File: Basic routing system.
 
 import React, { Component } from 'react';
 import { Switch, Route, Redirect, withRouter } from 'react-router';
-import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
-import socketIOClient from 'socket.io-client';
 
 import Homepage from './homepage/Homepage';
 import Classes from './homepage/Classes';
@@ -21,38 +19,6 @@ import NotFound from './components/NotFound';
 import Users from './admin/users/Users';
 import GeneratePDF from './generate-pdf/GeneratePDF';
 import autobind from 'react-autobind';
-
-const authenticator = {
-	user: 3,
-	// level of user
-	// 0: general
-	// 1: faculty
-	// 2: regcom
-	// 3: Admin
-
-	authenticate(cb) {
-		this.isAuthenticated = 1;
-		setTimeout(cb, 100); // fake async
-	},
-
-	signout(cb) {
-		this.isAuthenticated = 0;
-		setTimeout(cb, 100); // fake async
-	}
-};
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-	<Route
-		{...rest}
-		render={props =>
-			authenticator.user >= rest.securityLevel ? (
-				<Component {...props} />
-			) : (
-				<Redirect to="/login" />
-			)
-		}
-	/>
-);
 
 class Routes extends Component {
 	constructor(props) {

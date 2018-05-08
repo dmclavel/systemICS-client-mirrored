@@ -199,10 +199,10 @@ class EditCourse extends Component {
         negative: true
       });
     } else if (
-      parseInt(this.state.no_of_students) <= parseInt(this.state.max_capacity)
+      parseInt(this.state.no_of_students, 10) <=
+      parseInt(this.state.max_capacity, 10)
     ) {
       socket.emit('modify_section_2', data);
-      this.props.fetchCourse();
       this.setState({
         message: 'Successfully edited section information!',
         hidden: false,
@@ -210,7 +210,8 @@ class EditCourse extends Component {
         negative: false
       });
     } else if (
-      parseInt(this.state.no_of_students) > parseInt(this.state.max_capacity)
+      parseInt(this.state.no_of_students, 10) >
+      parseInt(this.state.max_capacity, 10)
     ) {
       this.setState({
         message: 'Number of students allowed is beyond the maximum capacity!',
@@ -264,7 +265,9 @@ class EditCourse extends Component {
         open={open}
         onOpen={this.open}
         onClose={this.close}
-        trigger={<Button icon="pencil" color="teal" />}
+        trigger={
+          <Button icon="pencil" floated="right" size="mini" color="teal" />
+        }
         basic
       >
         <Modal.Content>
@@ -324,7 +327,6 @@ class EditCourse extends Component {
                   width={4}
                 />
                 <Form.Input
-                  width={2}
                   min={0}
                   type="number"
                   label="Capacity"
@@ -335,7 +337,6 @@ class EditCourse extends Component {
                   width={4}
                 />
                 <Form.Input
-                  width={2}
                   min={0}
                   max={max_capacity}
                   type="number"
