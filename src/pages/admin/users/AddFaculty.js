@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Button,
-  Modal,
-  Form
-} from 'semantic-ui-react';
+import { Button, Modal, Form } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ErrorMessage from './ErrorMessage';
@@ -39,7 +35,7 @@ class AddFaculty extends Component {
       isAddSuccess: false,
       numberOfClicks: 0,
       isSubmitLoading: false,
-      addFacultyLabel: "Add Faculty",
+      addFacultyLabel: 'Add Faculty',
       options: [
         { key: 'Faculty', value: 1, text: 'Faculty' },
         { key: 'Admin', value: 3, text: 'Admin' },
@@ -63,12 +59,12 @@ class AddFaculty extends Component {
 
   handleName = e => {
     if (e.target.value.length !== 0) {
-      var regex =  /^[a-zA-Z][a-zA-Z\s]+$/;
+      var regex = /^[a-zA-Z][a-zA-Z\s]+$/;
       var isValid = regex.test(e.target.value);
-      if (isValid){
-        this.setState({ isErrorName: false});
-      }else{
-        this.setState({ isErrorName: true});
+      if (isValid) {
+        this.setState({ isErrorName: false });
+      } else {
+        this.setState({ isErrorName: true });
       }
     } else {
       this.setState({ isErrorName: true });
@@ -78,22 +74,22 @@ class AddFaculty extends Component {
 
   handleNumber = e => {
     var reg = /^[0-9]+$/;
-    if (e.target.value.length !== 11 || !reg.test(e.target.value)){
-       this.setState({isErrorNumber: true});
-    }else{
-      this.setState({isErrorNumber: false});
-    }  
-    this.setState({emp_no: e.target.value});
+    if (e.target.value.length !== 11 || !reg.test(e.target.value)) {
+      this.setState({ isErrorNumber: true });
+    } else {
+      this.setState({ isErrorNumber: false });
+    }
+    this.setState({ emp_no: e.target.value });
   };
 
   handleEmail = e => {
     if (e.target.value.length !== 0) {
       var regex = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var isValid = regex.test(e.target.value);
-      if (isValid){
-        this.setState({ isErrorMail: false});
-      }else{
-        this.setState({ isErrorMail: true});
+      if (isValid) {
+        this.setState({ isErrorMail: false });
+      } else {
+        this.setState({ isErrorMail: true });
       }
     } else {
       this.setState({ isErrorMail: true });
@@ -112,73 +108,70 @@ class AddFaculty extends Component {
   };
 
   handleSubmit = e => {
-    if (this.state.numberOfClicks == 0){
-      this.setState({isSubmitLoading: true});
+    if (this.state.numberOfClicks === 0) {
+      this.setState({ isSubmitLoading: true });
       if (
-      this.state.isRegCom === '' ||
-      this.state.status === '' ||
-      this.state.name === '' ||
-      this.state.email_add === '' ||
-      this.state.emp_no === ''
-    ) {
-      if (!this.state.isRegCom) {
-        this.setState({ isErrorReg: true });
-      }
-      if (!this.state.status) {
-        this.setState({ isErrorStatus: true });
-      }
-      if (!this.state.name) {
-        this.setState({ isErrorName: true });
-      }
-      if (!this.state.email_add) {
-        this.setState({ isErrorMail: true });
-      }
-      if (!this.state.emp_no) {
-        this.setState({ isErrorNumber: true });
-      }
-      this.setState({ isErrorMessage: true });
-    } else {
-      if (
-        !this.state.isErrorStatus &&
-        !this.state.isErrorMail &&
-        !this.state.isErrorNumber &&
-        !this.state.isErrorName &&
-        !this.state.isErrorReg
+        this.state.isRegCom === '' ||
+        this.state.status === '' ||
+        this.state.name === '' ||
+        this.state.email_add === '' ||
+        this.state.emp_no === ''
       ) {
-        const socket = socketIOClient(this.state.address); //establish connection to the server
-        socket.emit('create_faculty', {
-          emp_no: this.state.emp_no,
-          name: this.state.name,
-          email_add: this.state.email_add,
-          status: this.state.status,
-          isRegCom: this.state.isRegCom
-        }); //send data to 'login' endpoint in server
-        socket.on('create_faculty', returnValueFromServer => {
-          console.log(returnValueFromServer);
-          this.setState({isSubmitLoading: false});
-          if (returnValueFromServer.success){
-            this.setState({isAddSuccess: true});
-            this.setState({numberOfClicks: 1});
-            this.setState({addFacultyLabel: "All Done"});
-          }else{
-            this.setState({isAddSuccess: false});
-          }
-          this.setState({isDisplayPrompt: true});
-          this.setState({isErrorMessage: false});
-        });
-        this.props.fetchData();
-       
-      } else {
+        if (!this.state.isRegCom) {
+          this.setState({ isErrorReg: true });
+        }
+        if (!this.state.status) {
+          this.setState({ isErrorStatus: true });
+        }
+        if (!this.state.name) {
+          this.setState({ isErrorName: true });
+        }
+        if (!this.state.email_add) {
+          this.setState({ isErrorMail: true });
+        }
+        if (!this.state.emp_no) {
+          this.setState({ isErrorNumber: true });
+        }
         this.setState({ isErrorMessage: true });
+      } else {
+        if (
+          !this.state.isErrorStatus &&
+          !this.state.isErrorMail &&
+          !this.state.isErrorNumber &&
+          !this.state.isErrorName &&
+          !this.state.isErrorReg
+        ) {
+          const socket = socketIOClient(this.state.address); //establish connection to the server
+          socket.emit('create_faculty', {
+            emp_no: this.state.emp_no,
+            name: this.state.name,
+            email_add: this.state.email_add,
+            status: this.state.status,
+            isRegCom: this.state.isRegCom
+          }); //send data to 'login' endpoint in server
+          socket.on('create_faculty', returnValueFromServer => {
+            console.log(returnValueFromServer);
+            this.setState({ isSubmitLoading: false });
+            if (returnValueFromServer.success) {
+              this.setState({ isAddSuccess: true });
+              this.setState({ numberOfClicks: 1 });
+              this.setState({ addFacultyLabel: 'All Done' });
+            } else {
+              this.setState({ isAddSuccess: false });
+            }
+            this.setState({ isDisplayPrompt: true });
+            this.setState({ isErrorMessage: false });
+          });
+          this.props.fetchData();
+        } else {
+          this.setState({ isErrorMessage: true });
+        }
       }
-    }
-
-    }else{
+    } else {
       this.handleClose();
-      this.setState({numberOfClicks: 0});
-      this.setState({isDisplayPrompt: false});
+      this.setState({ numberOfClicks: 0 });
+      this.setState({ isDisplayPrompt: false });
     }
-    
   };
 
   handleClose = e => {
@@ -211,14 +204,17 @@ class AddFaculty extends Component {
         <Modal.Header>Add Faculty</Modal.Header>
         <Modal.Content>
           {this.state.isErrorMessage && <ErrorMessage />}
-          {this.state.isDisplayPrompt && this.state.isAddSuccess && <Successful/>}
-          {this.state.isDisplayPrompt && !this.state.isAddSuccess && <Unsuccessful/>}
+          {this.state.isDisplayPrompt &&
+            this.state.isAddSuccess && <Successful />}
+          {this.state.isDisplayPrompt &&
+            !this.state.isAddSuccess && <Unsuccessful />}
           <Form>
             <Form.Group>
               <Form.Input
                 type="number"
                 width={5}
-                min="1" step="1"
+                min="1"
+                step="1"
                 error={this.state.isErrorNumber}
                 fluid
                 label="Employee Number"
@@ -267,7 +263,8 @@ class AddFaculty extends Component {
         </Modal.Content>
         <Modal.Actions className="modal-actions">
           <Button
-            content={this.state.addFacultyLabel} loading={this.state.isSubmitLoading}
+            content={this.state.addFacultyLabel}
+            loading={this.state.isSubmitLoading}
             floated="right"
             positive
             onClick={this.handleSubmit}

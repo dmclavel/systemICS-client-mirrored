@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Button,
-  Modal,
-  Form
-} from 'semantic-ui-react';
+import { Button, Modal, Form } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ErrorMessage from './ErrorMessage';
@@ -44,19 +40,19 @@ class StudentAdd extends Component {
         { key: 'Enrolled', value: 'Enrolled', text: 'Enrolled' },
         { key: 'Unenrolled', value: 'Unenrolled', text: 'Unenrolled' }
       ],
-      addStudentLabel: "Add Student"
+      addStudentLabel: 'Add Student'
     };
     autobind(this);
   }
 
-  handleName = (e) => {
+  handleName = e => {
     if (e.target.value.length !== 0) {
-      var regex =  /^[a-zA-Z][a-zA-Z\s]+$/;
+      var regex = /^[a-zA-Z][a-zA-Z\s]+$/;
       var isValid = regex.test(e.target.value);
-      if (isValid){
-        this.setState({ isErrorName: false});
-      }else{
-        this.setState({ isErrorName: true});
+      if (isValid) {
+        this.setState({ isErrorName: false });
+      } else {
+        this.setState({ isErrorName: true });
       }
     } else {
       this.setState({ isErrorName: true });
@@ -64,25 +60,25 @@ class StudentAdd extends Component {
     this.setState({ name: e.target.value });
   };
 
-  handleEmail = (e) => {
-    if (e.target.value.length !== 0){
-      this.setState({isErrorMail: false});
+  handleEmail = e => {
+    if (e.target.value.length !== 0) {
+      this.setState({ isErrorMail: false });
       var re = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      var isValid =  re.test(e.target.value);
-      if (!isValid){
-        this.setState({isErrorMail: true});
+      var isValid = re.test(e.target.value);
+      if (!isValid) {
+        this.setState({ isErrorMail: true });
       }
-    }else{
-      this.setState({isErrorMail: true});
+    } else {
+      this.setState({ isErrorMail: true });
     }
     this.setState({ email_add: e.target.value });
   };
 
-  handleCurriculum = (e) => {
-    if (e.target.value.length !== 0){
-      this.setState({isErrorCurriculum: false});
-    }else{
-      this.setState({isErrorCurriculum: true});
+  handleCurriculum = e => {
+    if (e.target.value.length !== 0) {
+      this.setState({ isErrorCurriculum: false });
+    } else {
+      this.setState({ isErrorCurriculum: true });
     }
     this.setState({ curriculum: e.target.value });
   };
@@ -92,83 +88,81 @@ class StudentAdd extends Component {
     this.setState({ isErrorStatus: false });
   };
 
-  handleNumber = (e) =>{
+  handleNumber = e => {
     var reg = /^[0-9]+$/;
-    if (e.target.value.length !== 9 || !reg.test(e.target.value)){
-       this.setState({isErrorNumber: true});
-    }else{
-      this.setState({isErrorNumber: false});
-    }  
-    this.setState({student_number: e.target.value});
-  }
+    if (e.target.value.length !== 9 || !reg.test(e.target.value)) {
+      this.setState({ isErrorNumber: true });
+    } else {
+      this.setState({ isErrorNumber: false });
+    }
+    this.setState({ student_number: e.target.value });
+  };
 
   handleSubmit = e => {
-    if (this.state.numberOfClicks == 0){
-      this.setState({isSubmitLoading: true});
-        if (
-      this.state.name === '' ||
-      this.state.email_add === '' ||
-      this.state.curriculum === '' ||
-      this.state.status === '' ||
-      this.state.student_number === ''
-    ) {
-      if (this.state.name === '') {
-        this.setState({ isErrorName: true });
-      }
-      if (this.state.email_add === '') {
-        this.setState({ isErrorMail: true });
-      }
-      if (this.state.curriculum === '') {
-        this.setState({ isErrorCurriculum: true });
-      }
-      if (this.state.status === '') {
-        this.setState({ isErrorStatus: true });
-      }
-      if (this.state.student_number === '') {
-        this.setState({ isErrorNumber: true });
-      }
-      this.setState({ isErrorMessage: true });
-    } else {
+    if (this.state.numberOfClicks === 0) {
+      this.setState({ isSubmitLoading: true });
       if (
-        this.state.isErrorName === false &&
-        this.state.isErrorMail === false &&
-        this.state.isErrorCurriculum === false &&
-        this.state.isErrorStatus === false &&
-        this.state.isErrorNumber === false
+        this.state.name === '' ||
+        this.state.email_add === '' ||
+        this.state.curriculum === '' ||
+        this.state.status === '' ||
+        this.state.student_number === ''
       ) {
-        const socket = socketIOClient(this.state.address); //establish connection to the server
-        socket.emit('create_student', {
-          student_number: this.state.student_number,
-          name: this.state.name,
-          email_add: this.state.email_add,
-          status: this.state.status,
-          curriculum: this.state.curriculum
-        }); //send data to 'login' endpoint in server
-        socket.on('create_student', returnValueFromServer => {
-          console.log(returnValueFromServer);
-          this.setState({isSubmitLoading: false});
-          if (returnValueFromServer.success){
-            this.setState({isAddSuccess: true});
-            this.setState({numberOfClicks: 1});
-            this.setState({addStudentLabel: "All Done"});
-          }else{
-            this.setState({isAddSuccess: false});
-          }
-          this.setState({isDisplayPrompt: true});
-          this.setState({isErrorMessage: false});
-        });
-        this.props.fetchData();
-
-      } else {
+        if (this.state.name === '') {
+          this.setState({ isErrorName: true });
+        }
+        if (this.state.email_add === '') {
+          this.setState({ isErrorMail: true });
+        }
+        if (this.state.curriculum === '') {
+          this.setState({ isErrorCurriculum: true });
+        }
+        if (this.state.status === '') {
+          this.setState({ isErrorStatus: true });
+        }
+        if (this.state.student_number === '') {
+          this.setState({ isErrorNumber: true });
+        }
         this.setState({ isErrorMessage: true });
+      } else {
+        if (
+          this.state.isErrorName === false &&
+          this.state.isErrorMail === false &&
+          this.state.isErrorCurriculum === false &&
+          this.state.isErrorStatus === false &&
+          this.state.isErrorNumber === false
+        ) {
+          const socket = socketIOClient(this.state.address); //establish connection to the server
+          socket.emit('create_student', {
+            student_number: this.state.student_number,
+            name: this.state.name,
+            email_add: this.state.email_add,
+            status: this.state.status,
+            curriculum: this.state.curriculum
+          }); //send data to 'login' endpoint in server
+          socket.on('create_student', returnValueFromServer => {
+            console.log(returnValueFromServer);
+            this.setState({ isSubmitLoading: false });
+            if (returnValueFromServer.success) {
+              this.setState({ isAddSuccess: true });
+              this.setState({ numberOfClicks: 1 });
+              this.setState({ addStudentLabel: 'All Done' });
+            } else {
+              this.setState({ isAddSuccess: false });
+            }
+            this.setState({ isDisplayPrompt: true });
+            this.setState({ isErrorMessage: false });
+          });
+          this.props.fetchData();
+        } else {
+          this.setState({ isErrorMessage: true });
+        }
       }
-    }
-    }else{
+    } else {
       this.handleClose();
-      this.setState({numberOfClicks: 0});
-      this.setState({isDisplayPrompt: false});
+      this.setState({ numberOfClicks: 0 });
+      this.setState({ isDisplayPrompt: false });
     }
-    
   };
 
   handleClose = e => {
@@ -193,12 +187,14 @@ class StudentAdd extends Component {
         <Modal.Header>Add Student</Modal.Header>
         <Modal.Content>
           {this.state.isErrorMessage && <ErrorMessage />}
-          {this.state.isDisplayPrompt && (this.state.isAddSuccess == true) && <Successful/>}
-          {this.state.isDisplayPrompt && (this.state.isAddSuccess == false) && <Unsuccessful/>}
+          {this.state.isDisplayPrompt &&
+            this.state.isAddSuccess && <Successful />}
+          {this.state.isDisplayPrompt &&
+            !this.state.isAddSuccess && <Unsuccessful />}
           <Form>
             <Form.Group>
               <Form.Input
-                type='number'
+                type="number"
                 width={5}
                 error={this.state.isErrorNumber}
                 fluid
