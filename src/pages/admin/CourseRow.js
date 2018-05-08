@@ -49,7 +49,6 @@ class CourseRow extends Component {
               data={this.props.data}
               courseLecID={this.props.course}
               coursecode={this.props.coursecode}
-              fetchCourse={this.props.fetch_Course}
               section={this.props.section}
               acadyear={this.props.acad_year}
               sem={this.props.semester}
@@ -59,7 +58,6 @@ class CourseRow extends Component {
 
           <EditCourse
             data={this.props.data}
-            fetchCourse={this.props.fetch_Course}
             emp_no={this.props.empno}
             courseoffering={this.props.courseoffering}
             title={this.props.title}

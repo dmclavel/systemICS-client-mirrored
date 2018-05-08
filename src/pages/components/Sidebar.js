@@ -126,7 +126,6 @@ class Sidebar extends Component {
 		const socket = socketIOClient(this.state.address);
 		socket.emit('view_timeframe', {});
 		socket.on('view_timeframe', semesters => {
-			console.log(semesters);
 			this.setState({
 				acad_year: semesters[semesters.length - 1].acad_year,
 				semester: semesters[semesters.length - 1].semester
@@ -177,7 +176,7 @@ class Sidebar extends Component {
 			<Grid>
 				<Grid.Row className="sidebar">
 					<Segment className="sidebar-container" fluid textAlign="right">
-						<Header as="h2">
+						<Header as="h3">
 							<Header.Content>
 								{this.props.showSemester
 									? `${

@@ -122,7 +122,6 @@ class DropFile extends Component {
       socket.emit(method, data);
       socket.on(method, response => {
         this.setState({ response });
-        console.log(response);
       });
     } else {
       this.setState({

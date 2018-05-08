@@ -2,19 +2,18 @@ import React, { Component } from 'react';
 import { Table, Button, Dropdown, Grid, Icon } from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
-import config from './../../config.json';
 
 class AdviseeSingle extends Component {
 	constructor(props) {
 		super(props);
 		autobind(this);
 		this.state = {
-			endpoint: config.backendAddress,
+			endpoint: 'https://sleepy-falls-95372.herokuapp.com',
 			list_advisers: [],
 			selected_adviser: undefined,
 			current_adviser: null,
 			hasPending: this.props.hasPending,
-			placeholder: 'Select adviser'
+			placeholder: "Select adviser"
 		};
 	}
 
@@ -39,7 +38,7 @@ class AdviseeSingle extends Component {
 		const socket = socketIOClient(this.state.endpoint);
 		if (
 			this.props.advisee.advisers.length > 0 &&
-			this.props.advisee.advisers[0].status === 'Current'
+			this.props.advisee.advisers[0].status == 'Current'
 		) {
 			socket.emit('modify_advisee_advisers', {
 				new_current: e.target.value,
@@ -57,7 +56,14 @@ class AdviseeSingle extends Component {
 
 	componentDidMount() {
 		const socket = socketIOClient(this.state.endpoint);
-
+		// if (this.props.advisee.advisers) {
+		// 	if (
+		// 		this.props.advisee.advisers[1] !== null &&
+		// 		this.props.advisee.advisers[1].status === 'Pending'
+		// 	) {
+		// 		this.setState({ hasPending: true });
+		// 	}
+		// }
 		socket.on('update_alert', update => {
 			socket.emit('view_faculty', { active: true });
 		});
@@ -135,8 +141,8 @@ class AdviseeSingle extends Component {
 							>
 								{this.props.advisee.name}
 							</Table.Cell>
-							{this.props.advisee.advisers[0].status === 'Pending' ? (
-								<Table.Cell width={12} warning>
+							{this.props.advisee.advisers[0].status === 'Pending' ? 
+							(<Table.Cell width={12} warning>
 									<Grid>
 										<Grid.Column width={13}>
 											{this.props.advisee.advisers[0].adviser_name}
