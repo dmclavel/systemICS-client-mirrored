@@ -341,7 +341,7 @@ class AddCourseLab extends Component {
         size="large"
         style={inlineStyle.modal}
         onClose={this.close}
-        trigger={<Button icon="plus" positive />}
+        trigger={<Button icon="plus" size="mini" floated="right" positive />}
         basic
         closeIcon
       >

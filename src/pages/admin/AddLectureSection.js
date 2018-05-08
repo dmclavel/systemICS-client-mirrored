@@ -325,7 +325,7 @@ class AddCourseLecture extends Component {
       this.state.existingSections.forEach(element => {
         if (
           value === element.section &&
-          parseInt(this.state.course_id) === parseInt(element.course_id)
+          parseInt(this.state.course_id, 10) === parseInt(element.course_id, 10)
         ) {
           message = 'Duplicate entry for section!';
           details +=

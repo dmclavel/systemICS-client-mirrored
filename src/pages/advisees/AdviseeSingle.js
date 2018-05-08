@@ -13,7 +13,7 @@ class AdviseeSingle extends Component {
 			selected_adviser: undefined,
 			current_adviser: null,
 			hasPending: this.props.hasPending,
-			placeholder: "Select adviser"
+			placeholder: 'Select adviser'
 		};
 	}
 
@@ -38,7 +38,7 @@ class AdviseeSingle extends Component {
 		const socket = socketIOClient(this.state.endpoint);
 		if (
 			this.props.advisee.advisers.length > 0 &&
-			this.props.advisee.advisers[0].status == 'Current'
+			this.props.advisee.advisers[0].status === 'Current'
 		) {
 			socket.emit('modify_advisee_advisers', {
 				new_current: e.target.value,
@@ -86,13 +86,13 @@ class AdviseeSingle extends Component {
 						!this.props.advisee.advisers ||
 						adviser_all.key !== this.props.advisee.advisers[0].adviser_emp_no
 				)
-				.map(adviser => {
+				.map(adviser =>
 					list_adviser_filtered.push({
 						key: adviser.key,
 						value: adviser.value,
 						text: adviser.text
-					});
-				});
+					})
+				);
 			this.setState({ list_advisers: list_adviser_filtered });
 		});
 	}
@@ -141,8 +141,8 @@ class AdviseeSingle extends Component {
 							>
 								{this.props.advisee.name}
 							</Table.Cell>
-							{this.props.advisee.advisers[0].status === 'Pending' ? 
-							(<Table.Cell width={12} warning>
+							{this.props.advisee.advisers[0].status === 'Pending' ? (
+								<Table.Cell width={12} warning>
 									<Grid>
 										<Grid.Column width={13}>
 											{this.props.advisee.advisers[0].adviser_name}
@@ -254,7 +254,6 @@ class AdviseeSingle extends Component {
 					</Table.Body>
 				</Table>
 			);
-		return null;
 	}
 }
 

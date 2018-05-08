@@ -12,37 +12,60 @@ class NavbarHome extends Component {
 		};
 	}
 
-	handleContextRef = (contextRef) => this.setState({ contextRef }); 
-	handleItemClick = (e, { name }) => this.setState({ activeItem : name });
+	handleContextRef = contextRef => this.setState({ contextRef });
+	handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
 	render() {
-		const { activeItem } = this.state
+		const { activeItem } = this.state;
 		return (
-			<div className='nav-home'>
+			<div className="nav-home">
 				<Grid>
 					<Grid.Row>
 						<Grid.Column width={5}>
-							<a href="/"><img src={Logo} className="nav-logo" /></a>
+							<a href="/">
+								<img src={Logo} alt="SystemICS" className="nav-logo" />
+							</a>
 							<div className="nav-name-container">
-								<a href="/" className="nav-logo-name">SYSTEM<span className="font-white">ICS</span></a>
+								<a href="/" className="nav-logo-name">
+									SYSTEM<span className="font-white">ICS</span>
+								</a>
 							</div>
 						</Grid.Column>
 						<Grid.Column width={6}>
 							<Menu className="nav-menu" pointing secondary>
-			          <Link to="/">
-				          <Menu.Item className="nav-item" name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-			          </Link>
-			          <Link to="/classes">
-			          	<Menu.Item className="nav-item" name='classes' active={activeItem === 'classes'} onClick={this.handleItemClick} />
-			          </Link>
-			          <Link to="/faculty">
-			          	<Menu.Item className="nav-item" name='faculty' active={activeItem === 'faculty'} onClick={this.handleItemClick} />
-			          </Link>
-			        </Menu>
+								<Link to="/">
+									<Menu.Item
+										className="nav-item"
+										name="home"
+										active={activeItem === 'home'}
+										onClick={this.handleItemClick}
+									/>
+								</Link>
+								<Link to="/classes">
+									<Menu.Item
+										className="nav-item"
+										name="classes"
+										active={activeItem === 'classes'}
+										onClick={this.handleItemClick}
+									/>
+								</Link>
+								<Link to="/faculty">
+									<Menu.Item
+										className="nav-item"
+										name="faculty"
+										active={activeItem === 'faculty'}
+										onClick={this.handleItemClick}
+									/>
+								</Link>
+							</Menu>
 						</Grid.Column>
 						<Grid.Column width={5}>
 							<Link to="/login">
-								<Button className="nav-login font-white" icon="sign in alternate" content="LOGIN" />
+								<Button
+									className="nav-login font-white"
+									icon="sign in alternate"
+									content="LOGIN"
+								/>
 							</Link>
 						</Grid.Column>
 					</Grid.Row>

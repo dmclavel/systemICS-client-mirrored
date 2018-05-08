@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Table, Dropdown, Button, Grid, Icon } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import AdviseeSingle from './AdviseeSingle';
 import autobind from 'react-autobind';
@@ -22,7 +21,7 @@ class AdviseeTable extends Component {
 
 		socket.emit('view_advisee_advisers', { enrolledOnly: true });
 		socket.on('view_advisee_advisers', advisees => {
-			this.setState({advisees:[]});
+			this.setState({ advisees: [] });
 			let advisees_list = [];
 			advisees.forEach(advisee => {
 				advisees_list.push({
@@ -44,10 +43,25 @@ class AdviseeTable extends Component {
 							.toLowerCase()
 							.includes(this.props.search.toLowerCase())
 					)
-					.map(advisee_single => <AdviseeSingle advisee={advisee_single} hasPending={advisee_single.advisers === null ? false : advisee_single.advisers.length === 1 && advisee_single.advisers[0].status==='Pending'? true:  advisee_single.advisers.length > 1 && advisee_single.advisers[1].status==='Pending'?true:false}/>)}
+					.map(advisee_single => (
+						<AdviseeSingle
+							advisee={advisee_single}
+							hasPending={
+								advisee_single.advisers === null
+									? false
+									: advisee_single.advisers.length === 1 &&
+									  advisee_single.advisers[0].status === 'Pending'
+										? true
+										: advisee_single.advisers.length > 1 &&
+										  advisee_single.advisers[1].status === 'Pending'
+											? true
+											: false
+							}
+						/>
+					))}
 			</div>
 		);
 	}
 }
 
-export default AdviseeTable
+export default AdviseeTable;

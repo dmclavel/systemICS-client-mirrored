@@ -132,7 +132,7 @@ class NavbarIn extends Component {
           <Grid.Row>
             <Grid.Column width={5}>
               <a href="/">
-                <img src={Logo} className="nav-logo" />
+                <img src={Logo} alt="SystemICS" className="nav-logo" />
               </a>
               <div className="nav-name-container">
                 <a href="/" className="nav-logo-name">

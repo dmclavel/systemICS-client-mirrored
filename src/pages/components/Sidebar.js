@@ -111,6 +111,10 @@ const inline = {
 	'overflow-y': 'auto'
 };
 
+const inline1 = {
+	width: '100rem'
+};
+
 class Sidebar extends Component {
 	constructor(props) {
 		super(props);
@@ -175,7 +179,7 @@ class Sidebar extends Component {
 		return (
 			<Grid>
 				<Grid.Row className="sidebar">
-					<Segment className="sidebar-container" fluid textAlign="right">
+					<Segment style={inline1} fluid textAlign="right">
 						<Header as="h3">
 							<Header.Content>
 								{this.props.showSemester

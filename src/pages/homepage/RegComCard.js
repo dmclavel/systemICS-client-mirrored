@@ -1,4 +1,4 @@
-import { Label, Image, Card, Segment } from 'semantic-ui-react';
+import { Label, Card, Segment } from 'semantic-ui-react';
 import React, { Component } from 'react';
 import './FacultyTab.css';
 import ProfilePic from '../../components/ProfilePic';
@@ -12,7 +12,6 @@ class RegComCard extends Component {
             <Label corner="right" icon="star" color={'yellow'} />
           </Card.Content>
           <ProfilePic
-            // src={image}
             centered={true}
             circular={true}
             rounded={true}
