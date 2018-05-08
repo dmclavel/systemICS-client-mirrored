@@ -12,99 +12,6 @@ import socketIOClient from 'socket.io-client';
 import config from './../../config.json';
 import DropFile from '../admin/DropFile';
 
-const items = [
-	{
-		key: 1,
-		content: (
-			<div>
-				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
-				<strong>{`Reginald Recario`}.</strong>
-			</div>
-		)
-	},
-	{
-		key: 2,
-		content: (
-			<div>
-				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
-				<strong>{`Reginald Recario`}.</strong>
-			</div>
-		)
-	},
-	{
-		key: 3,
-		content: (
-			<div>
-				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
-				<strong>{`Reginald Recario`}.</strong>
-			</div>
-		)
-	},
-	{
-		key: 4,
-		content: (
-			<div>
-				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
-				<strong>{`Reginald Recario`}.</strong>
-			</div>
-		)
-	},
-	{
-		key: 5,
-		content: (
-			<div>
-				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
-				<strong>{`Reginald Recario`}.</strong>
-			</div>
-		)
-	},
-	{
-		key: 6,
-		content: (
-			<div>
-				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
-				<strong>{`Reginald Recario`}.</strong>
-			</div>
-		)
-	},
-	{
-		key: 7,
-		content: (
-			<div>
-				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
-				<strong>{`Reginald Recario`}.</strong>
-			</div>
-		)
-	},
-	{
-		key: 8,
-		content: (
-			<div>
-				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
-				<strong>{`Reginald Recario`}.</strong>
-			</div>
-		)
-	},
-	{
-		key: 9,
-		content: (
-			<div>
-				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
-				<strong>{`Reginald Recario`}.</strong>
-			</div>
-		)
-	},
-	{
-		key: 10,
-		content: (
-			<div>
-				<strong>{`CMSC 123 T-1L`}</strong> was assigned to{' '}
-				<strong>{`Reginald Recario`}.</strong>
-			</div>
-		)
-	}
-];
-
 const inline = {
 	width: '100rem',
 	height: '25rem',
@@ -122,12 +29,13 @@ class Sidebar extends Component {
 			address: config.backendAddress,
 			semesters: [],
 			acad_year: 0,
-			semester: 0
+			semester: 0,
+			logs: []
 		};
+		socket = socketIOClient(this.state.address); //establish connection to the server
 	}
 
 	componentDidMount() {
-		const socket = socketIOClient(this.state.address);
 		socket.emit('view_timeframe', {});
 		socket.on('view_timeframe', semesters => {
 			this.setState({
@@ -154,6 +62,11 @@ class Sidebar extends Component {
 			});
 			this.setState({ semesters: tempSem });
 		});
+		socket.emit('view_log_table', {});
+		socket.on('view_log_table', logs => {
+			this.setState({logs: logs});
+			console.log(this.state.logs)
+		})
 	}
 
 	handleOnChange = (e, data) => {
@@ -243,10 +156,10 @@ class Sidebar extends Component {
 				<Grid.Row>
 					<Segment style={inline}>
 						<Item.Group divided>
-							{items.map((item, index) => (
+							{this.state.logs.map((item, index) => (
 								<Item key={index}>
 									<Item.Content verticalAlign="middle" textAlign="left">
-										{item.content}
+										{item.date_and_time_accessed + " : "}<b>{item.comment}</b>
 									</Item.Content>
 								</Item>
 							))}

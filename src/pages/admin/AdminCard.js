@@ -9,6 +9,7 @@ import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
 import './AdminCard.css';
 import config from './../../config.json';
+import debounce from 'debounce'
 
 class AdminCard extends Component {
   constructor() {
@@ -130,7 +131,7 @@ class AdminCard extends Component {
           <Grid.Column width={10}>
             <SearchCard
               placeholder="Search course name"
-              handleSearch={this.handleSearch}
+              handleSearch={ debounce(this.handleSearch,config.searchDelay) }
               fluid={true}
             />
           </Grid.Column>

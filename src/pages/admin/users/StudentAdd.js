@@ -8,6 +8,8 @@ import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
 import ErrorMessage from './ErrorMessage';
 import config from './../../../config.json';
+import Successful from './Successful';
+import Unsuccessful from './Unsuccessful';
 
 const inlineStyle = {
   modal: {
@@ -34,10 +36,15 @@ class StudentAdd extends Component {
       isErrorStatus: false,
       isErrorNumber: false,
       isErrorMessage: false,
+      isDisplayPrompt: false,
+      isAddSuccess: false,
+      numberOfClicks: 0,
+      isSubmitLoading: false,
       statusOptions: [
         { key: 'Enrolled', value: 'Enrolled', text: 'Enrolled' },
         { key: 'Unenrolled', value: 'Unenrolled', text: 'Unenrolled' }
-      ]
+      ],
+      addStudentLabel: "Add Student"
     };
     autobind(this);
   }
@@ -96,7 +103,9 @@ class StudentAdd extends Component {
   }
 
   handleSubmit = e => {
-    if (
+    if (this.state.numberOfClicks == 0){
+      this.setState({isSubmitLoading: true});
+        if (
       this.state.name === '' ||
       this.state.email_add === '' ||
       this.state.curriculum === '' ||
@@ -137,13 +146,29 @@ class StudentAdd extends Component {
         }); //send data to 'login' endpoint in server
         socket.on('create_student', returnValueFromServer => {
           console.log(returnValueFromServer);
+          this.setState({isSubmitLoading: false});
+          if (returnValueFromServer.success){
+            this.setState({isAddSuccess: true});
+            this.setState({numberOfClicks: 1});
+            this.setState({addStudentLabel: "All Done"});
+          }else{
+            this.setState({isAddSuccess: false});
+          }
+          this.setState({isDisplayPrompt: true});
+          this.setState({isErrorMessage: false});
         });
         this.props.fetchData();
-        this.handleClose();
+
       } else {
         this.setState({ isErrorMessage: true });
       }
     }
+    }else{
+      this.handleClose();
+      this.setState({numberOfClicks: 0});
+      this.setState({isDisplayPrompt: false});
+    }
+    
   };
 
   handleClose = e => {
@@ -168,6 +193,8 @@ class StudentAdd extends Component {
         <Modal.Header>Add Student</Modal.Header>
         <Modal.Content>
           {this.state.isErrorMessage && <ErrorMessage />}
+          {this.state.isDisplayPrompt && (this.state.isAddSuccess == true) && <Successful/>}
+          {this.state.isDisplayPrompt && (this.state.isAddSuccess == false) && <Unsuccessful/>}
           <Form>
             <Form.Group>
               <Form.Input
@@ -218,7 +245,8 @@ class StudentAdd extends Component {
         </Modal.Content>
         <Modal.Actions className="modal-actions">
           <Button
-            content="Add Student"
+            loading={this.state.isSubmitLoading}
+            content={this.state.addStudentLabel}
             floated="right"
             positive
             onClick={this.handleSubmit}
