@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Label, Menu, Button, Container, Grid } from 'semantic-ui-react';
+import { Menu, Button, Grid } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import './NavbarHome.css';
 import Logo from './logo-transparent-no-stroke.png';

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react';
 import './ManageHeader.css';
 
 class HomepageHeader extends Component {

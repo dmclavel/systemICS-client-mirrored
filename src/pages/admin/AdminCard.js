@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import {
-  Grid,
-  Header,
-  Table,
-  Input,
-  Loader,
-  Pagination,
-  Icon
-} from 'semantic-ui-react';
+import { Grid, Header, Table, Loader, Pagination, Icon } from 'semantic-ui-react';
+
 import SearchCard from '../../components/SearchCard';
 import CourseRow from './CourseRow';
 import AddCourseModal from './AddCourseModal';
@@ -88,7 +81,7 @@ class AdminCard extends Component {
   }
 
   handleSearch = query => {
-    if (query.length == 0) {
+    if (query.length === 0) {
       this.setState({ courses: this.state.coursesX });
     } else {
       this.setState({

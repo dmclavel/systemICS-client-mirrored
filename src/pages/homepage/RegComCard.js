@@ -1,4 +1,3 @@
-import image from './sample.jpg';
 import { Label, Image, Card, Segment } from 'semantic-ui-react';
 import React, { Component } from 'react';
 import './FacultyTab.css';

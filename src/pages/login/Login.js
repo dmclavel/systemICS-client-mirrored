@@ -13,7 +13,7 @@ import {
   Divider,
   Message
 } from 'semantic-ui-react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { GoogleAPI, GoogleLogin } from 'react-google-oauth';
 import socketIOClient from 'socket.io-client';
 import './Login.css';
@@ -118,7 +118,6 @@ class Login extends Component {
                   content={message}
                 />
               )}
-
                 <div>
                   <GoogleAPI
                     clientId="175573341301-f0qqirbda07fqsqam42vjpoi1kldjro4.apps.googleusercontent.com"

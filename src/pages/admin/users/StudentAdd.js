@@ -2,14 +2,7 @@ import React, { Component } from 'react';
 import {
   Button,
   Modal,
-  Form,
-  Grid,
-  Segment,
-  Header,
-  Dropdown,
-  Container,
-  Checkbox,
-  Popup
+  Form
 } from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import autobind from 'react-autobind';
@@ -67,7 +60,7 @@ class StudentAdd extends Component {
   handleEmail = (e) => {
     if (e.target.value.length !== 0){
       this.setState({isErrorMail: false});
-      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      var re = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       var isValid =  re.test(e.target.value);
       if (!isValid){
         this.setState({isErrorMail: true});
@@ -94,7 +87,7 @@ class StudentAdd extends Component {
 
   handleNumber = (e) =>{
     var reg = /^[0-9]+$/;
-    if (e.target.value.length != 9 || !reg.test(e.target.value)){
+    if (e.target.value.length !== 9 || !reg.test(e.target.value)){
        this.setState({isErrorNumber: true});
     }else{
       this.setState({isErrorNumber: false});

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Grid } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import NavbarIn from '../components/navbar/NavbarIn';
 import ManageHeader from '../components/headers/ManageHeader';
 import Sidebar from '../components/Sidebar';

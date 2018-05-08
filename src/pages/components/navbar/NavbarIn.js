@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Button, Grid, Dropdown } from 'semantic-ui-react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Logo from './logo-transparent-no-stroke.png';
 
 const options = [

@@ -325,13 +325,13 @@ class AddCourseLab extends Component {
       Th,
       F,
       no_of_students,
-      courses,
+      // courses,
       acad_year,
-      semester,
+      // semester,
       time_start,
       time_end,
       room,
-      section,
+      // section,
       unit,
       max_capacity
     } = this.state;
@@ -399,7 +399,6 @@ class AddCourseLab extends Component {
                   placeholder="Number of Students"
                   value={no_of_students}
                   onChange={this.handleChange}
-                  width={3}
                 />
 
                 <Form.Input
