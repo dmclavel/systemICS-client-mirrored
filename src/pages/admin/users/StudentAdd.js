@@ -178,6 +178,14 @@ class StudentAdd extends Component {
 
   handleOpen = e => {
     this.setState({ modalOpen: true });
+    this.setState({isErrorMessage: false});
+    this.setState({isDisplayPrompt: false});
+    this.setState({name: ''});
+    this.setState({email_add: ''});
+    this.setState({curriculum: ''});
+    this.setState({status: ''});
+    this.setState({student_number: ''});
+
   };
 
   render() {

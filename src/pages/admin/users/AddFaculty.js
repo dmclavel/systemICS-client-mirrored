@@ -84,6 +84,7 @@ class AddFaculty extends Component {
       this.setState({isErrorNumber: false});
     }  
     this.setState({emp_no: e.target.value});
+    console.log(e.target.value);
   };
 
   handleEmail = e => {
@@ -189,6 +190,13 @@ class AddFaculty extends Component {
 
   handleOpen = e => {
     this.setState({ modalOpen: true });
+    this.setState({name: ''});
+    this.setState({email_add: ''});
+    this.setState({isRegCom: ''});
+    this.setState({status: ''});
+    this.setState({emp_no: ''});
+    this.setState({isErrorMessage: false});
+    this.setState({isDisplayPrompt: false});
   };
 
   render() {
