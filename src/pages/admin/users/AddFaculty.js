@@ -84,6 +84,7 @@ class AddFaculty extends Component {
       this.setState({isErrorNumber: false});
     }  
     this.setState({emp_no: e.target.value});
+    console.log(e.target.value);
   };
 
   handleEmail = e => {
@@ -113,7 +114,7 @@ class AddFaculty extends Component {
 
   handleSubmit = e => {
     if (this.state.numberOfClicks == 0){
-      this.setState({isSubmitLoading: true});
+      
       if (
       this.state.isRegCom === '' ||
       this.state.status === '' ||
@@ -145,6 +146,7 @@ class AddFaculty extends Component {
         !this.state.isErrorName &&
         !this.state.isErrorReg
       ) {
+      	this.setState({isSubmitLoading: true});
         const socket = socketIOClient(this.state.address); //establish connection to the server
         socket.emit('create_faculty', {
           emp_no: this.state.emp_no,
@@ -188,6 +190,13 @@ class AddFaculty extends Component {
 
   handleOpen = e => {
     this.setState({ modalOpen: true });
+    this.setState({name: ''});
+    this.setState({email_add: ''});
+    this.setState({isRegCom: ''});
+    this.setState({status: ''});
+    this.setState({emp_no: ''});
+    this.setState({isErrorMessage: false});
+    this.setState({isDisplayPrompt: false});
   };
 
   render() {

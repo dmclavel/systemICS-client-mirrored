@@ -104,7 +104,7 @@ class StudentAdd extends Component {
 
   handleSubmit = e => {
     if (this.state.numberOfClicks == 0){
-      this.setState({isSubmitLoading: true});
+      
         if (
       this.state.name === '' ||
       this.state.email_add === '' ||
@@ -136,6 +136,7 @@ class StudentAdd extends Component {
         this.state.isErrorStatus === false &&
         this.state.isErrorNumber === false
       ) {
+      	this.setState({isSubmitLoading: true});
         const socket = socketIOClient(this.state.address); //establish connection to the server
         socket.emit('create_student', {
           student_number: this.state.student_number,
@@ -177,6 +178,14 @@ class StudentAdd extends Component {
 
   handleOpen = e => {
     this.setState({ modalOpen: true });
+    this.setState({isErrorMessage: false});
+    this.setState({isDisplayPrompt: false});
+    this.setState({name: ''});
+    this.setState({email_add: ''});
+    this.setState({curriculum: ''});
+    this.setState({status: ''});
+    this.setState({student_number: ''});
+
   };
 
   render() {
