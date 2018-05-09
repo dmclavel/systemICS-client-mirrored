@@ -113,7 +113,7 @@ class AddFaculty extends Component {
 
   handleSubmit = e => {
     if (this.state.numberOfClicks == 0){
-      this.setState({isSubmitLoading: true});
+      
       if (
       this.state.isRegCom === '' ||
       this.state.status === '' ||
@@ -145,6 +145,7 @@ class AddFaculty extends Component {
         !this.state.isErrorName &&
         !this.state.isErrorReg
       ) {
+      	this.setState({isSubmitLoading: true});
         const socket = socketIOClient(this.state.address); //establish connection to the server
         socket.emit('create_faculty', {
           emp_no: this.state.emp_no,
