@@ -32,10 +32,10 @@ class Sidebar extends Component {
 			semester: 0,
 			logs: []
 		};
-		socket = socketIOClient(this.state.address); //establish connection to the server
 	}
 
 	componentDidMount() {
+		const socket = socketIOClient(this.state.address); //establish connection to the server
 		socket.emit('view_timeframe', {});
 		socket.on('view_timeframe', semesters => {
 			this.setState({
@@ -64,9 +64,9 @@ class Sidebar extends Component {
 		});
 		socket.emit('view_log_table', {});
 		socket.on('view_log_table', logs => {
-			this.setState({logs: logs});
-			console.log(this.state.logs)
-		})
+			this.setState({ logs: logs });
+			console.log(this.state.logs);
+		});
 	}
 
 	handleOnChange = (e, data) => {
@@ -159,7 +159,8 @@ class Sidebar extends Component {
 							{this.state.logs.map((item, index) => (
 								<Item key={index}>
 									<Item.Content verticalAlign="middle" textAlign="left">
-										{item.date_and_time_accessed + " : "}<b>{item.comment}</b>
+										{item.date_and_time_accessed + ' : '}
+										<b>{item.comment}</b>
 									</Item.Content>
 								</Item>
 							))}
