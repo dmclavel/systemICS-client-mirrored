@@ -99,8 +99,32 @@ class StudentAdd extends Component {
   };
 
   handleSubmit = e => {
-    if (this.state.numberOfClicks === 0) {
-      this.setState({ isSubmitLoading: true });
+    if (this.state.numberOfClicks == 0){
+      
+        if (
+      this.state.name === '' ||
+      this.state.email_add === '' ||
+      this.state.curriculum === '' ||
+      this.state.status === '' ||
+      this.state.student_number === ''
+    ) {
+      if (this.state.name === '') {
+        this.setState({ isErrorName: true });
+      }
+      if (this.state.email_add === '') {
+        this.setState({ isErrorMail: true });
+      }
+      if (this.state.curriculum === '') {
+        this.setState({ isErrorCurriculum: true });
+      }
+      if (this.state.status === '') {
+        this.setState({ isErrorStatus: true });
+      }
+      if (this.state.student_number === '') {
+        this.setState({ isErrorNumber: true });
+      }
+      this.setState({ isErrorMessage: true });
+    } else {
       if (
         this.state.name === '' ||
         this.state.email_add === '' ||
@@ -108,21 +132,31 @@ class StudentAdd extends Component {
         this.state.status === '' ||
         this.state.student_number === ''
       ) {
-        if (this.state.name === '') {
-          this.setState({ isErrorName: true });
-        }
-        if (this.state.email_add === '') {
-          this.setState({ isErrorMail: true });
-        }
-        if (this.state.curriculum === '') {
-          this.setState({ isErrorCurriculum: true });
-        }
-        if (this.state.status === '') {
-          this.setState({ isErrorStatus: true });
-        }
-        if (this.state.student_number === '') {
-          this.setState({ isErrorNumber: true });
-        }
+      	this.setState({isSubmitLoading: true});
+        const socket = socketIOClient(this.state.address); //establish connection to the server
+        socket.emit('create_student', {
+          student_number: this.state.student_number,
+          name: this.state.name,
+          email_add: this.state.email_add,
+          status: this.state.status,
+          curriculum: this.state.curriculum
+        }); //send data to 'login' endpoint in server
+        socket.on('create_student', returnValueFromServer => {
+          console.log(returnValueFromServer);
+          this.setState({isSubmitLoading: false});
+          if (returnValueFromServer.success){
+            this.setState({isAddSuccess: true});
+            this.setState({numberOfClicks: 1});
+            this.setState({addStudentLabel: "All Done"});
+          }else{
+            this.setState({isAddSuccess: false});
+          }
+          this.setState({isDisplayPrompt: true});
+          this.setState({isErrorMessage: false});
+        });
+        this.props.fetchData();
+
+      } else {
         this.setState({ isErrorMessage: true });
       } else {
         if (
@@ -171,6 +205,14 @@ class StudentAdd extends Component {
 
   handleOpen = e => {
     this.setState({ modalOpen: true });
+    this.setState({isErrorMessage: false});
+    this.setState({isDisplayPrompt: false});
+    this.setState({name: ''});
+    this.setState({email_add: ''});
+    this.setState({curriculum: ''});
+    this.setState({status: ''});
+    this.setState({student_number: ''});
+
   };
 
   render() {

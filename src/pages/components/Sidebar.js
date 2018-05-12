@@ -21,7 +21,7 @@ const inline = {
 const inline1 = {
 	width: '100rem'
 };
-
+var socket = null
 class Sidebar extends Component {
 	constructor(props) {
 		super(props);
