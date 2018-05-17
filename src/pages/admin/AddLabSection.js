@@ -80,13 +80,18 @@ class AddCourseLab extends Component {
       section: '',
       unit: '',
       max_capacity: '',
-      status: '',
+      status: 'Active',
       course_title: '',
       description: '',
       posted: '',
-      existingSections: []
+      existingSections: [],
+      lecture_id: '',
+
     };
     autobind(this);
+  }
+  componentDidMount = () =>{
+  this.setState({lecture_id: this.props.data.course_offering_id, course_id: this.props.data.course_id});
   }
 
   componentWillReceiveProps(nextProps) {
@@ -103,7 +108,7 @@ class AddCourseLab extends Component {
   labSectionFormat() {
     const { labSectionAppend } = this.state;
     let tempStr = this.props.section;
-    let labSection = tempStr + '-' + labSectionAppend;
+    let labSection = tempStr + '-' + labSectionAppend +'L';
     return labSection;
   }
 
@@ -163,15 +168,15 @@ class AddCourseLab extends Component {
       time_start,
       time_end,
       room,
-      section,
       unit,
       max_capacity,
       semester,
-      status
+      status,
+      lecture_id
     } = this.state;
+    const  section = this.labSectionFormat();
     const socket = socketIOClient(this.state.address);
     const data = {
-      email: 'pvgrubat@up.edu.ph',
       acad_year,
       semester,
       time_start,
@@ -182,10 +187,11 @@ class AddCourseLab extends Component {
       section,
       section_type,
       max_capacity,
-      emp_no,
       course_id,
       unit,
-      status
+      status,
+      lecture_id,
+      section_type: 1
     };
     let conflict = false;
     let details = '';
@@ -273,6 +279,8 @@ class AddCourseLab extends Component {
           hidden: false
         },
         () => {
+          console.log("new lab");
+          console.log(data);
           socket.emit('create_section_2', data);
         }
       );
@@ -307,7 +315,7 @@ class AddCourseLab extends Component {
       section: '',
       unit: '',
       max_capacity: '',
-      status: '',
+      status: 'Active',
       course_title: '',
       description: ''
     });

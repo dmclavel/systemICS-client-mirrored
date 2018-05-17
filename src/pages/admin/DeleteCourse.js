@@ -40,6 +40,7 @@ class DeleteCourse extends Component {
     };
 
     socket.emit('remove_section', data);
+    this.props.fetchCourse();
     this.close();
   };
 

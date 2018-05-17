@@ -172,7 +172,7 @@ class AdminCard extends Component {
             {this.state.courses.map((course, index) => {
               return (
                 <CourseRow
-                  data={coursesX}
+                  data={course}
                   key={index}
                   description={course.description}
                   course={course.course_id}
