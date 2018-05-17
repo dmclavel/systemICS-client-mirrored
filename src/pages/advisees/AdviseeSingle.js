@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Dropdown, Grid, Icon } from 'semantic-ui-react';
+import { Table, Button, Dropdown, Grid, Icon, Label} from 'semantic-ui-react';
 import autobind from 'react-autobind';
 import socketIOClient from 'socket.io-client';
 import config from './../../config.json';
@@ -16,10 +16,11 @@ class AdviseeSingle extends Component {
 			hasPending: this.props.hasPending,
 			placeholder: 'Select adviser'
 		};
+		
 	}
 
 	handleAssignOnClick(e) {
-		const socket = socketIOClient(this.state.endpoint);
+		 const socket = socketIOClient(this.state.endpoint);
 		socket.emit('create_advisee_adviser', {
 			emp_no: this.state.selected_adviser,
 			student_number: this.props.advisee.key
@@ -28,7 +29,7 @@ class AdviseeSingle extends Component {
 	}
 
 	handleRemoveOnClick(e) {
-		const socket = socketIOClient(this.state.endpoint);
+		 const socket = socketIOClient(this.state.endpoint);
 		socket.emit('remove_advisee_advisers', {
 			student_number: this.props.advisee.key,
 			emp_no: e.target.value
@@ -135,11 +136,16 @@ class AdviseeSingle extends Component {
 							>
 								{this.props.advisee.name}
 							</Table.Cell>
-							{this.props.advisee.advisers[0].status === 'Pending' ? (
+							{this.props.advisee.advisers[0].status === 'pending' ? (
 								<Table.Cell width={12} warning>
 									<Grid>
-										<Grid.Column width={13}>
+										<Grid.Column width={6}>
 											{this.props.advisee.advisers[0].adviser_name}
+										</Grid.Column>
+										<Grid.Column width={7}>
+											 <Label color={"blue"} >
+											0
+											</Label>
 										</Grid.Column>
 										<Grid.Column width={1}>
 											<Button
@@ -168,12 +174,36 @@ class AdviseeSingle extends Component {
 									</Grid>
 								</Table.Cell>
 							) : this.props.advisee.advisers[0].status === 'Previous' ? (
+								
 								<Table.Cell width={12} negative>
+								<Grid>
+								<Grid.Column width={6}>
+
 									{this.props.advisee.advisers[0].adviser_name}
+								</Grid.Column>
+
+								<Grid.Column width={7}>
+											 <Label color={"blue"} >
+											0
+											</Label>
+								</Grid.Column>
+								</Grid>
 								</Table.Cell>
+
+								
 							) : (
 								<Table.Cell width={12}>
+								<Grid>
+								<Grid.Column width = {6} >
 									{this.props.advisee.advisers[0].adviser_name}
+								</Grid.Column>
+								<Grid.Column width={7}>
+											 <Label color={"blue"} >
+											0
+											</Label>
+								</Grid.Column>
+								</Grid>
+
 								</Table.Cell>
 							)}
 						</Table.Row>
@@ -181,11 +211,16 @@ class AdviseeSingle extends Component {
 							(adviser, index) =>
 								index === 0 ? null : (
 									<Table.Row>
-										{adviser.status === 'Pending' ? (
+										{adviser.status === 'pending' ? (
 											<Table.Cell warning>
 												<Grid>
-													<Grid.Column width={13}>
+													<Grid.Column width={6}>
 														{adviser.adviser_name}
+													</Grid.Column>
+													<Grid.Column width={7}>
+														<Label color={"blue"} >
+														0
+														</Label>
 													</Grid.Column>
 													<Grid.Column width={1}>
 														<Button
@@ -213,10 +248,30 @@ class AdviseeSingle extends Component {
 											</Table.Cell>
 										) : adviser.status === 'Previous' ? (
 											<Table.Cell width={12} negative>
+											<Grid>
+											<Grid.Column width={6}>
 												{adviser.adviser_name}
+											</Grid.Column>
+											<Grid.Column width={7}>
+													<Label color={"blue"} >
+													0
+													</Label>
+												</Grid.Column>
+											</Grid>
 											</Table.Cell>
 										) : (
-											<Table.Cell width={12}>{adviser.adviser_name}</Table.Cell>
+											<Table.Cell width={12}>
+											<Grid>
+											<Grid.Column width = {6}>
+											{adviser.adviser_name}
+											</Grid.Column>
+												<Grid.Column width={7}>
+													<Label color={"blue"} >
+													0
+													</Label>
+												</Grid.Column>
+											</Grid>
+											</Table.Cell>
 										)}
 									</Table.Row>
 								)

@@ -5,6 +5,7 @@ import AdviseeSingle from './AdviseeSingle';
 import autobind from 'react-autobind';
 import config from './../../config.json';
 
+const socket = socketIOClient(config.endpoint);
 class AdviseeTable extends Component {
 	constructor(props) {
 		super(props);
@@ -17,13 +18,13 @@ class AdviseeTable extends Component {
 	}
 	componentDidMount() {
 		this.setState({ loading: true });
-		const socket = socketIOClient(this.state.endpoint);
+		 const socket = socketIOClient(this.state.endpoint);
 		socket.on('update_alert', update => {
 			socket.emit('view_advisee_advisers', { enrolledOnly: true });
 		});
-
 		socket.emit('view_advisee_advisers', { enrolledOnly: true });
 		socket.on('view_advisee_advisers', advisees => {
+			console.log(advisees);
 			let advisees_list = [];
 			advisees.forEach(advisee => {
 				advisees_list.push({
@@ -60,6 +61,7 @@ class AdviseeTable extends Component {
 										  advisee_single.advisers[1].status === 'Pending'
 											? true
 											: false
+
 							}
 						/>
 					))}
