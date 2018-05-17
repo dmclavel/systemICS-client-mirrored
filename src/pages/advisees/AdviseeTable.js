@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Loader} from 'semantic-ui-react';
 import socketIOClient from 'socket.io-client';
 import AdviseeSingle from './AdviseeSingle';
 import autobind from 'react-autobind';
@@ -8,11 +9,13 @@ class AdviseeTable extends Component {
 		super(props);
 		this.state = {
 			endpoint: 'https://sleepy-falls-95372.herokuapp.com',
-			advisees: []
+			advisees: [],
+			isLoading: true
 		};
 		autobind(this);
 	}
 	componentDidMount() {
+		this.setState({isLoading:true});
 		const socket = socketIOClient(this.state.endpoint);
 
 		socket.on('update_alert', update => {
@@ -21,7 +24,10 @@ class AdviseeTable extends Component {
 
 		socket.emit('view_advisee_advisers', { enrolledOnly: true });
 		socket.on('view_advisee_advisers', advisees => {
-			this.setState({ advisees: [] });
+			this.setState({
+				advisees: [],
+				isLoading:false
+			 });
 			let advisees_list = [];
 			advisees.forEach(advisee => {
 				advisees_list.push({
@@ -37,6 +43,7 @@ class AdviseeTable extends Component {
 	render() {
 		return (
 			<div>
+				<Loader active={this.state.isLoading}>  Loading Advisees</Loader>
 				{this.state.advisees
 					.filter(information =>
 						information.name

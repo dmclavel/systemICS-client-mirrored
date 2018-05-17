@@ -5,7 +5,8 @@ import {
 	Grid,
 	Item,
 	Button,
-	Dropdown
+	Dropdown,
+	Loader
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import socketIOClient from 'socket.io-client';
@@ -30,17 +31,20 @@ class Sidebar extends Component {
 			semesters: [],
 			acad_year: 0,
 			semester: 0,
-			logs: []
+			logs: [],
+			semLoading: true
 		};
 	}
 
 	componentDidMount() {
+		this.setState({semLoading: true});
 		const socket = socketIOClient(this.state.address); //establish connection to the server
 		socket.emit('view_timeframe', {});
 		socket.on('view_timeframe', semesters => {
 			this.setState({
 				acad_year: semesters[semesters.length - 1].acad_year,
-				semester: semesters[semesters.length - 1].semester
+				semester: semesters[semesters.length - 1].semester,
+				semLoading:false
 			});
 
 			const tempSem = [];
@@ -95,6 +99,7 @@ class Sidebar extends Component {
 					<Segment style={inline1} fluid textAlign="right">
 						<Header as="h3">
 							<Header.Content>
+								<Loader active={this.state.semLoading} inline="center"> </Loader>
 								{this.props.showSemester
 									? `${
 											semester === 1
