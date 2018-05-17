@@ -167,7 +167,7 @@ class AddFaculty extends Component {
        
       } else {
         this.setState({ isErrorMessage: true });
-      } else {
+      } 
         if (
           !this.state.isErrorStatus &&
           !this.state.isErrorMail &&
