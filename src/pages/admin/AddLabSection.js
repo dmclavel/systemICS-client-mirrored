@@ -272,7 +272,7 @@ class AddCourseLab extends Component {
     } else {
       this.setState(
         {
-          message: 'Successfully added a new lecture section!',
+          message: 'Successfully added a new lab section!',
           details,
           positive: true,
           negative: false,
