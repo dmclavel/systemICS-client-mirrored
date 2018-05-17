@@ -109,6 +109,7 @@ class StudentAdd extends Component {
       if (!student_number) this.setState({ isErrorNumber: true });
       this.setState({ isErrorMessage: true });
     } else {
+
       this.setState({ isSubmitLoading: true });
       const socket = socketIOClient(this.state.address); //establish connection to the server
       socket.emit('create_student', {
@@ -125,6 +126,7 @@ class StudentAdd extends Component {
           this.setState({ isAddSuccess: true });
           this.setState({ numberOfClicks: 1 });
           this.setState({ addStudentLabel: 'All Done' });
+
         } else {
           this.setState({ isAddSuccess: false });
         }

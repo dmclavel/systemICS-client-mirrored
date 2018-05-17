@@ -116,6 +116,18 @@ class AdminCard extends Component {
     });
   };
 
+
+  fetchCourse = () => {
+    const socket = socketIOClient(this.state.address);
+    const data = {
+      acad_year: this.props.current_year,
+      semester: this.props.current_sem
+    };
+    socket.emit('view_sections', data);
+    socket.on('view_sections', course => {
+      this.setState({ coursesX: course });
+    });
+  };
   render() {
     const {
       loading,

@@ -118,6 +118,7 @@ class AddFaculty extends Component {
       if (!emp_no) this.setState({ isErrorNumber: true });
       this.setState({ isErrorMessage: true });
     } else {
+
       this.setState({ isSubmitLoading: true });
       const socket = socketIOClient(this.state.address); //establish connection to the server
       socket.emit('create_faculty', {
@@ -134,6 +135,7 @@ class AddFaculty extends Component {
           this.setState({ isAddSuccess: true });
           this.setState({ numberOfClicks: 1 });
           this.setState({ addFacultyLabel: 'All Done' });
+      
         } else {
           this.setState({ isAddSuccess: false });
         }
