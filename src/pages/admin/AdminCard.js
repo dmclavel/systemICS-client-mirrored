@@ -53,8 +53,7 @@ class AdminCard extends Component {
     const socket = socketIOClient(this.state.address);
     const data = {
       acad_year: nextProps.current_year,
-      semester: nextProps.current_sem,
-      page: this.state.page
+      semester: nextProps.current_sem
     };
 
     socket.emit('view_sections', data);
@@ -80,7 +79,17 @@ class AdminCard extends Component {
       current_sem: nextProps.current_sem
     });
   }
-
+  fetchCourse = () => {
+    const socket = socketIOClient(this.state.address);
+    const data = {
+      acad_year: this.props.current_year,
+      semester: this.props.current_sem
+    };
+    socket.emit('view_sections', data);
+    socket.on('view_sections', course => {
+      this.setState({ coursesX: course });
+    });
+  };
   handleSearch = query => {
     if (query.length === 0) {
       this.setState({ courses: this.state.coursesX });
@@ -175,7 +184,7 @@ class AdminCard extends Component {
             {this.state.courses.map((course, index) => {
               return (
                 <CourseRow
-                  data={coursesX}
+                  data={course}
                   key={index}
                   description={course.description}
                   course={course.course_id}
@@ -197,13 +206,15 @@ class AdminCard extends Component {
                   courseoffering={course.course_offering_id}
                   current_year={current_year}
                   current_sem={current_sem}
+                  fetchCourse={this.fetchCourse}
                 />
               );
             })}
           </Table.Body>
         </Table>
 
-        {!loading &&
+    {/*
+      !loading &&
           this.state.courses.length > 10 && (
             <Pagination
               fluid
@@ -226,7 +237,8 @@ class AdminCard extends Component {
               activePage={page}
               onPageChange={this.handlePageChange}
             />
-          )}
+          )
+        */}
       </Grid>
     );
   }

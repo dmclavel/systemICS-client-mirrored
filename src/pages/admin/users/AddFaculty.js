@@ -74,12 +74,12 @@ class AddFaculty extends Component {
 
   handleNumber = e => {
     var reg = /^[0-9]+$/;
-    if (e.target.value.length !== 11 || !reg.test(e.target.value)){
-       this.setState({isErrorNumber: true});
-    }else{
-      this.setState({isErrorNumber: false});
-    }  
-    this.setState({emp_no: e.target.value});
+    if (e.target.value.length !== 11 || !reg.test(e.target.value)) {
+      this.setState({ isErrorNumber: true });
+    } else {
+      this.setState({ isErrorNumber: false });
+    }
+    this.setState({ emp_no: e.target.value });
   };
 
   handleEmail = e => {
@@ -108,103 +108,40 @@ class AddFaculty extends Component {
   };
 
   handleSubmit = e => {
-    if (this.state.numberOfClicks == 0){
-      
-      if (
-      this.state.isRegCom === '' ||
-      this.state.status === '' ||
-      this.state.name === '' ||
-      this.state.email_add === '' ||
-      this.state.emp_no === ''
-    ) {
-      if (!this.state.isRegCom) {
-        this.setState({ isErrorReg: true });
-      }
-      if (!this.state.status) {
-        this.setState({ isErrorStatus: true });
-      }
-      if (!this.state.name) {
-        this.setState({ isErrorName: true });
-      }
-      if (!this.state.email_add) {
-        this.setState({ isErrorMail: true });
-      }
-      if (!this.state.emp_no) {
-        this.setState({ isErrorNumber: true });
-      }
+    const { isRegCom, status, name, email_add, emp_no } = this.state;
+
+    if (!isRegCom || !status || !name || !email_add || !emp_no) {
+      if (!isRegCom) this.setState({ isErrorReg: true });
+      if (!status) this.setState({ isErrorStatus: true });
+      if (!name) this.setState({ isErrorName: true });
+      if (!email_add) this.setState({ isErrorMail: true });
+      if (!emp_no) this.setState({ isErrorNumber: true });
       this.setState({ isErrorMessage: true });
     } else {
-      if (
-        this.state.isRegCom === '' ||
-        this.state.status === '' ||
-        this.state.name === '' ||
-        this.state.email_add === '' ||
-        this.state.emp_no === ''
-      ) {
-      	this.setState({isSubmitLoading: true});
-        const socket = socketIOClient(this.state.address); //establish connection to the server
-        socket.emit('create_faculty', {
-          emp_no: this.state.emp_no,
-          name: this.state.name,
-          email_add: this.state.email_add,
-          status: this.state.status,
-          isRegCom: this.state.isRegCom
-        }); //send data to 'login' endpoint in server
-        socket.on('create_faculty', returnValueFromServer => {
-          console.log(returnValueFromServer);
-          this.setState({isSubmitLoading: false});
-          if (returnValueFromServer.success){
-            this.setState({isAddSuccess: true});
-            this.setState({numberOfClicks: 1});
-            this.setState({addFacultyLabel: "All Done"});
-          }else{
-            this.setState({isAddSuccess: false});
-          }
-          this.setState({isDisplayPrompt: true});
-          this.setState({isErrorMessage: false});
-        });
-        this.props.fetchData();
-       
-      } else {
-        this.setState({ isErrorMessage: true });
-      } 
-        if (
-          !this.state.isErrorStatus &&
-          !this.state.isErrorMail &&
-          !this.state.isErrorNumber &&
-          !this.state.isErrorName &&
-          !this.state.isErrorReg
-        ) {
-          const socket = socketIOClient(this.state.address); //establish connection to the server
-          socket.emit('create_faculty', {
-            emp_no: this.state.emp_no,
-            name: this.state.name,
-            email_add: this.state.email_add,
-            status: this.state.status,
-            isRegCom: this.state.isRegCom
-          }); //send data to 'login' endpoint in server
-          socket.on('create_faculty', returnValueFromServer => {
-            console.log(returnValueFromServer);
-            this.setState({ isSubmitLoading: false });
-            if (returnValueFromServer.success) {
-              this.setState({ isAddSuccess: true });
-              this.setState({ numberOfClicks: 1 });
-              this.setState({ addFacultyLabel: 'All Done' });
-            } else {
-              this.setState({ isAddSuccess: false });
-            }
-            this.setState({ isDisplayPrompt: true });
-            this.setState({ isErrorMessage: false });
-          });
-          this.props.fetchData();
+
+      this.setState({ isSubmitLoading: true });
+      const socket = socketIOClient(this.state.address); //establish connection to the server
+      socket.emit('create_faculty', {
+        emp_no: this.state.emp_no,
+        name: this.state.name,
+        email_add: this.state.email_add,
+        status: this.state.status,
+        isRegCom: this.state.isRegCom
+      }); //send data to 'login' endpoint in server
+      socket.on('create_faculty', returnValueFromServer => {
+        console.log(returnValueFromServer);
+        this.setState({ isSubmitLoading: false });
+        if (returnValueFromServer.success) {
+          this.setState({ isAddSuccess: true });
+          this.setState({ numberOfClicks: 1 });
+          this.setState({ addFacultyLabel: 'All Done' });
+      
         } else {
-          this.setState({ isErrorMessage: true });
+          this.setState({ isAddSuccess: false });
         }
-      }
-    } else {
-      this.handleClose();
-      this.setState({ numberOfClicks: 0 });
-      this.setState({ isDisplayPrompt: false });
+        this.setState({ isDisplayPrompt: true });
+        this.setState({ isErrorMessage: false });
+      });
     }
   };
 
@@ -215,13 +152,13 @@ class AddFaculty extends Component {
 
   handleOpen = e => {
     this.setState({ modalOpen: true });
-    this.setState({name: ''});
-    this.setState({email_add: ''});
-    this.setState({isRegCom: ''});
-    this.setState({status: ''});
-    this.setState({emp_no: ''});
-    this.setState({isErrorMessage: false});
-    this.setState({isDisplayPrompt: false});
+    this.setState({ name: '' });
+    this.setState({ email_add: '' });
+    this.setState({ isRegCom: '' });
+    this.setState({ status: '' });
+    this.setState({ emp_no: '' });
+    this.setState({ isErrorMessage: false });
+    this.setState({ isDisplayPrompt: false });
   };
 
   render() {
