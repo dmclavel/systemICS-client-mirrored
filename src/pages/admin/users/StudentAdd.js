@@ -158,8 +158,7 @@ class StudentAdd extends Component {
 
       } else {
         this.setState({ isErrorMessage: true });
-      } else {
-        if (
+      } else if (
           this.state.isErrorName === false &&
           this.state.isErrorMail === false &&
           this.state.isErrorCurriculum === false &&
