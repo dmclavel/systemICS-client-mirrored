@@ -47,7 +47,7 @@ class CourseRow extends Component {
           <DeleteCourse
             coursecodeid={this.props.courseoffering}
             section={this.props.section}
-            fetchCourse={this.props.fetch_Course}
+            fetchCourse={this.props.fetchCourse}
             coursecode={this.props.coursecode}
             section_type={this.props.section_type}
           />
@@ -75,6 +75,7 @@ class CourseRow extends Component {
 
           {this.props.section_type === 0 && (
             <AddLabSection
+              fetchCourse={this.props.fetchCourse}
               data={this.props.data}
               courseLecID={this.props.course}
               coursecode={this.props.coursecode}
